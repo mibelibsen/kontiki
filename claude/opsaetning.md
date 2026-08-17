@@ -1,159 +1,119 @@
-# Opsætning af mibelibsen.space — én gang, så det bare kører
+# Opsætning af mibelibsen.space
 
 Sidst opdateret: 2026-08-17
 
-## Hvorfor det er gået galt hele dagen
+## Om links i denne fil
 
-Sitet er indtil nu blevet deployet af Claude **gennem** Vercel. Den vej virker
-ikke: adgangen til Vercel i chatten kan oprette ting, men hverken læse dem igen
-eller udgive dem. Hvert forsøg lykkes derfor halvt, og næste forsøg starter
-oven på noget halvfærdigt. Det er dét mønster, der har gentaget sig.
+Claude kan **ikke** tilgå vercel.com fra sit arbejdsmiljø — netværket blokerer
+det, og Vercels dokumentation indeholder kun CLI- og API-kommandoer, ingen
+dashboard-adresser. Adresser til Vercel-dashboardet kan derfor ikke verificeres
+herfra.
+
+Derfor er hvert link nedenfor mærket:
+
+- ✅ **Bekræftet** — verificeret i praksis.
+- 🔎 **Ubekræftet** — sandsynligt mønster, men gættet. Virker det ikke, så brug
+  klikvejen der står lige under.
+- 🖱️ **Klikvej** — ingen adresse, kun præcis hvilket element der skal klikkes.
+
+Skriv aldrig et ubekræftet link uden mærket. Det er bedre at beskrive et klik
+end at gætte en adresse.
+
+## Hvorfor det gik galt
+
+Sitet blev deployet af Claude **gennem** Vercel. Den vej virker ikke: adgangen
+kan oprette ting, men hverken læse dem igen eller udgive dem. Hvert forsøg
+lykkes halvt, og det næste bygger oven på noget halvfærdigt.
 
 ## Løsningen
 
-Vi fjerner Claude fra deploy-leddet.
+Claude fjernes fra deploy-leddet.
 
 ```
-Claude  →  GitHub (mibelibsen/kontiki, branch main)  →  Vercel  →  mibelibsen.space
+Claude  →  GitHub (mibelibsen/kontiki, main)  →  Vercel  →  mibelibsen.space
 ```
 
-Vercel kobles til GitHub **én gang**. Derefter holder Vercel selv øje med
-repoet: hver gang der kommer noget nyt på `main`, lægger den det op af sig selv,
-typisk på under et minut. Claudes Vercel-adgang skal aldrig bruges igen.
+Vercel kobles til GitHub én gang. Derefter udgiver Vercel selv ved hvert push.
+Claudes Vercel-adgang bruges aldrig igen.
+
+## Projekterne på Vercel
+
+Bekræftet 17. august 2026 ud fra Vercel-dashboardet:
+
+| Projekt | Git-kobling | Domæne |
+|---|---|---|
+| `kontiki-9klasse` | ✅ `mibelibsen/kontiki`, bygger ved push | — |
+| `kontiki9` | — | `mibelibsen.space` + `www` |
+| `mibelibsen-skole` | — | — |
+| `mibelibsen-site` | — | — |
+
+`mibelibsen-skole` og `mibelibsen-site` er rester fra mislykkede forsøg og kan
+slettes.
+
+Claudes Vercel-adgang kan kun læse fem andre projekter. `get_project` på
+`kontiki9` svarer `404`, `list_deployments` svarer `403`. Adgangen er begrænset
+på projektniveau. Det behøver ikke rettes: Git-koblingen på `kontiki-9klasse`
+virker uafhængigt af den, og det er dén, der udgiver sitet.
 
 ## Trin for trin
 
-Rækkefølgen er vigtig. Sitet er oppe hele vejen igennem, og du sletter først
-det gamle, når det nye beviseligt virker.
+Planen er at flytte domænet hen på det projekt, der allerede bygger koden —
+ikke at koble det tomme projekt til Git. Det er færrest trin.
 
-### 1. Find ud af hvor domænet ligger nu
+### 1. Se om koden er live
 
-👉 **https://vercel.com/mibelibsens-projects/~/domains/mibelibsen.space**
+✅ **https://kontiki-9klasse.vercel.app**
 
-Bemærk: oversigten på `/~/domains` viser **ikke**, hvilket projekt et domæne
-hører til — kun navn, fornyelse og dato. Du skal klikke ind på selve domænet,
-og det er adressen ovenfor.
+Tjek:
 
-På den side finder du feltet, der viser projektet — *Assigned to*, *Project*
-eller en liste over projekter. **Skriv navnet ned**; du skal bruge det i trin
-6 og 7.
-
-Står der intet projekt, er domænet købt men aldrig koblet på noget. Så skal du
-ikke fjerne noget i trin 6 — kun tilføje.
-
-Domænet blev købt gennem Vercel 17. august 2026 og ligger i teamet
-`mibelibsens-projects`. Det skal altså ikke flyttes mellem konti.
-
-### 2. Se hvad der allerede findes
-
-👉 **https://vercel.com/mibelibsens-projects**
-
-Her er alle projekter. Du leder efter to navne:
-
-- **`kontiki-9klasse`** — oprettede jeg under fejlsøgningen. Det er allerede
-  koblet til det rigtige GitHub-repo, men har aldrig udgivet noget. Findes det,
-  så brug det i trin 3 og spring importen over.
-- **`kontiki`** — findes et sted i kontoen, men jeg kan ikke se det. Er det på
-  listen, så åbn det og se under Settings → Git, om det peger på
-  `mibelibsen/kontiki`.
-
-### 3. Sørg for at der er et projekt koblet til repoet
-
-**Findes `kontiki-9klasse`:** åbn projektets Git-indstillinger.
-
-👉 **https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/git**
-
-Tjek at Repository står til `mibelibsen/kontiki`, og sæt **Production Branch**
-til `main`. Gem.
-
-**Findes det ikke:** importér repoet på ny.
-
-👉 **https://vercel.com/new/mibelibsens-projects**
-
-Vælg `mibelibsen/kontiki` på listen og tryk *Import*. Under *Framework Preset*
-vælger du **Other**. Build Command og Output Directory skal stå tomme — det er
-rene HTML-filer, der bare skal serveres. Tryk *Deploy*.
-
-### 4. Sæt gang i den første udgivelse
-
-👉 **https://vercel.com/mibelibsens-projects/kontiki-9klasse/deployments**
-
-Er listen tom, så tryk på knappen *Redeploy* øverst, eller *Create Deployment*
-og vælg branchen `main`.
-
-Vent til den øverste linje står som **Ready**.
-
-### 5. Tjek at sitet virker, før du rører domænet
-
-Klik på den øverste deployment i listen. Vercel viser en adresse i stil med
-`kontiki-9klasse-xxxx.vercel.app`. Åbn den.
-
-Tjek tre ting:
-
-- Forsiden har farver og de fire fagkort.
+- Forsiden har farver og fire fagkort.
 - Matematiksiden viser seks kort, heriblandt *Hjemmeopgaver: Manipulation*.
-- Manipulation-siden spørger om dit fornavn, og quizzen svarer rigtigt/forkert
-  når du klikker.
+- Manipulation-siden spørger om fornavn, og quizzen svarer rigtigt/forkert.
 
-**Gå først videre, når alle tre virker.** Gør de ikke det, så stop her og sig
-til — så retter jeg det, før domænet flyttes.
+### 2. Flyt domænet
 
-### 6. Flyt domænet til det nye projekt
+🖱️ **Klikvej:** **Projects** → **kontiki-9klasse** → fanen **Settings** →
+**Domains** → skriv `www.mibelibsen.space` → **Add**.
 
-Først væk fra det gamle. Sæt det projektnavn ind, du skrev ned i trin 1:
+Vercel svarer, at domænet bruges af `kontiki9`, og spørger om det skal flyttes.
+**Sig ja.** Gentag med `mibelibsen.space`.
 
-👉 `https://vercel.com/mibelibsens-projects/`**`DET-GAMLE-PROJEKT`**`/settings/domains`
+`kontiki9` skal ikke åbnes.
 
-Fjern `mibelibsen.space` og `www.mibelibsen.space` dér.
+### 3. Tjek sitet
 
-Så over på det nye:
+Åbn https://www.mibelibsen.space og genindlæs med `Shift` nede.
 
-👉 **https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/domains**
+### 4. Ryd op
 
-Tilføj begge: `mibelibsen.space` og `www.mibelibsen.space`.
+Slet `kontiki9`, `mibelibsen-skole` og `mibelibsen-site`. Sletteknappen ligger
+nederst på projektets **Settings**-side under *Delete Project*.
 
-Åbn https://www.mibelibsen.space og hold `Shift` nede mens du genindlæser.
+✅ **https://github.com/mibelibsen/kontiki/settings** — sæt *Default branch*
+til `main`.
 
-### 7. Ryd op i Vercel
+✅ **https://github.com/mibelibsen/kontiki/branches** — slet
+`claude/status-9klasse-op6yol`.
 
-Slet det gamle projekt. Knappen sidder nederst på siden under *Delete Project*:
+### 5. Tjek Production Branch
 
-👉 `https://vercel.com/mibelibsens-projects/`**`DET-GAMLE-PROJEKT`**`/settings`
-
-Fandt du også et projekt ved navn `kontiki` i trin 2, og var det ikke det
-samme, så slet det ligeledes:
-
-👉 **https://vercel.com/mibelibsens-projects/kontiki/settings**
-
-### 8. Ryd op på GitHub
-
-Sæt default-branch til `main`. Feltet hedder *Default branch* og sidder et
-stykke nede på siden:
-
-👉 **https://github.com/mibelibsen/kontiki/settings**
-
-Slet derefter den gamle arbejdsbranch — tryk på skraldespanden ud for
-`claude/status-9klasse-op6yol`:
-
-👉 **https://github.com/mibelibsen/kontiki/branches**
+🖱️ **Klikvej:** **kontiki-9klasse** → **Settings** → **Git** → feltet
+**Production Branch**. Skal stå til `main`.
 
 ## Bagefter
 
-Reglen er enkel: **det, der ligger på `main`, er det, der ligger på sitet.**
+**Det, der ligger på `main`, er det, der ligger på sitet.**
 
-Når du beder om en ændring, pusher jeg til `main`, og Vercel lægger den op selv.
+Claude pusher til `main`, og Vercel udgiver selv. Går noget galt, kan enhver
+tidligere version sættes tilbage:
 
-Går noget galt, kan du rulle tilbage: åbn
-👉 **https://vercel.com/mibelibsens-projects/kontiki-9klasse/deployments**,
-find en version der virkede, tryk på de tre prikker til højre og vælg
-*Promote to Production*. Ét klik, og sitet er tilbage som før.
+🖱️ **Klikvej:** projektet → **Deployments** → find en version der virkede →
+`...`-menuen til højre → **Promote to Production**.
 
 ## Hvis noget driller
 
-- **Ændringen kan ikke ses.** Tjek på deployments-siden, at den øverste står som
-  *Ready* og *Production*. Ellers hold `Shift` og genindlæs siden.
-- **Siden er uden farver og layout.** Så mangler en fil. Alle sider er
-  selvbærende nu, så det bør ikke kunne ske — det var netop manipulation-sidens
-  fejl.
-- **Vercel bygger ikke ved et push.** Tjek Production Branch på
-  👉 **https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/git**
+- **Ændringen kan ikke ses.** Tjek under **Deployments**, at øverste række står
+  som *Ready* og *Production*. Ellers genindlæs med `Shift` nede.
+- **Siden mangler farver.** Så mangler en fil. Alle sider er selvbærende nu, så
+  det bør ikke kunne ske.
+- **Intet sker ved et push.** Tjek Production Branch, trin 2.
