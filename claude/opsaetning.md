@@ -38,21 +38,35 @@ Claudes Vercel-adgang bruges aldrig igen.
 
 ## Projekterne på Vercel
 
-Bekræftet 17. august 2026 ud fra Vercel-dashboardet:
+Bekræftet 17. august 2026 ud fra Vercel-dashboardet. Der blev oprettet omkring
+ti projekter til dette ene site i løbet af dagen. **Kun ét har en Git-kobling.**
+Resten står med "Connect Git Repository" — tomme skaller uden kilde, som hverken
+kan bygge noget eller gå i stykker.
 
-| Projekt | Git-kobling | Domæne |
-|---|---|---|
-| `kontiki-9klasse` | ✅ `mibelibsen/kontiki`, bygger ved push | — |
-| `kontiki9` | — | `mibelibsen.space` + `www` |
-| `mibelibsen-skole` | — | — |
-| `mibelibsen-site` | — | — |
+**Behold:**
 
-`mibelibsen-skole` og `mibelibsen-site` er rester fra mislykkede forsøg og kan
-slettes.
+| Projekt | Hvorfor |
+|---|---|
+| `kontiki-9klasse` | Eneste med Git-kobling til `mibelibsen/kontiki`. Bygger ved push. Det er sitet. |
 
-Claudes Vercel-adgang kan kun læse fem andre projekter. `get_project` på
-`kontiki9` svarer `404`, `list_deployments` svarer `403`. Adgangen er begrænset
-på projektniveau. Det behøver ikke rettes: Git-koblingen på `kontiki-9klasse`
+**Slet** — i denne rækkefølge:
+
+1. `kontiki9` — har domænet i dag. Slettes **først når** domænet er flyttet.
+2. `mibelibsen9`
+3. `mibelibsen-space`
+4. `kontiki` (`kontiki-beta.vercel.app`)
+5. `mibelibsen-9klasse`
+6. `mibelibsen-skole`
+7. `mibelibsen-site`
+8. `matematik-9-kontiki-probe`
+9. `funktioner-og-ligninger-kontiki`
+
+**Rør ikke:** `store51`, `kazzen-app`, `s51pos-api`, `s51pos-mobil`,
+`s51pos-demo`, `dog-lovers-app`. De hører til andre projekter.
+
+Claudes Vercel-adgang kan kun læse fem projekter. `get_project` på `kontiki9`
+svarer `404`, `list_deployments` svarer `403`. Adgangen er begrænset på
+projektniveau. Det behøver ikke rettes: Git-koblingen på `kontiki-9klasse`
 virker uafhængigt af den, og det er dén, der udgiver sitet.
 
 ## Trin for trin
