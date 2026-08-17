@@ -82,6 +82,25 @@ have disse id'er: `startOverlay`, `nameInput`, `ovTitle`, `ovText`, `startBtn`,
 6. **`/style.css` og `/app.js` på det deployede site** bruges nu ikke længere af
    nogen side i repoet. Tjek om de kan fjernes fra deployet.
 
+## Næste opgave — indhold
+
+Aftalt 17. august 2026: **først deploy-flowet, derefter indholdet.**
+
+Sitet er set live på `kontiki-9klasse.vercel.app` og indeholder fejl. Brugeren
+nævner to ting, som skal tages fat på, når deploy virker:
+
+1. **Matematikken skal gennemgås.** Regnestykker, facit og forklaringer på de
+   interaktive sider er ikke verificeret. Der er ikke lavet et gennemløb af,
+   om `data-answer` peger på det rigtige svar, eller om udregningerne holder.
+2. **Manglende opgaver.** Hvilke der mangler, er endnu ikke specificeret.
+
+Derudover: brugeren nævner rettelser fra andre chats, som er "kommet med" i
+den udgave der ligger live. Afklar hvilke, før noget skrives om — der kan ligge
+arbejde i den live-udgave, som ikke findes i dette repo.
+
+Bed om en konkret liste over fejl frem for at gætte. Når deploy-flowet virker,
+kan hver rettelse ses live under et minut efter et push.
+
 ## Næste skridt
 
 Ikke besluttet — tag et af punkterne ovenfor.
