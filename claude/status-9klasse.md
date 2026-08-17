@@ -5,10 +5,10 @@ Sidst opdateret: 2026-08-17
 Denne fil er arbejdsloggen for sitet. Læs den først i en ny session, og opdatér
 den til sidst, så næste session kan fortsætte uden at gætte.
 
-**Deploy:** Vercel-projektet `kontiki-9klasse` er koblet til dette repo og
-bygger ved hvert push til `main`. Mangler kun at få domænet flyttet over fra
-`kontiki9`. Se `claude/opsaetning.md`. Claudes egen Vercel-adgang kan ikke
-bruges og skal ikke bruges — Git-koblingen klarer det.
+**Deploy virker.** Vercel-projektet `kontiki-9klasse` er koblet til dette repo
+og har begge domæner. Et push til `main` er live på mibelibsen.space under et
+minut senere. Claudes egen Vercel-adgang kan ikke bruges og skal ikke bruges —
+Git-koblingen klarer det. Se `claude/opsaetning.md`.
 
 > **Bemærk:** Denne fil fandtes ikke i repoet, da den blev efterspurgt første
 > gang (repoet var tomt, og zip-filen indeholdt kun HTML/PDF/XLSX). Indholdet

@@ -2,22 +2,33 @@
 
 Sidst opdateret: 2026-08-17
 
+## ✅ Opsætningen er færdig
+
+`kontiki-9klasse` er koblet til `mibelibsen/kontiki` og har begge domæner med
+*Valid Configuration*. Apex redirecter til www.
+
+**Flowet er: push til `main` → Vercel bygger → live på mibelibsen.space.**
+
+Resten af filen er baggrund og oprydning.
+
 ## Om links i denne fil
 
-Claude kan **ikke** tilgå vercel.com fra sit arbejdsmiljø — netværket blokerer
-det, og Vercels dokumentation indeholder kun CLI- og API-kommandoer, ingen
-dashboard-adresser. Adresser til Vercel-dashboardet kan derfor ikke verificeres
-herfra.
+**Skriv altid linket ud. Aldrig en klikvej.**
 
-Derfor er hvert link nedenfor mærket:
+Vercel-dashboardet følger mønsteret:
 
-- ✅ **Bekræftet** — verificeret i praksis.
-- 🔎 **Ubekræftet** — sandsynligt mønster, men gættet. Virker det ikke, så brug
-  klikvejen der står lige under.
-- 🖱️ **Klikvej** — ingen adresse, kun præcis hvilket element der skal klikkes.
+```
+https://vercel.com/<team-slug>/<projekt>/settings/<sektion>
+```
 
-Skriv aldrig et ubekræftet link uden mærket. Det er bedre at beskrive et klik
-end at gætte en adresse.
+Team-slug'en er `mibelibsens-projects` — bekræftet i praksis via
+https://vercel.com/mibelibsens-projects/~/domains, hvor `~` står i stedet for
+et projektnavn på team-niveau.
+
+Claude kan ikke tilgå vercel.com fra sit arbejdsmiljø og kan derfor ikke
+efterprøve en adresse, før den sendes. Det er ikke en undskyldning for at
+skrive en klikvej i stedet — skriv linket, og ret det hvis det viser sig
+forkert.
 
 ## Hvorfor det gik galt
 
@@ -86,11 +97,11 @@ Tjek:
 
 ### 2. Flyt domænet
 
-🖱️ **Klikvej:** **Projects** → **kontiki-9klasse** → fanen **Settings** →
-**Domains** → skriv `www.mibelibsen.space` → **Add**.
+**https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/domains**
 
-Vercel svarer, at domænet bruges af `kontiki9`, og spørger om det skal flyttes.
-**Sig ja.** Gentag med `mibelibsen.space`.
+Skriv `www.mibelibsen.space` → **Add**. Vercel svarer, at domænet bruges af
+`kontiki9`, og spørger om det skal flyttes. **Sig ja.** Gentag med
+`mibelibsen.space`.
 
 `kontiki9` skal ikke åbnes.
 
@@ -100,8 +111,19 @@ Vercel svarer, at domænet bruges af `kontiki9`, og spørger om det skal flyttes
 
 ### 4. Ryd op
 
-Slet `kontiki9`, `mibelibsen-skole` og `mibelibsen-site`. Sletteknappen ligger
-nederst på projektets **Settings**-side under *Delete Project*.
+*Delete Project* ligger nederst på hver af disse sider:
+
+| Projekt | Link |
+|---|---|
+| `kontiki9` *(først når domænet er flyttet)* | https://vercel.com/mibelibsens-projects/kontiki9/settings |
+| `mibelibsen9` | https://vercel.com/mibelibsens-projects/mibelibsen9/settings |
+| `mibelibsen-space` | https://vercel.com/mibelibsens-projects/mibelibsen-space/settings |
+| `kontiki` | https://vercel.com/mibelibsens-projects/kontiki/settings |
+| `mibelibsen-9klasse` | https://vercel.com/mibelibsens-projects/mibelibsen-9klasse/settings |
+| `mibelibsen-skole` | https://vercel.com/mibelibsens-projects/mibelibsen-skole/settings |
+| `mibelibsen-site` | https://vercel.com/mibelibsens-projects/mibelibsen-site/settings |
+| `matematik-9-kontiki-probe` | https://vercel.com/mibelibsens-projects/matematik-9-kontiki-probe/settings |
+| `funktioner-og-ligninger-kontiki` | https://vercel.com/mibelibsens-projects/funktioner-og-ligninger-kontiki/settings |
 
 ✅ **https://github.com/mibelibsen/kontiki/settings** — sæt *Default branch*
 til `main`.
@@ -111,8 +133,9 @@ til `main`.
 
 ### 5. Tjek Production Branch
 
-🖱️ **Klikvej:** **kontiki-9klasse** → **Settings** → **Git** → feltet
-**Production Branch**. Skal stå til `main`.
+**https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/git**
+
+Feltet **Production Branch** skal stå til `main`.
 
 ## Bagefter
 
@@ -121,13 +144,16 @@ til `main`.
 Claude pusher til `main`, og Vercel udgiver selv. Går noget galt, kan enhver
 tidligere version sættes tilbage:
 
-🖱️ **Klikvej:** projektet → **Deployments** → find en version der virkede →
-`...`-menuen til højre → **Promote to Production**.
+**https://vercel.com/mibelibsens-projects/kontiki-9klasse/deployments** — find
+en version der virkede → `...`-menuen til højre → **Promote to Production**.
 
 ## Hvis noget driller
 
-- **Ændringen kan ikke ses.** Tjek under **Deployments**, at øverste række står
-  som *Ready* og *Production*. Ellers genindlæs med `Shift` nede.
+- **Ændringen kan ikke ses.** Tjek på
+  **https://vercel.com/mibelibsens-projects/kontiki-9klasse/deployments**, at
+  øverste række står som *Ready* og *Production*. Ellers genindlæs med `Shift`
+  nede.
 - **Siden mangler farver.** Så mangler en fil. Alle sider er selvbærende nu, så
   det bør ikke kunne ske.
-- **Intet sker ved et push.** Tjek Production Branch, trin 2.
+- **Intet sker ved et push.** Tjek Production Branch på
+  **https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/git**
