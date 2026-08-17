@@ -5,6 +5,11 @@ Sidst opdateret: 2026-08-17
 Denne fil er arbejdsloggen for sitet. Læs den først i en ny session, og opdatér
 den til sidst, så næste session kan fortsætte uden at gætte.
 
+**Deploy virker ikke — læs `claude/deploy.md` før du forsøger.** Kort: domænet
+mibelibsen.space sidder på et Vercel-projekt som denne sessions forbindelse
+hverken kan se eller deploye til. Det kræver en rettelse i Vercel-kontoen, ikke
+i koden.
+
 > **Bemærk:** Denne fil fandtes ikke i repoet, da den blev efterspurgt første
 > gang (repoet var tomt, og zip-filen indeholdt kun HTML/PDF/XLSX). Indholdet
 > nedenfor er rekonstrueret ud fra de faktiske filer i uploadet — ikke fra en
