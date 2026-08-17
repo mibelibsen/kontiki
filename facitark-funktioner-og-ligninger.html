@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facitark - Funktioner og ligninger, 9. klasse</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:#1a2233;line-height:1.55;background:#fff;
+  }
+  .page{max-width:820px;margin:0 auto;padding:32px 28px 60px}
+  h1{font-size:1.7rem;margin:0 0 4px}
+  .lead{color:#586074;margin:0 0 8px}
+  .meta{color:#586074;font-size:.9rem;margin:0 0 20px}
+  .printbtn{
+    display:inline-flex;align-items:center;gap:8px;margin:6px 0 22px;
+    background:#fff;border:1px solid #d3dae7;color:#1a2233;
+    padding:9px 16px;border-radius:10px;font-size:.92rem;font-family:inherit;cursor:pointer;font-weight:600;
+  }
+  .printbtn:hover{border-color:#1f6fd6;color:#1f6fd6}
+  h2{
+    font-size:1.2rem;margin:26px 0 10px;padding-bottom:6px;border-bottom:2px solid #1f6fd6;
+  }
+  table{width:100%;border-collapse:collapse;margin:0 0 8px}
+  th,td{border:1px solid #cfd6e4;padding:8px 11px;text-align:left;vertical-align:top;font-size:.96rem}
+  th{background:#f4f6fb;font-weight:700}
+  th.n,td.n{width:34px;text-align:center}
+  th.sv,td.sv{width:120px;font-weight:700;white-space:nowrap}
+  td.sv{color:#12633f}
+  code{font-family:"Cambria Math",Georgia,serif;background:#f4f6fb;padding:1px 6px;border-radius:5px;border:1px solid #e0e5ef}
+  .keyrow td{background:#eaf2fd}
+  .note{background:#f4f6fb;border:1px solid #d3dae7;border-left:4px solid #1f6fd6;border-radius:8px;padding:12px 16px;margin:10px 0 24px;font-size:.94rem;color:#374151}
+  footer{color:#586074;font-size:.82rem;margin-top:30px;border-top:1px solid #e0e5ef;padding-top:12px}
+  @media print{
+    @page{margin:15mm}
+    .printbtn{display:none}
+    body{font-size:11pt}
+    h2{break-after:avoid}
+    table{break-inside:auto}
+    tr{break-inside:avoid}
+    .keyrow td,th{background:#fff !important}
+    td.sv{color:#000}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Facitark</h1>
+  <p class="lead">Funktioner og ligninger · 9. klasse</p>
+  <p class="meta">Til læreren. Bogstavet henviser til svarmuligheden på ungernes side. Fuld løsning står i højre kolonne.</p>
+  <button class="printbtn" onclick="window.print()">Print facitark</button>
+
+  <div class="note">
+    Facit i alt: 26 opgaver fordelt på fire moduler. Svarene svarer til rækkefølgen A, B, C på ungernes side.
+  </div>
+
+  <h2>Modul 1 · Ligninger (7 opgaver)</h2>
+  <table>
+    <thead><tr><th class="n">Nr.</th><th>Opgave</th><th class="sv">Svar</th><th>Løsning</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td><code>x + 7 = 12</code></td><td class="sv">A · x = 5</td><td>Træk 7 fra på begge sider: x = 12 − 7 = 5.</td></tr>
+      <tr><td class="n">2</td><td><code>2x + 5 = 17</code></td><td class="sv">C · x = 6</td><td>Træk 5 fra: 2x = 12. Divider med 2: x = 6.</td></tr>
+      <tr><td class="n">3</td><td><code>4x + 3x = 28</code></td><td class="sv">B · x = 4</td><td>Saml x-leddene: 7x = 28. Divider med 7: x = 4.</td></tr>
+      <tr><td class="n">4</td><td><code>4x − 2 = x + 10</code></td><td class="sv">A · x = 4</td><td>Træk x fra: 3x − 2 = 10. Læg 2 til: 3x = 12. x = 4.</td></tr>
+      <tr><td class="n">5</td><td><code>3(x + 2) = 18</code></td><td class="sv">C · x = 4</td><td>Gang ind: 3x + 6 = 18. Træk 6 fra: 3x = 12. x = 4.</td></tr>
+      <tr><td class="n">6</td><td><code>x/4 + 3 = 5</code></td><td class="sv">B · x = 8</td><td>Træk 3 fra: x/4 = 2. Gang med 4: x = 8.</td></tr>
+      <tr><td class="n">7</td><td><code>2(x + 3) = 4(x − 1)</code></td><td class="sv">C · x = 5</td><td>Gang ind i begge parenteser: 2x + 6 = 4x − 4. Saml: 10 = 2x, så x = 5.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Modul 2 · Lineære funktioner (7 opgaver)</h2>
+  <table>
+    <thead><tr><th class="n">Nr.</th><th>Opgave</th><th class="sv">Svar</th><th>Løsning</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td>Hældningen a i <code>y = 3x − 5</code></td><td class="sv">B · a = 3</td><td>Tallet foran x er hældningen. Her a = 3.</td></tr>
+      <tr><td class="n">2</td><td>Skæring med y-aksen for <code>y = 3x − 5</code></td><td class="sv">C · (0, −5)</td><td>b = −5, så linjen skærer y-aksen i (0, −5).</td></tr>
+      <tr><td class="n">3</td><td>y i <code>y = 2x + 1</code>, når x = 3</td><td class="sv">B · y = 7</td><td>y = 2·3 + 1 = 7.</td></tr>
+      <tr><td class="n">4</td><td>Hældning for linje gennem (2, 4) og (5, 13)</td><td class="sv">A · a = 3</td><td>a = (13 − 4) / (5 − 2) = 9 / 3 = 3.</td></tr>
+      <tr><td class="n">5</td><td>Nulpunkt for <code>y = 2x − 8</code></td><td class="sv">C · (4, 0)</td><td>Sæt y = 0: 0 = 2x − 8, så 2x = 8 og x = 4. Nulpunkt (4, 0).</td></tr>
+      <tr><td class="n">6</td><td>Parallel med <code>y = 4x − 7</code></td><td class="sv">B · y = 4x + 1</td><td>Parallelle linjer har samme hældning. a = 4 i begge.</td></tr>
+      <tr><td class="n">7</td><td>Forskrift for linje gennem (1, 5) og (3, 11)</td><td class="sv">A · y = 3x + 2</td><td>a = (11 − 5)/(3 − 1) = 3. Indsæt (1, 5): 5 = 3 + b, så b = 2. y = 3x + 2.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Modul 3 · Aflæsning af grafer (5 opgaver)</h2>
+  <table>
+    <thead><tr><th class="n">Nr.</th><th>Opgave</th><th class="sv">Svar</th><th>Løsning</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td>På <code>y = x</code>: y når x = 4</td><td class="sv">B · y = 4</td><td>På linjen y = x er y altid lig x, så y = 4.</td></tr>
+      <tr><td class="n">2</td><td>Linje der går nedad: hvad ved du om a?</td><td class="sv">C · a er negativ</td><td>Når linjen falder fra venstre mod højre, er hældningen negativ.</td></tr>
+      <tr><td class="n">3</td><td>To linjer krydser i (3, 5)</td><td class="sv">A</td><td>I krydspunktet har begge funktioner samme x og y: x = 3 giver y = 5 for begge.</td></tr>
+      <tr><td class="n">4</td><td>Skærer (0, 2), 1 op pr. 1 til højre</td><td class="sv">B · y = x + 2</td><td>b = 2 (skæring) og a = 1 (1 op pr. 1 til højre): y = x + 2.</td></tr>
+      <tr><td class="n">5</td><td>Skæring mellem <code>y = 2x</code> og <code>y = x + 3</code></td><td class="sv">C · (3, 6)</td><td>Sæt lig: 2x = x + 3, så x = 3. Indsæt: y = 2·3 = 6. Punktet er (3, 6).</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Blandet quiz · hele emnet (7 opgaver)</h2>
+  <table>
+    <thead><tr><th class="n">Nr.</th><th>Opgave</th><th class="sv">Svar</th><th>Løsning</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td><code>6x − 4 = 2x + 12</code></td><td class="sv">B · x = 4</td><td>Træk 2x fra: 4x − 4 = 12. Læg 4 til: 4x = 16. x = 4.</td></tr>
+      <tr><td class="n">2</td><td>Funktion med hældning 4 og skæring (0, −2)</td><td class="sv">C · y = 4x − 2</td><td>Hældning 4 giver 4x, og (0, −2) giver b = −2: y = 4x − 2.</td></tr>
+      <tr><td class="n">3</td><td>Taxa: 40 kr. start + 12 kr./km. Pris for x km</td><td class="sv">A · y = 12x + 40</td><td>Startgebyret er b = 40, prisen pr. km er a = 12: y = 12x + 40.</td></tr>
+      <tr><td class="n">4</td><td>Pris for 5 km med <code>y = 12x + 40</code></td><td class="sv">B · 100 kr.</td><td>y = 12·5 + 40 = 60 + 40 = 100 kr.</td></tr>
+      <tr><td class="n">5</td><td>Antal km for 100 kr. med <code>y = 12x + 40</code></td><td class="sv">C · x = 5</td><td>100 = 12x + 40 → 60 = 12x → x = 5 km.</td></tr>
+      <tr><td class="n">6</td><td><code>5(x − 2) = 3x + 8</code></td><td class="sv">A · x = 9</td><td>Gang ind: 5x − 10 = 3x + 8. Saml: 2x = 18, så x = 9.</td></tr>
+      <tr><td class="n">7</td><td>Skæring mellem <code>y = 3x + 1</code> og <code>y = x + 7</code></td><td class="sv">B · (3, 10)</td><td>Sæt lig: 3x + 1 = x + 7, så 2x = 6 og x = 3. Indsæt: y = 3·3 + 1 = 10. Punktet er (3, 10).</td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    Facitark til undervisningsmateriale i matematik, 9. klasse · Funktioner og ligninger. 26 opgaver i alt.
+  </footer>
+</div>
+</body>
+</html>

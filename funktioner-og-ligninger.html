@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funktioner og ligninger - 9. klasse</title>
+<style>
+  :root{
+    --bg:#ffffff;
+    --panel:#ffffff;
+    --panel2:#f4f6fb;
+    --ink:#1a2233;
+    --muted:#586074;
+    --line:#d3dae7;
+    --accent:#1f6fd6;
+    --accent-soft:#eaf2fd;
+    --good:#1a8f5e;
+    --good-soft:#eaf7f0;
+    --bad:#c23b4b;
+    --bad-soft:#fdeef0;
+    --warn:#b5710a;
+    --shadow:0 1px 3px rgba(20,30,60,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  header.top{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(8px);
+    background:rgba(255,255,255,.9);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1000px;margin:0 auto;padding:12px 20px;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}
+  .brand span{color:var(--accent)}
+  nav.jump{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  nav.jump a{
+    color:var(--muted);text-decoration:none;font-size:.86rem;
+    padding:6px 11px;border-radius:999px;border:1px solid transparent;
+    transition:.15s;
+  }
+  nav.jump a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+
+  main{max-width:1000px;margin:0 auto;padding:28px 20px 90px}
+
+  .hero{
+    background:var(--panel2);
+    border:1px solid var(--line);border-radius:20px;
+    padding:34px 32px;box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  .hero h1{margin:0 0 10px;font-size:2.1rem;line-height:1.15}
+  .hero p{margin:0;color:var(--muted);font-size:1.06rem;max-width:72ch}
+  .pill{
+    display:inline-block;font-size:.76rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--line);border-radius:999px;
+    padding:4px 12px;margin-bottom:14px;background:#fff;font-weight:700;
+  }
+
+  .progress-wrap{margin:22px 0 4px}
+  .progress-bar{height:10px;border-radius:999px;background:#e4e9f2;overflow:hidden;border:1px solid var(--line)}
+  .progress-fill{height:100%;width:0;background:var(--accent);transition:width .5s ease}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+  section.lesson{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:28px 30px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  section.lesson h2{
+    font-size:1.5rem;margin:0 0 6px;display:flex;align-items:center;gap:12px;
+  }
+  .num{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    display:grid;place-items:center;font-weight:800;font-size:1rem;
+    background:var(--accent);color:#fff;
+  }
+  section.lesson .sub{color:var(--muted);margin:0 0 18px;font-size:1rem}
+  section.lesson h3{font-size:1.15rem;margin:26px 0 8px;color:#243149}
+  p{margin:12px 0}
+
+  .box{
+    background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;margin:16px 0;
+  }
+  .box.tip{border-left:4px solid var(--good)}
+  .box.note{border-left:4px solid var(--warn)}
+  .box.rule{border-left:4px solid var(--accent);background:var(--accent-soft)}
+  .box b{color:#111}
+  .box .rlabel{
+    display:inline-block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);font-weight:800;margin-bottom:2px;
+  }
+
+  .formula{
+    font-family:"Cambria Math","Times New Roman",Georgia,serif;
+    background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0;text-align:center;
+    font-size:1.3rem;letter-spacing:.4px;color:#111;
+  }
+  .formula small{display:block;font-size:.8rem;color:var(--muted);margin-top:6px;font-family:inherit;letter-spacing:0}
+  code.inl{
+    font-family:"Cambria Math",Georgia,serif;background:var(--panel2);
+    padding:2px 8px;border-radius:6px;border:1px solid var(--line);font-size:1.05em;color:#111;
+  }
+
+  .steps{margin:16px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .steps .row{display:flex;gap:0;border-top:1px solid var(--line)}
+  .steps .row:first-child{border-top:none}
+  .steps .calc{
+    flex:1;padding:11px 18px;font-family:"Cambria Math",Georgia,serif;font-size:1.12rem;
+    background:#fff;color:#111;display:flex;align-items:center;
+  }
+  .steps .why{
+    flex:1;padding:11px 18px;color:var(--muted);font-size:.92rem;background:var(--panel2);
+    display:flex;align-items:center;
+  }
+  @media(max-width:620px){.steps .row{flex-direction:column}}
+
+  .graphwrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin:18px 0}
+  .graphwrap svg{background:#fff;border:1px solid var(--line);border-radius:12px;flex:0 0 auto}
+  .graphwrap .caption{flex:1;min-width:220px;color:var(--muted);font-size:.95rem}
+
+  /* QUIZ */
+  .quiz{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:18px;padding:24px 28px;margin:24px 0;box-shadow:var(--shadow);
+  }
+  .quiz .qhead{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+  .quiz .qtag{
+    font-size:.72rem;letter-spacing:.7px;text-transform:uppercase;color:#fff;
+    background:var(--accent);padding:4px 11px;border-radius:999px;font-weight:800;
+  }
+  .quiz h3{margin:0;font-size:1.22rem}
+  .quiz .qsub{color:var(--muted);margin:6px 0 16px;font-size:.95rem}
+  .q{margin:18px 0;padding-top:18px;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:none;padding-top:0}
+  .q .qtext{font-weight:600;margin-bottom:12px;font-size:1.04rem}
+  .q .qtext .qn{color:var(--accent);font-weight:800;margin-right:6px}
+  .lvl{
+    display:inline-block;font-size:.68rem;letter-spacing:.5px;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:8px;
+    color:var(--muted);font-weight:700;vertical-align:middle;background:#fff;
+  }
+  .opts{display:grid;gap:9px}
+  .opt{
+    text-align:left;width:100%;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);color:var(--ink);
+    padding:11px 15px;border-radius:10px;font-size:1rem;font-family:inherit;
+    transition:.15s;display:flex;align-items:center;gap:10px;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .mk{
+    flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);
+    display:grid;place-items:center;font-weight:800;font-size:.85rem;color:var(--muted);background:#fff;
+  }
+  .opt.correct{border-color:var(--good);background:var(--good-soft)}
+  .opt.correct .mk{background:var(--good);color:#fff;border-color:var(--good)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.wrong .mk{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt:disabled{cursor:default}
+  .fb{
+    margin-top:12px;padding:11px 15px;border-radius:10px;font-size:.95rem;display:none;
+  }
+  .fb.show{display:block}
+  .fb.ok{background:var(--good-soft);border:1px solid var(--good);color:#12633f}
+  .fb.no{background:var(--bad-soft);border:1px solid var(--bad);color:#8f2733}
+  .fb b{color:#111}
+
+  .scorebar{
+    margin-top:16px;font-size:.95rem;color:var(--muted);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .scorebar .badge{
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:5px 14px;font-weight:700;color:var(--ink);
+  }
+  .final-note{text-align:center;color:var(--muted);margin-top:16px;font-size:.95rem}
+
+  footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  @media(max-width:620px){.cheat{grid-template-columns:1fr}}
+  .cheat .card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .cheat .card h4{margin:0 0 6px;font-size:1rem;color:#243149}
+  .cheat .card p{margin:0;font-size:.92rem;color:var(--muted)}
+
+  .printbtn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:#fff;border:1px solid var(--line);color:var(--ink);
+    padding:9px 16px;border-radius:10px;font-size:.92rem;font-family:inherit;cursor:pointer;
+    font-weight:600;
+  }
+  .printbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .btn{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn:hover{background:#195cb5}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* start overlay */
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(26,34,51,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}
+  .overlay.hidden{display:none}
+  .overlay .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 32px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(20,30,60,.25)}
+  .overlay h2{margin:0 0 6px;font-size:1.5rem}
+  .overlay p{margin:0 0 18px;color:var(--muted)}
+  .overlay input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:1.05rem;font-family:inherit;margin-bottom:14px}
+  .overlay input:focus{outline:none;border-color:var(--accent)}
+  .overlay .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* welcome bar */
+  .welcome{display:none;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .welcome.show{display:flex}
+  .welcome .hi{font-weight:800;font-size:1.05rem}
+  .welcome .live{color:var(--muted);font-size:.95rem}
+  .welcome .spacer{margin-left:auto}
+  .welcome .btn{padding:8px 14px;font-size:.9rem}
+
+  /* results */
+  #results .rtable{width:100%;border-collapse:collapse;margin-top:10px}
+  #results .rtable th,#results .rtable td{border:1px solid var(--line);padding:9px 12px;text-align:left;font-size:.98rem}
+  #results .rtable th{background:var(--panel2);font-weight:700}
+  #results .rtable tr.total td{font-weight:800;background:var(--accent-soft)}
+  #results .grade{font-size:1.08rem;margin-top:16px;font-weight:600}
+
+  /* ---------- PRINT ---------- */
+  @media print{
+    @page{margin:16mm}
+    body{background:#fff;color:#000;font-size:11.5pt;line-height:1.45}
+    header.top,nav.jump,.progress-wrap,.printbtn,.overlay,.welcome .btn{display:none !important}
+    .welcome{border:1px solid #999;background:#fff !important}
+    main{max-width:none;padding:0}
+    .hero,section.lesson,.quiz,.box,.steps,.cheat .card,.formula,.graphwrap svg{
+      box-shadow:none !important;
+    }
+    .hero,section.lesson,.quiz{
+      border:1px solid #999;background:#fff !important;border-radius:0;
+      padding:14px 16px;margin:10px 0;break-inside:avoid;page-break-inside:avoid;
+    }
+    section.lesson h2,.quiz h3,section.lesson h3{break-after:avoid}
+    .num{background:#fff !important;color:#000;border:1.5px solid #000}
+    .pill,.qtag{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .box,.box.rule{background:#fff !important;border:1px solid #bbb;border-left:3px solid #000}
+    .rlabel{color:#000 !important}
+    .formula,.steps .calc,.opt,.opt .mk,.cheat .card{background:#fff !important}
+    .steps .why{background:#fff !important;color:#333}
+    .opt{border:1px solid #888}
+    .opt .mk{border:1px solid #000;color:#000}
+    /* keep quizzes usable as a paper worksheet: neutral options, hide screen-only feedback state */
+    .opt.correct,.opt.wrong{background:#fff !important;border:1px solid #888 !important}
+    .opt.correct .mk,.opt.wrong .mk{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .fb{display:none !important}
+    .q{break-inside:avoid;page-break-inside:avoid}
+    a{color:#000;text-decoration:none}
+    svg line[stroke="#1f6fd6"],svg line[stroke="#4f9dff"]{stroke:#000 !important}
+    svg circle{fill:#000 !important}
+    .caption{color:#333}
+  }
+</style>
+</head>
+<body>
+<div class="overlay" id="startOverlay">
+  <div class="card">
+    <h2 id="ovTitle">Velkommen</h2>
+    <p id="ovText">Skriv dit fornavn, så gemmes dine svar og dit resultat i denne browser. Så kan du fortsætte, hvor du slap, næste gang.</p>
+    <input id="nameInput" type="text" placeholder="Dit fornavn" autocomplete="off" maxlength="30">
+    <div class="btnrow">
+      <button class="btn" id="startBtn">Start</button>
+      <button class="btn ghost" id="skipBtn">Fortsæt uden navn</button>
+    </div>
+  </div>
+</div>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Matematik · <span>Funktioner og ligninger</span></div>
+    <nav class="jump">
+      <a href="#intro">Start</a>
+      <a href="#ligninger">Ligninger</a>
+      <a href="#funktioner">Lineære funktioner</a>
+      <a href="#grafer">Grafer</a>
+      <a href="#eksamen">Blandet quiz</a>
+      <a href="#results">Resultater</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="intro">
+    <span class="pill">9. klasse · kernestof</span>
+    <h1>Funktioner og ligninger</h1>
+    <p>Denne side gennemgår det, du skal kunne om ligninger og lineære funktioner i 9. klasse: at løse ligninger med parenteser, brøker og x på begge sider, at forstå forskriften y = ax + b, og at aflæse og tegne grafer. Hvert modul har en forklaring med regneregler og eksempler, og en quiz med spørgsmål i stigende sværhedsgrad. Du kan bruge siden i klassen på tavlen, alene når du repeterer, eller printe den som opgaveark.</p>
+
+    <button class="printbtn" onclick="window.print()">Print siden</button>
+
+    <div class="welcome" id="welcomeBar">
+      <span class="hi" id="welcomeHi"></span>
+      <span class="live" id="welcomeLive"></span>
+      <span class="spacer"></span>
+      <button class="btn ghost" id="resetBtn">Nulstil mine svar</button>
+      <button class="btn ghost" id="switchBtn">Skift unge</button>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">Quiz-fremgang: 0 af 0 spørgsmål besvaret</div>
+    </div>
+  </section>
+
+  <!-- ============ 1. LIGNINGER ============ -->
+  <section class="lesson" id="ligninger">
+    <h2><span class="num">1</span> Ligninger</h2>
+    <p class="sub">En ligning er to udtryk, der er lige store, med et lighedstegn imellem. At løse en ligning betyder at finde den værdi af x, der gør ligningen sand.</p>
+
+    <p>Tænk på lighedstegnet som en vægt i balance. Alt, hvad du gør på den ene side, skal du også gøre på den anden, ellers tipper vægten. Det er hele hemmeligheden bag at løse ligninger.</p>
+
+    <div class="box rule">
+      <span class="rlabel">Regneregel · de fire tilladte træk</span><br>
+      Du må <b>lægge det samme til</b> på begge sider, <b>trække det samme fra</b> på begge sider, <b>gange</b> begge sider med det samme tal, og <b>dividere</b> begge sider med det samme tal (undtagen 0). Målet er altid det samme: få x til at stå alene.
+    </div>
+
+    <h3>Eksempel: en simpel ligning</h3>
+    <p>Løs <code class="inl">2x + 4 = 12</code>. Vi fjerner først +4 og bagefter faktoren 2.</p>
+    <div class="steps">
+      <div class="row"><div class="calc">2x + 4 = 12</div><div class="why">Vi starter her.</div></div>
+      <div class="row"><div class="calc">2x = 12 − 4 = 8</div><div class="why">Træk 4 fra på begge sider.</div></div>
+      <div class="row"><div class="calc">x = 8 ÷ 2 = 4</div><div class="why">Divider begge sider med 2. Prøve: 2·4 + 4 = 12.</div></div>
+    </div>
+
+    <h3>Regneregel: reducer først (saml ens led)</h3>
+    <div class="box rule">
+      <span class="rlabel">Regneregel · reduktion</span><br>
+      Led med x kan lægges sammen: <code class="inl">3x + 2x = 5x</code>. Tal kan lægges sammen med tal. <b>Bogstav og tal kan ikke slås sammen</b> — <code class="inl">5x + 3</code> kan ikke reduceres yderligere.
+    </div>
+    <p>Løs <code class="inl">3x + 2x − 4 = 11</code>.</p>
+    <div class="steps">
+      <div class="row"><div class="calc">3x + 2x − 4 = 11</div><div class="why">Saml de to x-led.</div></div>
+      <div class="row"><div class="calc">5x − 4 = 11</div><div class="why">3x + 2x = 5x.</div></div>
+      <div class="row"><div class="calc">5x = 15</div><div class="why">Læg 4 til på begge sider.</div></div>
+      <div class="row"><div class="calc">x = 3</div><div class="why">Divider med 5.</div></div>
+    </div>
+
+    <h3>Regneregel: parenteser</h3>
+    <div class="box rule">
+      <span class="rlabel">Regneregel · gang ind i parentes</span><br>
+      Tallet uden for parentesen ganges ind på hvert led indeni: <code class="inl">a(b + c) = a·b + a·c</code>. Et <b>minus foran</b> en parentes vender fortegnet på alle led: <code class="inl">−(x − 3) = −x + 3</code>.
+    </div>
+    <p>Løs <code class="inl">2(x + 3) = 14</code>.</p>
+    <div class="steps">
+      <div class="row"><div class="calc">2(x + 3) = 14</div><div class="why">Gang 2 ind i parentesen.</div></div>
+      <div class="row"><div class="calc">2x + 6 = 14</div><div class="why">2·x + 2·3.</div></div>
+      <div class="row"><div class="calc">2x = 8</div><div class="why">Træk 6 fra.</div></div>
+      <div class="row"><div class="calc">x = 4</div><div class="why">Divider med 2.</div></div>
+    </div>
+
+    <h3>Regneregel: ligninger med brøker</h3>
+    <div class="box rule">
+      <span class="rlabel">Regneregel · gang brøken væk</span><br>
+      Står x i en brøk, ganger du <b>begge sider</b> med nævneren, så brøken forsvinder. Har ligningen flere brøker, ganger du med det tal, alle nævnere går op i.
+    </div>
+    <p>Løs <code class="inl">x/2 + 1 = 5</code>.</p>
+    <div class="steps">
+      <div class="row"><div class="calc">x/2 + 1 = 5</div><div class="why">Træk 1 fra først.</div></div>
+      <div class="row"><div class="calc">x/2 = 4</div><div class="why">Nu står brøken alene.</div></div>
+      <div class="row"><div class="calc">x = 4 · 2 = 8</div><div class="why">Gang begge sider med 2.</div></div>
+    </div>
+
+    <h3>Ligninger med x på begge sider</h3>
+    <div class="box note">
+      <b>Husk fortegnet.</b> Når et led flytter over på den anden side af lighedstegnet, skifter det fortegn. +4 bliver til −4. Det er blot en hurtig måde at sige "læg til / træk fra på begge sider".
+    </div>
+    <p>Løs <code class="inl">5x − 3 = 2x + 9</code>.</p>
+    <div class="steps">
+      <div class="row"><div class="calc">5x − 3 = 2x + 9</div><div class="why">Saml x-led til venstre.</div></div>
+      <div class="row"><div class="calc">3x − 3 = 9</div><div class="why">Træk 2x fra på begge sider.</div></div>
+      <div class="row"><div class="calc">3x = 12</div><div class="why">Læg 3 til.</div></div>
+      <div class="row"><div class="calc">x = 4</div><div class="why">Divider med 3. Prøve: 5·4 − 3 = 17 = 2·4 + 9.</div></div>
+    </div>
+  </section>
+
+  <!-- QUIZ 1 -->
+  <section class="quiz" data-quiz>
+    <div class="qhead"><span class="qtag">Quiz · Modul 1</span><h3>Test dig selv: ligninger</h3></div>
+    <p class="qsub">Spørgsmålene bliver sværere undervejs. Du får svar og forklaring med det samme.</p>
+
+    <div class="q" data-answer="0" data-exp="Træk 7 fra på begge sider: x = 12 − 7 = 5.">
+      <div class="qtext"><span class="qn">1.</span> Løs <code class="inl">x + 7 = 12</code>. <span class="lvl">Let</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 5</button>
+        <button class="opt"><span class="mk">B</span> x = 19</button>
+        <button class="opt"><span class="mk">C</span> x = 7</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="2" data-exp="Træk 5 fra: 2x = 12. Divider med 2: x = 6.">
+      <div class="qtext"><span class="qn">2.</span> Løs <code class="inl">2x + 5 = 17</code>. <span class="lvl">Let</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 11</button>
+        <button class="opt"><span class="mk">B</span> x = 4,4</button>
+        <button class="opt"><span class="mk">C</span> x = 6</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="1" data-exp="Saml x-leddene: 4x + 3x = 7x, så 7x = 28 og x = 4.">
+      <div class="qtext"><span class="qn">3.</span> Løs <code class="inl">4x + 3x = 28</code>. <span class="lvl">Mellem</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 7</button>
+        <button class="opt"><span class="mk">B</span> x = 4</button>
+        <button class="opt"><span class="mk">C</span> x = 21</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="0" data-exp="Træk x fra: 3x − 2 = 10. Læg 2 til: 3x = 12. x = 4.">
+      <div class="qtext"><span class="qn">4.</span> Løs <code class="inl">4x − 2 = x + 10</code>. <span class="lvl">Mellem</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 4</button>
+        <button class="opt"><span class="mk">B</span> x = 3</button>
+        <button class="opt"><span class="mk">C</span> x = 12</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="2" data-exp="Gang ind: 3x + 6 = 18. Træk 6 fra: 3x = 12. x = 4.">
+      <div class="qtext"><span class="qn">5.</span> Løs <code class="inl">3(x + 2) = 18</code>. <span class="lvl">Svær</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 6</button>
+        <button class="opt"><span class="mk">B</span> x = 5</button>
+        <button class="opt"><span class="mk">C</span> x = 4</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="1" data-exp="Træk 3 fra: x/4 = 2. Gang med 4: x = 8.">
+      <div class="qtext"><span class="qn">6.</span> Løs <code class="inl">x/4 + 3 = 5</code>. <span class="lvl">Svær</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 2</button>
+        <button class="opt"><span class="mk">B</span> x = 8</button>
+        <button class="opt"><span class="mk">C</span> x = 32</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="2" data-exp="Gang ind i begge parenteser: 2x + 6 = 4x − 4. Saml: 10 = 2x, så x = 5.">
+      <div class="qtext"><span class="qn">7.</span> Løs <code class="inl">2(x + 3) = 4(x − 1)</code>. <span class="lvl">Udfordring</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 2</button>
+        <button class="opt"><span class="mk">B</span> x = 4</button>
+        <button class="opt"><span class="mk">C</span> x = 5</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="scorebar"><span class="badge" data-score>0 / 7 rigtige</span> <span>Ret dine fejl, og gå videre til lineære funktioner.</span></div>
+  </section>
+
+  <!-- ============ 2. LINEÆRE FUNKTIONER ============ -->
+  <section class="lesson" id="funktioner">
+    <h2><span class="num">2</span> Lineære funktioner</h2>
+    <p class="sub">En funktion er en regel, der til hvert x-tal giver præcis ét y-tal. En lineær funktion giver altid en ret linje, når man tegner den.</p>
+
+    <div class="formula">y = a · x + b
+      <small>a er hældningen (stigningstallet) · b er skæringen med y-aksen (begyndelsesværdien)</small>
+    </div>
+
+    <h3>Hvad betyder a og b?</h3>
+    <div class="cheat">
+      <div class="card"><h4>b — skæring med y-aksen</h4><p>Det er y-værdien, når x = 0. Grafen skærer y-aksen i punktet (0, b). "Startværdien".</p></div>
+      <div class="card"><h4>a — hældning</h4><p>Hvor meget y ændrer sig, hver gang x vokser med 1. Positiv a: linjen går opad. Negativ a: linjen går nedad.</p></div>
+    </div>
+
+    <p>Se på <code class="inl">y = 2x + 1</code>. Her er a = 2 og b = 1. Linjen skærer y-aksen i (0, 1), og for hvert skridt til højre går den 2 op.</p>
+
+    <div class="graphwrap">
+      <svg width="300" height="300" viewBox="0 0 300 300" role="img" aria-label="Graf for y = 2x + 1">
+        <g stroke="#e2e7f0" stroke-width="1">
+          <line x1="30" y1="0" x2="30" y2="300"/><line x1="80" y1="0" x2="80" y2="300"/>
+          <line x1="130" y1="0" x2="130" y2="300"/><line x1="180" y1="0" x2="180" y2="300"/>
+          <line x1="230" y1="0" x2="230" y2="300"/><line x1="280" y1="0" x2="280" y2="300"/>
+          <line x1="0" y1="30" x2="300" y2="30"/><line x1="0" y1="80" x2="300" y2="80"/>
+          <line x1="0" y1="130" x2="300" y2="130"/><line x1="0" y1="180" x2="300" y2="180"/>
+          <line x1="0" y1="230" x2="300" y2="230"/><line x1="0" y1="280" x2="300" y2="280"/>
+        </g>
+        <line x1="30" y1="0" x2="30" y2="300" stroke="#7b869c" stroke-width="2"/>
+        <line x1="0" y1="230" x2="300" y2="230" stroke="#7b869c" stroke-width="2"/>
+        <text x="285" y="223" fill="#586074" font-size="12">x</text>
+        <text x="36" y="14" fill="#586074" font-size="12">y</text>
+        <line x1="30" y1="180" x2="180" y2="0" stroke="#1f6fd6" stroke-width="3"/>
+        <circle cx="30" cy="180" r="5" fill="#1a8f5e"/>
+        <text x="40" y="176" fill="#1a8f5e" font-size="12">(0, 1)</text>
+        <circle cx="130" cy="30" r="4" fill="#1f6fd6"/>
+      </svg>
+      <div class="caption">Grafen for <code class="inl">y = 2x + 1</code>. Det grønne punkt (0, 1) er skæringen med y-aksen (b = 1). Fra det punkt går linjen 2 op for hvert 1 til højre (a = 2).</div>
+    </div>
+
+    <h3>Regneregel: find hældningen a fra to punkter</h3>
+    <div class="box rule">
+      <span class="rlabel">Regneregel · hældning</span><br>
+      Kender du to punkter (x₁, y₁) og (x₂, y₂): <code class="inl">a = (y₂ − y₁) / (x₂ − x₁)</code> — altså ændringen i y divideret med ændringen i x.
+    </div>
+    <p>Linjen gennem (1, 3) og (4, 9): a = (9 − 3) / (4 − 1) = 6 / 3 = 2.</p>
+
+    <h3>Regneregel: find hele forskriften fra to punkter</h3>
+    <div class="box rule">
+      <span class="rlabel">Regneregel · bestem forskrift</span><br>
+      Find først a med formlen ovenfor. Sæt derefter et af punkterne ind i <code class="inl">y = ax + b</code> og løs for b.
+    </div>
+    <p>Punkterne (1, 5) og (3, 11). Først a = (11 − 5)/(3 − 1) = 6/2 = 3. Sæt (1, 5) ind: 5 = 3·1 + b, så b = 2. Forskriften er <code class="inl">y = 3x + 2</code>.</p>
+
+    <h3>Regneregel: nulpunkt (hvor grafen skærer x-aksen)</h3>
+    <div class="box rule">
+      <span class="rlabel">Regneregel · nulpunkt</span><br>
+      På x-aksen er y = 0. Sæt <code class="inl">y = 0</code> og løs ligningen for x.
+    </div>
+    <p>For <code class="inl">y = 2x − 6</code>: sæt 0 = 2x − 6, så 2x = 6 og x = 3. Nulpunktet er (3, 0).</p>
+
+    <div class="box tip">
+      <b>Parallelle linjer.</b> To linjer er parallelle, når de har <b>samme hældning a</b>. Fx er y = 2x + 1 og y = 2x − 4 parallelle.
+    </div>
+
+    <div class="box note">
+      <b>Sammenhængen med ligninger.</b> Når du løser <code class="inl">2x + 1 = 7</code>, spørger du: "For hvilket x giver funktionen y = 2x + 1 værdien 7?" På grafen svarer det til at finde det x, hvor linjen er i højden y = 7.
+    </div>
+  </section>
+
+  <!-- QUIZ 2 -->
+  <section class="quiz" data-quiz>
+    <div class="qhead"><span class="qtag">Quiz · Modul 2</span><h3>Test dig selv: lineære funktioner</h3></div>
+    <p class="qsub">Brug y = ax + b. Spørgsmålene stiger i sværhedsgrad.</p>
+
+    <div class="q" data-answer="1" data-exp="Tallet foran x er hældningen. Her a = 3.">
+      <div class="qtext"><span class="qn">1.</span> I <code class="inl">y = 3x − 5</code>: hvad er hældningen a? <span class="lvl">Let</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> −5</button>
+        <button class="opt"><span class="mk">B</span> 3</button>
+        <button class="opt"><span class="mk">C</span> 5</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="2" data-exp="b = −5, så linjen skærer y-aksen i (0, −5).">
+      <div class="qtext"><span class="qn">2.</span> Hvor skærer <code class="inl">y = 3x − 5</code> y-aksen? <span class="lvl">Let</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> I (0, 3)</button>
+        <button class="opt"><span class="mk">B</span> I (0, 5)</button>
+        <button class="opt"><span class="mk">C</span> I (0, −5)</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="1" data-exp="y = 2·3 + 1 = 7.">
+      <div class="qtext"><span class="qn">3.</span> Hvad er y i <code class="inl">y = 2x + 1</code>, når x = 3? <span class="lvl">Let</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> y = 5</button>
+        <button class="opt"><span class="mk">B</span> y = 7</button>
+        <button class="opt"><span class="mk">C</span> y = 6</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="0" data-exp="a = (13 − 4) / (5 − 2) = 9 / 3 = 3.">
+      <div class="qtext"><span class="qn">4.</span> En linje går gennem (2, 4) og (5, 13). Hældningen er? <span class="lvl">Mellem</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> a = 3</button>
+        <button class="opt"><span class="mk">B</span> a = 9</button>
+        <button class="opt"><span class="mk">C</span> a = 1/3</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="2" data-exp="Sæt y = 0: 0 = 2x − 8, så 2x = 8 og x = 4. Nulpunkt (4, 0).">
+      <div class="qtext"><span class="qn">5.</span> Hvad er nulpunktet for <code class="inl">y = 2x − 8</code>? <span class="lvl">Mellem</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> (0, −8)</button>
+        <button class="opt"><span class="mk">B</span> (8, 0)</button>
+        <button class="opt"><span class="mk">C</span> (4, 0)</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="1" data-exp="Parallel betyder samme a. y = 4x + 1 har a = 4 ligesom y = 4x − 7.">
+      <div class="qtext"><span class="qn">6.</span> Hvilken linje er parallel med <code class="inl">y = 4x − 7</code>? <span class="lvl">Svær</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> y = −4x − 7</button>
+        <button class="opt"><span class="mk">B</span> y = 4x + 1</button>
+        <button class="opt"><span class="mk">C</span> y = 7x − 4</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="0" data-exp="a = (11 − 5)/(3 − 1) = 3. Indsæt (1, 5): 5 = 3 + b, så b = 2. Forskrift y = 3x + 2.">
+      <div class="qtext"><span class="qn">7.</span> Find forskriften for linjen gennem (1, 5) og (3, 11). <span class="lvl">Udfordring</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> y = 3x + 2</button>
+        <button class="opt"><span class="mk">B</span> y = 2x + 3</button>
+        <button class="opt"><span class="mk">C</span> y = 3x − 2</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="scorebar"><span class="badge" data-score>0 / 7 rigtige</span> <span>Godt gået. Nu til graferne.</span></div>
+  </section>
+
+  <!-- ============ 3. AFLÆSNING AF GRAFER ============ -->
+  <section class="lesson" id="grafer">
+    <h2><span class="num">3</span> Aflæsning af grafer</h2>
+    <p class="sub">En graf viser sammenhængen mellem x og y som en linje i et koordinatsystem. Du skal kunne aflæse værdier og forstå, hvad de betyder.</p>
+
+    <h3>Sådan aflæser du et punkt</h3>
+    <p>Vil du finde y ud fra et bestemt x, går du lodret op fra x-aksen til linjen og derefter vandret ind til y-aksen. Vil du den anden vej, gør du det modsatte.</p>
+
+    <div class="graphwrap">
+      <svg width="300" height="300" viewBox="0 0 300 300" role="img" aria-label="Aflæsning på graf">
+        <g stroke="#e2e7f0" stroke-width="1">
+          <line x1="30" y1="0" x2="30" y2="300"/><line x1="80" y1="0" x2="80" y2="300"/>
+          <line x1="130" y1="0" x2="130" y2="300"/><line x1="180" y1="0" x2="180" y2="300"/>
+          <line x1="230" y1="0" x2="230" y2="300"/><line x1="280" y1="0" x2="280" y2="300"/>
+          <line x1="0" y1="30" x2="300" y2="30"/><line x1="0" y1="80" x2="300" y2="80"/>
+          <line x1="0" y1="130" x2="300" y2="130"/><line x1="0" y1="180" x2="300" y2="180"/>
+          <line x1="0" y1="230" x2="300" y2="230"/><line x1="0" y1="280" x2="300" y2="280"/>
+        </g>
+        <line x1="30" y1="0" x2="30" y2="300" stroke="#7b869c" stroke-width="2"/>
+        <line x1="0" y1="230" x2="300" y2="230" stroke="#7b869c" stroke-width="2"/>
+        <text x="76" y="248" fill="#586074" font-size="11">1</text>
+        <text x="126" y="248" fill="#586074" font-size="11">2</text>
+        <text x="176" y="248" fill="#586074" font-size="11">3</text>
+        <text x="226" y="248" fill="#586074" font-size="11">4</text>
+        <text x="14" y="184" fill="#586074" font-size="11">1</text>
+        <text x="14" y="134" fill="#586074" font-size="11">2</text>
+        <text x="14" y="84" fill="#586074" font-size="11">3</text>
+        <line x1="30" y1="230" x2="230" y2="30" stroke="#1f6fd6" stroke-width="3"/>
+        <line x1="130" y1="230" x2="130" y2="130" stroke="#b5710a" stroke-width="2" stroke-dasharray="5 4"/>
+        <line x1="130" y1="130" x2="30" y2="130" stroke="#b5710a" stroke-width="2" stroke-dasharray="5 4"/>
+        <circle cx="130" cy="130" r="5" fill="#b5710a"/>
+      </svg>
+      <div class="caption">Her aflæses: når x = 2, er y = 2. Den stiplede linje viser vejen — lodret op fra x = 2 til grafen, derefter vandret ind til y-aksen. Denne linje har forskriften <code class="inl">y = x</code>.</div>
+    </div>
+
+    <h3>Regneregel: bestem a og b direkte fra grafen</h3>
+    <div class="box rule">
+      <span class="rlabel">Regneregel · aflæs forskrift</span><br>
+      <b>b</b> aflæses, hvor linjen skærer y-aksen. <b>a</b> findes ved at gå 1 til højre og se, hvor mange enheder linjen går op (eller ned). Så har du y = ax + b.
+    </div>
+
+    <h3>Regneregel: skæring mellem to grafer</h3>
+    <div class="box rule">
+      <span class="rlabel">Regneregel · skæringspunkt</span><br>
+      To linjer krydser hinanden dér, hvor de har samme x og samme y. Du finder punktet ved at sætte de to forskrifter lig med hinanden og løse ligningen.
+    </div>
+    <p>Hvor skærer <code class="inl">y = 2x</code> og <code class="inl">y = x + 3</code> hinanden? Sæt lig: 2x = x + 3, så x = 3. Sæt ind: y = 2·3 = 6. Skæringspunktet er (3, 6).</p>
+
+    <div class="box tip">
+      <b>Hverdagen i grafen.</b> x kan være tid og y en pris, en afstand eller en mængde. Hældningen fortæller "hvor hurtigt", og skæringen med y-aksen fortæller "hvor man startede".
+    </div>
+  </section>
+
+  <!-- QUIZ 3 -->
+  <section class="quiz" data-quiz>
+    <div class="qhead"><span class="qtag">Quiz · Modul 3</span><h3>Test dig selv: grafer</h3></div>
+    <p class="qsub">Kig på beskrivelserne og forskrifterne.</p>
+
+    <div class="q" data-answer="1" data-exp="På linjen y = x er y altid lig x, så y = 4.">
+      <div class="qtext"><span class="qn">1.</span> På grafen for <code class="inl">y = x</code> ovenfor: hvad er y, når x = 4? <span class="lvl">Let</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> y = 1</button>
+        <button class="opt"><span class="mk">B</span> y = 4</button>
+        <button class="opt"><span class="mk">C</span> y = 0</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="2" data-exp="Når linjen falder fra venstre mod højre, er hældningen negativ.">
+      <div class="qtext"><span class="qn">2.</span> En linje går nedad fra venstre mod højre. Hvad ved du om a? <span class="lvl">Let</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> a = 0</button>
+        <button class="opt"><span class="mk">B</span> a er positiv</button>
+        <button class="opt"><span class="mk">C</span> a er negativ</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="0" data-exp="I krydspunktet har begge funktioner samme x og y: x = 3 giver y = 5 for begge.">
+      <div class="qtext"><span class="qn">3.</span> To linjer krydser hinanden i (3, 5). Hvad betyder det? <span class="lvl">Mellem</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> Begge funktioner giver y = 5, når x = 3</button>
+        <button class="opt"><span class="mk">B</span> De to linjer er parallelle</button>
+        <button class="opt"><span class="mk">C</span> Begge linjer har hældningen 3</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="1" data-exp="Linjen skærer y-aksen i 2 (b = 2) og går 1 op pr. 1 til højre (a = 1): y = x + 2.">
+      <div class="qtext"><span class="qn">4.</span> En linje skærer y-aksen i (0, 2) og går 1 op for hvert 1 til højre. Forskriften er? <span class="lvl">Mellem</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> y = 2x + 1</button>
+        <button class="opt"><span class="mk">B</span> y = x + 2</button>
+        <button class="opt"><span class="mk">C</span> y = 2x</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="2" data-exp="Sæt lig: 2x = x + 3, så x = 3. Sæt ind: y = 2·3 = 6. Punktet er (3, 6).">
+      <div class="qtext"><span class="qn">5.</span> Hvor skærer <code class="inl">y = 2x</code> og <code class="inl">y = x + 3</code> hinanden? <span class="lvl">Svær</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> (2, 4)</button>
+        <button class="opt"><span class="mk">B</span> (1, 2)</button>
+        <button class="opt"><span class="mk">C</span> (3, 6)</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="scorebar"><span class="badge" data-score>0 / 5 rigtige</span> <span>Sidste stop: den blandede quiz.</span></div>
+  </section>
+
+  <!-- ============ BLANDET QUIZ ============ -->
+  <section class="quiz" id="eksamen">
+    <div class="qhead"><span class="qtag">Afslutning</span><h3>Blandet quiz — hele emnet</h3></div>
+    <p class="qsub">Spørgsmål på tværs af ligninger, funktioner og grafer, i stigende sværhedsgrad.</p>
+
+    <div class="q" data-answer="1" data-exp="Træk 2x fra: 4x − 4 = 12. Læg 4 til: 4x = 16. x = 4.">
+      <div class="qtext"><span class="qn">1.</span> Løs <code class="inl">6x − 4 = 2x + 12</code>. <span class="lvl">Let</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 2</button>
+        <button class="opt"><span class="mk">B</span> x = 4</button>
+        <button class="opt"><span class="mk">C</span> x = 8</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="2" data-exp="Hældning 4 giver 4x, og (0, −2) giver b = −2: y = 4x − 2.">
+      <div class="qtext"><span class="qn">2.</span> Hvilken funktion har hældning 4 og skærer y-aksen i (0, −2)? <span class="lvl">Let</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> y = −2x + 4</button>
+        <button class="opt"><span class="mk">B</span> y = 4x + 2</button>
+        <button class="opt"><span class="mk">C</span> y = 4x − 2</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="0" data-exp="Startgebyret er b = 40, prisen pr. km er a = 12: y = 12x + 40.">
+      <div class="qtext"><span class="qn">3.</span> En taxa koster 40 kr. i start plus 12 kr. pr. km. Prisen y for x km er? <span class="lvl">Mellem</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> y = 12x + 40</button>
+        <button class="opt"><span class="mk">B</span> y = 40x + 12</button>
+        <button class="opt"><span class="mk">C</span> y = 52x</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="1" data-exp="y = 12·5 + 40 = 60 + 40 = 100 kr.">
+      <div class="qtext"><span class="qn">4.</span> Med <code class="inl">y = 12x + 40</code>: hvad koster en tur på 5 km? <span class="lvl">Mellem</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> 60 kr.</button>
+        <button class="opt"><span class="mk">B</span> 100 kr.</button>
+        <button class="opt"><span class="mk">C</span> 260 kr.</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="2" data-exp="100 = 12x + 40 → 60 = 12x → x = 5 km.">
+      <div class="qtext"><span class="qn">5.</span> Med <code class="inl">y = 12x + 40</code>: hvor mange km kan man køre for 100 kr.? <span class="lvl">Svær</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 3</button>
+        <button class="opt"><span class="mk">B</span> x = 4</button>
+        <button class="opt"><span class="mk">C</span> x = 5</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="0" data-exp="Gang ind: 5x − 10 = 3x + 8. Saml: 2x = 18, så x = 9.">
+      <div class="qtext"><span class="qn">6.</span> Løs <code class="inl">5(x − 2) = 3x + 8</code>. <span class="lvl">Svær</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> x = 9</button>
+        <button class="opt"><span class="mk">B</span> x = 6</button>
+        <button class="opt"><span class="mk">C</span> x = 3</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="q" data-answer="1" data-exp="Sæt lig: 3x + 1 = x + 7, så 2x = 6 og x = 3. Sæt ind: y = 3·3 + 1 = 10. Punktet er (3, 10).">
+      <div class="qtext"><span class="qn">7.</span> Hvor skærer <code class="inl">y = 3x + 1</code> og <code class="inl">y = x + 7</code> hinanden? <span class="lvl">Udfordring</span></div>
+      <div class="opts">
+        <button class="opt"><span class="mk">A</span> (2, 7)</button>
+        <button class="opt"><span class="mk">B</span> (3, 10)</button>
+        <button class="opt"><span class="mk">C</span> (4, 11)</button>
+      </div>
+      <div class="fb"></div>
+    </div>
+
+    <div class="scorebar"><span class="badge" data-score>0 / 7 rigtige</span> <span id="finalMsg"></span></div>
+    <p class="final-note">Du kan altid gå tilbage og læse afsnittene igen, hvis et spørgsmål driller.</p>
+  </section>
+  <!-- ============ RESULTATER ============ -->
+  <section class="lesson" id="results">
+    <h2><span class="num">R</span> Dine resultater</h2>
+    <p class="sub" id="resultsSub">Løs opgaverne, så udfyldes din oversigt her automatisk. Skriv dit fornavn øverst, hvis du vil have dit resultat gemt.</p>
+    <table class="rtable">
+      <thead><tr><th>Modul</th><th>Rigtige</th><th>Besvaret</th></tr></thead>
+      <tbody id="resultsBody"></tbody>
+    </table>
+    <div class="grade" id="gradeMsg"></div>
+    <div style="margin-top:16px"><button class="printbtn" onclick="window.print()">Print siden</button></div>
+  </section>
+</main>
+
+<footer>
+  Undervisningsmateriale til matematik i 9. klasse · Funktioner og ligninger. Til brug i klassen, til ungernes repetition og til print som opgaveark.
+</footer>
+
+<script>
+(function(){
+  var STORAGE_KEY = 'fol9_state_v1';
+  var okChime = ["Rigtigt. Godt set.","Korrekt. Sådan.","Præcis rigtigt.","Ja, det er rigtigt.","Flot, det er rigtigt."];
+  var moduleNames = ['Modul 1: Ligninger','Modul 2: Lineære funktioner','Modul 3: Grafer','Blandet quiz'];
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  var allQuestions = Array.prototype.slice.call(document.querySelectorAll('.q'));
+  var total = allQuestions.length;
+
+  var state = load() || {name:'', chosen:{}};
+  if(!state.chosen) state.chosen = {};
+
+  function load(){
+    try{ var s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : null; }
+    catch(e){ return null; }
+  }
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function applyAnswer(q, chosenIdx){
+    if(q.dataset.done === '1') return;
+    q.dataset.done = '1';
+    var correct = parseInt(q.getAttribute('data-answer'),10);
+    var exp = q.getAttribute('data-exp') || '';
+    var idx = allQuestions.indexOf(q);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(o,j){ o.disabled = true; if(j === correct) o.classList.add('correct'); });
+    if(chosenIdx === correct){
+      fb.className = 'fb show ok';
+      fb.innerHTML = '<b>' + okChime[idx % okChime.length] + '</b> ' + exp;
+    }else{
+      if(opts[chosenIdx]) opts[chosenIdx].classList.add('wrong');
+      fb.className = 'fb show no';
+      fb.innerHTML = '<b>Ikke helt.</b> ' + exp;
+    }
+  }
+
+  function resetQuestion(q){
+    q.dataset.done = '';
+    q.querySelectorAll('.opt').forEach(function(o){ o.disabled = false; o.classList.remove('correct','wrong'); });
+    var fb = q.querySelector('.fb'); fb.className = 'fb'; fb.innerHTML = '';
+  }
+
+  // wire up clicks
+  allQuestions.forEach(function(q){
+    q.querySelectorAll('.opt').forEach(function(opt, oi){
+      opt.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        var gi = allQuestions.indexOf(q);
+        state.chosen[gi] = oi;
+        save();
+        applyAnswer(q, oi);
+        refresh();
+      });
+    });
+  });
+
+  // restore previously saved answers
+  Object.keys(state.chosen).forEach(function(k){
+    var gi = parseInt(k,10); var q = allQuestions[gi];
+    if(q) applyAnswer(q, state.chosen[k]);
+  });
+
+  function stats(){
+    var perQuiz = quizzes.map(function(quiz){
+      var qs = quiz.querySelectorAll('.q'); var right=0, ans=0;
+      qs.forEach(function(q){
+        var gi = allQuestions.indexOf(q);
+        if(gi in state.chosen){ ans++; if(state.chosen[gi] === parseInt(q.getAttribute('data-answer'),10)) right++; }
+      });
+      return {total:qs.length, right:right, ans:ans};
+    });
+    var right=0, ans=0;
+    perQuiz.forEach(function(p){ right+=p.right; ans+=p.ans; });
+    return {perQuiz:perQuiz, right:right, ans:ans};
+  }
+
+  function refresh(){
+    var s = stats();
+    var pct = total ? Math.round(s.ans/total*100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent =
+      'Quiz-fremgang: ' + s.ans + ' af ' + total + ' spørgsmål besvaret';
+
+    quizzes.forEach(function(quiz,i){
+      var badge = quiz.querySelector('[data-score]');
+      if(badge) badge.textContent = s.perQuiz[i].right + ' / ' + s.perQuiz[i].total + ' rigtige';
+    });
+
+    if(state.name){
+      document.getElementById('welcomeLive').textContent =
+        'Du har svaret ' + s.ans + ' af ' + total + '. Rigtige indtil nu: ' + s.right + '.';
+    }
+
+    var body = document.getElementById('resultsBody'); body.innerHTML = '';
+    quizzes.forEach(function(quiz,i){
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + moduleNames[i] + '</td><td>' + s.perQuiz[i].right + ' / ' + s.perQuiz[i].total +
+        '</td><td>' + s.perQuiz[i].ans + ' / ' + s.perQuiz[i].total + '</td>';
+      body.appendChild(tr);
+    });
+    var trt = document.createElement('tr'); trt.className = 'total';
+    trt.innerHTML = '<td>I alt</td><td>' + s.right + ' / ' + total + '</td><td>' + s.ans + ' / ' + total + '</td>';
+    body.appendChild(trt);
+
+    var who = state.name ? state.name : 'Du';
+    var g = document.getElementById('gradeMsg');
+    if(s.ans === total){
+      var p = Math.round(s.right/total*100);
+      var msg;
+      if(p === 100) msg = 'Alt rigtigt. Fremragende arbejde.';
+      else if(p >= 80) msg = 'Rigtig flot resultat.';
+      else if(p >= 60) msg = 'Godt gået. Kig på de opgaver, du missede.';
+      else msg = 'God indsats. Læs afsnittene igen, og prøv de svære en gang til.';
+      g.textContent = who + ': ' + s.right + ' ud af ' + total + ' rigtige (' + p + ' %). ' + msg;
+    }else{
+      g.textContent = who + ': ' + s.right + ' rigtige indtil videre. Svar på alle ' + total + ' opgaver for at se dit samlede resultat.';
+    }
+
+    var fm = document.getElementById('finalMsg');
+    if(fm){
+      var last = s.perQuiz[quizzes.length-1];
+      if(last.ans === last.total){
+        if(last.right === last.total) fm.textContent = 'Flot — alt rigtigt i den blandede quiz.';
+        else if(last.right >= last.total-1) fm.textContent = 'Rigtig godt. Kig på det sidste, du missede.';
+        else fm.textContent = 'Se din samlede oversigt nederst under Resultater.';
+      }else{ fm.textContent = ''; }
+    }
+  }
+
+  // name / overlay
+  var overlay = document.getElementById('startOverlay');
+  var nameInput = document.getElementById('nameInput');
+
+  function showWelcome(){
+    var wb = document.getElementById('welcomeBar');
+    if(state.name){ wb.classList.add('show'); document.getElementById('welcomeHi').textContent = 'Hej, ' + state.name + '!'; }
+    else wb.classList.remove('show');
+  }
+
+  function openOverlay(returning){
+    if(returning && state.name){
+      document.getElementById('ovTitle').textContent = 'Velkommen tilbage, ' + state.name + '!';
+      document.getElementById('ovText').textContent = 'Dine tidligere svar er gemt i denne browser. Fortsæt hvor du slap, eller skriv et nyt navn for at starte forfra.';
+      nameInput.value = state.name;
+      document.getElementById('startBtn').textContent = 'Fortsæt';
+    }else{
+      document.getElementById('ovTitle').textContent = 'Velkommen';
+      document.getElementById('ovText').textContent = 'Skriv dit fornavn, så gemmes dine svar og dit resultat i denne browser. Så kan du fortsætte, hvor du slap, næste gang.';
+      nameInput.value = '';
+      document.getElementById('startBtn').textContent = 'Start';
+    }
+    overlay.classList.remove('hidden');
+    setTimeout(function(){ nameInput.focus(); }, 60);
+  }
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    var v = nameInput.value.trim();
+    if(v && v !== state.name){
+      state.name = v;
+      state.chosen = {};
+      allQuestions.forEach(resetQuestion);
+    }else if(v){
+      state.name = v;
+    }
+    save();
+    overlay.classList.add('hidden');
+    showWelcome(); refresh();
+  });
+
+  document.getElementById('skipBtn').addEventListener('click', function(){
+    overlay.classList.add('hidden');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    state.chosen = {};
+    save();
+    allQuestions.forEach(resetQuestion);
+    refresh();
+  });
+
+  document.getElementById('switchBtn').addEventListener('click', function(){
+    state = {name:'', chosen:{}};
+    save();
+    allQuestions.forEach(resetQuestion);
+    showWelcome(); refresh();
+    openOverlay(false);
+  });
+
+  nameInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') document.getElementById('startBtn').click();
+  });
+
+  // init
+  showWelcome();
+  refresh();
+  openOverlay(!!state.name);
+})();
+</script>
+</body>
+</html>

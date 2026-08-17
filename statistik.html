@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Statistik og sandsynlighed - 9. klasse</title><style>
+  :root{
+    --bg:#ffffff;
+    --panel:#ffffff;
+    --panel2:#f4f6fb;
+    --ink:#1a2233;
+    --muted:#586074;
+    --line:#d3dae7;
+    --accent:#1f6fd6;
+    --accent-soft:#eaf2fd;
+    --good:#1a8f5e;
+    --good-soft:#eaf7f0;
+    --bad:#c23b4b;
+    --bad-soft:#fdeef0;
+    --warn:#b5710a;
+    --shadow:0 1px 3px rgba(20,30,60,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  header.top{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(8px);
+    background:rgba(255,255,255,.9);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1000px;margin:0 auto;padding:12px 20px;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}
+  .brand span{color:var(--accent)}
+  nav.jump{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  nav.jump a{
+    color:var(--muted);text-decoration:none;font-size:.86rem;
+    padding:6px 11px;border-radius:999px;border:1px solid transparent;
+    transition:.15s;
+  }
+  nav.jump a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+
+  main{max-width:1000px;margin:0 auto;padding:28px 20px 90px}
+
+  .hero{
+    background:var(--panel2);
+    border:1px solid var(--line);border-radius:20px;
+    padding:34px 32px;box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  .hero h1{margin:0 0 10px;font-size:2.1rem;line-height:1.15}
+  .hero p{margin:0;color:var(--muted);font-size:1.06rem;max-width:72ch}
+  .pill{
+    display:inline-block;font-size:.76rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--line);border-radius:999px;
+    padding:4px 12px;margin-bottom:14px;background:#fff;font-weight:700;
+  }
+
+  .progress-wrap{margin:22px 0 4px}
+  .progress-bar{height:10px;border-radius:999px;background:#e4e9f2;overflow:hidden;border:1px solid var(--line)}
+  .progress-fill{height:100%;width:0;background:var(--accent);transition:width .5s ease}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+  section.lesson{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:28px 30px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  section.lesson h2{
+    font-size:1.5rem;margin:0 0 6px;display:flex;align-items:center;gap:12px;
+  }
+  .num{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    display:grid;place-items:center;font-weight:800;font-size:1rem;
+    background:var(--accent);color:#fff;
+  }
+  section.lesson .sub{color:var(--muted);margin:0 0 18px;font-size:1rem}
+  section.lesson h3{font-size:1.15rem;margin:26px 0 8px;color:#243149}
+  p{margin:12px 0}
+
+  .box{
+    background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;margin:16px 0;
+  }
+  .box.tip{border-left:4px solid var(--good)}
+  .box.note{border-left:4px solid var(--warn)}
+  .box.rule{border-left:4px solid var(--accent);background:var(--accent-soft)}
+  .box b{color:#111}
+  .box .rlabel{
+    display:inline-block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);font-weight:800;margin-bottom:2px;
+  }
+
+  .formula{
+    font-family:"Cambria Math","Times New Roman",Georgia,serif;
+    background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0;text-align:center;
+    font-size:1.3rem;letter-spacing:.4px;color:#111;
+  }
+  .formula small{display:block;font-size:.8rem;color:var(--muted);margin-top:6px;font-family:inherit;letter-spacing:0}
+  code.inl{
+    font-family:"Cambria Math",Georgia,serif;background:var(--panel2);
+    padding:2px 8px;border-radius:6px;border:1px solid var(--line);font-size:1.05em;color:#111;
+  }
+
+  .steps{margin:16px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .steps .row{display:flex;gap:0;border-top:1px solid var(--line)}
+  .steps .row:first-child{border-top:none}
+  .steps .calc{
+    flex:1;padding:11px 18px;font-family:"Cambria Math",Georgia,serif;font-size:1.12rem;
+    background:#fff;color:#111;display:flex;align-items:center;
+  }
+  .steps .why{
+    flex:1;padding:11px 18px;color:var(--muted);font-size:.92rem;background:var(--panel2);
+    display:flex;align-items:center;
+  }
+  @media(max-width:620px){.steps .row{flex-direction:column}}
+
+  .graphwrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin:18px 0}
+  .graphwrap svg{background:#fff;border:1px solid var(--line);border-radius:12px;flex:0 0 auto}
+  .graphwrap .caption{flex:1;min-width:220px;color:var(--muted);font-size:.95rem}
+
+  /* QUIZ */
+  .quiz{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:18px;padding:24px 28px;margin:24px 0;box-shadow:var(--shadow);
+  }
+  .quiz .qhead{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+  .quiz .qtag{
+    font-size:.72rem;letter-spacing:.7px;text-transform:uppercase;color:#fff;
+    background:var(--accent);padding:4px 11px;border-radius:999px;font-weight:800;
+  }
+  .quiz h3{margin:0;font-size:1.22rem}
+  .quiz .qsub{color:var(--muted);margin:6px 0 16px;font-size:.95rem}
+  .q{margin:18px 0;padding-top:18px;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:none;padding-top:0}
+  .q .qtext{font-weight:600;margin-bottom:12px;font-size:1.04rem}
+  .q .qtext .qn{color:var(--accent);font-weight:800;margin-right:6px}
+  .lvl{
+    display:inline-block;font-size:.68rem;letter-spacing:.5px;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:8px;
+    color:var(--muted);font-weight:700;vertical-align:middle;background:#fff;
+  }
+  .opts{display:grid;gap:9px}
+  .opt{
+    text-align:left;width:100%;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);color:var(--ink);
+    padding:11px 15px;border-radius:10px;font-size:1rem;font-family:inherit;
+    transition:.15s;display:flex;align-items:center;gap:10px;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .mk{
+    flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);
+    display:grid;place-items:center;font-weight:800;font-size:.85rem;color:var(--muted);background:#fff;
+  }
+  .opt.correct{border-color:var(--good);background:var(--good-soft)}
+  .opt.correct .mk{background:var(--good);color:#fff;border-color:var(--good)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.wrong .mk{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt:disabled{cursor:default}
+  .fb{
+    margin-top:12px;padding:11px 15px;border-radius:10px;font-size:.95rem;display:none;
+  }
+  .fb.show{display:block}
+  .fb.ok{background:var(--good-soft);border:1px solid var(--good);color:#12633f}
+  .fb.no{background:var(--bad-soft);border:1px solid var(--bad);color:#8f2733}
+  .fb b{color:#111}
+
+  .scorebar{
+    margin-top:16px;font-size:.95rem;color:var(--muted);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .scorebar .badge{
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:5px 14px;font-weight:700;color:var(--ink);
+  }
+  .final-note{text-align:center;color:var(--muted);margin-top:16px;font-size:.95rem}
+
+  footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  @media(max-width:620px){.cheat{grid-template-columns:1fr}}
+  .cheat .card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .cheat .card h4{margin:0 0 6px;font-size:1rem;color:#243149}
+  .cheat .card p{margin:0;font-size:.92rem;color:var(--muted)}
+
+  .printbtn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:#fff;border:1px solid var(--line);color:var(--ink);
+    padding:9px 16px;border-radius:10px;font-size:.92rem;font-family:inherit;cursor:pointer;
+    font-weight:600;
+  }
+  .printbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .btn{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn:hover{background:#195cb5}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* start overlay */
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(26,34,51,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}
+  .overlay.hidden{display:none}
+  .overlay .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 32px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(20,30,60,.25)}
+  .overlay h2{margin:0 0 6px;font-size:1.5rem}
+  .overlay p{margin:0 0 18px;color:var(--muted)}
+  .overlay input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:1.05rem;font-family:inherit;margin-bottom:14px}
+  .overlay input:focus{outline:none;border-color:var(--accent)}
+  .overlay .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* welcome bar */
+  .welcome{display:none;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .welcome.show{display:flex}
+  .welcome .hi{font-weight:800;font-size:1.05rem}
+  .welcome .live{color:var(--muted);font-size:.95rem}
+  .welcome .spacer{margin-left:auto}
+  .welcome .btn{padding:8px 14px;font-size:.9rem}
+
+  /* results */
+  #results .rtable{width:100%;border-collapse:collapse;margin-top:10px}
+  #results .rtable th,#results .rtable td{border:1px solid var(--line);padding:9px 12px;text-align:left;font-size:.98rem}
+  #results .rtable th{background:var(--panel2);font-weight:700}
+  #results .rtable tr.total td{font-weight:800;background:var(--accent-soft)}
+  #results .grade{font-size:1.08rem;margin-top:16px;font-weight:600}
+
+  /* ---------- PRINT ---------- */
+  .opg{background:#fdf8f0;border:1px solid var(--line);border-left:4px solid #b5710a;border-radius:10px;padding:14px 18px;margin:18px 0 4px}.opg h4{margin:0 0 6px;font-size:1.02rem}.opg h4 em{font-style:normal;color:#b5710a;font-weight:800;margin-right:8px}.opg ol{margin:8px 0 2px;padding-left:24px}.opg ol li{margin:5px 0}.opg .opgtable{margin:10px 0 4px}
+ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margin:5px 0}.opgtable{width:auto;min-width:60%;border-collapse:collapse;margin:8px 0}.opgtable th,.opgtable td{border:1px solid #cfd6e4;padding:5px 10px;font-size:.92rem;text-align:left}.opgtable th{background:#f4f6fb}
+  @media print{
+    @page{margin:16mm}
+    body{background:#fff;color:#000;font-size:11.5pt;line-height:1.45}
+    header.top,nav.jump,.progress-wrap,.printbtn,.overlay,.welcome .btn{display:none !important}
+    .welcome{border:1px solid #999;background:#fff !important}
+    main{max-width:none;padding:0}
+    .hero,section.lesson,.quiz,.box,.steps,.cheat .card,.formula,.graphwrap svg{
+      box-shadow:none !important;
+    }
+    .hero,section.lesson,.quiz{
+      border:1px solid #999;background:#fff !important;border-radius:0;
+      padding:14px 16px;margin:10px 0;break-inside:avoid;page-break-inside:avoid;
+    }
+    section.lesson h2,.quiz h3,section.lesson h3{break-after:avoid}
+    .num{background:#fff !important;color:#000;border:1.5px solid #000}
+    .pill,.qtag{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .box,.box.rule{background:#fff !important;border:1px solid #bbb;border-left:3px solid #000}
+    .rlabel{color:#000 !important}
+    .formula,.steps .calc,.opt,.opt .mk,.cheat .card{background:#fff !important}
+    .steps .why{background:#fff !important;color:#333}
+    .opt{border:1px solid #888}
+    .opt .mk{border:1px solid #000;color:#000}
+    /* keep quizzes usable as a paper worksheet: neutral options, hide screen-only feedback state */
+    .opt.correct,.opt.wrong{background:#fff !important;border:1px solid #888 !important}
+    .opt.correct .mk,.opt.wrong .mk{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .fb{display:none !important}
+    .q{break-inside:avoid;page-break-inside:avoid}
+    a{color:#000;text-decoration:none}
+    svg line[stroke="#1f6fd6"],svg line[stroke="#4f9dff"]{stroke:#000 !important}
+    svg circle{fill:#000 !important}
+    .caption{color:#333}
+  }
+</style></head><body><div class="overlay" id="startOverlay"><div class="card"><h2 id="ovTitle">Velkommen</h2><p id="ovText">Skriv dit fornavn, så gemmes dine svar og dit resultat i denne browser. Så kan du fortsætte, hvor du slap, næste gang.</p><input id="nameInput" type="text" placeholder="Dit fornavn" autocomplete="off" maxlength="30"><div class="btnrow"><button class="btn" id="startBtn">Start</button> <button class="btn ghost" id="skipBtn">Fortsæt uden navn</button></div></div></div><header class="top"><div class="top-inner"><div class="brand">Matematik · <span>Statistik</span></div><nav class="jump"><a href="matematik.html">Matematik</a> <a href="#beskriv">Beskriv data</a> <a href="#diagrammer">Diagrammer</a> <a href="#kritik">Kildekritik</a> <a href="#sandsynlighed">Sandsynlighed</a> <a href="#eksamen">Blandet quiz</a> <a href="#results">Resultater</a> <a href="statistik-hjemmeopgaver.html">Hjemmeopgaver</a> <a href="manipulation.html">Manipulation</a></nav></div></header><main><section class="hero" id="intro"><span class="pill">9. klasse · statistik og sandsynlighed</span><h1>Statistik og sandsynlighed</h1><p>Denne side gennemgår første blok i årsplanen: at beskrive data (gennemsnit, median, typetal, spredning, kvartiler og boksplot), at vælge og aflæse diagrammer og sumkurver, at være kildekritisk over for tal og grafer, og at regne med sandsynlighed. Hvert modul har en quiz med spørgsmål i stigende sværhedsgrad. Du kan bruge siden i klassen, alene til repetition, eller printe den som opgaveark.</p><button class="printbtn" onclick="window.print()">Print siden</button><div class="welcome" id="welcomeBar"><span class="hi" id="welcomeHi"></span> <span class="live" id="welcomeLive"></span> <span class="spacer"></span> <button class="btn ghost" id="resetBtn">Nulstil mine svar</button> <button class="btn ghost" id="switchBtn">Skift unge</button></div><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><div class="progress-label" id="progressLabel">Quiz-fremgang: 0 af 0 spørgsmål besvaret</div></div></section><section class="lesson" id="beskriv"><h2><span class="num">1</span> Beskriv data</h2><p class="sub">Når du har en talrække, kan du beskrive den med et par tal: hvor midten ligger, og hvor spredt tallene er.</p><div class="box rule"><span class="rlabel">Regneregel · centrale mål</span><br><b>Gennemsnit</b> (middelværdi): læg alle tal sammen og divider med antallet. <b>Median</b>: det midterste tal, når tallene er sorteret. <b>Typetal</b>: det tal, der optræder flest gange.</div><p>Eksempel på talrækken <code class="inl">4, 7, 7, 9, 13</code>:</p><div class="steps"><div class="row"><div class="calc">(4+7+7+9+13) ÷ 5 = 8</div><div class="why">Gennemsnit.</div></div><div class="row"><div class="calc">4, 7, [7], 9, 13</div><div class="why">Median = midterste = 7.</div></div><div class="row"><div class="calc">7 optræder to gange</div><div class="why">Typetal = 7.</div></div></div><div class="box rule"><span class="rlabel">Regneregel · spredning</span><br><b>Variationsbredde</b> = største tal − mindste tal. <b>Kvartiler</b> deler de sorterede tal i fire lige store dele: nedre kvartil (Q1), median (Q2) og øvre kvartil (Q3). <b>Kvartilbredde</b> = Q3 − Q1.</div><p>For <code class="inl">2, 4, 5, 7, 8, 10, 12</code>: median = 7, nedre kvartil Q1 = 4 (midten af 2,4,5), øvre kvartil Q3 = 10 (midten af 8,10,12). Kvartilbredde = 10 − 4 = 6.</p><h3>Boksplot</h3><p>Et boksplot tegner de fem tal: mindste, Q1, median, Q3 og største. Kassen går fra Q1 til Q3, og stregen inde i kassen er medianen.</p><div class="graphwrap"><svg width="360" height="120" viewBox="0 0 360 120" role="img" aria-label="Boksplot"><line x1="20" y1="100" x2="340" y2="100" stroke="#7b869c" stroke-width="1"/><line x1="20" y1="96" x2="20" y2="104" stroke="#7b869c"/><text x="20" y="116" fill="#586074" font-size="10" text-anchor="middle">0</text><line x1="68" y1="96" x2="68" y2="104" stroke="#7b869c"/><text x="68" y="116" fill="#586074" font-size="10" text-anchor="middle">2</text><line x1="116" y1="96" x2="116" y2="104" stroke="#7b869c"/><text x="116" y="116" fill="#586074" font-size="10" text-anchor="middle">4</text><line x1="164" y1="96" x2="164" y2="104" stroke="#7b869c"/><text x="164" y="116" fill="#586074" font-size="10" text-anchor="middle">6</text><line x1="212" y1="96" x2="212" y2="104" stroke="#7b869c"/><text x="212" y="116" fill="#586074" font-size="10" text-anchor="middle">8</text><line x1="260" y1="96" x2="260" y2="104" stroke="#7b869c"/><text x="260" y="116" fill="#586074" font-size="10" text-anchor="middle">10</text><line x1="308" y1="96" x2="308" y2="104" stroke="#7b869c"/><text x="308" y="116" fill="#586074" font-size="10" text-anchor="middle">12</text><line x1="68" y1="55" x2="116" y2="55" stroke="#1f6fd6" stroke-width="2"/><line x1="260" y1="55" x2="308" y2="55" stroke="#1f6fd6" stroke-width="2"/><line x1="68" y1="40" x2="68" y2="70" stroke="#1f6fd6" stroke-width="2"/><line x1="308" y1="40" x2="308" y2="70" stroke="#1f6fd6" stroke-width="2"/><rect x="116" y="30" width="144" height="50" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="2"/><line x1="188" y1="30" x2="188" y2="80" stroke="#1a8f5e" stroke-width="3"/><text x="116" y="22" fill="#586074" font-size="10" text-anchor="middle">Q1</text><text x="188" y="22" fill="#1a8f5e" font-size="10" text-anchor="middle">Median</text><text x="260" y="22" fill="#586074" font-size="10" text-anchor="middle">Q3</text></svg><div class="caption">Boksplot for 2, 4, 5, 7, 8, 10, 12. Kassen dækker den midterste halvdel (fra Q1=4 til Q3=10), og den grønne streg er medianen (7).</div></div><div class="opg"><h4><em>Opgave A</em> Beskriv talrækken</h4><p>Talrækken <code class="inl">3, 5, 5, 6, 8, 9, 13</code> er antal mål, ungerne har scoret i syv håndboldkampe. Skriv udregninger og svar i dit hæfte, og vis din metode.</p><ol><li>Beregn gennemsnittet.</li><li>Find medianen og typetallet.</li><li>Beregn variationsbredden.</li><li>Find nedre kvartil (Q1) og øvre kvartil (Q3), og beregn kvartilbredden.</li><li>Tegn et boksplot over talrækken.</li><li>Tag derefter talrækken <code class="inl">2, 4, 5, 5, 6, 7, 8, 9, 10, 12, 14</code> (11 observationer): find de fem tal til et boksplot (mindste, Q1, median, Q3, største), og tegn det.</li></ol></div></section><section class="quiz" data-quiz><div class="qhead"><span class="qtag">Quiz · Modul 1</span><h3>Test dig selv: beskriv data</h3></div><p class="qsub">Brug talrækken i spørgsmålet. Svar og forklaring kommer med det samme.</p><div class="q" data-answer="0" data-exp="(4+7+7+9+13) ÷ 5 = 40 ÷ 5 = 8."><div class="qtext"><span class="qn">1.</span> Hvad er gennemsnittet af <code class="inl">4, 7, 7, 9, 13</code>? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 8</button> <button class="opt"><span class="mk">B</span> 7</button> <button class="opt"><span class="mk">C</span> 9</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Tallene er sorteret; det midterste er 7."><div class="qtext"><span class="qn">2.</span> Hvad er medianen af <code class="inl">4, 7, 7, 9, 13</code>? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 7</button> <button class="opt"><span class="mk">B</span> 8</button> <button class="opt"><span class="mk">C</span> 9</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="7 optræder flest gange."><div class="qtext"><span class="qn">3.</span> Hvad er typetallet i <code class="inl">4, 7, 7, 9, 13</code>? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 13</button> <button class="opt"><span class="mk">B</span> 7</button> <button class="opt"><span class="mk">C</span> 9</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Største minus mindste: 13 − 4 = 9."><div class="qtext"><span class="qn">4.</span> Hvad er variationsbredden af <code class="inl">4, 7, 7, 9, 13</code>? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 9</button> <button class="opt"><span class="mk">B</span> 13</button> <button class="opt"><span class="mk">C</span> 4</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="7 tal; det midterste (det 4.) er 7."><div class="qtext"><span class="qn">5.</span> Hvad er medianen af <code class="inl">2, 4, 5, 7, 8, 10, 12</code>? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 7</button> <button class="opt"><span class="mk">B</span> 8</button> <button class="opt"><span class="mk">C</span> 6</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Q1 er medianen af den nedre halvdel {2, 4, 5}, altså 4."><div class="qtext"><span class="qn">6.</span> Hvad er nedre kvartil (Q1) af <code class="inl">2, 4, 5, 7, 8, 10, 12</code>? <span class="lvl">Svær</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 5</button> <button class="opt"><span class="mk">B</span> 4</button> <button class="opt"><span class="mk">C</span> 2</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Q3 = 10 og Q1 = 4, så 10 − 4 = 6."><div class="qtext"><span class="qn">7.</span> Hvad er kvartilbredden (Q3 − Q1) af <code class="inl">2, 4, 5, 7, 8, 10, 12</code>? <span class="lvl">Svær</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 6</button> <button class="opt"><span class="mk">B</span> 8</button> <button class="opt"><span class="mk">C</span> 10</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Kassen går fra Q1 til Q3, og stregen i den er medianen."><div class="qtext"><span class="qn">8.</span> Hvad viser stregen inde i kassen på et boksplot? <span class="lvl">Udfordring</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Gennemsnittet</button> <button class="opt"><span class="mk">B</span> Medianen</button> <button class="opt"><span class="mk">C</span> Typetallet</button></div><div class="fb"></div></div><div class="scorebar"><span class="badge" data-score>0 / 8 rigtige</span> <span>Videre til diagrammer og sumkurve.</span></div></section><section class="lesson" id="diagrammer"><h2><span class="num">2</span> Diagrammer og sumkurve</h2><p class="sub">Forskellige data kaldes på forskellige diagrammer. Og med frekvenser kan du sammenligne grupper af forskellig størrelse.</p><div class="box rule"><span class="rlabel">Regneregel · frekvens</span><br><b>Frekvens</b> = antal i en kategori ÷ det samlede antal. Den skrives ofte i procent. <b>Kumuleret frekvens</b> = summen af frekvenserne til og med et interval.</div><p>Eksempel: 25 unger, 5 kan bedst lide rød. Frekvensen for rød er 5 ÷ 25 = 0,20 = 20 %.</p><div class="cheat"><div class="card"><h4>Cirkeldiagram</h4><p>Viser andele af en helhed, fx procentfordeling.</p></div><div class="card"><h4>Søjle-/pindediagram</h4><p>Sammenligner kategorier eller enkelte tal.</p></div><div class="card"><h4>Histogram</h4><p>Bruges til grupperede talobservationer (intervaller).</p></div><div class="card"><h4>Sumkurve</h4><p>Viser den kumulerede frekvens og bruges til at aflæse median og kvartiler.</p></div></div><h3>Aflæsning på en sumkurve</h3><p>På en sumkurve aflæser du medianen ved 50 %, nedre kvartil ved 25 % og øvre kvartil ved 75 %: gå vandret ind fra procenten til kurven og lodret ned til værdien.</p><div class="graphwrap"><svg width="300" height="240" viewBox="0 0 300 240" role="img" aria-label="Sumkurve"><line x1="40" y1="20" x2="40" y2="200" stroke="#7b869c" stroke-width="2"/><line x1="40" y1="200" x2="280" y2="200" stroke="#7b869c" stroke-width="2"/><text x="8" y="30" fill="#586074" font-size="10">100%</text><text x="14" y="115" fill="#586074" font-size="10">50%</text><text x="20" y="204" fill="#586074" font-size="10">0%</text><polyline points="40,200 90,185 140,140 190,70 240,30 280,25" fill="none" stroke="#1f6fd6" stroke-width="3"/><line x1="40" y1="110" x2="165" y2="110" stroke="#b5710a" stroke-width="2" stroke-dasharray="5 4"/><line x1="165" y1="110" x2="165" y2="200" stroke="#b5710a" stroke-width="2" stroke-dasharray="5 4"/><text x="150" y="215" fill="#b5710a" font-size="10">median</text></svg><div class="caption">Sumkurve: fra 50 % på y-aksen går man vandret ind til kurven og lodret ned til medianen på x-aksen.</div></div><div class="opg"><h4><em>Opgave B</em> Frekvens og sumkurve</h4><p>20 unger i klassen er blevet spurgt om deres yndlingssport: Fodbold 8, Håndbold 5, Svømning 4, Andet 3. Og 40 unger har svaret på, hvor mange kroner de får i lommepenge om måneden:</p><table class="opgtable"><tr><th>Lommepenge (kr)</th><td>0–100</td><td>100–200</td><td>200–300</td><td>300–400</td><td>400–500</td></tr><tr><th>Hyppighed</th><td>4</td><td>10</td><td>14</td><td>8</td><td>4</td></tr></table><ol><li>Lav en tabel med hyppighed og frekvens i procent for de fire sportsgrene.</li><li>Hvilken kategori er typetallet?</li><li>Beregn, hvor mange grader hver sportsgren fylder i et cirkeldiagram, og tegn diagrammet.</li><li>Hvilket diagram ville du vælge, hvis du skulle sammenligne med en klasse på 25 unger? Begrund dit svar.</li><li>Lommepengene: lav en tabel med kumuleret hyppighed og kumuleret frekvens i procent.</li><li>Tegn sumkurven, og aflæs medianen, nedre kvartil og øvre kvartil.</li><li>Hvor mange procent af ungerne får under 300 kr om måneden?</li></ol></div></section><section class="quiz" data-quiz><div class="qhead"><span class="qtag">Quiz · Modul 2</span><h3>Test dig selv: diagrammer og sumkurve</h3></div><p class="qsub">Frekvens, diagramtyper og sumkurve.</p><div class="q" data-answer="1" data-exp="5 ÷ 25 = 0,20 = 20 %."><div class="qtext"><span class="qn">1.</span> 25 unger, 5 kan bedst lide rød. Hvad er frekvensen for rød? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 5 %</button> <button class="opt"><span class="mk">B</span> 20 %</button> <button class="opt"><span class="mk">C</span> 25 %</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Cirkeldiagrammet viser dele af en helhed."><div class="qtext"><span class="qn">2.</span> Hvilket diagram viser bedst andele af en helhed (fx en procentfordeling)? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Cirkeldiagram</button> <button class="opt"><span class="mk">B</span> Kurvediagram</button> <button class="opt"><span class="mk">C</span> Boksplot</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Man lægger frekvenserne sammen op til og med intervallet."><div class="qtext"><span class="qn">3.</span> Hvad er den kumulerede frekvens for et interval? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Antallet i intervallet</button> <button class="opt"><span class="mk">B</span> Summen af frekvenserne til og med intervallet</button> <button class="opt"><span class="mk">C</span> Den største frekvens</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Medianen ligger ved 50 %."><div class="qtext"><span class="qn">4.</span> Ved hvilken kumuleret frekvens aflæser man medianen på en sumkurve? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 25 %</button> <button class="opt"><span class="mk">B</span> 50 %</button> <button class="opt"><span class="mk">C</span> 100 %</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Nedre kvartil (Q1) aflæses ved 25 %."><div class="qtext"><span class="qn">5.</span> Ved hvilken kumuleret frekvens aflæser man nedre kvartil? <span class="lvl">Svær</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 25 %</button> <button class="opt"><span class="mk">B</span> 50 %</button> <button class="opt"><span class="mk">C</span> 75 %</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Histogrammet viser grupperede talintervaller."><div class="qtext"><span class="qn">6.</span> Hvad bruges et histogram typisk til? <span class="lvl">Svær</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Grupperede talobservationer</button> <button class="opt"><span class="mk">B</span> Navne på kategorier</button> <button class="opt"><span class="mk">C</span> Andele i procent</button></div><div class="fb"></div></div><div class="scorebar"><span class="badge" data-score>0 / 6 rigtige</span> <span>Videre til kildekritik.</span></div></section><section class="lesson" id="kritik"><h2><span class="num">3</span> Kildekritik og manipulation</h2><p class="sub">Tal og grafer kan bruges til at vildlede. Du skal kunne gennemskue, når en fremstilling snyder.</p><div class="box rule"><span class="rlabel">Regneregel · vær kritisk</span><br>Tjek altid: Starter y-aksen ved 0? Passer delene i et cirkeldiagram sammen til 100 %? Er stikprøven <b>repræsentativ</b> — ligner den hele gruppen, den skal sige noget om? Hvem har lavet fremstillingen?</div><div class="box note"><b>Klassisk tricks:</b> en afskåret y-akse får små forskelle til at se store ud; en lille eller skæv stikprøve giver tilfældige udsving; og et cirkeldiagram, hvor delene ikke giver 100 %, er misvisende.</div><p>Eksempel: to søjler på 102 og 105 ser dobbelt så større ud, hvis y-aksen starter ved 100 i stedet for 0.</p><div class="opg"><h4><em>Opgave C</em> Gennemskue fremstillingen</h4><p>Se kritisk på tallene. Skriv for hvert punkt, hvad der teknisk set er rigtigt, og hvad der vildleder.</p><ol><li>En graf viser to søjler på 102 og 105, og y-aksen starter ved 100. Hvor mange procent er forskellen i virkeligheden? Hvorfor ser den meget større ud?</li><li>Et cirkeldiagram har tre dele på 45 %, 40 % og 35 %. Hvad er der galt?</li><li>12 af skolens 600 unger er spurgt om skolemaden — alle fra samme klasse. Hvor mange procent af skolen er spurgt? Nævn to grunde til, at stikprøven er skæv.</li><li>"Antallet af cykeltyverier er fordoblet." Sidste år var der 3, i år er der 6. Er overskriften teknisk rigtig? Er den vildledende? Forklar.</li><li>Find selv et eksempel fra en avis, en reklame eller sociale medier på et tal eller en graf, der kan vildlede, og forklar tricket.</li></ol></div></section><section class="quiz" data-quiz><div class="qhead"><span class="qtag">Quiz · Modul 3</span><h3>Test dig selv: kildekritik</h3></div><p class="qsub">Gennemsku manipulation.</p><div class="q" data-answer="1" data-exp="En afskåret y-akse overdriver forskellene."><div class="qtext"><span class="qn">1.</span> En graf starter y-aksen ved 90 i stedet for 0. Hvad sker der? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Forskellene ser mindre ud</button> <button class="opt"><span class="mk">B</span> Forskellene ser større ud, end de er</button> <button class="opt"><span class="mk">C</span> Ingen forskel</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Den skal afspejle sammensætningen i hele gruppen."><div class="qtext"><span class="qn">2.</span> Hvornår er en stikprøve repræsentativ? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Når den er meget stor</button> <button class="opt"><span class="mk">B</span> Når den ligner hele gruppen, den skal sige noget om</button> <button class="opt"><span class="mk">C</span> Når den er tilfældigt stor</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Andele i en helhed skal summe til 100 %."><div class="qtext"><span class="qn">3.</span> Et cirkeldiagram, hvor delene tilsammen giver 120 %, er? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Fint nok</button> <button class="opt"><span class="mk">B</span> Misvisende — delene skal give 100 %</button> <button class="opt"><span class="mk">C</span> Et tegn på vækst</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Med få svar betyder tilfældigheder for meget."><div class="qtext"><span class="qn">4.</span> Hvorfor kan en meget lille stikprøve være et problem? <span class="lvl">Svær</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Tilfældige udsving fylder for meget</button> <button class="opt"><span class="mk">B</span> Den er altid forkert</button> <button class="opt"><span class="mk">C</span> Den er for dyr</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Undersøg akserne, de faktiske tal og afsenderen."><div class="qtext"><span class="qn">5.</span> Bedste måde at være kildekritisk over for en graf i en reklame? <span class="lvl">Svær</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Tro på den</button> <button class="opt"><span class="mk">B</span> Se på akser, tal og hvem der har lavet den</button> <button class="opt"><span class="mk">C</span> Kigge på farverne</button></div><div class="fb"></div></div><div class="scorebar"><span class="badge" data-score>0 / 5 rigtige</span> <span>Sidste modul: sandsynlighed.</span></div></section><section class="lesson" id="sandsynlighed"><h2><span class="num">4</span> Sandsynlighed</h2><p class="sub">Sandsynlighed fortæller, hvor tit noget sker. Den er et tal mellem 0 (sker aldrig) og 1 (sker altid).</p><div class="box rule"><span class="rlabel">Regneregel · sandsynlighed</span><br>For lige mulige udfald: <b>P(hændelse)</b> = antal gunstige udfald ÷ antal mulige udfald. Sandsynligheden for at noget <b>ikke</b> sker = 1 − P(hændelse).</div><div class="cheat"><div class="card"><h4>Teoretisk sandsynlighed</h4><p>Regnet ud fra modellen, fx at en terning har 6 lige mulige sider.</p></div><div class="card"><h4>Statistisk sandsynlighed</h4><p>Bygger på forsøg og data — hvor tit skete det i virkeligheden.</p></div></div><p>Eksempel: en terning. P(6) = 1 ÷ 6. P(lige tal) = 3 ÷ 6 = 1/2. P(ikke 6) = 1 − 1/6 = 5/6.</p><div class="opg"><h4><em>Opgave D</em> Regn med chancen</h4><p>En pose indeholder 3 røde, 4 blå og 5 grønne kugler. Skriv alle sandsynligheder som brøk.</p><ol><li>Beregn P(rød), P(blå eller grøn) og P(ikke grøn).</li><li>Du trækker to kugler <b>med</b> tilbagelægning. Beregn sandsynligheden for to røde.</li><li>Du trækker to kugler <b>uden</b> tilbagelægning. Beregn sandsynligheden for to røde.</li><li>Du kaster to terninger. Beregn sandsynligheden for, at summen bliver 7 — og skriv alle de gunstige udfald op.</li><li>Klasseøvelse: kast to mønter 40 gange, og notér hvor mange gange begge viser plat. Sammenlign jeres statistiske sandsynlighed med den teoretiske på 1/4.</li><li>Forklar med dine egne ord forskellen på teoretisk og statistisk sandsynlighed.</li></ol></div></section><section class="quiz" data-quiz><div class="qhead"><span class="qtag">Quiz · Modul 4</span><h3>Test dig selv: sandsynlighed</h3></div><p class="qsub">Regn med lige mulige udfald.</p><div class="q" data-answer="0" data-exp="Ét gunstigt udfald ud af seks mulige: 1/6."><div class="qtext"><span class="qn">1.</span> Hvad er sandsynligheden for at slå en 6'er med en almindelig terning? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 1/6</button> <button class="opt"><span class="mk">B</span> 1/2</button> <button class="opt"><span class="mk">C</span> 6</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="3 ud af 6 = 1/2."><div class="qtext"><span class="qn">2.</span> Hvad er sandsynligheden for et lige tal (2, 4, 6) på en terning? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 1/3</button> <button class="opt"><span class="mk">B</span> 1/2</button> <button class="opt"><span class="mk">C</span> 2/3</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="3 røde ud af 5 i alt = 3/5."><div class="qtext"><span class="qn">3.</span> En pose med 3 røde og 2 blå kugler. Hvad er P(rød)? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 2/5</button> <button class="opt"><span class="mk">B</span> 3/5</button> <button class="opt"><span class="mk">C</span> 1/2</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Teoretisk = ud fra modellen; statistisk = ud fra forsøg."><div class="qtext"><span class="qn">4.</span> Teoretisk sandsynlighed bygger på? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Mange forsøg og data</button> <button class="opt"><span class="mk">B</span> Hvad der kan ske ud fra modellen</button> <button class="opt"><span class="mk">C</span> Et gæt</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="1/2 · 1/2 = 1/4."><div class="qtext"><span class="qn">5.</span> Kaster du to mønter, hvad er P(begge bliver plat)? <span class="lvl">Svær</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 1/2</button> <button class="opt"><span class="mk">B</span> 1/4</button> <button class="opt"><span class="mk">C</span> 1/3</button></div><div class="fb"></div></div><div class="scorebar"><span class="badge" data-score>0 / 5 rigtige</span> <span>Til sidst: den blandede quiz.</span></div></section><section class="quiz" id="eksamen"><div class="qhead"><span class="qtag">Afslutning</span><h3>Blandet quiz — hele emnet</h3></div><p class="qsub">Spørgsmål på tværs af statistik og sandsynlighed.</p><div class="q" data-answer="0" data-exp="(3+5+10) ÷ 3 = 18 ÷ 3 = 6."><div class="qtext"><span class="qn">1.</span> Gennemsnittet af <code class="inl">3, 5, 10</code>? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 6</button> <button class="opt"><span class="mk">B</span> 5</button> <button class="opt"><span class="mk">C</span> 18</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="10 − 3 = 7."><div class="qtext"><span class="qn">2.</span> Variationsbredden af <code class="inl">3, 5, 10</code>? <span class="lvl">Let</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 7</button> <button class="opt"><span class="mk">B</span> 5</button> <button class="opt"><span class="mk">C</span> 10</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Whiskers går ud til mindste og største værdi."><div class="qtext"><span class="qn">3.</span> På et boksplot går stregerne (whiskers) typisk ud til? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Kvartilerne</button> <button class="opt"><span class="mk">B</span> Mindste og største værdi</button> <button class="opt"><span class="mk">C</span> Gennemsnittet</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="12 ÷ 40 = 0,30 = 30 %."><div class="qtext"><span class="qn">4.</span> 12 ud af 40 unger cykler. Hvad er frekvensen? <span class="lvl">Mellem</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 12 %</button> <button class="opt"><span class="mk">B</span> 30 %</button> <button class="opt"><span class="mk">C</span> 40 %</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="1 − 1/6 = 5/6."><div class="qtext"><span class="qn">5.</span> Hvad er P(ikke at slå en 6'er med en terning)? <span class="lvl">Svær</span></div><div class="opts"><button class="opt"><span class="mk">A</span> 5/6</button> <button class="opt"><span class="mk">B</span> 1/6</button> <button class="opt"><span class="mk">C</span> 1/2</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Se på de faktiske tal frem for indtrykket."><div class="qtext"><span class="qn">6.</span> En avis viser en graf med afskåret y-akse. Hvad bør du gøre? <span class="lvl">Svær</span></div><div class="opts"><button class="opt"><span class="mk">A</span> Stole på indtrykket</button> <button class="opt"><span class="mk">B</span> Tjekke de faktiske tal</button> <button class="opt"><span class="mk">C</span> Ignorere grafen</button></div><div class="fb"></div></div><div class="scorebar"><span class="badge" data-score>0 / 6 rigtige</span> <span id="finalMsg"></span></div><p class="final-note">Gå gerne tilbage og læs et modul igen, hvis et spørgsmål driller.</p></section><section class="lesson" id="results"><h2><span class="num">R</span> Dine resultater</h2><p class="sub" id="resultsSub">Løs opgaverne, så udfyldes din oversigt her. Skriv dit fornavn øverst, hvis du vil have dit resultat gemt.</p><table class="rtable"><thead><tr><th>Modul</th><th>Rigtige</th><th>Besvaret</th></tr></thead><tbody id="resultsBody"></tbody></table><div class="grade" id="gradeMsg"></div><div style="margin-top:16px"><button class="printbtn" onclick="window.print()">Print siden</button></div></section></main><footer>Undervisningsmateriale til matematik i 9. klasse · Statistik og sandsynlighed.</footer><script>
+(function(){
+  var STORAGE_KEY = 'stat9_state_v1';
+  var okChime = ["Rigtigt. Godt set.","Korrekt. Sådan.","Præcis rigtigt.","Ja, det er rigtigt.","Flot, det er rigtigt."];
+  var moduleNames = ['Modul 1: Beskriv data','Modul 2: Diagrammer og sumkurve','Modul 3: Kildekritik og manipulation','Modul 4: Sandsynlighed','Blandet quiz'];
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  var allQuestions = Array.prototype.slice.call(document.querySelectorAll('.q'));
+  var total = allQuestions.length;
+
+  var state = load() || {name:'', chosen:{}};
+  if(!state.chosen) state.chosen = {};
+
+  function load(){
+    try{ var s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : null; }
+    catch(e){ return null; }
+  }
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function applyAnswer(q, chosenIdx){
+    if(q.dataset.done === '1') return;
+    q.dataset.done = '1';
+    var correct = parseInt(q.getAttribute('data-answer'),10);
+    var exp = q.getAttribute('data-exp') || '';
+    var idx = allQuestions.indexOf(q);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(o,j){ o.disabled = true; if(j === correct) o.classList.add('correct'); });
+    if(chosenIdx === correct){
+      fb.className = 'fb show ok';
+      fb.innerHTML = '<b>' + okChime[idx % okChime.length] + '</b> ' + exp;
+    }else{
+      if(opts[chosenIdx]) opts[chosenIdx].classList.add('wrong');
+      fb.className = 'fb show no';
+      fb.innerHTML = '<b>Ikke helt.</b> ' + exp;
+    }
+  }
+
+  function resetQuestion(q){
+    q.dataset.done = '';
+    q.querySelectorAll('.opt').forEach(function(o){ o.disabled = false; o.classList.remove('correct','wrong'); });
+    var fb = q.querySelector('.fb'); fb.className = 'fb'; fb.innerHTML = '';
+  }
+
+  // wire up clicks
+  allQuestions.forEach(function(q){
+    q.querySelectorAll('.opt').forEach(function(opt, oi){
+      opt.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        var gi = allQuestions.indexOf(q);
+        state.chosen[gi] = oi;
+        save();
+        applyAnswer(q, oi);
+        refresh();
+      });
+    });
+  });
+
+  // restore previously saved answers
+  Object.keys(state.chosen).forEach(function(k){
+    var gi = parseInt(k,10); var q = allQuestions[gi];
+    if(q) applyAnswer(q, state.chosen[k]);
+  });
+
+  function stats(){
+    var perQuiz = quizzes.map(function(quiz){
+      var qs = quiz.querySelectorAll('.q'); var right=0, ans=0;
+      qs.forEach(function(q){
+        var gi = allQuestions.indexOf(q);
+        if(gi in state.chosen){ ans++; if(state.chosen[gi] === parseInt(q.getAttribute('data-answer'),10)) right++; }
+      });
+      return {total:qs.length, right:right, ans:ans};
+    });
+    var right=0, ans=0;
+    perQuiz.forEach(function(p){ right+=p.right; ans+=p.ans; });
+    return {perQuiz:perQuiz, right:right, ans:ans};
+  }
+
+  function refresh(){
+    var s = stats();
+    var pct = total ? Math.round(s.ans/total*100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent =
+      'Quiz-fremgang: ' + s.ans + ' af ' + total + ' spørgsmål besvaret';
+
+    quizzes.forEach(function(quiz,i){
+      var badge = quiz.querySelector('[data-score]');
+      if(badge) badge.textContent = s.perQuiz[i].right + ' / ' + s.perQuiz[i].total + ' rigtige';
+    });
+
+    if(state.name){
+      document.getElementById('welcomeLive').textContent =
+        'Du har svaret ' + s.ans + ' af ' + total + '. Rigtige indtil nu: ' + s.right + '.';
+    }
+
+    var body = document.getElementById('resultsBody'); body.innerHTML = '';
+    quizzes.forEach(function(quiz,i){
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + moduleNames[i] + '</td><td>' + s.perQuiz[i].right + ' / ' + s.perQuiz[i].total +
+        '</td><td>' + s.perQuiz[i].ans + ' / ' + s.perQuiz[i].total + '</td>';
+      body.appendChild(tr);
+    });
+    var trt = document.createElement('tr'); trt.className = 'total';
+    trt.innerHTML = '<td>I alt</td><td>' + s.right + ' / ' + total + '</td><td>' + s.ans + ' / ' + total + '</td>';
+    body.appendChild(trt);
+
+    var who = state.name ? state.name : 'Du';
+    var g = document.getElementById('gradeMsg');
+    if(s.ans === total){
+      var p = Math.round(s.right/total*100);
+      var msg;
+      if(p === 100) msg = 'Alt rigtigt. Fremragende arbejde.';
+      else if(p >= 80) msg = 'Rigtig flot resultat.';
+      else if(p >= 60) msg = 'Godt gået. Kig på de opgaver, du missede.';
+      else msg = 'God indsats. Læs afsnittene igen, og prøv de svære en gang til.';
+      g.textContent = who + ': ' + s.right + ' ud af ' + total + ' rigtige (' + p + ' %). ' + msg;
+    }else{
+      g.textContent = who + ': ' + s.right + ' rigtige indtil videre. Svar på alle ' + total + ' opgaver for at se dit samlede resultat.';
+    }
+
+    var fm = document.getElementById('finalMsg');
+    if(fm){
+      var last = s.perQuiz[quizzes.length-1];
+      if(last.ans === last.total){
+        if(last.right === last.total) fm.textContent = 'Flot — alt rigtigt i den blandede quiz.';
+        else if(last.right >= last.total-1) fm.textContent = 'Rigtig godt. Kig på det sidste, du missede.';
+        else fm.textContent = 'Se din samlede oversigt nederst under Resultater.';
+      }else{ fm.textContent = ''; }
+    }
+  }
+
+  // name / overlay
+  var overlay = document.getElementById('startOverlay');
+  var nameInput = document.getElementById('nameInput');
+
+  function showWelcome(){
+    var wb = document.getElementById('welcomeBar');
+    if(state.name){ wb.classList.add('show'); document.getElementById('welcomeHi').textContent = 'Hej, ' + state.name + '!'; }
+    else wb.classList.remove('show');
+  }
+
+  function openOverlay(returning){
+    if(returning && state.name){
+      document.getElementById('ovTitle').textContent = 'Velkommen tilbage, ' + state.name + '!';
+      document.getElementById('ovText').textContent = 'Dine tidligere svar er gemt i denne browser. Fortsæt hvor du slap, eller skriv et nyt navn for at starte forfra.';
+      nameInput.value = state.name;
+      document.getElementById('startBtn').textContent = 'Fortsæt';
+    }else{
+      document.getElementById('ovTitle').textContent = 'Velkommen';
+      document.getElementById('ovText').textContent = 'Skriv dit fornavn, så gemmes dine svar og dit resultat i denne browser. Så kan du fortsætte, hvor du slap, næste gang.';
+      nameInput.value = '';
+      document.getElementById('startBtn').textContent = 'Start';
+    }
+    overlay.classList.remove('hidden');
+    setTimeout(function(){ nameInput.focus(); }, 60);
+  }
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    var v = nameInput.value.trim();
+    if(v && v !== state.name){
+      state.name = v;
+      state.chosen = {};
+      allQuestions.forEach(resetQuestion);
+    }else if(v){
+      state.name = v;
+    }
+    save();
+    overlay.classList.add('hidden');
+    showWelcome(); refresh();
+  });
+
+  document.getElementById('skipBtn').addEventListener('click', function(){
+    overlay.classList.add('hidden');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    state.chosen = {};
+    save();
+    allQuestions.forEach(resetQuestion);
+    refresh();
+  });
+
+  document.getElementById('switchBtn').addEventListener('click', function(){
+    state = {name:'', chosen:{}};
+    save();
+    allQuestions.forEach(resetQuestion);
+    showWelcome(); refresh();
+    openOverlay(false);
+  });
+
+  nameInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') document.getElementById('startBtn').click();
+  });
+
+  // init
+  showWelcome();
+  refresh();
+  openOverlay(!!state.name);
+})();
+</script></body></html>
