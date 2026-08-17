@@ -36,12 +36,32 @@ dokumenteres bedre først.
 |---|---|---|---|---|
 | 33 | 10.08 – 14.08 | Statistik: beskriv data | `lektier-uge33-beskriv-data.html` | ✅ udgivet |
 | 34 | 17.08 – 21.08 | Statistik: diagrammer og sumkurve | `lektier-uge34-diagrammer.html` | ✅ udgivet |
-| 35 | 24.08 – 28.08 | Manipulation | `kommende/lektier-uge35-manipulation.html` | ⏳ klar, venter på 24.08 |
+| 35 | 24.08 – 28.08 | Manipulation | `kommende/lektier-uge35-manipulation.html` | ⏳ planlagt til 24.08 kl. 08.00 |
 | 36 | 31.08 – 04.09 | Manipulation (fortsat) | — | ikke lavet |
 | 37 | 07.09 – 11.09 | Sandsynligheder i verden | — | ikke lavet, afventer |
 
 Uge 33 og 34 er udgivet samtidig, fordi uge 33 allerede var passeret, da lektierne
 blev lavet.
+
+## Planlagt udgivelse
+
+Uge 35 udgives automatisk af en planlagt opgave (Routine), oprettet 17. august
+2026:
+
+- **Id:** `trig_01JHr8vUKSkFWdi6msBM5eMY`
+- **Fyrer:** 24. august 2026 kl. 06:00 UTC = 08:00 dansk tid, én gang
+- **Type:** frisk session, så den er uafhængig af den samtale der oprettede den
+- **Besked:** push og mail til ejeren når den er færdig
+
+Den flytter filen op i roden, tilføjer kortet på `matematik.html`, verificerer i
+browser, pusher til `main` og sender `facit/facit-lektier-uge35.md` i chatten.
+
+Routines kan ses og slettes med `list_triggers` og `delete_trigger`. Skal
+udgivelsen aflyses eller flyttes, så ret eller slet den Routine — lav ikke en ny
+ved siden af.
+
+Bemærk: den fyrede session har ingen MCP-connectors, kun almindelige værktøjer.
+Det er nok, fordi den bruger `git` direkte og ikke Vercels API.
 
 ## Hvilken modulopgave svarer lektien til
 
