@@ -1,0 +1,11 @@
+# Facit må ALDRIG ligge på sitet. Filerne bliver i repoet, så de kan sendes i
+# Code, men de bliver ikke udgivet.
+facit/
+
+# Lektier der endnu ikke er givet. Flyttes op i roden på den dag, årsplanen
+# siger — se claude/lektieplan.md.
+kommende/
+
+# Arbejdslog og dokumentation hører ikke på sitet.
+claude/
+CLAUDE.md
