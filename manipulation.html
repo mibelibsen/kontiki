@@ -4,7 +4,292 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manipulation - 9. klasse</title>
-<link rel="stylesheet" href="/style.css">
+<style>
+  :root{
+    --bg:#ffffff;
+    --panel:#ffffff;
+    --panel2:#f4f6fb;
+    --ink:#1a2233;
+    --muted:#586074;
+    --line:#d3dae7;
+    --accent:#1f6fd6;
+    --accent-soft:#eaf2fd;
+    --good:#1a8f5e;
+    --good-soft:#eaf7f0;
+    --bad:#c23b4b;
+    --bad-soft:#fdeef0;
+    --warn:#b5710a;
+    --shadow:0 1px 3px rgba(20,30,60,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  header.top{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(8px);
+    background:rgba(255,255,255,.9);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1000px;margin:0 auto;padding:12px 20px;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}
+  .brand span{color:var(--accent)}
+  nav.jump{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  nav.jump a{
+    color:var(--muted);text-decoration:none;font-size:.86rem;
+    padding:6px 11px;border-radius:999px;border:1px solid transparent;
+    transition:.15s;
+  }
+  nav.jump a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+
+  main{max-width:1000px;margin:0 auto;padding:28px 20px 90px}
+
+  .hero{
+    background:var(--panel2);
+    border:1px solid var(--line);border-radius:20px;
+    padding:34px 32px;box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  .hero h1{margin:0 0 10px;font-size:2.1rem;line-height:1.15}
+  .hero p{margin:0;color:var(--muted);font-size:1.06rem;max-width:72ch}
+  .pill{
+    display:inline-block;font-size:.76rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--line);border-radius:999px;
+    padding:4px 12px;margin-bottom:14px;background:#fff;font-weight:700;
+  }
+
+  .progress-wrap{margin:22px 0 4px}
+  .progress-bar{height:10px;border-radius:999px;background:#e4e9f2;overflow:hidden;border:1px solid var(--line)}
+  .progress-fill{height:100%;width:0;background:var(--accent);transition:width .5s ease}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+  section.lesson{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:28px 30px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  section.lesson h2{
+    font-size:1.5rem;margin:0 0 6px;display:flex;align-items:center;gap:12px;
+  }
+  .num{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    display:grid;place-items:center;font-weight:800;font-size:1rem;
+    background:var(--accent);color:#fff;
+  }
+  section.lesson .sub{color:var(--muted);margin:0 0 18px;font-size:1rem}
+  section.lesson h3{font-size:1.15rem;margin:26px 0 8px;color:#243149}
+  p{margin:12px 0}
+
+  .box{
+    background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;margin:16px 0;
+  }
+  .box.tip{border-left:4px solid var(--good)}
+  .box.note{border-left:4px solid var(--warn)}
+  .box.rule{border-left:4px solid var(--accent);background:var(--accent-soft)}
+  .box b{color:#111}
+  .box .rlabel{
+    display:inline-block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);font-weight:800;margin-bottom:2px;
+  }
+
+  .formula{
+    font-family:"Cambria Math","Times New Roman",Georgia,serif;
+    background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0;text-align:center;
+    font-size:1.3rem;letter-spacing:.4px;color:#111;
+  }
+  .formula small{display:block;font-size:.8rem;color:var(--muted);margin-top:6px;font-family:inherit;letter-spacing:0}
+  code.inl{
+    font-family:"Cambria Math",Georgia,serif;background:var(--panel2);
+    padding:2px 8px;border-radius:6px;border:1px solid var(--line);font-size:1.05em;color:#111;
+  }
+
+  .steps{margin:16px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .steps .row{display:flex;gap:0;border-top:1px solid var(--line)}
+  .steps .row:first-child{border-top:none}
+  .steps .calc{
+    flex:1;padding:11px 18px;font-family:"Cambria Math",Georgia,serif;font-size:1.12rem;
+    background:#fff;color:#111;display:flex;align-items:center;
+  }
+  .steps .why{
+    flex:1;padding:11px 18px;color:var(--muted);font-size:.92rem;background:var(--panel2);
+    display:flex;align-items:center;
+  }
+  @media(max-width:620px){.steps .row{flex-direction:column}}
+
+  .graphwrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin:18px 0}
+  .graphwrap svg{background:#fff;border:1px solid var(--line);border-radius:12px;flex:0 0 auto}
+  .graphwrap .caption{flex:1;min-width:220px;color:var(--muted);font-size:.95rem}
+
+  /* QUIZ */
+  .quiz{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:18px;padding:24px 28px;margin:24px 0;box-shadow:var(--shadow);
+  }
+  .quiz .qhead{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+  .quiz .qtag{
+    font-size:.72rem;letter-spacing:.7px;text-transform:uppercase;color:#fff;
+    background:var(--accent);padding:4px 11px;border-radius:999px;font-weight:800;
+  }
+  .quiz h3{margin:0;font-size:1.22rem}
+  .quiz .qsub{color:var(--muted);margin:6px 0 16px;font-size:.95rem}
+  .q{margin:18px 0;padding-top:18px;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:none;padding-top:0}
+  .q .qtext{font-weight:600;margin-bottom:12px;font-size:1.04rem}
+  .q .qtext .qn{color:var(--accent);font-weight:800;margin-right:6px}
+  .lvl{
+    display:inline-block;font-size:.68rem;letter-spacing:.5px;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:8px;
+    color:var(--muted);font-weight:700;vertical-align:middle;background:#fff;
+  }
+  .opts{display:grid;gap:9px}
+  .opt{
+    text-align:left;width:100%;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);color:var(--ink);
+    padding:11px 15px;border-radius:10px;font-size:1rem;font-family:inherit;
+    transition:.15s;display:flex;align-items:center;gap:10px;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .mk{
+    flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);
+    display:grid;place-items:center;font-weight:800;font-size:.85rem;color:var(--muted);background:#fff;
+  }
+  .opt.correct{border-color:var(--good);background:var(--good-soft)}
+  .opt.correct .mk{background:var(--good);color:#fff;border-color:var(--good)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.wrong .mk{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt:disabled{cursor:default}
+  .fb{
+    margin-top:12px;padding:11px 15px;border-radius:10px;font-size:.95rem;display:none;
+  }
+  .fb.show{display:block}
+  .fb.ok{background:var(--good-soft);border:1px solid var(--good);color:#12633f}
+  .fb.no{background:var(--bad-soft);border:1px solid var(--bad);color:#8f2733}
+  .fb b{color:#111}
+
+  .scorebar{
+    margin-top:16px;font-size:.95rem;color:var(--muted);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .scorebar .badge{
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:5px 14px;font-weight:700;color:var(--ink);
+  }
+  .final-note{text-align:center;color:var(--muted);margin-top:16px;font-size:.95rem}
+
+  footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  @media(max-width:620px){.cheat{grid-template-columns:1fr}}
+  .cheat .card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .cheat .card h4{margin:0 0 6px;font-size:1rem;color:#243149}
+  .cheat .card p{margin:0;font-size:.92rem;color:var(--muted)}
+
+  .printbtn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:#fff;border:1px solid var(--line);color:var(--ink);
+    padding:9px 16px;border-radius:10px;font-size:.92rem;font-family:inherit;cursor:pointer;
+    font-weight:600;
+  }
+  .printbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .btn{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn:hover{background:#195cb5}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* start overlay */
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(26,34,51,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}
+  .overlay.hidden{display:none}
+  .overlay .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 32px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(20,30,60,.25)}
+  .overlay h2{margin:0 0 6px;font-size:1.5rem}
+  .overlay p{margin:0 0 18px;color:var(--muted)}
+  .overlay input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:1.05rem;font-family:inherit;margin-bottom:14px}
+  .overlay input:focus{outline:none;border-color:var(--accent)}
+  .overlay .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* welcome bar */
+  .welcome{display:none;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .welcome.show{display:flex}
+  .welcome .hi{font-weight:800;font-size:1.05rem}
+  .welcome .live{color:var(--muted);font-size:.95rem}
+  .welcome .spacer{margin-left:auto}
+  .welcome .btn{padding:8px 14px;font-size:.9rem}
+
+  /* results */
+  #results .rtable{width:100%;border-collapse:collapse;margin-top:10px}
+  #results .rtable th,#results .rtable td{border:1px solid var(--line);padding:9px 12px;text-align:left;font-size:.98rem}
+  #results .rtable th{background:var(--panel2);font-weight:700}
+  #results .rtable tr.total td{font-weight:800;background:var(--accent-soft)}
+  #results .grade{font-size:1.08rem;margin-top:16px;font-weight:600}
+
+  /* ---------- PRINT ---------- */
+  .opg{background:#fdf8f0;border:1px solid var(--line);border-left:4px solid #b5710a;border-radius:10px;padding:14px 18px;margin:18px 0 4px}.opg h4{margin:0 0 6px;font-size:1.02rem}.opg h4 em{font-style:normal;color:#b5710a;font-weight:800;margin-right:8px}.opg ol{margin:8px 0 2px;padding-left:24px}.opg ol li{margin:5px 0}.opg .opgtable{margin:10px 0 4px}
+ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margin:5px 0}.opgtable{width:auto;min-width:60%;border-collapse:collapse;margin:8px 0}.opgtable th,.opgtable td{border:1px solid #cfd6e4;padding:5px 10px;font-size:.92rem;text-align:left}.opgtable th{background:#f4f6fb}
+
+  /* ---------- FIGURER (kun denne side) ---------- */
+  .figur{margin:18px 0}
+  .figur svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .figur .caption{color:var(--muted);font-size:.95rem;margin-top:8px}
+  .to-figurer{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:18px 0}
+  .to-figurer .figur{margin:0}
+  @media(max-width:620px){.to-figurer{grid-template-columns:1fr}}
+
+  .cirkelblok{display:flex;gap:24px;flex-wrap:wrap;align-items:center;margin:18px 0}
+  .cirkelblok svg{flex:0 0 auto;width:min(300px,100%);height:auto;background:#fff;border:1px solid var(--line);border-radius:12px}
+  ul.legende{flex:1;min-width:200px;list-style:none;margin:0;padding:0;font-size:.95rem}
+  ul.legende li{display:flex;align-items:center;gap:9px;margin:7px 0}
+  ul.legende i{flex:0 0 auto;width:14px;height:14px;border-radius:4px;border:1px solid var(--line)}
+
+  /* links til de andre sider, adskilt fra sidens egne anker-links */
+  nav.jump a.side{border-color:var(--line);background:var(--panel2);color:var(--ink);font-weight:600}
+  nav.jump a.side:hover{border-color:var(--accent);color:var(--accent)}
+
+  @media print{
+    @page{margin:16mm}
+    body{background:#fff;color:#000;font-size:11.5pt;line-height:1.45}
+    header.top,nav.jump,.progress-wrap,.printbtn,.overlay,.welcome .btn{display:none !important}
+    .welcome{border:1px solid #999;background:#fff !important}
+    main{max-width:none;padding:0}
+    .hero,section.lesson,.quiz,.box,.steps,.cheat .card,.formula,.graphwrap svg,.figur svg,.cirkelblok svg{
+      box-shadow:none !important;
+    }
+    .hero,section.lesson,.quiz{
+      border:1px solid #999;background:#fff !important;border-radius:0;
+      padding:14px 16px;margin:10px 0;break-inside:avoid;page-break-inside:avoid;
+    }
+    section.lesson h2,.quiz h3,section.lesson h3{break-after:avoid}
+    .num{background:#fff !important;color:#000;border:1.5px solid #000}
+    .pill,.qtag{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .box,.box.rule{background:#fff !important;border:1px solid #bbb;border-left:3px solid #000}
+    .rlabel{color:#000 !important}
+    .formula,.steps .calc,.opt,.opt .mk,.cheat .card{background:#fff !important}
+    .steps .why{background:#fff !important;color:#333}
+    .opt{border:1px solid #888}
+    .opt .mk{border:1px solid #000;color:#000}
+    /* keep quizzes usable as a paper worksheet: neutral options, hide screen-only feedback state */
+    .opt.correct,.opt.wrong{background:#fff !important;border:1px solid #888 !important}
+    .opt.correct .mk,.opt.wrong .mk{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .fb{display:none !important}
+    .q{break-inside:avoid;page-break-inside:avoid}
+    a{color:#000;text-decoration:none}
+    /* figurerne baerer pointen i farverne - lad dem printe som de ser ud */
+    .figur svg,.cirkelblok svg,ul.legende i{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .figur svg,.cirkelblok svg{border:1px solid #999}
+    .figur,.to-figurer,.cirkelblok{break-inside:avoid;page-break-inside:avoid}
+    .to-figurer{gap:10px}
+    .caption{color:#333}
+  }
+</style>
 </head>
 <body data-store-key="man9_state_v1" data-modules="Modul 1: Stikprøven|Modul 2: Diagrammet|Modul 3: Tallet og teksten|Blandet quiz">
 <div class="overlay" id="startOverlay">
@@ -28,6 +313,7 @@
       <a href="#tallet">Tallet og teksten</a>
       <a href="#blandet">Blandet quiz</a>
       <a href="#results">Resultater</a>
+      <a class="side" href="index.html">Forside</a>
       <a class="side" href="matematik.html">Matematik</a>
       <a class="side" href="statistik.html">Statistik</a>
     </nav>
@@ -786,6 +1072,210 @@
   Undervisningsmateriale til matematik i 9. klasse · Manipulation. Stikprøver, diagrammer og fortolkning af data.
 </footer>
 
-<script src="/app.js"></script>
+<script>
+(function(){
+  // Nogle af sidens indstillinger staar paa <body>, saa den samme motor kan
+  // koere flere emnesider uden at blive rettet: data-store-key er noeglen i
+  // localStorage, data-modules er modulnavnene til resultattabellen.
+  var page = document.body;
+  var STORAGE_KEY = page.getAttribute('data-store-key') || 'quiz_state_v1';
+  var okChime = ["Rigtigt. Godt set.","Korrekt. Sådan.","Præcis rigtigt.","Ja, det er rigtigt.","Flot, det er rigtigt."];
+  var moduleNames = (page.getAttribute('data-modules') || '').split('|');
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  var allQuestions = Array.prototype.slice.call(document.querySelectorAll('.q'));
+  var total = allQuestions.length;
+
+  var state = load() || {name:'', chosen:{}};
+  if(!state.chosen) state.chosen = {};
+
+  function load(){
+    try{ var s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : null; }
+    catch(e){ return null; }
+  }
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function applyAnswer(q, chosenIdx){
+    if(q.dataset.done === '1') return;
+    q.dataset.done = '1';
+    var correct = parseInt(q.getAttribute('data-answer'),10);
+    var exp = q.getAttribute('data-exp') || '';
+    var idx = allQuestions.indexOf(q);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(o,j){ o.disabled = true; if(j === correct) o.classList.add('correct'); });
+    if(chosenIdx === correct){
+      fb.className = 'fb show ok';
+      fb.innerHTML = '<b>' + okChime[idx % okChime.length] + '</b> ' + exp;
+    }else{
+      if(opts[chosenIdx]) opts[chosenIdx].classList.add('wrong');
+      fb.className = 'fb show no';
+      fb.innerHTML = '<b>Ikke helt.</b> ' + exp;
+    }
+  }
+
+  function resetQuestion(q){
+    q.dataset.done = '';
+    q.querySelectorAll('.opt').forEach(function(o){ o.disabled = false; o.classList.remove('correct','wrong'); });
+    var fb = q.querySelector('.fb'); fb.className = 'fb'; fb.innerHTML = '';
+  }
+
+  // wire up clicks
+  allQuestions.forEach(function(q){
+    q.querySelectorAll('.opt').forEach(function(opt, oi){
+      opt.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        var gi = allQuestions.indexOf(q);
+        state.chosen[gi] = oi;
+        save();
+        applyAnswer(q, oi);
+        refresh();
+      });
+    });
+  });
+
+  // restore previously saved answers
+  Object.keys(state.chosen).forEach(function(k){
+    var gi = parseInt(k,10); var q = allQuestions[gi];
+    if(q) applyAnswer(q, state.chosen[k]);
+  });
+
+  function stats(){
+    var perQuiz = quizzes.map(function(quiz){
+      var qs = quiz.querySelectorAll('.q'); var right=0, ans=0;
+      qs.forEach(function(q){
+        var gi = allQuestions.indexOf(q);
+        if(gi in state.chosen){ ans++; if(state.chosen[gi] === parseInt(q.getAttribute('data-answer'),10)) right++; }
+      });
+      return {total:qs.length, right:right, ans:ans};
+    });
+    var right=0, ans=0;
+    perQuiz.forEach(function(p){ right+=p.right; ans+=p.ans; });
+    return {perQuiz:perQuiz, right:right, ans:ans};
+  }
+
+  function refresh(){
+    var s = stats();
+    var pct = total ? Math.round(s.ans/total*100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent =
+      'Quiz-fremgang: ' + s.ans + ' af ' + total + ' spørgsmål besvaret';
+
+    quizzes.forEach(function(quiz,i){
+      var badge = quiz.querySelector('[data-score]');
+      if(badge) badge.textContent = s.perQuiz[i].right + ' / ' + s.perQuiz[i].total + ' rigtige';
+    });
+
+    if(state.name){
+      document.getElementById('welcomeLive').textContent =
+        'Du har svaret ' + s.ans + ' af ' + total + '. Rigtige indtil nu: ' + s.right + '.';
+    }
+
+    var body = document.getElementById('resultsBody'); body.innerHTML = '';
+    quizzes.forEach(function(quiz,i){
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + (moduleNames[i] || 'Modul ' + (i+1)) + '</td><td>' + s.perQuiz[i].right + ' / ' + s.perQuiz[i].total +
+        '</td><td>' + s.perQuiz[i].ans + ' / ' + s.perQuiz[i].total + '</td>';
+      body.appendChild(tr);
+    });
+    var trt = document.createElement('tr'); trt.className = 'total';
+    trt.innerHTML = '<td>I alt</td><td>' + s.right + ' / ' + total + '</td><td>' + s.ans + ' / ' + total + '</td>';
+    body.appendChild(trt);
+
+    var who = state.name ? state.name : 'Du';
+    var g = document.getElementById('gradeMsg');
+    if(s.ans === total){
+      var p = Math.round(s.right/total*100);
+      var msg;
+      if(p === 100) msg = 'Alt rigtigt. Fremragende arbejde.';
+      else if(p >= 80) msg = 'Rigtig flot resultat.';
+      else if(p >= 60) msg = 'Godt gået. Kig på de opgaver, du missede.';
+      else msg = 'God indsats. Læs afsnittene igen, og prøv de svære en gang til.';
+      g.textContent = who + ': ' + s.right + ' ud af ' + total + ' rigtige (' + p + ' %). ' + msg;
+    }else{
+      g.textContent = who + ': ' + s.right + ' rigtige indtil videre. Svar på alle ' + total + ' opgaver for at se dit samlede resultat.';
+    }
+
+    var fm = document.getElementById('finalMsg');
+    if(fm){
+      var last = s.perQuiz[quizzes.length-1];
+      if(last.ans === last.total){
+        if(last.right === last.total) fm.textContent = 'Flot — alt rigtigt i den blandede quiz.';
+        else if(last.right >= last.total-1) fm.textContent = 'Rigtig godt. Kig på det sidste, du missede.';
+        else fm.textContent = 'Se din samlede oversigt nederst under Resultater.';
+      }else{ fm.textContent = ''; }
+    }
+  }
+
+  // name / overlay
+  var overlay = document.getElementById('startOverlay');
+  var nameInput = document.getElementById('nameInput');
+
+  function showWelcome(){
+    var wb = document.getElementById('welcomeBar');
+    if(state.name){ wb.classList.add('show'); document.getElementById('welcomeHi').textContent = 'Hej, ' + state.name + '!'; }
+    else wb.classList.remove('show');
+  }
+
+  function openOverlay(returning){
+    if(returning && state.name){
+      document.getElementById('ovTitle').textContent = 'Velkommen tilbage, ' + state.name + '!';
+      document.getElementById('ovText').textContent = 'Dine tidligere svar er gemt i denne browser. Fortsæt hvor du slap, eller skriv et nyt navn for at starte forfra.';
+      nameInput.value = state.name;
+      document.getElementById('startBtn').textContent = 'Fortsæt';
+    }else{
+      document.getElementById('ovTitle').textContent = 'Velkommen';
+      document.getElementById('ovText').textContent = 'Skriv dit fornavn, så gemmes dine svar og dit resultat i denne browser. Så kan du fortsætte, hvor du slap, næste gang.';
+      nameInput.value = '';
+      document.getElementById('startBtn').textContent = 'Start';
+    }
+    overlay.classList.remove('hidden');
+    setTimeout(function(){ nameInput.focus(); }, 60);
+  }
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    var v = nameInput.value.trim();
+    if(v && v !== state.name){
+      state.name = v;
+      state.chosen = {};
+      allQuestions.forEach(resetQuestion);
+    }else if(v){
+      state.name = v;
+    }
+    save();
+    overlay.classList.add('hidden');
+    showWelcome(); refresh();
+  });
+
+  document.getElementById('skipBtn').addEventListener('click', function(){
+    overlay.classList.add('hidden');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    state.chosen = {};
+    save();
+    allQuestions.forEach(resetQuestion);
+    refresh();
+  });
+
+  document.getElementById('switchBtn').addEventListener('click', function(){
+    state = {name:'', chosen:{}};
+    save();
+    allQuestions.forEach(resetQuestion);
+    showWelcome(); refresh();
+    openOverlay(false);
+  });
+
+  nameInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') document.getElementById('startBtn').click();
+  });
+
+  // init
+  showWelcome();
+  refresh();
+  openOverlay(!!state.name);
+})();
+</script>
 </body>
 </html>

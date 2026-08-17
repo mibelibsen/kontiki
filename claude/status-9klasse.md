@@ -28,7 +28,7 @@ Sproget er dansk hele vejen igennem. Eleverne omtales "unger".
 | `aarsplan-matematik-2026-27.xlsx` | Download-version af årsplanen | Klar |
 | `statistik.html` | Interaktiv side, 4 moduler + blandet quiz | Klar |
 | `funktioner-og-ligninger.html` | Interaktiv side, 26 quizspørgsmål | Klar |
-| `manipulation.html` | Interaktiv side, 3 moduler + blandet quiz | Klar, **men se afhængigheder** |
+| `manipulation.html` | Interaktiv side, 3 moduler + blandet quiz | Klar, selvbærende
 | `statistik-hjemmeopgaver.html` | 35 opgaver til print/aflevering | Klar |
 | `facitark-funktioner-og-ligninger.html` | Facit som HTML | Klar, **ikke linket fra nogen side** |
 | `facit-statistik-online.pdf` | Facit til statistik-siden | **Ikke linket** |
@@ -44,34 +44,39 @@ Sproget er dansk hele vejen igennem. Eleverne omtales "unger".
 
 ## Teknisk mønster
 
-De fleste sider har **al CSS inline** i et `<style>`-blok og al JS inline i et
+**Alle** sider har nu al CSS inline i et `<style>`-blok og al JS inline i et
 `<script>`-blok, så hver fil virker alene. Fælles designtokens (`--accent:#1f6fd6`
 m.fl.) er kopieret ind i hver fil.
 
-De interaktive sider gemmer elevens navn og svar i `localStorage` via en
-`data-store-key` på `<body>` (fx `man9_state_v1`), så ungen kan fortsætte hvor
-hen slap.
+De interaktive sider gemmer elevens navn og svar i `localStorage`. Quiz-motoren i
+`manipulation.html` er den generelle udgave: den læser `data-store-key` (nøglen i
+localStorage) og `data-modules` (modulnavne til resultattabellen, adskilt af `|`)
+fra `<body>`, så den kan genbruges på en ny emneside uden at blive rettet.
+`statistik.html` og `funktioner-og-ligninger.html` har stadig hver deres kopi med
+hårdkodede værdier.
+
+Quiz-markuppen er ens på tværs af siderne: `.quiz` > `.q[data-answer][data-exp]`
+> `.opt`, plus `.fb` til feedback og et `[data-score]`-badge pr. quiz. Siden skal
+have disse id'er: `startOverlay`, `nameInput`, `ovTitle`, `ovText`, `startBtn`,
+`skipBtn`, `resetBtn`, `switchBtn`, `welcomeBar`, `welcomeHi`, `welcomeLive`,
+`progressFill`, `progressLabel`, `resultsBody`, `gradeMsg`, `finalMsg`.
 
 ## Åbne punkter
 
-1. **`manipulation.html` bruger eksterne filer.** Den er den eneste side uden
-   inline CSS/JS — den henter `/style.css` og `/app.js` fra sitets rod. De to
-   filer er ikke i repoet. Enten mangler de i uploadet, eller også er siden
-   ustylet når den åbnes lokalt. **Skal afklares:** findes de på det deployede
-   site, eller skal CSS/JS inlines som på de andre sider?
-2. **Facit-filerne er ikke linket** fra nogen side. Tre facit-ressourcer ligger
+1. **Facit-filerne er ikke linket** fra nogen side. Tre facit-ressourcer ligger
    i repoet uden indgang. Bevidst (så unger ikke finder dem) eller glemt?
-3. **`model-fra-anden-chat/`** er en næsten identisk kopi af `manipulation.html`
+2. **`model-fra-anden-chat/`** er en næsten identisk kopi af `manipulation.html`
    med absolutte links (`/statistik.html`) plus tre manipulation-PDF'er der
    ikke findes i roden. Enten flyt PDF'erne op og slet mappen, eller behold den
-   som arkiv.
-4. **Manipulation mangler et hjemmeopgave-ark** — statistik har ét, det har
+   som arkiv. Bemærk at kopien stadig peger på `/style.css` og `/app.js`.
+3. **Manipulation mangler et hjemmeopgave-ark** — statistik har ét, det har
    funktioner og manipulation ikke.
-5. **Ingen "tilbage til forsiden"** fra `statistik.html` og `manipulation.html`
-   — de linker kun til `matematik.html`.
-6. **Årsplaner til samfundsfag og tysk** mangler stadig.
+4. **`statistik.html` mangler stadig "tilbage til forsiden"** — den linker kun
+   til `matematik.html`. Manipulation har fået linket.
+5. **Årsplaner til samfundsfag og tysk** mangler stadig.
+6. **`/style.css` og `/app.js` på det deployede site** bruges nu ikke længere af
+   nogen side i repoet. Tjek om de kan fjernes fra deployet.
 
 ## Næste skridt
 
-Ikke besluttet. Afklar punkt 1 først — det er det eneste der kan gøre en side
-ubrugelig for eleverne.
+Ikke besluttet — tag et af punkterne ovenfor.
