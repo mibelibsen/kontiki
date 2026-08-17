@@ -37,7 +37,7 @@ dokumenteres bedre først.
 | 33 | 10.08 – 14.08 | Statistik: beskriv data | `lektier-uge33-beskriv-data.html` | ✅ udgivet |
 | 34 | 17.08 – 21.08 | Statistik: diagrammer og sumkurve | `lektier-uge34-diagrammer.html` | ✅ udgivet |
 | 35 | 24.08 – 28.08 | Manipulation | `kommende/lektier-uge35-manipulation.html` | ⏳ planlagt til 24.08 kl. 08.00 |
-| 36 | 31.08 – 04.09 | Manipulation (fortsat) | — | ikke lavet |
+| 36 | 31.08 – 04.09 | Manipulation (fortsat) | `kommende/lektier-uge36-manipulation-diagrammer.html` | ⏳ planlagt til 31.08 kl. 08.00 |
 | 37 | 07.09 – 11.09 | Sandsynligheder i verden | — | ikke lavet, afventer |
 
 Uge 33 og 34 er udgivet samtidig, fordi uge 33 allerede var passeret, da lektierne
@@ -45,16 +45,17 @@ blev lavet.
 
 ## Planlagt udgivelse
 
-Uge 35 udgives automatisk af en planlagt opgave (Routine), oprettet 17. august
-2026:
+Uge 35 og 36 udgives automatisk af to Routines, oprettet 17. august 2026. Begge
+fyrer i en frisk session, uafhængigt af den samtale der oprettede dem, og sender
+push og mail til ejeren når de er færdige.
 
-- **Id:** `trig_01JHr8vUKSkFWdi6msBM5eMY`
-- **Fyrer:** 24. august 2026 kl. 06:00 UTC = 08:00 dansk tid, én gang
-- **Type:** frisk session, så den er uafhængig af den samtale der oprettede den
-- **Besked:** push og mail til ejeren når den er færdig
+| Uge | Id | Fyrer |
+|---|---|---|
+| 35 | `trig_01JHr8vUKSkFWdi6msBM5eMY` | 24.08.2026 kl. 06:00 UTC = 08:00 dansk |
+| 36 | `trig_011VkD4eyGviV1DGpejiRHsa` | 31.08.2026 kl. 06:00 UTC = 08:00 dansk |
 
-Den flytter filen op i roden, tilføjer kortet på `matematik.html`, verificerer i
-browser, pusher til `main` og sender `facit/facit-lektier-uge35.md` i chatten.
+Hver af dem flytter sin fil op i roden, tilføjer kortet på `matematik.html`,
+verificerer i browser, pusher til `main` og sender det tilhørende facit i chatten.
 
 Routines kan ses og slettes med `list_triggers` og `delete_trigger`. Skal
 udgivelsen aflyses eller flyttes, så ret eller slet den Routine — lav ikke en ny
@@ -73,6 +74,7 @@ med nye tal.
 | Uge 33, opgave A og B | `statistik.html`, Opgave A (modul 1) |
 | Uge 34, opgave A og B | `statistik.html`, Opgave B (modul 2) |
 | Uge 35, opgave A og B | `manipulation.html`, Opgave A og C |
+| Uge 36, opgave A–D | `manipulation.html`, Opgave B og D |
 
 ## Test af tallene
 
