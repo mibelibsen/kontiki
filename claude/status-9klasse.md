@@ -5,15 +5,15 @@ Sidst opdateret: 2026-08-17
 Denne fil er arbejdsloggen for sitet. Læs den først i en ny session, og opdatér
 den til sidst, så næste session kan fortsætte uden at gætte.
 
-**Deploy virker ikke — læs `claude/deploy.md` før du forsøger.** Kort: domænet
-mibelibsen.space sidder på et Vercel-projekt som denne sessions forbindelse
-hverken kan se eller deploye til. Det kræver en rettelse i Vercel-kontoen, ikke
-i koden.
+**Deploy:** Vercel-projektet `kontiki-9klasse` er koblet til dette repo og
+bygger ved hvert push til `main`. Mangler kun at få domænet flyttet over fra
+`kontiki9`. Se `claude/opsaetning.md`. Claudes egen Vercel-adgang kan ikke
+bruges og skal ikke bruges — Git-koblingen klarer det.
 
 > **Bemærk:** Denne fil fandtes ikke i repoet, da den blev efterspurgt første
 > gang (repoet var tomt, og zip-filen indeholdt kun HTML/PDF/XLSX). Indholdet
-> nedenfor er rekonstrueret ud fra de faktiske filer i uploadet — ikke fra en
-> tidligere status-fil. Hvis der findes en original, så indsæt den i stedet.
+> er rekonstrueret ud fra de faktiske filer i uploadet — ikke fra en tidligere
+> status-fil.
 
 ## Hvad sitet er
 
@@ -38,7 +38,9 @@ Sproget er dansk hele vejen igennem. Eleverne omtales "unger".
 | `facitark-funktioner-og-ligninger.html` | Facit som HTML | Klar, **ikke linket fra nogen side** |
 | `facit-statistik-online.pdf` | Facit til statistik-siden | **Ikke linket** |
 | `facit-statistik-hjemmeopgaver.pdf` | Facit til hjemmeopgaverne | **Ikke linket** |
-| `model-fra-anden-chat/` | Ældre variant af manipulation + 3 PDF'er | Duplikat, bør ryddes op |
+| `lektier-manipulation.pdf` | Opgaveark til manipulation | Linket fra `matematik.html` |
+| `facitark-manipulation.pdf` | Facit til manipulation-siden | **Ikke linket** |
+| `facit-lektier-manipulation.pdf` | Facit til opgavearket | **Ikke linket** |
 
 ## Fagfaner
 
@@ -68,19 +70,17 @@ have disse id'er: `startOverlay`, `nameInput`, `ovTitle`, `ovText`, `startBtn`,
 
 ## Åbne punkter
 
-1. **Facit-filerne er ikke linket** fra nogen side. Tre facit-ressourcer ligger
-   i repoet uden indgang. Bevidst (så unger ikke finder dem) eller glemt?
-2. **`model-fra-anden-chat/`** er en næsten identisk kopi af `manipulation.html`
-   med absolutte links (`/statistik.html`) plus tre manipulation-PDF'er der
-   ikke findes i roden. Enten flyt PDF'erne op og slet mappen, eller behold den
-   som arkiv. Bemærk at kopien stadig peger på `/style.css` og `/app.js`.
-3. **Manipulation mangler et hjemmeopgave-ark** — statistik har ét, det har
-   funktioner og manipulation ikke.
-4. **`statistik.html` mangler stadig "tilbage til forsiden"** — den linker kun
-   til `matematik.html`. Manipulation har fået linket.
-5. **Årsplaner til samfundsfag og tysk** mangler stadig.
-6. **`/style.css` og `/app.js` på det deployede site** bruges nu ikke længere af
-   nogen side i repoet. Tjek om de kan fjernes fra deployet.
+1. **Fire facit-filer er ikke linket** fra nogen side. Bevidst (så unger ikke
+   finder dem) eller glemt?
+2. **Funktioner og ligninger mangler et opgaveark.** Statistik og manipulation
+   har hver ét; funktioner har kun et facitark.
+3. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
+   `matematik.html`. Manipulation har fået linket.
+4. **Årsplaner til samfundsfag og tysk** mangler stadig.
+5. **Quiz-motoren findes i tre kopier.** Kun `manipulation.html` har den
+   generelle udgave. `statistik.html` og `funktioner-og-ligninger.html` har
+   hver deres med hårdkodet nøgle og modulnavne. Kan samles, hvis en side mere
+   skal laves.
 
 ## Næste opgave — indhold
 
@@ -101,6 +101,11 @@ arbejde i den live-udgave, som ikke findes i dette repo.
 Bed om en konkret liste over fejl frem for at gætte. Når deploy-flowet virker,
 kan hver rettelse ses live under et minut efter et push.
 
-## Næste skridt
+## Løst undervejs
 
-Ikke besluttet — tag et af punkterne ovenfor.
+- `manipulation.html` hentede `/style.css` og `/app.js` fra sitets rod og lå
+  ustylet. Begge dele er nu inline, og motoren er gjort generel.
+- Dubletmappen `model-fra-anden-chat/` er slettet. Dens tre PDF'er var unikke
+  og ligger nu i roden.
+- `lektier-manipulation.pdf` var ikke linket nogen steder og har fået et kort
+  på `matematik.html`.
