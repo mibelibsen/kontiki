@@ -28,13 +28,21 @@ det gamle, når det nye beviseligt virker.
 
 ### 1. Find ud af hvor domænet ligger nu
 
-👉 **https://vercel.com/mibelibsens-projects/~/domains**
+👉 **https://vercel.com/mibelibsens-projects/~/domains/mibelibsen.space**
 
-Find `mibelibsen.space` på listen. Kolonnen ved siden af viser, hvilket projekt
-det peger på. **Skriv projektnavnet ned** — du skal bruge det i trin 6 og 7.
+Bemærk: oversigten på `/~/domains` viser **ikke**, hvilket projekt et domæne
+hører til — kun navn, fornyelse og dato. Du skal klikke ind på selve domænet,
+og det er adressen ovenfor.
 
-Står domænet der slet ikke, ligger det i en anden Vercel-konto end teamet
-`mibelibsens-projects`. Sig til, hvis det er tilfældet.
+På den side finder du feltet, der viser projektet — *Assigned to*, *Project*
+eller en liste over projekter. **Skriv navnet ned**; du skal bruge det i trin
+6 og 7.
+
+Står der intet projekt, er domænet købt men aldrig koblet på noget. Så skal du
+ikke fjerne noget i trin 6 — kun tilføje.
+
+Domænet blev købt gennem Vercel 17. august 2026 og ligger i teamet
+`mibelibsens-projects`. Det skal altså ikke flyttes mellem konti.
 
 ### 2. Se hvad der allerede findes
 
