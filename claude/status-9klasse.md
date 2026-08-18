@@ -24,22 +24,35 @@ moduler og lektier ligger i `facit/` som PDF.
 
 ## Næste skridt
 
-1. **`funktioner-og-ligninger.html` er det største hul.** Siden har kun quiz —
-   hverken åbne opgaver som statistik og manipulation, eller figurer og
-   tegnepladser. Der er heller ikke lavet lektier eller facit til den.
-2. **Gennemgå matematikken på de interaktive sider.** Facit til modulopgaverne
+1. **Gennemgå matematikken på de interaktive sider.** Facit til modulopgaverne
    er nu skrevet og efterregnet, men **quizzernes** `data-answer` er ikke
    verificeret — 81 spørgsmål på tværs af de tre sider. Der er ikke lavet et
    gennemløb af, om det markerede rigtige svar faktisk er rigtigt.
-3. **Lektier fra uge 37.** Der er lavet til og med uge 36. Aftalt at indholdet
+2. **Lektier fra uge 37.** Der er lavet til og med uge 36. Aftalt at indholdet
    skal gennemgås, før der laves mere.
-4. **Årsplaner til samfundsfag og tysk.** Afventer at brugeren sender dem.
-5. **Fire gamle facit-filer** i `facit/` er ikke omskrevet til det nye
+3. **Årsplaner til samfundsfag og tysk.** Afventer at brugeren sender dem.
+4. **Fire gamle facit-filer** i `facit/` er ikke omskrevet til det nye
    PDF-format: `facitark-funktioner-og-ligninger.html`, `facitark-manipulation.pdf`,
    `facit-lektier-manipulation.pdf`, `facit-statistik-hjemmeopgaver.pdf`,
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
-6. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
+5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
+
+## Rettet 18. august 2026
+
+- **`funktioner-og-ligninger.html` var det største hul** — kun quiz, ingen åbne
+  opgaver, to figurer. Den har nu Opgave A–D med 26 delspørgsmål, tre nye
+  figurer, og quiz-motoren er gjort generel som på manipulation.
+- **Lektier til uge 38, 39 og 41** er lavet og planlagt. Dermed er der lektier
+  til hele blok 1 og blok 2 så langt, som sidernes indhold rækker.
+- **Illustrationer på selve sitet.** De fire diagramtyper på statistik.html har
+  fået et eksempel hver, og kildekritik-modulet har fået den afskårne y-akse
+  tegnet.
+- **Endnu en talfejl fundet ved at tegne:** siden skrev, at to søjler på 102 og
+  105 ser "dobbelt så større" ud med afskåret akse. De ser **2,5 gange** så høje
+  ud, og den reelle forskel er **2,94 %**. Rettet, og begge tal står nu i figuren.
+- **Lektiearkene uddeles som PDF uden facit** fra `lektieark/`, navngivet uden
+  ordet facit. Mappen er udelukket fra deploy.
 
 ## Rettet 17. august 2026
 
