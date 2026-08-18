@@ -2,6 +2,10 @@
 # Code, men de bliver ikke udgivet.
 facit/
 
+# Lektiearkene som PDF. De uddeles i Code eller på print, ikke via sitet —
+# ellers ligger kommende ugers lektier frit tilgængelige.
+lektieark/
+
 # Lektier der endnu ikke er givet. Flyttes op i roden på den dag, årsplanen
 # siger — se claude/lektieplan.md.
 kommende/

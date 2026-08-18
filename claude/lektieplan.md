@@ -11,9 +11,12 @@ Sidst opdateret: 2026-08-17
    timen eller derhjemme — ikke noget der stilles for.
 3. **Intet udgives før den dag, lektien gives.** Kommende lektier ligger i
    `kommende/` og udgives ved at flytte filen op i roden og pushe.
-4. **Facit kommer aldrig på sitet.** Facit ligger i `facit/` og sendes i Code.
+4. **Lektiearket uddeles som PDF uden facit.** PDF'erne ligger i `lektieark/`
+   og hedder `lektier-<ÅÅÅÅ-MM-DD>-<emne>.pdf` — uden ordet "facit" i navnet.
+   Mappen er udelukket fra deploy, så kommende ugers lektier ikke ligger frit.
+5. **Facit kommer aldrig på sitet.** Facit ligger i `facit/` og sendes i Code.
    Begge mapper er udelukket i `.vercelignore`.
-5. Besvarelsesformuleringen er altid:
+6. Besvarelsesformuleringen er altid:
    *"Lav udregninger i Word med Geogebra eller Excel og vis din metode."*
 
 ## Sådan udgives en lektie
@@ -39,6 +42,9 @@ dokumenteres bedre først.
 | 35 | 24.08 – 28.08 | Manipulation | `kommende/lektier-uge35-manipulation.html` | ⏳ planlagt til 24.08 kl. 08.00 |
 | 36 | 31.08 – 04.09 | Manipulation (fortsat) | `kommende/lektier-uge36-manipulation-diagrammer.html` | ⏳ planlagt til 31.08 kl. 08.00 |
 | 37 | 07.09 – 11.09 | Sandsynligheder i verden | — | ikke lavet, afventer |
+| 38 | 14.09 – 18.09 | Ligninger og CAS | `kommende/lektier-uge38-ligninger.html` | ⏳ planlagt til 14.09 kl. 08.00 |
+| 39 | 21.09 – 25.09 | Ligninger og CAS (fortsat) | `kommende/lektier-uge39-ligninger-cas.html` | ⏳ planlagt til 21.09 kl. 08.00 |
+| 41 | 05.10 – 09.10 | Lineære funktioner og grafer | `kommende/lektier-uge41-funktioner-grafer.html` | ⏳ planlagt til 05.10 kl. 08.00 |
 
 Uge 33 og 34 er udgivet samtidig, fordi uge 33 allerede var passeret, da lektierne
 blev lavet.
@@ -75,6 +81,9 @@ med nye tal.
 | Uge 34, opgave A og B | `statistik.html`, Opgave B (modul 2) |
 | Uge 35, opgave A og B | `manipulation.html`, Opgave A og C |
 | Uge 36, opgave A–D | `manipulation.html`, Opgave B og D |
+| Uge 38, opgave A og B | `funktioner-og-ligninger.html`, Opgave A og B |
+| Uge 39, opgave A–C | `funktioner-og-ligninger.html`, Opgave A (udvidet) |
+| Uge 41, opgave A–C | `funktioner-og-ligninger.html`, Opgave C og D |
 
 ## Test af tallene
 

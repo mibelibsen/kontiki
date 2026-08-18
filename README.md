@@ -74,7 +74,7 @@ Detaljer i [`claude/opsaetning.md`](claude/opsaetning.md).
 | `aarsplan-matematik.html` | Årsplan 2026/27, uge 33 → uge 6 + repetition |
 | `aarsplan-matematik-2026-27.xlsx` | Årsplanen som download |
 | `statistik.html` | Interaktiv side: 4 moduler, quiz, Opgave A–D |
-| `funktioner-og-ligninger.html` | Interaktiv side: quiz. **Mangler åbne opgaver** |
+| `funktioner-og-ligninger.html` | Interaktiv side: 3 moduler, quiz, Opgave A–D |
 | `manipulation.html` | Interaktiv side: 3 moduler, quiz, Opgave A–D |
 | `lektier-uge33-beskriv-data.html` | Lektier uge 33 |
 | `lektier-uge34-diagrammer.html` | Lektier uge 34 |
@@ -87,6 +87,7 @@ Udelukket i `.vercelignore`, så de findes ikke på sitet:
 |---|---|
 | `facit/` | Alle facitlister. **Må aldrig udgives.** |
 | `kommende/` | Lektier der endnu ikke er givet |
+| `lektieark/` | Lektiearkene som PDF til uddeling, uden facit |
 | `claude/` | Arbejdslog og dokumentation |
 
 `.vercelignore` er den eneste beskyttelse af facit. **Ret den ikke** uden at
@@ -130,6 +131,11 @@ Datoen på en lektie-facitliste er **den dag lektien blev givet**.
 
 Filnavne følger `facit-<serie>-<ÅÅÅÅ-MM-DD>-<emne>.pdf`, så de sorterer
 kronologisk.
+
+**Selve lektiearket** uddeles som PDF fra `lektieark/`, navngivet
+`lektier-<ÅÅÅÅ-MM-DD>-<emne>.pdf` — **uden** ordet "facit" i navnet, og uden
+facit i indholdet. Mappen er udelukket fra deploy, så kommende ugers lektier
+ikke ligger frit tilgængelige.
 
 **Sådan udgives en lektie:**
 
@@ -201,6 +207,13 @@ svg = FG.boksplot(3, 5, 6, 9, 13, 'Talrækken 3, 5, 5, 6, 8, 9, 13')
 | `loen_figur(vals, navne, enhed)` | Gennemsnit kontra median, når én værdi trækker |
 | `svarprocent(N, n, tekst)` | Bortfald som prikgitter |
 | `procentpoint(fra, til)` | Samme ændring i procentpoint og i procent |
+| `koordinatsystem(linjer, punkter, …)` | Rette linjer `y = ax + b` med gitter, signatur og markerede punkter. Gitterskridtet vælges automatisk |
+| `tomt_koordinatsystem(…)` | Samme uden linjer — til at tegne i |
+| `vaegt(a, b, c)` | Vægtstang i balance for `ax + b = c` |
+| `arealmodel(k, n)` | Rektangel der viser `k(x + n) = kx + kn` |
+| `afskaaret_akse(v1, v2, afskæring)` | To søjlediagrammer med samme tal: et afskåret og et fra nul |
+| `mini_cirkel()` · `mini_soejler()` · `mini_histogram()` · `mini_sumkurve()` | Små eksempler til oversigtskort |
+| `tom_talllinje` · `tomt_sumkurvegitter` · `tom_cirkel` | Tegnepladser til opgaveark |
 
 Figuren sættes ind som:
 

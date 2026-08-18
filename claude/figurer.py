@@ -479,3 +479,308 @@ def tom_cirkel(titel='Tegn dit cirkeldiagram her'):
              f'font-size="9.5">Start ved 0° og gå med uret. 1 % = 3,6°</text>')
     s.append('</g></svg>')
     return ''.join(s)
+
+
+# ============================================================================
+# KOORDINATSYSTEM - til lineaere funktioner og grafaflaesning
+# ============================================================================
+
+def _koord_ramme(xmin, xmax, ymin, ymax, W=470, H=360, top=30):
+    """Returnerer plotgeometri og X/Y-omregnere."""
+    X0, X1 = 44, W - 16
+    YT, YB = top, H - 34
+    def X(v): return float(X0 + (F(v) - xmin) / (xmax - xmin) * (X1 - X0))
+    def Y(v): return float(YB - (F(v) - ymin) / (ymax - ymin) * (YB - YT))
+    return X0, X1, YT, YB, X, Y
+
+
+def _skridt(spaend, maks_linjer=22):
+    """Vaelger et paent gitterskridt, saa der aldrig tegnes tusindvis af linjer."""
+    import math as _m
+    raa = spaend / maks_linjer
+    if raa <= 1:
+        return 1
+    tier = 10 ** int(_m.floor(_m.log10(raa)))
+    for m in (1, 2, 2.5, 5, 10):
+        if tier * m >= raa:
+            return int(tier * m) if tier * m >= 1 else 1
+    return int(tier * 10)
+
+
+def _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, tal=True):
+    s = []
+    xs = _skridt(float(xmax - xmin))
+    ys = _skridt(float(ymax - ymin))
+    for v in range(int(xmin) - int(xmin) % xs, int(xmax) + 1, xs):
+        x = X(v)
+        akse = v == 0
+        s.append(f'<line x1="{x:.1f}" y1="{YT}" x2="{x:.1f}" y2="{YB}" '
+                 f'stroke="{INK if akse else LIN}" stroke-width="{1.4 if akse else 0.6}"/>')
+        if tal and v != 0:
+            s.append(f'<text x="{x:.1f}" y="{Y(0)+15:.1f}" text-anchor="middle" '
+                     f'fill="{MUT}" font-size="10">{v}</text>')
+    for v in range(int(ymin) - int(ymin) % ys, int(ymax) + 1, ys):
+        y = Y(v)
+        akse = v == 0
+        s.append(f'<line x1="{X0}" y1="{y:.1f}" x2="{X1}" y2="{y:.1f}" '
+                 f'stroke="{INK if akse else LIN}" stroke-width="{1.4 if akse else 0.6}"/>')
+        if tal and v != 0:
+            s.append(f'<text x="{X(0)-7:.1f}" y="{y+4:.1f}" text-anchor="end" '
+                     f'fill="{MUT}" font-size="10">{v}</text>')
+    s.append(f'<text x="{X1-4}" y="{Y(0)-8:.1f}" text-anchor="end" fill="{INK}" '
+             f'font-style="italic">x</text>')
+    s.append(f'<text x="{X(0)+8:.1f}" y="{YT+12}" fill="{INK}" font-style="italic">y</text>')
+    return s
+
+
+def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
+                    titel='', vis_tal=True):
+    """linjer: [(a, b, farve, navn)] for y = ax + b.
+       punkter: [(x, y, farve, navn)]."""
+    xmin, xmax, ymin, ymax = F(xmin), F(xmax), F(ymin), F(ymax)
+    X0, X1, YT, YB, X, Y = _koord_ramme(xmin, xmax, ymin, ymax)
+    s = [f'<svg viewBox="0 0 470 360" role="img" aria-label="Koordinatsystem'
+         + (f' med {len(linjer)} rette linjer' if linjer else '') + '.">', f'<g {FONT}>']
+    if titel:
+        s.append(f'<text x="235" y="16" text-anchor="middle" fill="{MUT}">{titel}</text>')
+    s.append(f'<rect x="{X0}" y="{YT}" width="{X1-X0}" height="{YB-YT}" fill="#fff"/>')
+    s += _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, vis_tal)
+    signatur = []
+    for a, b, farve, navn in linjer:
+        a, b = F(a), F(b)
+        signatur.append((farve, navn))
+        pts = []
+        for xv in (xmin, xmax):
+            yv = a * xv + b
+            if ymin <= yv <= ymax:
+                pts.append((xv, yv))
+        for yv in (ymin, ymax):
+            if a != 0:
+                xv = F(yv - b, a)
+                if xmin <= xv <= xmax:
+                    pts.append((xv, yv))
+        pts = sorted(set(pts))[:2]
+        if len(pts) == 2:
+            (xa, ya), (xb, yb) = pts
+            s.append(f'<line x1="{X(xa):.1f}" y1="{Y(ya):.1f}" x2="{X(xb):.1f}" '
+                     f'y2="{Y(yb):.1f}" stroke="{farve}" stroke-width="2.6"/>')
+    for px, py, farve, navn in punkter:
+        s.append(f'<circle cx="{X(px):.1f}" cy="{Y(py):.1f}" r="5" fill="{farve}" '
+                 f'stroke="#fff" stroke-width="1.5"/>')
+        if navn:
+            s.append(f'<text x="{X(px)+11:.1f}" y="{Y(py)-10:.1f}" fill="{farve}" '
+                     f'font-weight="700" stroke="#fff" stroke-width="3.5" '
+                     f'paint-order="stroke" stroke-linejoin="round">{navn}</text>')
+    if signatur:
+        bx = X0
+        for farve, navn in signatur:
+            s.append(f'<line x1="{bx}" y1="{YB+26}" x2="{bx+22}" y2="{YB+26}" '
+                     f'stroke="{farve}" stroke-width="3"/>')
+            s.append(f'<text x="{bx+28}" y="{YB+30}" fill="{INK}">{navn}</text>')
+            bx += 34 + len(navn) * 7
+    s.append('</g></svg>')
+    return ''.join(s)
+
+
+def tomt_koordinatsystem(xmin=-2, xmax=8, ymin=-4, ymax=10,
+                         titel='Tegn din graf her'):
+    return koordinatsystem(xmin=xmin, xmax=xmax, ymin=ymin, ymax=ymax, titel=titel)
+
+
+# ============================================================================
+# LIGNINGER - vaegtmodel og arealmodel
+# ============================================================================
+
+def vaegt(a, b, c, xnavn='x'):
+    """Vaegtstang i balance for ligningen a*x + b = c.
+
+    Indholdet ligger i EN raekke, og broedstoerrelsen tilpasses antallet, saa
+    figuren aldrig loeber ud over skaalen - uanset hvor store tallene er.
+    """
+    CX, CY, ARM, PAN = 250.0, 86.0, 168.0, 112.0
+    s = [f'<svg viewBox="0 0 500 190" role="img" aria-label="En vægt i balance. '
+         f'På venstre skål {a} kasser med {xnavn} og {b} lodder, på højre skål '
+         f'{c} lodder.">', f'<g {FONT}>']
+    s.append(f'<text x="250" y="18" text-anchor="middle" fill="{INK}" '
+             f'font-weight="700">{a}{xnavn} + {b} = {c}</text>')
+
+    def skaal(cx, kasser, lodder, farve):
+        n = kasser + lodder
+        pitch = min(28.0, (PAN - 8) / max(n, 1))
+        kb = min(26.0, pitch - 3)
+        pr = min(8.0, pitch / 2 - 1.5)
+        ud = [f'<line x1="{cx}" y1="{CY}" x2="{cx}" y2="{CY+32}" stroke="{MUT}"/>',
+              f'<path d="M{cx-PAN/2},{CY+32} L{cx+PAN/2},{CY+32} '
+              f'L{cx+PAN/2-14},{CY+48} L{cx-PAN/2+14},{CY+48} Z" '
+              f'fill="#eef1f6" stroke="{MUT}"/>']
+        x = cx - n * pitch / 2
+        for i in range(n):
+            midt = x + pitch / 2
+            if i < kasser:
+                ud.append(f'<rect x="{midt-kb/2:.1f}" y="{CY+29-kb:.1f}" '
+                          f'width="{kb:.1f}" height="{kb:.1f}" rx="3" fill="{farve}"/>')
+                ud.append(f'<text x="{midt:.1f}" y="{CY+29-kb/2+4:.1f}" '
+                          f'text-anchor="middle" fill="#fff" font-weight="700" '
+                          f'font-style="italic" font-size="{min(12, kb*0.6):.0f}">'
+                          f'{xnavn}</text>')
+            else:
+                ud.append(f'<circle cx="{midt:.1f}" cy="{CY+29-pr:.1f}" '
+                          f'r="{pr:.1f}" fill="{MUT}"/>')
+            x += pitch
+        return ''.join(ud)
+
+    s.append(f'<line x1="{CX-ARM}" y1="{CY}" x2="{CX+ARM}" y2="{CY}" '
+             f'stroke="{INK}" stroke-width="3"/>')
+    s.append(f'<path d="M{CX},{CY} L{CX-20},{CY+56} L{CX+20},{CY+56} Z" fill="{INK}"/>')
+    s.append(skaal(CX - ARM, a, b, BLA))
+    s.append(skaal(CX + ARM, 0, c, GRO))
+    s.append('</g></svg>')
+    return ''.join(s)
+
+
+def arealmodel(k, n, xnavn='x'):
+    """Rektangel der viser k(x + n) = kx + kn."""
+    X0, Y0, H = 66, 46, 92
+    BX, BN = 150, 88
+    s = [f'<svg viewBox="0 0 500 170" role="img" aria-label="Rektangel med højden '
+         f'{k} delt i to felter: {xnavn} gange {k} og {n} gange {k}.">', f'<g {FONT}>']
+    s.append(f'<text x="250" y="20" text-anchor="middle" fill="{MUT}">'
+             f'{k}({xnavn} + {n}) = {k}{xnavn} + {k*n}</text>')
+    s.append(f'<rect x="{X0}" y="{Y0}" width="{BX}" height="{H}" fill="#eaf2fd" '
+             f'stroke="{BLA}" stroke-width="1.5"/>')
+    s.append(f'<rect x="{X0+BX}" y="{Y0}" width="{BN}" height="{H}" fill="#eaf7f0" '
+             f'stroke="{GRO}" stroke-width="1.5"/>')
+    s.append(f'<text x="{X0+BX/2}" y="{Y0+H/2+5}" text-anchor="middle" fill="{BLA}" '
+             f'font-weight="700">{k} · {xnavn}</text>')
+    s.append(f'<text x="{X0+BX+BN/2}" y="{Y0+H/2+5}" text-anchor="middle" '
+             f'fill="{GRO}" font-weight="700">{k} · {n} = {k*n}</text>')
+    s.append(f'<text x="{X0+BX/2}" y="{Y0-8}" text-anchor="middle" fill="{MUT}" '
+             f'font-style="italic">{xnavn}</text>')
+    s.append(f'<text x="{X0+BX+BN/2}" y="{Y0-8}" text-anchor="middle" fill="{MUT}">{n}</text>')
+    s.append(f'<line x1="{X0-14}" y1="{Y0}" x2="{X0-14}" y2="{Y0+H}" stroke="{MUT}"/>')
+    s.append(f'<text x="{X0-20}" y="{Y0+H/2+4}" text-anchor="end" fill="{MUT}">{k}</text>')
+    s.append('</g></svg>')
+    return ''.join(s)
+
+
+# ============================================================================
+# SMAA EKSEMPELFIGURER - til forklaringer og oversigtskort paa sitet
+# ============================================================================
+
+def mini_cirkel(dele=(4, 3, 2, 1)):
+    """Lille cirkeldiagram uden tekst - til et oversigtskort."""
+    import math as _m
+    cx = cy = 50.0
+    r = 40.0
+    N = sum(dele)
+    farver = [BLA, ORA, GRO, ROD]
+    vinkel, ud = -90.0, []
+    for i, v in enumerate(dele):
+        span = float(F(v, N) * 360)
+        a0, a1 = _m.radians(vinkel), _m.radians(vinkel + span)
+        x0, y0 = cx + r * _m.cos(a0), cy + r * _m.sin(a0)
+        x1, y1 = cx + r * _m.cos(a1), cy + r * _m.sin(a1)
+        ud.append(f'<path d="M{cx},{cy} L{x0:.1f},{y0:.1f} A{r},{r} 0 '
+                  f'{1 if span > 180 else 0},1 {x1:.1f},{y1:.1f} Z" '
+                  f'fill="{farver[i % 4]}" stroke="#fff" stroke-width="1.5"/>')
+        vinkel += span
+    return (f'<svg viewBox="0 0 100 100" role="img" aria-label="Lille '
+            f'cirkeldiagram med fire udsnit.">{"".join(ud)}</svg>')
+
+
+def mini_soejler(vals=(5, 8, 3, 6)):
+    """Lille soejlediagram - adskilte soejler, en pr. kategori."""
+    W, H, BUND = 100.0, 100.0, 86.0
+    maks = max(vals)
+    bw = 15.0
+    gap = (W - 12 - len(vals) * bw) / max(len(vals) - 1, 1)
+    ud, x = [], 6.0
+    for v in vals:
+        h = v / maks * 62
+        ud.append(f'<rect x="{x:.1f}" y="{BUND-h:.1f}" width="{bw}" height="{h:.1f}" '
+                  f'rx="1.5" fill="{BLA}"/>')
+        x += bw + gap
+    ud.append(f'<line x1="4" y1="{BUND}" x2="{W-4}" y2="{BUND}" stroke="{INK}" '
+              f'stroke-width="1.5"/>')
+    return (f'<svg viewBox="0 0 100 100" role="img" aria-label="Lille '
+            f'søjlediagram med fire adskilte søjler.">{"".join(ud)}</svg>')
+
+
+def mini_histogram(vals=(2, 5, 8, 4, 2)):
+    """Lille histogram - soejler uden mellemrum, fordi intervallerne graenser op."""
+    W, BUND = 100.0, 86.0
+    maks = max(vals)
+    bw = (W - 12) / len(vals)
+    ud, x = [], 6.0
+    for v in vals:
+        h = v / maks * 62
+        ud.append(f'<rect x="{x:.1f}" y="{BUND-h:.1f}" width="{bw:.1f}" '
+                  f'height="{h:.1f}" fill="{GRO}" stroke="#fff" stroke-width="1"/>')
+        x += bw
+    ud.append(f'<line x1="4" y1="{BUND}" x2="{W-4}" y2="{BUND}" stroke="{INK}" '
+              f'stroke-width="1.5"/>')
+    return (f'<svg viewBox="0 0 100 100" role="img" aria-label="Lille histogram '
+            f'med fem søjler uden mellemrum.">{"".join(ud)}</svg>')
+
+
+def mini_sumkurve(frek=(10, 35, 70, 90, 100)):
+    """Lille sumkurve - stiger altid, ender i 100 %."""
+    W, BUND, TOP = 100.0, 86.0, 16.0
+    ud = []
+    for p in (50,):
+        y = BUND - p / 100 * (BUND - TOP)
+        ud.append(f'<line x1="8" y1="{y:.1f}" x2="{W-6}" y2="{y:.1f}" '
+                  f'stroke="{LIN}" stroke-dasharray="2 2"/>')
+    pts = [(8.0, BUND)]
+    for i, f in enumerate(frek):
+        x = 8 + (i + 1) / len(frek) * (W - 16)
+        pts.append((x, BUND - f / 100 * (BUND - TOP)))
+    ud.append('<polyline points="' + ' '.join(f'{x:.1f},{y:.1f}' for x, y in pts) +
+              f'" fill="none" stroke="{ORA}" stroke-width="2.5"/>')
+    ud.append(f'<line x1="8" y1="{BUND}" x2="{W-6}" y2="{BUND}" stroke="{INK}" '
+              f'stroke-width="1.5"/>')
+    ud.append(f'<line x1="8" y1="{TOP-4}" x2="8" y2="{BUND}" stroke="{INK}" '
+              f'stroke-width="1.5"/>')
+    return (f'<svg viewBox="0 0 100 100" role="img" aria-label="Lille sumkurve der '
+            f'stiger fra nul til hundrede procent.">{"".join(ud)}</svg>')
+
+
+def afskaaret_akse(v1, v2, afskaering, navne=('A', 'B')):
+    """To soejlediagrammer med samme tal: et afskaaret og et fra nul."""
+    def panel(x0, ymin, ymax, farve, overskrift, undertekst):
+        W, BUND, TOP = 190.0, 176.0, 46.0
+        ud = [f'<text x="{x0+W/2:.0f}" y="30" text-anchor="middle" fill="{farve}" '
+              f'font-weight="700">{overskrift}</text>']
+        for i, v in enumerate((v1, v2)):
+            h = (v - ymin) / (ymax - ymin) * (BUND - TOP)
+            bx = x0 + 46 + i * 62
+            ud.append(f'<rect x="{bx}" y="{BUND-h:.1f}" width="40" height="{h:.1f}" '
+                      f'rx="2" fill="{farve}" fill-opacity="0.85"/>')
+            ud.append(f'<text x="{bx+20}" y="{BUND-h-7:.1f}" text-anchor="middle" '
+                      f'fill="{farve}" font-weight="700">{v}</text>')
+            ud.append(f'<text x="{bx+20}" y="{BUND+15}" text-anchor="middle" '
+                      f'fill="{MUT}">{navne[i]}</text>')
+        ud.append(f'<line x1="{x0+30}" y1="{BUND}" x2="{x0+W-14}" y2="{BUND}" '
+                  f'stroke="{INK}"/>')
+        ud.append(f'<line x1="{x0+30}" y1="{TOP-6}" x2="{x0+30}" y2="{BUND}" '
+                  f'stroke="{INK}"/>')
+        ud.append(f'<text x="{x0+25}" y="{BUND+4}" text-anchor="end" fill="{MUT}" '
+                  f'font-size="10">{ymin}</text>')
+        ud.append(f'<text x="{x0+25}" y="{TOP+4}" text-anchor="end" fill="{MUT}" '
+                  f'font-size="10">{ymax}</text>')
+        ud.append(f'<text x="{x0+W/2:.0f}" y="{BUND+34}" text-anchor="middle" '
+                  f'fill="{MUT}" font-size="9.5">{undertekst}</text>')
+        return ''.join(ud)
+
+    reel = F(int(round((v2 - v1) * 100)), int(round(v1 * 100))) * 100
+    hoejde = F(int(round((v2 - afskaering) * 100)), int(round((v1 - afskaering) * 100)))
+    s = [f'<svg viewBox="0 0 500 230" role="img" aria-label="To søjlediagrammer med '
+         f'de samme to tal. I det venstre starter y-aksen ved {afskaering}, så '
+         f'forskellen ser meget større ud.">', f'<g {FONT}>']
+    s.append(panel(10, afskaering, v2 + (v2 - afskaering) * 0.15, ROD,
+                   f'y-aksen starter ved {afskaering}',
+                   f'Søjlerne ser {_dk(hoejde)} gange så høje ud'))
+    s.append(panel(280, 0, v2 * 1.25, GRO, 'y-aksen starter ved 0',
+                   f'Den reelle forskel er {_dk(reel)} %'))
+    s.append('</g></svg>')
+    return ''.join(s)
