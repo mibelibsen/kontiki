@@ -43,6 +43,16 @@ Lektier er **altid** åbne opgaver — multiple choice er aldrig lektier. Intet
 udgives før den dag, lektien gives; kommende lektier ligger i `kommende/`.
 Begge mapper er udelukket i `.vercelignore`.
 
+## ALTID VISUELLE EKSEMPLER
+
+Hver opgave og hver forklaring skal have en figur. Et boksplot, en sumkurve, et
+cirkeldiagram, et udfaldsrum, to søjler der viser procentpoint mod procent — en
+tegning, ikke kun tal. Det gælder også facitlister: står der "tegn et boksplot"
+i opgaven, skal facit **vise** boksplottet.
+
+Byg dem med `claude/figurer.py`, som har færdige funktioner til de figurtyper,
+sitet bruger. Tegn aldrig en figur på øjemål — koordinaterne skal beregnes.
+
 ## Regn altid efter
 
 Regn aldrig facit i hovedet, og tegn aldrig figurer på øjemål. Brug

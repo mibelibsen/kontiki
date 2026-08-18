@@ -12,12 +12,13 @@ Dette er den samlede dokumentation. Læs den før du ændrer noget.
 1. [Sådan er sitet bygget](#sådan-er-sitet-bygget)
 2. [Deploy](#deploy)
 3. [Filoversigt](#filoversigt)
-4. [De fem regler](#de-fem-regler)
+4. [De seks regler](#de-seks-regler)
 5. [Lektier og facit](#lektier-og-facit)
 6. [Quiz-motoren](#quiz-motoren)
-7. [Sådan tester du](#sådan-tester-du)
-8. [Planlagte opgaver](#planlagte-opgaver)
-9. [Øvrig dokumentation](#øvrig-dokumentation)
+7. [Figurer](#figurer)
+8. [Sådan tester du](#sådan-tester-du)
+9. [Planlagte opgaver](#planlagte-opgaver)
+10. [Øvrig dokumentation](#øvrig-dokumentation)
 
 ---
 
@@ -92,7 +93,7 @@ Udelukket i `.vercelignore`, så de findes ikke på sitet:
 tænke over konsekvensen: en fil i roden er offentlig, også hvis intet linker til
 den.
 
-## De fem regler
+## De seks regler
 
 1. **Svar altid på dansk** — også i commit-beskeder og dokumentation.
 2. **Altid dybe links.** Skal brugeren gøre noget i en webgrænseflade, så giv et
@@ -103,6 +104,8 @@ den.
 3. **Facit kommer aldrig på sitet.** Facit ligger i `facit/` og sendes i Code.
 4. **Lektier er altid åbne opgaver.** Multiple choice er aldrig lektier.
 5. **Intet udgives før den dag, lektien gives.**
+6. **Altid visuelle eksempler.** Hver opgave og hver forklaring skal have en
+   figur — også facitlisterne. Se [Figurer](#figurer).
 
 Reglerne står også i [`CLAUDE.md`](CLAUDE.md), som Claude læser automatisk.
 
@@ -172,6 +175,43 @@ Og disse id'er skal findes på siden:
 `resetBtn` · `switchBtn` · `welcomeBar` · `welcomeHi` · `welcomeLive` ·
 `progressFill` · `progressLabel` · `resultsBody` · `gradeMsg` · `finalMsg`
 
+## Figurer
+
+Hver opgave og hver forklaring skal have en tegning. Siger opgaven "tegn et
+boksplot", skal facit vise boksplottet — ikke kun de fem tal.
+
+Figurerne bygges med **`claude/figurer.py`**, som er et værktøj og ikke en del
+af sitet (mappen er udelukket fra deploy — sitet er fortsat rene HTML-filer uden
+build):
+
+```python
+import sys; sys.path.insert(0, 'claude')
+import figurer as FG
+svg = FG.boksplot(3, 5, 6, 9, 13, 'Talrækken 3, 5, 5, 6, 8, 9, 13')
+```
+
+| Funktion | Viser |
+|---|---|
+| `boksplot(min, q1, median, q3, maks, titel)` | Femtalssammendrag med kasse, median og whiskers |
+| `cirkeldiagram(dele)` | Cirkeldiagram med frekvens og grader i signaturen |
+| `cirkel_overflow(dele)` | Cirkel der summer til over 100 %, med synligt overlap |
+| `sumkurve(graenser, hyp, aflaes, xnavn)` | Sumkurve med aflæsning af Q1, median og Q3. Returnerer `(svg, aflæsninger)` |
+| `terninger(sum_)` | 6×6 udfaldsrum med de gunstige felter fremhævet |
+| `areal_aerligt(side, …, forkert_faktor)` | Arealtricket: den forkerte og den ærlige tegning ved siden af hinanden |
+| `loen_figur(vals, navne, enhed)` | Gennemsnit kontra median, når én værdi trækker |
+| `svarprocent(N, n, tekst)` | Bortfald som prikgitter |
+| `procentpoint(fra, til)` | Samme ændring i procentpoint og i procent |
+
+Figuren sættes ind som:
+
+```html
+<div class="figur">…svg…<div class="figtekst">Forklarende tekst</div></div>
+```
+
+**Tegn aldrig en figur på øjemål.** Alle koordinater beregnes. To linjediagrammer
+på `manipulation.html` påstod at vise de samme seks tal og afveg 4,8 % i niveau,
+fordi de var tegnet i hånden.
+
 ## Sådan tester du
 
 Der er ingen testsuite. Til gengæld er der to ting, der **altid** skal gøres før
@@ -190,6 +230,7 @@ Tjek på hver ændret side:
 - metodeteksten er den korrekte
 - ingen brudte links nogen steder på sitet
 - ved print: nav og overlay skjules, og figurernes farver bevares
+- der er en figur til hver opgave og hver forklaring
 
 ### 2. Regn tallene efter programmatisk
 

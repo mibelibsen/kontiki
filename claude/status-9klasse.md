@@ -24,12 +24,13 @@ moduler og lektier ligger i `facit/` som PDF.
 
 ## Næste skridt
 
-1. **Gennemgå matematikken på de interaktive sider.** Facit til modulopgaverne
+1. **`funktioner-og-ligninger.html` er det største hul.** Siden har kun quiz —
+   hverken åbne opgaver som statistik og manipulation, eller figurer og
+   tegnepladser. Der er heller ikke lavet lektier eller facit til den.
+2. **Gennemgå matematikken på de interaktive sider.** Facit til modulopgaverne
    er nu skrevet og efterregnet, men **quizzernes** `data-answer` er ikke
    verificeret — 81 spørgsmål på tværs af de tre sider. Der er ikke lavet et
    gennemløb af, om det markerede rigtige svar faktisk er rigtigt.
-2. **Åbne opgaver til `funktioner-og-ligninger.html`.** Siden har kun quiz, hvor
-   statistik og manipulation har Opgave A–D. Det er det største hul i indholdet.
 3. **Lektier fra uge 37.** Der er lavet til og med uge 36. Aftalt at indholdet
    skal gennemgås, før der laves mere.
 4. **Årsplaner til samfundsfag og tysk.** Afventer at brugeren sender dem.
@@ -41,6 +42,12 @@ moduler og lektier ligger i `facit/` som PDF.
    `matematik.html`.
 
 ## Rettet 17. august 2026
+
+- **Der manglede figurer overalt.** Facitlisterne gav kun tal, selvom fem opgaver
+  siger "tegn et boksplot / en sumkurve / et cirkeldiagram". Alle elleve
+  facitlister har nu tegningerne, og lektiearkene har fået tegnepladser — tomme
+  akser og en tom cirkel med gradmarkeringer — så de kan printes og udfyldes uden
+  at facit røbes. Figurbiblioteket ligger i `claude/figurer.py`.
 
 - **`manipulation.html` hentede `/style.css` og `/app.js` fra sitets rod** og lå
   ustylet med død quiz. Begge er nu inline, og motoren er gjort generel via
@@ -78,3 +85,6 @@ Tre vaner kom ud af det, og de står som regler i `README.md`:
    der ikke havde noget svar i det oprindelige datasæt.
 3. **Sig hvad du fandt, frem for at bygge videre på gætværk.** Det gælder også de
    planlagte Routines, som har den instruks skrevet ind.
+4. **Vis det, i stedet for kun at skrive det.** Der skal være en figur til hver
+   opgave og hver forklaring — også i facit. Brug `claude/figurer.py`, og beregn
+   koordinaterne.
