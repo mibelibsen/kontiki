@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-08-17
+Sidst opdateret: 2026-08-18
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
