@@ -227,8 +227,34 @@ fordi de var tegnet i hånden.
 
 ## Sådan tester du
 
-Der er ingen testsuite. Til gengæld er der to ting, der **altid** skal gøres før
-et push.
+Der er tre ting, der **altid** skal gøres før et push.
+
+### 0. Kør tjekket
+
+```bash
+python3 claude/tjek.py
+```
+
+Det er et selvstændigt script uden afhængigheder, så det virker i en frisk
+session. Hver kontrol svarer til en fejl, der rent faktisk er sket i projektet:
+
+| Kontrol | Fanger |
+|---|---|
+| Selvbærende sider | En side der henter CSS eller JS fra roden, eller mangler inline `<style>` |
+| Facit skjult | `facit/`, `kommende/`, `lektieark/` eller `claude/` udeladt af `.vercelignore`, eller en facit-fil i roden |
+| Lektier uden multiple choice | `.opt`, `.bx` eller `.mk` i et lektieark |
+| Metodetekst | Manglende eller gammel besvarelsesformulering |
+| Links | Brudte interne links. Filer i `kommende/` måles fra roden, hvor de havner |
+| Visuelle eksempler | En indholdsside uden en eneste figur |
+| Quiz-motor | Manglende id'er, eller uenighed mellem antal quizzer, score-badges og `data-modules` |
+| Årsplan side↔regneark | De to udgaver siger ikke det samme om uger eller forløb |
+| Filnavne | Facit eller lektieark der ikke følger navnemønstret, eller "facit" i et lektiearks navn |
+
+Scriptet afslutter med kode 1, hvis der er fejl. Advarsler blokerer ikke.
+
+**Tjekket er selv testet:** ti bevidste fejl blev indført på en kopi af repoet,
+og alle ti blev fanget. Ændrer du scriptet, så gør det samme — et tjek der
+altid siger OK, er værdiløst.
 
 ### 1. Åbn siderne i en browser
 
@@ -293,6 +319,8 @@ ved siden af. De findes med `list_triggers`.
 | [`CLAUDE.md`](CLAUDE.md) | Arbejdsreglerne, læses automatisk af Claude |
 | [`claude/status-9klasse.md`](claude/status-9klasse.md) | Arbejdslog. **Læs den først i en ny session, og opdatér den til sidst.** |
 | [`claude/lektieplan.md`](claude/lektieplan.md) | Hvilken lektie hører til hvilken uge, og hvordan de udgives |
+| [`claude/tjek.py`](claude/tjek.py) | Tjekket der køres før hvert push |
+| [`claude/figurer.py`](claude/figurer.py) | Figurbiblioteket |
 | [`claude/opsaetning.md`](claude/opsaetning.md) | Hvordan Vercel og GitHub hænger sammen |
 
 ## Det der mangler

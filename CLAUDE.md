@@ -53,6 +53,17 @@ i opgaven, skal facit **vise** boksplottet.
 Byg dem med `claude/figurer.py`, som har færdige funktioner til de figurtyper,
 sitet bruger. Tegn aldrig en figur på øjemål — koordinaterne skal beregnes.
 
+## Kør tjekket før hvert push
+
+```bash
+python3 claude/tjek.py
+```
+
+Det fanger de fejl, der er sket før: facit der kan udgives, multiple choice i
+lektier, sider der henter CSS fra roden, brudte links, manglende figurer, og
+årsplanen der siger ét på siden og noget andet i regnearket. Ret alt der står
+som FEJL, før du pusher.
+
 ## Regn altid efter
 
 Regn aldrig facit i hovedet, og tegn aldrig figurer på øjemål. Brug

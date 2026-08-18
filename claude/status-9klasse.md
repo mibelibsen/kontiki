@@ -40,6 +40,10 @@ moduler og lektier ligger i `facit/` som PDF.
 
 ## Rettet 18. august 2026
 
+- **`claude/tjek.py` er lavet.** Ni kontroller, én pr. fejltype fra projektets
+  historie. Kør det før hvert push. Det fandt med det samme, at årsplanens to
+  udgaver kan drive fra hinanden — det skete tre gange på én dag.
+
 - **`funktioner-og-ligninger.html` var det største hul** — kun quiz, ingen åbne
   opgaver, to figurer. Den har nu Opgave A–D med 26 delspørgsmål, tre nye
   figurer, og quiz-motoren er gjort generel som på manipulation.
@@ -98,6 +102,9 @@ Tre vaner kom ud af det, og de står som regler i `README.md`:
    der ikke havde noget svar i det oprindelige datasæt.
 3. **Sig hvad du fandt, frem for at bygge videre på gætværk.** Det gælder også de
    planlagte Routines, som har den instruks skrevet ind.
-4. **Vis det, i stedet for kun at skrive det.** Der skal være en figur til hver
+4. **Lad maskinen holde øje.** Alt hvad der findes to steder, driver fra
+   hinanden. `claude/tjek.py` sammenligner dem automatisk — udvid det, når en
+   ny dublet opstår, i stedet for at love at huske det.
+5. **Vis det, i stedet for kun at skrive det.** Der skal være en figur til hver
    opgave og hver forklaring — også i facit. Brug `claude/figurer.py`, og beregn
    koordinaterne.
