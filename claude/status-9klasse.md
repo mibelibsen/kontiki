@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-08-18
+Sidst opdateret: 2026-08-20
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -37,6 +37,24 @@ moduler og lektier ligger i `facit/` som PDF.
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
+
+## Rettet 20. august 2026
+
+- **Trinvis Excel-vejledning: `excel-soejlediagram.html`.** Ungen kunne ikke lave
+  et søjlediagram af SpaceX-arket, fordi tallene i K-AD er gemt som **tekst**,
+  ikke som tal. Vejledningen tager de ni trin fra tekst til færdigt diagram,
+  celle for celle, og forklarer hvorfor logaritmisk skala er nødvendig: væksten
+  er 70.698 gange, så 2002-søjlen bliver 0,006 pixel høj ved siden af 2026.
+  Ligger også som PDF i roden og er linket fra `matematik.html`.
+- **`claude/figurer.py` har fået `regneark()` og `soejler_log()`.** Den første
+  tegner et udsnit af et regneark med rammer og pile, så en vejledning kan vise
+  præcis hvilken celle der menes. Den anden tegner søjler med lineær eller
+  logaritmisk y-akse. Begge beregner koordinaterne.
+- **Tre påstande blev regnet efter i stedet for skønnet.** Udkastet skrev "15 af
+  19 år kan ikke ses" og "kun de sidste 3-4 søjler". Det rigtige tal er **6** —
+  det er dem, hvis søjle er under 1 pixel høj ved 400 px. Tallet står nu i
+  figurens titel og beregnes af scriptet.
+- **`__pycache__` er taget ud af repoet** og ligger nu i `.gitignore`.
 
 ## Rettet 18. august 2026
 

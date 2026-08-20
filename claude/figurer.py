@@ -784,3 +784,172 @@ def afskaaret_akse(v1, v2, afskaering, navne=('A', 'B')):
                    f'Den reelle forskel er {_dk(reel)} %'))
     s.append('</g></svg>')
     return ''.join(s)
+
+
+# ------------------------------------------------------------ regneark-mock
+# Bruges til Excel-vejledninger. Cellernes placering beregnes ud fra
+# kolonnebredderne, saa pile og rammer altid rammer den rigtige celle.
+
+GITTER, HOVEDFYLD = '#c9d2e0', '#eef2f8'
+
+
+def _celleboks(kols, bredder, gutter=30, celleh=21):
+    """Returnerer (x_for_kolonne, samlet_bredde)."""
+    x, ud = gutter, {}
+    for k in kols:
+        ud[k] = x
+        x += bredder[k]
+    return ud, x
+
+
+def regneark(kols, raekker, data, bredder, hoejre=(), rammer=(), noter=(),
+             fyld=(), celleh=21, gutter=30, W=None):
+    """Tegner et udsnit af et regneark.
+
+    kols     ['B','C','D']            kolonnebogstaver i raekkefoelge
+    raekker  [6,7,8,None,24,25]       raekkenumre; None giver en brudlinje
+    data     {'B6':'Aktiekurs'}       celleindhold
+    bredder  {'B':62,'C':132}         kolonnebredde i px
+    hoejre   ('D',)                   kolonner der staar hoejrestillet (tal)
+    rammer   [('D7','D25','#1f6fd6')] markering om et celleomraade
+    noter    [('D7','tekst','#b5710a')] pil med tekst til hoejre for arket
+    fyld     {'B6':'#1f6fd6'}         cellefarve; tekst bliver hvid
+    """
+    xk, arkb = _celleboks(kols, bredder, gutter, celleh)
+    rk = {r: 18 + i * celleh for i, r in enumerate(raekker)}   # 18 = hovedhoejde
+    H = 18 + len(raekker) * celleh + 2
+    notb = 250 if noter else 0
+    if W is None:
+        W = arkb + notb + 12
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" '
+         f'style="max-width:{W}px" xmlns="http://www.w3.org/2000/svg" {FONT}>']
+    s.append(f'<rect x="0" y="0" width="{arkb}" height="{H}" fill="#fff"/>')
+    # kolonnehoveder
+    s.append(f'<rect x="0" y="0" width="{arkb}" height="18" fill="{HOVEDFYLD}"/>')
+    for k in kols:
+        s.append(f'<rect x="{xk[k]}" y="0" width="{bredder[k]}" height="18" '
+                 f'fill="{HOVEDFYLD}" stroke="{GITTER}"/>')
+        s.append(f'<text x="{xk[k] + bredder[k] / 2:.1f}" y="13" text-anchor="middle" '
+                 f'fill="{MUT}" font-weight="bold">{k}</text>')
+    # raekkenumre og celler
+    for r in raekker:
+        y = rk[r]
+        if r is None:
+            continue
+        s.append(f'<rect x="0" y="{y}" width="{gutter}" height="{celleh}" '
+                 f'fill="{HOVEDFYLD}" stroke="{GITTER}"/>')
+        s.append(f'<text x="{gutter / 2}" y="{y + celleh - 6}" text-anchor="middle" '
+                 f'fill="{MUT}">{r}</text>')
+        for k in kols:
+            ref = f'{k}{r}'
+            bg = dict(fyld).get(ref, '#fff')
+            s.append(f'<rect x="{xk[k]}" y="{y}" width="{bredder[k]}" '
+                     f'height="{celleh}" fill="{bg}" stroke="{GITTER}"/>')
+            v = data.get(ref)
+            if v is None:
+                continue
+            farve = '#fff' if bg != '#fff' else INK
+            if k in hoejre:
+                s.append(f'<text x="{xk[k] + bredder[k] - 5}" y="{y + celleh - 6}" '
+                         f'text-anchor="end" fill="{farve}">{v}</text>')
+            else:
+                s.append(f'<text x="{xk[k] + 5}" y="{y + celleh - 6}" '
+                         f'fill="{farve}">{v}</text>')
+    # brudlinje hvor raekker springer
+    for i, r in enumerate(raekker):
+        if r is None:
+            y = 18 + i * celleh
+            s.append(f'<rect x="0" y="{y}" width="{arkb}" height="{celleh}" fill="#fff"/>')
+            s.append(f'<text x="{arkb / 2}" y="{y + celleh - 6}" text-anchor="middle" '
+                     f'fill="{MUT}">⋮</text>')
+
+    def _pos(ref):
+        k = ''.join(c for c in ref if c.isalpha())
+        r = int(''.join(c for c in ref if c.isdigit()))
+        return xk[k], rk[r], bredder[k]
+
+    for fra, til, farve in rammer:
+        x1, y1, b1 = _pos(fra)
+        x2, y2, b2 = _pos(til)
+        s.append(f'<rect x="{x1}" y="{y1}" width="{x2 + b2 - x1}" '
+                 f'height="{y2 + celleh - y1}" fill="none" stroke="{farve}" '
+                 f'stroke-width="2.5"/>')
+    for ref, tekst, farve in noter:
+        x, y, b = _pos(ref)
+        ym = y + celleh / 2
+        xs = arkb + 10
+        s.append(f'<line x1="{x + b}" y1="{ym}" x2="{xs}" y2="{ym}" '
+                 f'stroke="{farve}" stroke-width="1.5"/>')
+        s.append(f'<circle cx="{x + b}" cy="{ym}" r="3" fill="{farve}"/>')
+        s.append(f'<text x="{xs + 6}" y="{ym + 4}" fill="{farve}">{tekst}</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+def soejler_log(vals, kats, log=False, titel='', ynavn='', xnavn='',
+                W=620, H=340):
+    """Soejlediagram med lineaer eller logaritmisk y-akse.
+
+    Hoejderne beregnes: lineaert v/maks, logaritmisk (log v - log lo)/(log hi - log lo).
+    """
+    X0, X1, YT, YB = 92, W - 14, 34, H - 46
+    ph, pb = YB - YT, X1 - X0
+    n = len(vals)
+    bb = pb / n * 0.62
+    mid = [X0 + pb / n * (i + .5) for i in range(n)]
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" {FONT}>',
+         f'<rect x="0" y="0" width="{W}" height="{H}" fill="#fff" stroke="{LIN}"/>']
+    if titel:
+        s.append(f'<text x="{W / 2}" y="20" text-anchor="middle" fill="{INK}" '
+                 f'font-size="13" font-weight="bold">{titel}</text>')
+
+    if log:
+        lo, hi = 0, math.ceil(math.log10(max(vals)))
+        def yy(v):
+            return YB - (math.log10(v) - lo) / (hi - lo) * ph
+        for e in range(lo, hi + 1):
+            y = yy(10 ** e)
+            s.append(f'<line x1="{X0}" y1="{y:.1f}" x2="{X1}" y2="{y:.1f}" '
+                     f'stroke="{LIN}" stroke-dasharray="2 3"/>')
+            s.append(f'<text x="{X0 - 6}" y="{y + 4:.1f}" text-anchor="end" '
+                     f'fill="{MUT}">10<tspan dy="-4" font-size="8">{e}</tspan></text>')
+        bund = YB
+    else:
+        maks = max(vals)
+        e = math.floor(math.log10(maks))
+        for m in (1, 2, 2.5, 5, 10):                    # pæne akseskridt
+            trin = m * 10 ** (e - 1)
+            if 4 <= math.ceil(maks / trin) <= 8:
+                break
+        def yy(v):
+            return YB - v / (math.ceil(maks / trin) * trin) * ph
+        t = 0
+        while t <= math.ceil(maks / trin) * trin + 1:
+            y = yy(t)
+            s.append(f'<line x1="{X0}" y1="{y:.1f}" x2="{X1}" y2="{y:.1f}" '
+                     f'stroke="{LIN}" stroke-dasharray="2 3"/>')
+            mrk = '0' if t == 0 else f'{_dk(t / 1e9)} mia.'
+            s.append(f'<text x="{X0 - 6}" y="{y + 4:.1f}" text-anchor="end" '
+                     f'fill="{MUT}">{mrk}</text>')
+            t += trin
+        bund = yy(0)
+
+    for i, v in enumerate(vals):
+        y = yy(v)
+        h = max(bund - y, 0.4)
+        s.append(f'<rect x="{mid[i] - bb / 2:.1f}" y="{y:.1f}" width="{bb:.1f}" '
+                 f'height="{h:.1f}" fill="{BLA}"/>')
+        s.append(f'<text x="{mid[i]:.1f}" y="{YB + 15}" text-anchor="middle" '
+                 f'fill="{MUT}" font-size="9" '
+                 f'transform="rotate(-55 {mid[i]:.1f} {YB + 15})">{kats[i]}</text>')
+    s.append(f'<line x1="{X0}" y1="{bund:.1f}" x2="{X1}" y2="{bund:.1f}" stroke="{INK}"/>')
+    s.append(f'<line x1="{X0}" y1="{YT}" x2="{X0}" y2="{YB}" stroke="{INK}"/>')
+    if ynavn:
+        s.append(f'<text x="14" y="{(YT + YB) / 2}" text-anchor="middle" fill="{MUT}" '
+                 f'transform="rotate(-90 14 {(YT + YB) / 2})">{ynavn}</text>')
+    if xnavn:
+        s.append(f'<text x="{(X0 + X1) / 2}" y="{H - 5}" text-anchor="middle" '
+                 f'fill="{MUT}">{xnavn}</text>')
+    s.append('</svg>')
+    return ''.join(s)
