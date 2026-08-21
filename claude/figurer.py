@@ -953,3 +953,40 @@ def soejler_log(vals, kats, log=False, titel='', ynavn='', xnavn='',
                  f'fill="{MUT}">{xnavn}</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+def potenslinje(navne, punkter=(), W=680, H=170):
+    """Logaritmisk tallinje fra 10^0 og op, med navne og nedslag.
+
+    navne    [(eksponent, 'Million'), ...]      mærker over linjen
+    punkter  [(tal, 'SpaceX 2002'), ...]        nedslag under linjen
+    Positionen beregnes af eksponenten, saa afstanden mellem million og
+    milliard er praecis lige saa lang som mellem milliard og billion.
+    """
+    hi = max(e for e, _ in navne)
+    X0, X1, Y = 40, W - 40, 74
+    def x(e):
+        return X0 + (X1 - X0) * e / hi
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" {FONT}>',
+         f'<line x1="{X0}" y1="{Y}" x2="{X1}" y2="{Y}" stroke="{INK}" stroke-width="1.5"/>']
+    for e in range(0, hi + 1, 3):
+        s.append(f'<line x1="{x(e):.1f}" y1="{Y - 5}" x2="{x(e):.1f}" y2="{Y + 5}" '
+                 f'stroke="{INK}"/>')
+        s.append(f'<text x="{x(e):.1f}" y="{Y + 20}" text-anchor="middle" fill="{MUT}">'
+                 f'10<tspan dy="-4" font-size="8">{e}</tspan></text>')
+    for e, navn in navne:
+        s.append(f'<line x1="{x(e):.1f}" y1="{Y - 5}" x2="{x(e):.1f}" y2="{Y - 26}" '
+                 f'stroke="{BLA}"/>')
+        s.append(f'<text x="{x(e):.1f}" y="{Y - 31}" text-anchor="middle" fill="{BLA}" '
+                 f'font-weight="bold" transform="rotate(-32 {x(e):.1f} {Y - 31})">'
+                 f'{navn}</text>')
+    for v, navn in punkter:
+        e = math.log10(v)
+        s.append(f'<circle cx="{x(e):.1f}" cy="{Y}" r="4.5" fill="{ORA}"/>')
+        s.append(f'<line x1="{x(e):.1f}" y1="{Y + 26}" x2="{x(e):.1f}" y2="{Y + 46}" '
+                 f'stroke="{ORA}" stroke-dasharray="2 2"/>')
+        s.append(f'<text x="{x(e):.1f}" y="{Y + 60}" text-anchor="middle" fill="{ORA}">'
+                 f'{navn}</text>')
+    s.append('</svg>')
+    return ''.join(s)

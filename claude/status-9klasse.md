@@ -54,6 +54,12 @@ moduler og lektier ligger i `facit/` som PDF.
   19 år kan ikke ses" og "kun de sidste 3-4 søjler". Det rigtige tal er **6** —
   det er dem, hvis søjle er under 1 pixel høj ved 400 px. Tallet står nu i
   figurens titel og beregnes af scriptet.
+- **`store-tal.html`: million, milliard, billion.** Tabellen over talnavne med
+  antal nuller og potens, en logaritmisk tallinje hvor SpaceX' to yderpunkter er
+  sat på, og fælden: engelsk *trillion* er dansk **billion** — en faktor
+  1.000.000 at tage fejl af. Tallene skrives ud af scriptet og kontrolleres mod
+  eksponenten, så nullerne ikke kan tælles forkert.
+- **`potenslinje()` føjet til `claude/figurer.py`.**
 - **`__pycache__` er taget ud af repoet** og ligger nu i `.gitignore`.
 
 ## Rettet 18. august 2026

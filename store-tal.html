@@ -1,0 +1,95 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Store tal · 9. klasse</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;
+--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;
+--good-soft:#eaf7f0;--warn:#b5710a;--bad:#c23b4b;--bad-soft:#fdeef0;
+--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+background:var(--bg);color:var(--ink);line-height:1.65}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1000px;margin:0 auto;padding:12px 20px;display:flex;
+align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a{font-size:.86rem;padding:6px 12px;border-radius:999px;
+border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+main{max-width:1000px;margin:0 auto;padding:28px 20px 80px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;
+padding:32px;box-shadow:var(--shadow);margin-bottom:18px}
+.hero h1{margin:0 0 10px;font-size:2.1rem}
+.hero p{margin:0;color:var(--muted);max-width:72ch}
+.pill{display:inline-block;font-size:.76rem;letter-spacing:.6px;text-transform:uppercase;
+color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;
+margin-bottom:14px;background:#fff;font-weight:700}
+section.k{background:var(--panel);border:1px solid var(--line);border-radius:18px;
+padding:24px 28px;margin:18px 0;box-shadow:var(--shadow)}
+h2{font-size:1.4rem;margin:0 0 10px}
+table.st{width:100%;border-collapse:collapse;font-size:1rem;margin:8px 0}
+table.st th,table.st td{border-bottom:1px solid var(--line);padding:11px 12px;text-align:left}
+table.st th{background:var(--panel2);font-weight:700;border-bottom:2px solid var(--line);
+white-space:nowrap}
+table.st td.navn{font-weight:800;color:var(--accent);white-space:nowrap}
+table.st td.tal{font-family:Consolas,"Courier New",monospace;letter-spacing:-.2px}
+table.st td.nul,table.st td.pot{text-align:center;white-space:nowrap}
+table.st td.pot{font-family:Consolas,"Courier New",monospace}
+table.st tr:hover td{background:var(--accent-soft)}
+.wrap{overflow-x:auto}
+.fig{margin:16px 0 4px;padding:14px;background:var(--panel2);border:1px solid var(--line);
+border-radius:12px;text-align:center}
+.fig figcaption{margin-top:8px;color:var(--muted);font-size:.88rem;text-align:left}
+.box{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+padding:14px 18px;margin:16px 0}
+.box.advar{border-left:4px solid var(--bad);background:var(--bad-soft)}
+.box.tip{border-left:4px solid var(--good);background:var(--good-soft)}
+code{font-family:Consolas,"Courier New",monospace;background:var(--panel2);
+border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:.94em}
+a.btnlink{display:inline-flex;gap:8px;background:#fff;color:var(--ink);
+border:1px solid var(--line);text-decoration:none;padding:10px 18px;border-radius:10px;
+font-weight:700;font-size:.95rem;margin:6px 8px 0 0}
+a.btnlink:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);
+font-size:.85rem;text-align:center}
+@media print{header.top,a.btnlink{display:none!important}
+.hero,section.k{box-shadow:none;break-inside:avoid}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="active" href="matematik.html">Matematik</a><a href="samfundsfag.html">Samfundsfag</a><a href="tysk.html">Tysk</a></nav></div></header><main><section class="hero"><span class="pill">Matematik · Store tal</span>
+<h1>Million, milliard, billion</h1>
+<p>Hvert trin i tabellen er <b>1.000 gange</b> større end trinnet før — ikke ti
+gange. Det er derfor store tal er så svære at have en fornemmelse af, og derfor
+et søjlediagram med både millioner og milliarder i ser tomt ud.</p>
+<a class="btnlink" href="excel-soejlediagram.html">Søjlediagram i Excel</a>
+<a class="btnlink" href="matematik.html">Tilbage til matematik</a></section>
+
+<section class="k"><h2>Tabellen</h2>
+<div class="wrap"><table class="st">
+<tr><th>Navn</th><th>Tallet skrevet ud</th><th>Antal nuller</th><th>Potens</th></tr>
+<tr><td class="navn">Million</td><td class="tal">1.000.000</td><td class="nul">6</td><td class="pot">10<sup>6</sup></td></tr><tr><td class="navn">Milliard</td><td class="tal">1.000.000.000</td><td class="nul">9</td><td class="pot">10<sup>9</sup></td></tr><tr><td class="navn">Billion</td><td class="tal">1.000.000.000.000</td><td class="nul">12</td><td class="pot">10<sup>12</sup></td></tr><tr><td class="navn">Billiard</td><td class="tal">1.000.000.000.000.000</td><td class="nul">15</td><td class="pot">10<sup>15</sup></td></tr><tr><td class="navn">Trillion</td><td class="tal">1.000.000.000.000.000.000</td><td class="nul">18</td><td class="pot">10<sup>18</sup></td></tr><tr><td class="navn">Trilliard</td><td class="tal">1.000.000.000.000.000.000.000</td><td class="nul">21</td><td class="pot">10<sup>21</sup></td></tr></table></div>
+<p style="color:var(--muted);font-size:.92rem;margin-top:10px">Antallet af nuller
+er det samme som eksponenten. <code>10<sup>9</sup></code> betyder "ti ganget med
+sig selv 9 gange" — altså et ettal med 9 nuller efter.</p>
+</section>
+
+<section class="k"><h2>Hvor langt er der egentlig imellem?</h2>
+<figure class="fig"><svg viewBox="0 0 680 170" width="100%" style="max-width:680px" xmlns="http://www.w3.org/2000/svg" font-family="Consolas, monospace" font-size="11"><line x1="40" y1="74" x2="640" y2="74" stroke="#1a2233" stroke-width="1.5"/><line x1="40.0" y1="69" x2="40.0" y2="79" stroke="#1a2233"/><text x="40.0" y="94" text-anchor="middle" fill="#586074">10<tspan dy="-4" font-size="8">0</tspan></text><line x1="125.7" y1="69" x2="125.7" y2="79" stroke="#1a2233"/><text x="125.7" y="94" text-anchor="middle" fill="#586074">10<tspan dy="-4" font-size="8">3</tspan></text><line x1="211.4" y1="69" x2="211.4" y2="79" stroke="#1a2233"/><text x="211.4" y="94" text-anchor="middle" fill="#586074">10<tspan dy="-4" font-size="8">6</tspan></text><line x1="297.1" y1="69" x2="297.1" y2="79" stroke="#1a2233"/><text x="297.1" y="94" text-anchor="middle" fill="#586074">10<tspan dy="-4" font-size="8">9</tspan></text><line x1="382.9" y1="69" x2="382.9" y2="79" stroke="#1a2233"/><text x="382.9" y="94" text-anchor="middle" fill="#586074">10<tspan dy="-4" font-size="8">12</tspan></text><line x1="468.6" y1="69" x2="468.6" y2="79" stroke="#1a2233"/><text x="468.6" y="94" text-anchor="middle" fill="#586074">10<tspan dy="-4" font-size="8">15</tspan></text><line x1="554.3" y1="69" x2="554.3" y2="79" stroke="#1a2233"/><text x="554.3" y="94" text-anchor="middle" fill="#586074">10<tspan dy="-4" font-size="8">18</tspan></text><line x1="640.0" y1="69" x2="640.0" y2="79" stroke="#1a2233"/><text x="640.0" y="94" text-anchor="middle" fill="#586074">10<tspan dy="-4" font-size="8">21</tspan></text><line x1="211.4" y1="69" x2="211.4" y2="48" stroke="#1f6fd6"/><text x="211.4" y="43" text-anchor="middle" fill="#1f6fd6" font-weight="bold" transform="rotate(-32 211.4 43)">Million</text><line x1="297.1" y1="69" x2="297.1" y2="48" stroke="#1f6fd6"/><text x="297.1" y="43" text-anchor="middle" fill="#1f6fd6" font-weight="bold" transform="rotate(-32 297.1 43)">Milliard</text><line x1="382.9" y1="69" x2="382.9" y2="48" stroke="#1f6fd6"/><text x="382.9" y="43" text-anchor="middle" fill="#1f6fd6" font-weight="bold" transform="rotate(-32 382.9 43)">Billion</text><line x1="468.6" y1="69" x2="468.6" y2="48" stroke="#1f6fd6"/><text x="468.6" y="43" text-anchor="middle" fill="#1f6fd6" font-weight="bold" transform="rotate(-32 468.6 43)">Billiard</text><line x1="554.3" y1="69" x2="554.3" y2="48" stroke="#1f6fd6"/><text x="554.3" y="43" text-anchor="middle" fill="#1f6fd6" font-weight="bold" transform="rotate(-32 554.3 43)">Trillion</text><line x1="640.0" y1="69" x2="640.0" y2="48" stroke="#1f6fd6"/><text x="640.0" y="43" text-anchor="middle" fill="#1f6fd6" font-weight="bold" transform="rotate(-32 640.0 43)">Trilliard</text><circle cx="249.5" cy="74" r="4.5" fill="#b5710a"/><line x1="249.5" y1="100" x2="249.5" y2="120" stroke="#b5710a" stroke-dasharray="2 2"/><text x="249.5" y="134" text-anchor="middle" fill="#b5710a">SpaceX 2002</text><circle cx="388.1" cy="74" r="4.5" fill="#b5710a"/><line x1="388.1" y1="100" x2="388.1" y2="120" stroke="#b5710a" stroke-dasharray="2 2"/><text x="388.1" y="134" text-anchor="middle" fill="#b5710a">SpaceX 2026</text></svg><figcaption>Tallinjen er logaritmisk: hvert skridt til
+højre ganger med 1.000. Afstanden fra million til milliard er nøjagtig lige så
+lang som fra milliard til billion. SpaceX' to yderpunkter er sat på.</figcaption>
+</figure>
+<div class="box tip"><b>Prøv det med kroner.</b><br>
+1 million sekunder er cirka <b>11½ døgn</b>. 1 milliard sekunder er cirka
+<b>32 år</b>. 1 billion sekunder er cirka <b>31.700 år</b>. Samme tre ord —
+helt forskellige størrelser.</div>
+</section>
+
+<section class="k"><h2>Fælden: engelsk "trillion"</h2>
+<div class="box advar"><b>Engelsk og dansk bruger ikke de samme ord.</b><br>
+Engelsk <i>billion</i> er dansk <b>milliard</b> (10<sup>9</sup>).<br>
+Engelsk <i>trillion</i> er dansk <b>billion</b> (10<sup>12</sup>).<br>
+Når en amerikansk artikel skriver, at SpaceX er "worth $1.5 trillion", betyder
+det <b>1,5 billion</b> på dansk — ikke 1,5 trillion. Forskellen er en faktor
+1.000.000.</div>
+<p>Tjek altid, om en kilde er dansk eller engelsk, før du skriver tallet af.
+Det er en af de nemmeste måder at komme til at overdrive med en million gange.</p>
+</section>
+</main><footer>Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>
