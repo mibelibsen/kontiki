@@ -340,7 +340,8 @@ def svarprocent(N, n, tekst=''):
     R = 4.6
     STEP = 11.4
     raekker = math.ceil(N / KOL)
-    W, H = 40 + KOL * STEP, 30 + raekker * STEP + 46
+    # sidste tekstlinjes grundlinje ligger i y+34; der skal vaere plads under den
+    W, H = 40 + KOL * STEP, 30 + raekker * STEP + (60 if tekst else 43)
     s = [f'<svg viewBox="0 0 {W:.0f} {H:.0f}" role="img" aria-label="{N} prikker '
          f'hvor {n} er fremhævet — det er dem der svarede.">', f'<g {FONT}>']
     for i in range(N):

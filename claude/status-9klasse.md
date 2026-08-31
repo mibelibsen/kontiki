@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-08-20
+Sidst opdateret: 2026-08-31
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -37,6 +37,18 @@ moduler og lektier ligger i `facit/` som PDF.
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
+
+## Rettet 31. august 2026
+
+- **Lektien til uge 36 er udgivet** (`lektier-uge36-manipulation-diagrammer.html`)
+  med kort på matematiksiden. De planlagte Routines fyrede **ikke** — hverken
+  uge 35 eller uge 36 blev lagt op af sig selv, så det blev gjort i hånden.
+  Kontrollér de resterende Routines med `list_triggers`, før der stoles på dem.
+- **Uge 35-arket blev ikke udgivet.** Ugen var passeret, og lektien ville komme
+  en uge for sent. Filen ligger stadig i `kommende/`.
+- **Fejl i `svarprocent()` fundet ved at kigge på siden:** figurens tredje
+  tekstlinje lå præcis på viewBox-kanten og blev klippet af. Højden beregnes nu
+  ud fra, om der er en tekstlinje. Rettet både i biblioteket og i uge 35-arket.
 
 ## Rettet 20. august 2026
 
