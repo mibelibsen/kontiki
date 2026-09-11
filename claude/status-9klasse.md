@@ -24,10 +24,10 @@ moduler og lektier ligger i `facit/` som PDF.
 
 ## Næste skridt
 
-1. **Gennemgå matematikken på de interaktive sider.** Facit til modulopgaverne
-   er nu skrevet og efterregnet, men **quizzernes** `data-answer` er ikke
-   verificeret — 81 spørgsmål på tværs af de tre sider. Der er ikke lavet et
-   gennemløb af, om det markerede rigtige svar faktisk er rigtigt.
+1. **Quizzerne på `manipulation.html` og `funktioner-og-ligninger.html` er
+   stadig ikke verificeret** — 51 spørgsmål. `statistik.html` er gennemgået
+   11. september: alle 30 svar er rigtige, og de 16, der kan regnes, er
+   efterregnet programmatisk.
 2. **Lektier fra uge 37.** Der er lavet til og med uge 36. Aftalt at indholdet
    skal gennemgås, før der laves mere.
 3. **Årsplaner til samfundsfag og tysk.** Afventer at brugeren sender dem.
@@ -39,6 +39,15 @@ moduler og lektier ligger i `facit/` som PDF.
    `matematik.html`.
 
 ## Rettet 11. september 2026
+
+- **Quizzen på `statistik.html` er verificeret.** Alle 30 markerede svar er
+  rigtige. De 16 spørgsmål med tal er regnet efter med brøkregning, resten er
+  læst igennem. Ingen fejl fundet.
+- **Men facit ligger aldrig på C.** 13 gange A, 17 gange B, nul gange C i alle
+  30 spørgsmål. Det er et mønster, ungerne kan udnytte uden at kunne stoffet.
+  De to andre sider er jævnt fordelt. Ikke rettet endnu: en omrokering ugyldiggør
+  de svar, ungerne har gemt i browseren, med mindre `data-store-key` samtidig
+  får et nyt versionsnummer.
 
 - **Statistik-test til Kahoot: 30 spørgsmål, alle med illustration.** Bygget af
   `claude/byg_quiz.py`. Alle facit beregnes med brøkregning, og scriptet nægter
