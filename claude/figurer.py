@@ -1003,13 +1003,16 @@ def potenslinje(navne, punkter=(), W=680, H=170):
     return ''.join(s)
 
 
-def prikplot(vals, titel='', W=540, H=150):
+def prikplot(vals, titel='', W=540, H=None):
     """Prikdiagram: én prik pr. observation, stablet over sin værdi.
 
     Bruges i spørgsmål om median, typetal og variationsbredde, hvor eleven skal
     kunne se tallene — en tom tegneplads duer ikke til det.
     """
     lo, hi = min(vals), max(vals)
+    stak = max(vals.count(v) for v in set(vals))     # højeste søjle af prikker
+    if H is None:                                    # ingen død luft over prikkerne
+        H = 96 + (stak - 1) * 17
     pad = max(1, (hi - lo) // 8)
     a, b = lo - pad, hi + pad
     X0, X1, YB = 40, W - 24, H - 34

@@ -218,6 +218,62 @@ SP = [
    'Den højeste løn', 'Summen af de fem'], 0, 30, fig_loen),
 ]
 
+
+# --------------------------------------------------------------- forklaringer
+# Vises af quiz-motoren, naar ungen har svaret. Én pr. spoergsmaal.
+FORKLARING = {
+ 'median': 'Sortér tallene og tag det midterste. Med 7 tal er det nummer 4: '
+           '3, 5, 5, 6, 8, 9, 13.',
+ 'typetal': 'Typetallet er det tal, der optræder flest gange. 5 kommer to '
+            'gange, alle andre kun én.',
+ 'variationsbredde': 'Variationsbredde = største minus mindste: 13 − 3 = 10.',
+ 'gennemsnit': 'Læg sammen og del med antallet: 49 ÷ 7 = 7.',
+ 'nedre-kvartil': 'Nedre kvartil er medianen af den nederste halvdel. Det '
+                  'midterste tal udelades: 3, 5, 5 → 5.',
+ 'oevre-kvartil': 'Øvre kvartil er medianen af den øverste halvdel: 8, 9, 13 → 9.',
+ 'boksplot-fem-tal': 'Et boksplot viser femtalssammendraget: mindsteværdi, '
+                     'nedre kvartil, median, øvre kvartil og størsteværdi.',
+ 'boksplot-kassen': 'Kassen går fra nedre til øvre kvartil. Den midterste '
+                    'halvdel af observationerne ligger inde i kassen — 50 %.',
+ 'boksplot-aflaes': 'Medianen er den røde streg inde i kassen. Her står den ved 6.',
+ 'median-robust': 'Medianen er det midterste tal. Det ændrer sig ikke, når det '
+                  'største tal bliver større — kun gennemsnittet gør.',
+ 'gennemsnit-b': '4 + 6 + 8 + 10 + 12 = 40, og 40 ÷ 5 = 8.',
+ 'cirkel-grader-haand': '15 ud af 40 er 37,5 %. 37,5 % af 360° = 135°.',
+ 'cirkel-grader-svoem': '8 ud af 40 er 20 %. 20 % af 360° = 72°.',
+ 'cirkel-procent': '10 ud af 40 = 10/40 = 0,25 = 25 %.',
+ 'cirkel-stoerst': 'Håndbold har 15 — flere end fodbold (10), svømning (8) og '
+                   'andet (7).',
+ 'frekvens-sum': 'Frekvenserne er alle delene af det hele, så de giver 100 % '
+                 'tilsammen. Graderne giver 360°.',
+ 'sumkurve-median': 'Medianen er der, hvor halvdelen er talt med. Du går ind '
+                    'ved 50 % på den lodrette akse og ned på den vandrette.',
+ 'sumkurve-aflaes': 'Gå ind ved 50 % på den lodrette akse, følg over til kurven '
+                    'og ned på højdeaksen: cirka 172 cm.',
+ 'kumuleret': 'Kumuleret betyder lagt sammen undervejs: 20 + 35 + 25 = 80 %.',
+ 'histogram-flest': 'Den højeste søjle er 4-6 timer med 8 unger.',
+ 'soejler-typetal': 'Typetallet er det, der forekommer oftest — den højeste '
+                    'søjle: 2 gange, med 9 unger.',
+ 'terning-sum7': 'Der er 36 udfald i alt. Seks af dem giver 7: 1+6, 2+5, 3+4, '
+                 '4+3, 5+2 og 6+1.',
+ 'terning-sum5': 'Tæl de fremhævede felter: 1+4, 2+3, 3+2 og 4+1 — fire udfald.',
+ 'terning-sekser': 'Uden nogen sekser er der 5 · 5 = 25 udfald. 36 − 25 = 11 '
+                   'udfald har mindst én sekser.',
+ 'procentpoint': 'Procentpoint er den rene forskel mellem to procenttal: '
+                 '21 − 15 = 6 procentpoint.',
+ 'procent-stigning': 'Stigningen måles i forhold til udgangspunktet: '
+                     '6 ÷ 15 = 0,40 = 40 %.',
+ 'svarprocent': '38 ud af 400 er 38/400 = 0,095 = 9,5 %. De øvrige 90,5 % er '
+                'bortfald — dem ved vi intet om.',
+ 'afskaaret-akse': 'Når aksen ikke starter i 0, bliver en lille forskel til en '
+                   'høj søjle. Øjet ser forskellen i højde, ikke i tal.',
+ 'areal-trick': 'Både bredden og højden fordobles: 2 · 2 = 4. Arealet bliver '
+                'fire gange større, selvom tallet kun er fordoblet.',
+ 'median-vs-gennemsnit': 'Den ene høje løn trækker gennemsnittet op på '
+                         '98.800 kr. Medianen på 24.000 kr ligner det, de '
+                         'fleste faktisk tjener.',
+}
+
 # --------------------------------------------------------------- kontrol
 LOVLIG_TID = {5, 10, 20, 30, 60, 90, 120, 240}
 navne = set()
@@ -231,6 +287,8 @@ for i, (navn, q, sv, rigtig, tid, fig) in enumerate(SP, 1):
     navne.add(navn)
 assert len(SP) == 30, f'der skal vaere 30 spoergsmaal, ikke {len(SP)}'
 assert all(r[5] for r in SP), 'alle spoergsmaal skal have en illustration'
+mangler_fork = [r[0] for r in SP if r[0] not in FORKLARING]
+assert not mangler_fork, f'mangler forklaring til: {mangler_fork}'
 med_fig = sum(1 for r in SP if r[5])
 print(f'{len(SP)} spørgsmål · {med_fig} med illustration · alle inden for '
       f'Kahoots grænser')
@@ -291,8 +349,9 @@ print(f'skrevet:  {len(lavet)} figursider i {FIGDIR}/')
 
 # ------------------------------------- data til PowerPoint-udgaven (Kahoot)
 import json
-json.dump([{'nr': i, 'q': q, 'sv': sv, 'rigtig': rigtig, 'tid': tid,
-            'png': f'{i:02d}-{navn}.png'}
+json.dump([{'nr': i, 'navn': navn, 'q': q, 'sv': sv, 'rigtig': rigtig,
+            'tid': tid, 'png': f'{i:02d}-{navn}.png',
+            'forklaring': FORKLARING[navn], 'svg': fig}
            for i, (navn, q, sv, rigtig, tid, fig) in enumerate(SP, 1)],
           open(os.path.join(FIGDIR, 'quiz.json'), 'w'), ensure_ascii=False, indent=1)
 print('skrevet: ', os.path.join(FIGDIR, 'quiz.json'))
@@ -307,8 +366,8 @@ for i, (navn, q, sv, rigtig, tid, fig) in enumerate(SP, 1):
                '<div class="ingen">Ingen illustration til dette spørgsmål</div>')
     rk.append(f'<section><h2><span class="nr">{i}</span>{html.escape(q)}</h2>'
               f'<ol class="sv">{valg}</ol>{billede}'
-              f'<div class="meta">{tid} sekunder · '
-              f'billedfil: {i:02d}-{navn}.png</div></section>')
+              f'<div class="meta">{html.escape(FORKLARING[navn])}<br>'
+              f'{tid} sekunder · billedfil: {i:02d}-{navn}.png</div></section>')
 OVER = ('<!DOCTYPE html><html lang="da"><head><meta charset="utf-8">'
         '<title>Statistik-quiz · overblik</title><style>'
         'body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",'

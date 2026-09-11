@@ -64,6 +64,19 @@ moduler og lektier ligger i `facit/` som PDF.
   fire svarfelter i Kahoots farver, og det rigtige svar i slidets noter, så
   ungerne ikke kan se det. Regnearket beholdes til den udgave af editoren, der
   har regnearksimport.
+- **Testen ligger nu som interaktiv side: `test-statistik.html`.** Hverken
+  Kahoot (slide-import koster abonnement) eller Teams Forms virkede. Siden
+  bruger den samme quiz-motor som manipulation.html — én motor i projektet — med
+  30 spørgsmål i fem dele, figuren inde i hvert spørgsmål og forklaring med det
+  samme.
+- **Statistik til læreren uden server.** Sitet er statisk, så ungen laver til
+  sidst en kode: `NAVN-27-VZXZZVB`. De seks tegn er 30 bit for rigtigt/forkert,
+  det sidste er et tjekciffer. Læreren indsætter koderne på
+  `test-statistik-resultater.html` og får en tabel pr. elev og pr. spørgsmål.
+  **Koden indeholder ikke facit** — kun om svaret var rigtigt — så resultatsiden
+  kan ligge offentligt uden at røbe noget.
+  Afprøvet ende til ende i browser: 30 rigtige og en med tre fejl i nummer 3, 17
+  og 28 blev afkodet præcis rigtigt, og en forfalsket kode blev afvist.
 - **Forms-udgaven** er bygget af `claude/byg_quiz_forms.py` ud fra den samme
   `quiz.json`: et Word-dokument til Forms' dokumentimport og en ren tekstfil at
   kopiere fra. Det rigtige svar er markeret med en stjerne. Kahoot blev droppet,

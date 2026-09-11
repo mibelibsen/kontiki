@@ -1,0 +1,391 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Resultater · Test i statistik</title><style>
+  :root{
+    --bg:#ffffff;
+    --panel:#ffffff;
+    --panel2:#f4f6fb;
+    --ink:#1a2233;
+    --muted:#586074;
+    --line:#d3dae7;
+    --accent:#1f6fd6;
+    --accent-soft:#eaf2fd;
+    --good:#1a8f5e;
+    --good-soft:#eaf7f0;
+    --bad:#c23b4b;
+    --bad-soft:#fdeef0;
+    --warn:#b5710a;
+    --shadow:0 1px 3px rgba(20,30,60,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  header.top{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(8px);
+    background:rgba(255,255,255,.9);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1000px;margin:0 auto;padding:12px 20px;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}
+  .brand span{color:var(--accent)}
+  nav.jump{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  nav.jump a{
+    color:var(--muted);text-decoration:none;font-size:.86rem;
+    padding:6px 11px;border-radius:999px;border:1px solid transparent;
+    transition:.15s;
+  }
+  nav.jump a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+
+  main{max-width:1000px;margin:0 auto;padding:28px 20px 90px}
+
+  .hero{
+    background:var(--panel2);
+    border:1px solid var(--line);border-radius:20px;
+    padding:34px 32px;box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  .hero h1{margin:0 0 10px;font-size:2.1rem;line-height:1.15}
+  .hero p{margin:0;color:var(--muted);font-size:1.06rem;max-width:72ch}
+  .pill{
+    display:inline-block;font-size:.76rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--line);border-radius:999px;
+    padding:4px 12px;margin-bottom:14px;background:#fff;font-weight:700;
+  }
+
+  .progress-wrap{margin:22px 0 4px}
+  .progress-bar{height:10px;border-radius:999px;background:#e4e9f2;overflow:hidden;border:1px solid var(--line)}
+  .progress-fill{height:100%;width:0;background:var(--accent);transition:width .5s ease}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+  section.lesson{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:28px 30px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  section.lesson h2{
+    font-size:1.5rem;margin:0 0 6px;display:flex;align-items:center;gap:12px;
+  }
+  .num{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    display:grid;place-items:center;font-weight:800;font-size:1rem;
+    background:var(--accent);color:#fff;
+  }
+  section.lesson .sub{color:var(--muted);margin:0 0 18px;font-size:1rem}
+  section.lesson h3{font-size:1.15rem;margin:26px 0 8px;color:#243149}
+  p{margin:12px 0}
+
+  .box{
+    background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;margin:16px 0;
+  }
+  .box.tip{border-left:4px solid var(--good)}
+  .box.note{border-left:4px solid var(--warn)}
+  .box.rule{border-left:4px solid var(--accent);background:var(--accent-soft)}
+  .box b{color:#111}
+  .box .rlabel{
+    display:inline-block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);font-weight:800;margin-bottom:2px;
+  }
+
+  .formula{
+    font-family:"Cambria Math","Times New Roman",Georgia,serif;
+    background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0;text-align:center;
+    font-size:1.3rem;letter-spacing:.4px;color:#111;
+  }
+  .formula small{display:block;font-size:.8rem;color:var(--muted);margin-top:6px;font-family:inherit;letter-spacing:0}
+  code.inl{
+    font-family:"Cambria Math",Georgia,serif;background:var(--panel2);
+    padding:2px 8px;border-radius:6px;border:1px solid var(--line);font-size:1.05em;color:#111;
+  }
+
+  .steps{margin:16px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .steps .row{display:flex;gap:0;border-top:1px solid var(--line)}
+  .steps .row:first-child{border-top:none}
+  .steps .calc{
+    flex:1;padding:11px 18px;font-family:"Cambria Math",Georgia,serif;font-size:1.12rem;
+    background:#fff;color:#111;display:flex;align-items:center;
+  }
+  .steps .why{
+    flex:1;padding:11px 18px;color:var(--muted);font-size:.92rem;background:var(--panel2);
+    display:flex;align-items:center;
+  }
+  @media(max-width:620px){.steps .row{flex-direction:column}}
+
+  .graphwrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin:18px 0}
+  .graphwrap svg{background:#fff;border:1px solid var(--line);border-radius:12px;flex:0 0 auto}
+  .graphwrap .caption{flex:1;min-width:220px;color:var(--muted);font-size:.95rem}
+
+  /* QUIZ */
+  .quiz{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:18px;padding:24px 28px;margin:24px 0;box-shadow:var(--shadow);
+  }
+  .quiz .qhead{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+  .quiz .qtag{
+    font-size:.72rem;letter-spacing:.7px;text-transform:uppercase;color:#fff;
+    background:var(--accent);padding:4px 11px;border-radius:999px;font-weight:800;
+  }
+  .quiz h3{margin:0;font-size:1.22rem}
+  .quiz .qsub{color:var(--muted);margin:6px 0 16px;font-size:.95rem}
+  .q{margin:18px 0;padding-top:18px;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:none;padding-top:0}
+  .q .qtext{font-weight:600;margin-bottom:12px;font-size:1.04rem}
+  .q .qtext .qn{color:var(--accent);font-weight:800;margin-right:6px}
+  .lvl{
+    display:inline-block;font-size:.68rem;letter-spacing:.5px;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:8px;
+    color:var(--muted);font-weight:700;vertical-align:middle;background:#fff;
+  }
+  .opts{display:grid;gap:9px}
+  .opt{
+    text-align:left;width:100%;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);color:var(--ink);
+    padding:11px 15px;border-radius:10px;font-size:1rem;font-family:inherit;
+    transition:.15s;display:flex;align-items:center;gap:10px;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .mk{
+    flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);
+    display:grid;place-items:center;font-weight:800;font-size:.85rem;color:var(--muted);background:#fff;
+  }
+  .opt.correct{border-color:var(--good);background:var(--good-soft)}
+  .opt.correct .mk{background:var(--good);color:#fff;border-color:var(--good)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.wrong .mk{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt:disabled{cursor:default}
+  .fb{
+    margin-top:12px;padding:11px 15px;border-radius:10px;font-size:.95rem;display:none;
+  }
+  .fb.show{display:block}
+  .fb.ok{background:var(--good-soft);border:1px solid var(--good);color:#12633f}
+  .fb.no{background:var(--bad-soft);border:1px solid var(--bad);color:#8f2733}
+  .fb b{color:#111}
+
+  .scorebar{
+    margin-top:16px;font-size:.95rem;color:var(--muted);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .scorebar .badge{
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:5px 14px;font-weight:700;color:var(--ink);
+  }
+  .final-note{text-align:center;color:var(--muted);margin-top:16px;font-size:.95rem}
+
+  footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  @media(max-width:620px){.cheat{grid-template-columns:1fr}}
+  .cheat .card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .cheat .card h4{margin:0 0 6px;font-size:1rem;color:#243149}
+  .cheat .card p{margin:0;font-size:.92rem;color:var(--muted)}
+
+  .printbtn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:#fff;border:1px solid var(--line);color:var(--ink);
+    padding:9px 16px;border-radius:10px;font-size:.92rem;font-family:inherit;cursor:pointer;
+    font-weight:600;
+  }
+  .printbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .btn{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn:hover{background:#195cb5}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* start overlay */
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(26,34,51,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}
+  .overlay.hidden{display:none}
+  .overlay .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 32px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(20,30,60,.25)}
+  .overlay h2{margin:0 0 6px;font-size:1.5rem}
+  .overlay p{margin:0 0 18px;color:var(--muted)}
+  .overlay input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:1.05rem;font-family:inherit;margin-bottom:14px}
+  .overlay input:focus{outline:none;border-color:var(--accent)}
+  .overlay .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* welcome bar */
+  .welcome{display:none;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .welcome.show{display:flex}
+  .welcome .hi{font-weight:800;font-size:1.05rem}
+  .welcome .live{color:var(--muted);font-size:.95rem}
+  .welcome .spacer{margin-left:auto}
+  .welcome .btn{padding:8px 14px;font-size:.9rem}
+
+  /* results */
+  #results .rtable{width:100%;border-collapse:collapse;margin-top:10px}
+  #results .rtable th,#results .rtable td{border:1px solid var(--line);padding:9px 12px;text-align:left;font-size:.98rem}
+  #results .rtable th{background:var(--panel2);font-weight:700}
+  #results .rtable tr.total td{font-weight:800;background:var(--accent-soft)}
+  #results .grade{font-size:1.08rem;margin-top:16px;font-weight:600}
+
+  /* ---------- PRINT ---------- */
+  .opg{background:#fdf8f0;border:1px solid var(--line);border-left:4px solid #b5710a;border-radius:10px;padding:14px 18px;margin:18px 0 4px}.opg h4{margin:0 0 6px;font-size:1.02rem}.opg h4 em{font-style:normal;color:#b5710a;font-weight:800;margin-right:8px}.opg ol{margin:8px 0 2px;padding-left:24px}.opg ol li{margin:5px 0}.opg .opgtable{margin:10px 0 4px}
+ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margin:5px 0}.opgtable{width:auto;min-width:60%;border-collapse:collapse;margin:8px 0}.opgtable th,.opgtable td{border:1px solid #cfd6e4;padding:5px 10px;font-size:.92rem;text-align:left}.opgtable th{background:#f4f6fb}
+
+  /* ---------- FIGURER (kun denne side) ---------- */
+  .figur{margin:18px 0}
+  .figur svg{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .figur .caption{color:var(--muted);font-size:.95rem;margin-top:8px}
+  .to-figurer{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:18px 0}
+  .to-figurer .figur{margin:0}
+  @media(max-width:620px){.to-figurer{grid-template-columns:1fr}}
+
+  .cirkelblok{display:flex;gap:24px;flex-wrap:wrap;align-items:center;margin:18px 0}
+  .cirkelblok svg{flex:0 0 auto;width:min(300px,100%);height:auto;background:#fff;border:1px solid var(--line);border-radius:12px}
+  ul.legende{flex:1;min-width:200px;list-style:none;margin:0;padding:0;font-size:.95rem}
+  ul.legende li{display:flex;align-items:center;gap:9px;margin:7px 0}
+  ul.legende i{flex:0 0 auto;width:14px;height:14px;border-radius:4px;border:1px solid var(--line)}
+
+  /* links til de andre sider, adskilt fra sidens egne anker-links */
+  nav.jump a.side{border-color:var(--line);background:var(--panel2);color:var(--ink);font-weight:600}
+  nav.jump a.side:hover{border-color:var(--accent);color:var(--accent)}
+
+  @media print{
+    @page{margin:16mm}
+    body{background:#fff;color:#000;font-size:11.5pt;line-height:1.45}
+    header.top,nav.jump,.progress-wrap,.printbtn,.overlay,.welcome .btn{display:none !important}
+    .welcome{border:1px solid #999;background:#fff !important}
+    main{max-width:none;padding:0}
+    .hero,section.lesson,.quiz,.box,.steps,.cheat .card,.formula,.graphwrap svg,.figur svg,.cirkelblok svg{
+      box-shadow:none !important;
+    }
+    .hero,section.lesson,.quiz{
+      border:1px solid #999;background:#fff !important;border-radius:0;
+      padding:14px 16px;margin:10px 0;break-inside:avoid;page-break-inside:avoid;
+    }
+    section.lesson h2,.quiz h3,section.lesson h3{break-after:avoid}
+    .num{background:#fff !important;color:#000;border:1.5px solid #000}
+    .pill,.qtag{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .box,.box.rule{background:#fff !important;border:1px solid #bbb;border-left:3px solid #000}
+    .rlabel{color:#000 !important}
+    .formula,.steps .calc,.opt,.opt .mk,.cheat .card{background:#fff !important}
+    .steps .why{background:#fff !important;color:#333}
+    .opt{border:1px solid #888}
+    .opt .mk{border:1px solid #000;color:#000}
+    /* keep quizzes usable as a paper worksheet: neutral options, hide screen-only feedback state */
+    .opt.correct,.opt.wrong{background:#fff !important;border:1px solid #888 !important}
+    .opt.correct .mk,.opt.wrong .mk{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .fb{display:none !important}
+    .q{break-inside:avoid;page-break-inside:avoid}
+    a{color:#000;text-decoration:none}
+    /* figurerne baerer pointen i farverne - lad dem printe som de ser ud */
+    .figur svg,.cirkelblok svg,ul.legende i{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .figur svg,.cirkelblok svg{border:1px solid #999}
+    .figur,.to-figurer,.cirkelblok{break-inside:avoid;page-break-inside:avoid}
+    .to-figurer{gap:10px}
+    .caption{color:#333}
+  }
+
+  .qfig{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+        padding:10px 12px;margin:10px 0 12px;text-align:center}
+  .qfig svg{max-width:100%;height:auto}
+  .kodeboks{background:var(--accent-soft);border:1px solid var(--accent);
+            border-radius:14px;padding:18px 20px;margin:18px 0}
+  .kodeboks h3{margin:0 0 6px;font-size:1.1rem}
+  .kodeboks p{margin:6px 0;color:var(--muted);font-size:.95rem}
+  .kode{font-family:Consolas,"Courier New",monospace;font-size:1.25rem;
+        font-weight:700;letter-spacing:1px;background:#fff;border:1px solid var(--line);
+        border-radius:10px;padding:12px 16px;margin:10px 0;word-break:break-all;
+        color:#111}
+  .kodeboks .btn{margin-right:8px}
+  textarea.koder{width:100%;min-height:180px;font-family:Consolas,monospace;
+        font-size:.95rem;border:1px solid var(--line);border-radius:10px;padding:12px}
+  table.rtable td.smal{white-space:nowrap}
+  .fejlliste{color:var(--bad);font-size:.9rem}
+</style></head>
+<body data-store-key="test9_laerer_v1">
+<header class="top"><div class="top-inner">
+<div class="brand">Matematik · <span>Resultater</span></div>
+<nav class="jump"><a class="side" href="test-statistik.html">Testen</a>
+<a class="side" href="matematik.html">Matematik</a></nav></div></header>
+<main><section class="hero"><span class="pill">Til læreren</span>
+<h1>Aflæs elevernes koder</h1>
+<p>Sæt koderne ind — én pr. linje — og tryk på knappen. Siden regner ud, hvem
+der har hvad, og hvilke spørgsmål der drillede flest. Koderne indeholder ikke
+elevernes svar, kun om hvert svar var rigtigt.</p></section>
+<section class="lesson"><h2><span class="num">1</span> Koderne</h2>
+<textarea class="koder" id="koder" placeholder="MIA-27-K3F9T2A&#10;OLIVER-22-B7X1M4C"></textarea>
+<div style="margin-top:12px"><button class="btn" id="afkod">Aflæs koderne</button></div>
+<p class="sub" id="opsummering" style="margin-top:12px"></p>
+<p class="fejlliste" id="daarlige"></p></section>
+<section class="lesson"><h2><span class="num">2</span> Eleverne</h2>
+<table class="rtable"><thead><tr><th>Navn</th><th>Rigtige</th><th>Procent</th>
+<th>Missede spørgsmål</th></tr></thead><tbody id="elevBody"></tbody></table></section>
+<section class="lesson"><h2><span class="num">3</span> Spørgsmålene</h2>
+<p class="sub">Sorteret efter hvor mange der svarede forkert. Brug den til at se,
+hvad klassen skal have igen.</p>
+<table class="rtable"><thead><tr><th>Spørgsmål</th><th>Rigtige</th><th>Andel</th>
+</tr></thead><tbody id="sporgsmaalBody"></tbody></table>
+<svg viewBox="0 0 100 8" width="100%" style="max-width:320px;margin-top:14px"
+ xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="100" height="8"
+ rx="4" fill="#eaf2fd"/><rect x="0" y="0" width="62" height="8" rx="4" fill="#1f6fd6"/>
+</svg><p class="sub" style="font-size:.85rem">Farvet felt = andel rigtige. Vises
+her som eksempel.</p></section>
+</main>
+<footer>Undervisningsmateriale til matematik i 9. klasse · Resultatoversigt.</footer>
+<script>
+(function(){
+  var ALFABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
+  var ANTAL = 30;
+  function tal(s){ var n = 0; for(var i=0;i<s.length;i++) n = n*32 + ALFABET.indexOf(s[i]); return n; }
+  function laes(linje){
+    var m = linje.trim().toUpperCase().match(/^([A-ZÆØÅ]+)-(\d+)-([0-9A-Z]{6})([0-9A-Z])$/);
+    if(!m) return null;
+    var krop = m[3], rigtige = parseInt(m[2],10), sum = 0;
+    for(var i=0;i<krop.length;i++){
+      if(ALFABET.indexOf(krop[i]) < 0) return null;
+      sum += ALFABET.indexOf(krop[i]);
+    }
+    if(ALFABET[(sum + rigtige) % 32] !== m[4]) return null;   // tjekciffer
+    var bits = tal(krop.slice(0,3)) * 32768 + tal(krop.slice(3));
+    var forkerte = [];
+    for(var i=0;i<ANTAL;i++) if(!(Math.floor(bits / Math.pow(2,i)) % 2)) forkerte.push(i+1);
+    if(ANTAL - forkerte.length !== rigtige) return null;      // score skal passe
+    return {navn:m[1], rigtige:rigtige, forkerte:forkerte};
+  }
+  document.getElementById('afkod').addEventListener('click', function(){
+    var linjer = document.getElementById('koder').value.split('\n').filter(function(l){ return l.trim(); });
+    var ok = [], daarlige = [];
+    linjer.forEach(function(l){ var r = laes(l); if(r) ok.push(r); else daarlige.push(l.trim()); });
+    var tb = document.getElementById('elevBody'); tb.innerHTML = '';
+    ok.sort(function(a,b){ return b.rigtige - a.rigtige; }).forEach(function(r){
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + r.navn + '</td><td class="smal">' + r.rigtige + ' / ' + ANTAL +
+        '</td><td class="smal">' + Math.round(r.rigtige/ANTAL*100) + ' %</td><td>' +
+        (r.forkerte.length ? r.forkerte.join(', ') : '—') + '</td>';
+      tb.appendChild(tr);
+    });
+    var fejlPr = [];
+    for(var i=1;i<=ANTAL;i++){
+      var n = ok.filter(function(r){ return r.forkerte.indexOf(i) >= 0; }).length;
+      fejlPr.push({nr:i, fejl:n});
+    }
+    var sb = document.getElementById('sporgsmaalBody'); sb.innerHTML = '';
+    fejlPr.sort(function(a,b){ return b.fejl - a.fejl; }).forEach(function(f){
+      if(!ok.length) return;
+      var pct = Math.round((ok.length - f.fejl)/ok.length*100);
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td class="smal">Spørgsmål ' + f.nr + '</td><td class="smal">' +
+        (ok.length - f.fejl) + ' / ' + ok.length + '</td><td class="smal">' + pct + ' % rigtige</td>';
+      sb.appendChild(tr);
+    });
+    document.getElementById('opsummering').textContent = ok.length
+      ? ok.length + ' koder aflæst. Gennemsnit: ' +
+        (Math.round(ok.reduce(function(a,r){ return a + r.rigtige; },0)/ok.length*10)/10) +
+        ' af ' + ANTAL + ' rigtige.'
+      : 'Ingen gyldige koder endnu.';
+    document.getElementById('daarlige').textContent = daarlige.length
+      ? 'Kunne ikke læses (tjek for tastefejl): ' + daarlige.join(' · ') : '';
+  });
+})();
+</script></body></html>
