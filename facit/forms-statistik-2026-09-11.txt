@@ -2,100 +2,100 @@ Statistik · 9. klasse · 30 spørgsmål
 Det rigtige svar er markeret med * foran.
 
 1. Talrækken er 3, 5, 5, 6, 8, 9, 13. Hvad er medianen?
-   *A. 6
+    A. 8
     B. 7
-    C. 5
-    D. 8
+   *C. 6
+    D. 5
 
 2. Talrækken er 3, 5, 5, 6, 8, 9, 13. Hvad er typetallet?
-   *A. 5
-    B. 6
+    A. 6
+    B. 13
     C. 7
-    D. 13
+   *D. 5
 
 3. Talrækken er 3, 5, 5, 6, 8, 9, 13. Hvad er variationsbredden?
    *A. 10
-    B. 13
-    C. 3
+    B. 3
+    C. 13
     D. 7
 
 4. Talrækken er 3, 5, 5, 6, 8, 9, 13. Hvad er gennemsnittet?
-   *A. 7
+    A. 49
     B. 6
-    C. 5
-    D. 49
+   *C. 7
+    D. 5
 
 5. Talrækken er 3, 5, 5, 6, 8, 9, 13. Hvad er den nedre kvartil?
-   *A. 5
-    B. 3
-    C. 6
-    D. 9
+    A. 9
+    B. 6
+    C. 3
+   *D. 5
 
 6. Talrækken er 3, 5, 5, 6, 8, 9, 13. Hvad er den øvre kvartil?
-   *A. 9
+    A. 8
     B. 13
     C. 6
-    D. 8
+   *D. 9
 
 7. Hvilke fem tal tegnes et boksplot ud fra?
-   *A. Mindste, nedre kvartil, median, øvre kvartil, største
-    B. Mindste, gennemsnit, median, typetal, største
-    C. De fem mindste tal i datasættet
-    D. Gennemsnit, median, typetal, sum og antal
+    A. Gennemsnit, median, typetal, sum og antal
+   *B. Mindste, nedre kvartil, median, øvre kvartil, største
+    C. Mindste, gennemsnit, median, typetal, største
+    D. De fem mindste tal i datasættet
 
 8. Hvor stor en del af observationerne ligger inde i boksplottets kasse?
-   *A. 50 %
-    B. 25 %
+    A. 25 %
+   *B. 50 %
     C. 75 %
     D. 100 %
 
 9. Aflæs medianen på boksplottet.
-   *A. 6
+    A. 9
     B. 5
-    C. 9
+   *C. 6
     D. 7
 
 10. Hvad sker der med medianen, hvis det største tal bliver dobbelt så stort?
-   *A. Ingenting
-    B. Den bliver dobbelt så stor
-    C. Den stiger lidt
-    D. Den falder
+    A. Den stiger lidt
+    B. Den falder
+    C. Den bliver dobbelt så stor
+   *D. Ingenting
 
 11. Talrækken er 4, 6, 8, 10, 12. Hvad er gennemsnittet?
-   *A. 8
-    B. 6
+    A. 40
+   *B. 8
     C. 10
-    D. 40
+    D. 6
 
 12. 40 unger. 15 spiller håndbold. Hvor mange grader fylder håndbold i cirklen?
-   *A. 135°
-    B. 150°
-    C. 90°
-    D. 15°
+    A. 90°
+    B. 15°
+   *C. 135°
+    D. 150°
 
 13. 40 unger. 8 svømmer. Hvor mange grader fylder svømning i cirklen?
-   *A. 72°
-    B. 80°
+    A. 80°
+    B. 45°
     C. 8°
-    D. 45°
+   *D. 72°
 
 14. 40 unger. 10 spiller fodbold. Hvor mange procent er det?
-   *A. 25 %
+    A. 40 %
     B. 10 %
-    C. 40 %
+   *C. 25 %
     D. 15 %
 
 15. Hvilken sektor er størst i cirkeldiagrammet?
-   *A. Håndbold
-    B. Fodbold
-    C. Svømning
-    D. Andet
+    A. Svømning
+    B. Andet
+   *C. Håndbold
+    D. Fodbold
 
 16. Hvad skal alle frekvenserne i en tabel tilsammen give?
-   *A. 100 %
-    B. 360 %
-    C. Antallet af observationer
-    D. Gennemsnittet
+    A. 360 %
+    B. Gennemsnittet
+   *C. 100 %
+    D. Antallet af observationer
 
 17. Hvor på en sumkurve aflæser man medianen?
    *A. Ved 50 % på den lodrette akse
@@ -104,33 +104,33 @@ Det rigtige svar er markeret med * foran.
     D. Midt mellem første og sidste punkt
 
 18. Aflæs medianen på sumkurven. Hvad er den cirka?
-   *A. Omkring 172 cm
+    A. Omkring 155 cm
     B. Omkring 160 cm
-    C. Omkring 180 cm
-    D. Omkring 155 cm
+   *C. Omkring 172 cm
+    D. Omkring 180 cm
 
 19. Frekvenserne er 20 %, 35 % og 25 %. Hvad er den kumulerede frekvens efter tredje interval?
-   *A. 80 %
-    B. 25 %
-    C. 100 %
-    D. 35 %
+    A. 25 %
+   *B. 80 %
+    C. 35 %
+    D. 100 %
 
 20. Hvilket interval har flest unger i histogrammet?
-   *A. 4-6 timer
+    A. 2-4 timer
     B. 0-2 timer
-    C. 2-4 timer
+   *C. 4-6 timer
     D. 6-8 timer
 
 21. Hvad er typetallet ifølge søjlediagrammet?
-   *A. 2 gange
-    B. 1 gang
+    A. 4 gange
+   *B. 2 gange
     C. 3 gange
-    D. 4 gange
+    D. 1 gang
 
 22. Du kaster to terninger. Hvad er sandsynligheden for at summen bliver 7?
-   *A. 6 ud af 36
+    A. 7 ud af 36
     B. 1 ud af 36
-    C. 7 ud af 36
+   *C. 6 ud af 36
     D. 1 ud af 12
 
 23. Hvor mange af de 36 udfald giver summen 5?
@@ -142,41 +142,41 @@ Det rigtige svar er markeret med * foran.
 24. Du kaster to terninger. Hvad er sandsynligheden for mindst én sekser?
    *A. 11 ud af 36
     B. 6 ud af 36
-    C. 12 ud af 36
-    D. 2 ud af 36
+    C. 2 ud af 36
+    D. 12 ud af 36
 
 25. Tilslutningen steg fra 15 % til 21 %. Hvor mange PROCENTPOINT er det steget?
-   *A. 6 procentpoint
-    B. 40 procentpoint
+    A. 21 procentpoint
+   *B. 6 procentpoint
     C. 6 procent
-    D. 21 procentpoint
+    D. 40 procentpoint
 
 26. Tilslutningen steg fra 15 % til 21 %. Hvor mange PROCENT er det steget?
    *A. 40 %
-    B. 6 %
+    B. 36 %
     C. 21 %
-    D. 36 %
+    D. 6 %
 
 27. Et spørgeskema sendes til 400 unger. 38 svarer. Hvad er svarprocenten?
-   *A. 9,5 %
-    B. 38 %
-    C. 10,5 %
-    D. 90,5 %
+    A. 38 %
+   *B. 9,5 %
+    C. 90,5 %
+    D. 10,5 %
 
 28. Et diagrams y-akse starter ved 199 i stedet for 0. Hvad sker der?
    *A. Forskellene ser større ud, end de er
-    B. Forskellene ser mindre ud, end de er
-    C. Ingenting — tallene er jo de samme
-    D. Diagrammet bliver ulovligt
+    B. Ingenting — tallene er jo de samme
+    C. Diagrammet bliver ulovligt
+    D. Forskellene ser mindre ud, end de er
 
 29. En figurs side fordobles. Hvor mange gange større bliver arealet?
-   *A. 4 gange
+    A. 8 gange
     B. 2 gange
-    C. 8 gange
-    D. 16 gange
+    C. 16 gange
+   *D. 4 gange
 
 30. Fire lønninger omkring 24.000 kr og én på 400.000 kr. Hvad er en typisk løn?
-   *A. Medianen, 24.000 kr
-    B. Gennemsnittet, 98.800 kr
+    A. Gennemsnittet, 98.800 kr
+    B. Summen af de fem
     C. Den højeste løn
-    D. Summen af de fem
+   *D. Medianen, 24.000 kr

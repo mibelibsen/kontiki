@@ -219,6 +219,24 @@ SP = [
 ]
 
 
+
+# ------------------------------------------------------ bland svarmulighederne
+# Det rigtige svar blev skrevet foerst i hvert spoergsmaal. Her blandes de fire
+# med en fast seed, saa alle formater faar samme raekkefoelge, og facit fordeler
+# sig over A, B, C og D i stedet for altid at staa oeverst.
+import random
+_bland = random.Random(20260911)
+_blandet = []
+for _navn, _q, _sv, _rigtig, _tid, _fig in SP:
+    _raek = list(range(4))
+    _bland.shuffle(_raek)
+    _nye = [_sv[k] for k in _raek]
+    _blandet.append((_navn, _q, _nye, _raek.index(_rigtig), _tid, _fig))
+SP = _blandet
+_fordeling = [sum(1 for r in SP if r[3] == k) for k in range(4)]
+assert min(_fordeling) >= 5, f'skæv fordeling af facit: {_fordeling}'
+print('facit fordelt paa A, B, C, D:', _fordeling)
+
 # --------------------------------------------------------------- forklaringer
 # Vises af quiz-motoren, naar ungen har svaret. Én pr. spoergsmaal.
 FORKLARING = {

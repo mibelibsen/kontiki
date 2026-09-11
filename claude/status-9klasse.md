@@ -64,6 +64,10 @@ moduler og lektier ligger i `facit/` som PDF.
   fire svarfelter i Kahoots farver, og det rigtige svar i slidets noter, så
   ungerne ikke kan se det. Regnearket beholdes til den udgave af editoren, der
   har regnearksimport.
+- **Svarmulighederne er blandet.** Det rigtige svar stod først i alle 30
+  spørgsmål, fordi det var sådan de blev skrevet. De blandes nu med en fast seed
+  i `byg_quiz.py`, så alle formater får samme rækkefølge, og scriptet afviser en
+  skæv fordeling. Facit ligger nu 6 gange på A, 7 på B, 10 på C og 7 på D.
 - **Testen ligger nu som interaktiv side: `test-statistik.html`.** Hverken
   Kahoot (slide-import koster abonnement) eller Teams Forms virkede. Siden
   bruger den samme quiz-motor som manipulation.html — én motor i projektet — med
