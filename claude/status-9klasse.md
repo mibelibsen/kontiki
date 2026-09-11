@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-08-31
+Sidst opdateret: 2026-09-11
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -37,6 +37,16 @@ moduler og lektier ligger i `facit/` som PDF.
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
+
+## Rettet 11. september 2026
+
+- **Statistik-test til Kahoot og Forms.** 20 spørgsmål med fire svarmuligheder,
+  bygget af `claude/byg_quiz.py`. Alle facit beregnes med brøkregning, og
+  scriptet nægter at skrive filerne, hvis et spørgsmål har to ens svar, et
+  ugyldigt facit, eller er for langt til Kahoots grænser på 120 og 75 tegn.
+  Kontrolleret en ekstra gang med `statistics` og et fuldt udfaldsrum for to
+  terninger. Filerne ligger i `facit/`, fordi de indeholder facit.
+- **Testen er ikke en lektie.** Multiple choice bruges kun som quiz, jf. reglen.
 
 ## Rettet 31. august 2026
 
