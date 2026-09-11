@@ -40,13 +40,24 @@ moduler og lektier ligger i `facit/` som PDF.
 
 ## Rettet 11. september 2026
 
-- **Statistik-test til Kahoot og Forms.** 20 spørgsmål med fire svarmuligheder,
-  bygget af `claude/byg_quiz.py`. Alle facit beregnes med brøkregning, og
-  scriptet nægter at skrive filerne, hvis et spørgsmål har to ens svar, et
-  ugyldigt facit, eller er for langt til Kahoots grænser på 120 og 75 tegn.
-  Kontrolleret en ekstra gang med `statistics` og et fuldt udfaldsrum for to
-  terninger. Filerne ligger i `facit/`, fordi de indeholder facit.
+- **Statistik-test til Kahoot: 30 spørgsmål, alle med illustration.** Bygget af
+  `claude/byg_quiz.py`. Alle facit beregnes med brøkregning, og scriptet nægter
+  at skrive filerne, hvis der er to ens svarmuligheder, et ugyldigt facit, en tid
+  Kahoot ikke kender, tekst over grænserne på 120 og 75 tegn, eller et spørgsmål
+  uden figur. Billederne ligger i `facit/kahoot-billeder/`, navngivet med
+  spørgsmålets nummer — Kahoots import kan ikke tage billeder med.
+- **Figurer må ikke røbe facit.** Tre figurer gjorde det: boksplottet skrev
+  tallene og ordet "median", cirkeldiagrammet skrev procenterne, og
+  svarprocent-figuren skrev svarprocenten. `boksplot()`, `cirkeldiagram()`,
+  `svarprocent()` og `terninger()` har nu hver et flag til at skjule facit.
+- **Rigtig fejl i `terninger()`:** billedteksten sagde altid "6 gunstige ud af
+  36", uanset hvilken sum der var fremhævet. Ved sum 5 var det direkte forkert.
+  Antallet beregnes nu.
+- **`prikplot()` er ny i figurbiblioteket.** Spørgsmålene om median og typetal
+  havde en tom tegneplads som illustration, hvilket var ubrugeligt. Nu vises
+  observationerne som prikker, så typetallet kan ses som den højeste stak.
 - **Testen er ikke en lektie.** Multiple choice bruges kun som quiz, jf. reglen.
+- **`claude/tjek.py` kender nu serien `kahoot`** i facit-mappens navnemønster.
 
 ## Rettet 31. august 2026
 

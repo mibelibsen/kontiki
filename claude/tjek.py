@@ -277,7 +277,7 @@ def tjek_aarsplan():
 def tjek_filnavne():
     for f in glob.glob('facit/*.pdf'):
         n = os.path.basename(f)
-        if not re.match(r'facit-(online|lektier)-\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.pdf$', n):
+        if not re.match(r'facit-(online|lektier|kahoot)-\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.pdf$', n):
             advar('filnavne', f'facit/{n} følger ikke facit-<serie>-<ÅÅÅÅ-MM-DD>-<emne>.pdf')
     for f in glob.glob('lektieark/*.pdf'):
         n = os.path.basename(f)

@@ -45,7 +45,7 @@ def _dk(x):
 
 
 # ---------------------------------------------------------------- boksplot
-def boksplot(mini, q1, med, q3, maks, titel=''):
+def boksplot(mini, q1, med, q3, maks, titel='', vis_tal=True, vis_navne=True):
     X0, X1, YB = 46, 494, 92          # akse
     lo, hi = mini, maks
     pad = (hi - lo) * F(1, 10)
@@ -84,16 +84,18 @@ def boksplot(mini, q1, med, q3, maks, titel=''):
                            (q3, 'Q3', BLA), (maks, 'max', MUT)):
         x = X(v)
         s.append(f'<line x1="{x:.1f}" y1="{YB-4}" x2="{x:.1f}" y2="{YB+4}" stroke="{INK}"/>')
-        s.append(f'<text x="{x:.1f}" y="{YB+18}" text-anchor="middle" fill="{INK}" '
-                 f'font-weight="700">{_dk(v)}</text>')
-        s.append(f'<text x="{x:.1f}" y="{YB+31}" text-anchor="middle" fill="{farve}" '
-                 f'font-size="9.5">{navn}</text>')
+        if vis_tal:
+            s.append(f'<text x="{x:.1f}" y="{YB+18}" text-anchor="middle" fill="{INK}" '
+                     f'font-weight="700">{_dk(v)}</text>')
+        if vis_navne:
+            s.append(f'<text x="{x:.1f}" y="{YB+31}" text-anchor="middle" fill="{farve}" '
+                     f'font-size="9.5">{navn}</text>')
     s.append('</g></svg>')
     return ''.join(s)
 
 
 # ------------------------------------------------------------ cirkeldiagram
-def cirkeldiagram(dele, vis_grader=True):
+def cirkeldiagram(dele, vis_grader=True, vis_procent=True):
     """dele: [(navn, antal)]. Vinkler beregnes eksakt."""
     N = sum(v for _, v in dele)
     cx = cy, r = 132.0, 108.0
@@ -113,8 +115,8 @@ def cirkeldiagram(dele, vis_grader=True):
         paths.append(f'<path d="M{cx},{cy} L{x0:.1f},{y0:.1f} A{r},{r} 0 {stor},1 '
                      f'{x1:.1f},{y1:.1f} Z" fill="{farver[i]}" stroke="#fff" stroke-width="1.5"/>')
         g = f' · {_dk(grad)}°' if vis_grader else ''
-        leg.append(f'<tspan x="290" dy="{22 if i else 0}">{navn}: '
-                   f'{_dk(pct)} %{g}</tspan>')
+        tal = f': {_dk(pct)} %{g}' if vis_procent else f': {v}'
+        leg.append(f'<tspan x="290" dy="{22 if i else 0}">{navn}{tal}</tspan>')
         vinkel += span
     prikker = ''.join(
         f'<rect x="272" y="{128-len(dele)*11+i*22}" width="10" height="10" '
@@ -185,10 +187,13 @@ def sumkurve(graenser, hyp, aflaes=(25, 50, 75), xnavn=''):
 
 
 # ------------------------------------------------------------ terningtabel
-def terninger(sum_=7):
+def terninger(sum_=7, vis_antal=True):
+    """Udfaldsrummet for to terninger. vis_antal=False skjuler facittallet,
+    saa figuren kan bruges i et spoergsmaal uden at roebe svaret."""
     C, X0, Y0 = 30, 60, 40
+    antal = sum(1 for a in range(1, 7) for b in range(1, 7) if a + b == sum_)
     s = [f'<svg viewBox="0 0 300 260" role="img" aria-label="Alle 36 udfald med '
-         f'to terninger. De {sum(1 for a in range(1,7) for b in range(1,7) if a+b==sum_)} '
+         f'to terninger. De {antal} '
          f'gunstige for summen {sum_} er fremhævet.">', f'<g {FONT}>']
     for i in range(6):
         s.append(f'<text x="{X0+i*C+C/2}" y="{Y0-8}" text-anchor="middle" '
@@ -206,8 +211,9 @@ def terninger(sum_=7):
             s.append(f'<text x="{x+C/2}" y="{y+C/2+4}" text-anchor="middle" '
                      f'fill="{GRO if traef else "#aab3c2"}" '
                      f'font-weight="{700 if traef else 400}">{a+b}</text>')
-    s.append(f'<text x="150" y="{Y0+6*C+26}" text-anchor="middle" fill="{GRO}" '
-             f'font-weight="700">6 gunstige ud af 36</text>')
+    if vis_antal:
+        s.append(f'<text x="150" y="{Y0+6*C+26}" text-anchor="middle" fill="{GRO}" '
+                 f'font-weight="700">{antal} gunstige ud af 36</text>')
     s.append('</g></svg>')
     return ''.join(s)
 
@@ -334,7 +340,7 @@ def loen_figur(vals, navne=None, enhed='kr'):
 
 
 # --------------------------------------------------- svarprocent / bortfald
-def svarprocent(N, n, tekst=''):
+def svarprocent(N, n, tekst='', vis_procent=True):
     """Prikgitter der viser hvor faa der svarede."""
     KOL = 40
     R = 4.6
@@ -352,10 +358,14 @@ def svarprocent(N, n, tekst=''):
                  f'fill="{GRO if svarede else "#dde3ec"}"/>')
     pct = F(n, N) * 100
     y = 22 + raekker * STEP + 20
-    s.append(f'<text x="20" y="{y:.0f}" fill="{GRO}" font-weight="700">'
-             f'{n} svarede = {_dk(pct)} %</text>')
-    s.append(f'<text x="20" y="{y+17:.0f}" fill="{MUT}">'
-             f'{N-n} svarede ikke = {_dk(100-pct)} % bortfald</text>')
+    if vis_procent:
+        s.append(f'<text x="20" y="{y:.0f}" fill="{GRO}" font-weight="700">'
+                 f'{n} svarede = {_dk(pct)} %</text>')
+        s.append(f'<text x="20" y="{y+17:.0f}" fill="{MUT}">'
+                 f'{N-n} svarede ikke = {_dk(100-pct)} % bortfald</text>')
+    else:
+        s.append(f'<text x="20" y="{y:.0f}" fill="{GRO}" font-weight="700">'
+                 f'{n} af {N} svarede</text>')
     if tekst:
         s.append(f'<text x="20" y="{y+34:.0f}" fill="{MUT}" font-size="9.5">{tekst}</text>')
     s.append('</g></svg>')
@@ -989,5 +999,39 @@ def potenslinje(navne, punkter=(), W=680, H=170):
                  f'stroke="{ORA}" stroke-dasharray="2 2"/>')
         s.append(f'<text x="{x(e):.1f}" y="{Y + 60}" text-anchor="middle" fill="{ORA}">'
                  f'{navn}</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+def prikplot(vals, titel='', W=540, H=150):
+    """Prikdiagram: én prik pr. observation, stablet over sin værdi.
+
+    Bruges i spørgsmål om median, typetal og variationsbredde, hvor eleven skal
+    kunne se tallene — en tom tegneplads duer ikke til det.
+    """
+    lo, hi = min(vals), max(vals)
+    pad = max(1, (hi - lo) // 8)
+    a, b = lo - pad, hi + pad
+    X0, X1, YB = 40, W - 24, H - 34
+    R, STEP = 7.5, 17
+
+    def X(v):
+        return X0 + (v - a) / (b - a) * (X1 - X0)
+
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prikdiagram '
+         f'over {len(vals)} observationer." {FONT}>']
+    if titel:
+        s.append(f'<text x="{W/2}" y="16" text-anchor="middle" fill="{MUT}">{titel}</text>')
+    s.append(f'<line x1="{X0-10}" y1="{YB}" x2="{X1+10}" y2="{YB}" stroke="{INK}"/>')
+    for v in range(a, b + 1):
+        x = X(v)
+        s.append(f'<line x1="{x:.1f}" y1="{YB-4}" x2="{x:.1f}" y2="{YB+4}" stroke="{INK}"/>')
+        s.append(f'<text x="{x:.1f}" y="{YB+18}" text-anchor="middle" fill="{MUT}">{v}</text>')
+    talt = {}
+    for v in sorted(vals):
+        talt[v] = talt.get(v, 0) + 1
+        s.append(f'<circle cx="{X(v):.1f}" cy="{YB - 12 - (talt[v]-1) * STEP:.1f}" '
+                 f'r="{R}" fill="{BLA}"/>')
     s.append('</svg>')
     return ''.join(s)
