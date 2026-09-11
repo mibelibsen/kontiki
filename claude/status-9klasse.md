@@ -64,6 +64,10 @@ moduler og lektier ligger i `facit/` som PDF.
   fire svarfelter i Kahoots farver, og det rigtige svar i slidets noter, så
   ungerne ikke kan se det. Regnearket beholdes til den udgave af editoren, der
   har regnearksimport.
+- **Forms-udgaven** er bygget af `claude/byg_quiz_forms.py` ud fra den samme
+  `quiz.json`: et Word-dokument til Forms' dokumentimport og en ren tekstfil at
+  kopiere fra. Det rigtige svar er markeret med en stjerne. Kahoot blev droppet,
+  fordi slide-import kræver et betalt årsabonnement.
 - **PPTX'en er ikke renderet visuelt.** LibreOffice bruges ikke i dette projekt,
   så den er kontrolleret geometrisk i stedet: alle figurer ligger inden for
   lærredet, og billedet overlapper ingen svarfelter. `validate.py` siger OK.
