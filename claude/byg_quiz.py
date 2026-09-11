@@ -289,6 +289,14 @@ for i, (navn, q, sv, rigtig, tid, fig) in enumerate(SP, 1):
     lavet.append(sti)
 print(f'skrevet:  {len(lavet)} figursider i {FIGDIR}/')
 
+# ------------------------------------- data til PowerPoint-udgaven (Kahoot)
+import json
+json.dump([{'nr': i, 'q': q, 'sv': sv, 'rigtig': rigtig, 'tid': tid,
+            'png': f'{i:02d}-{navn}.png'}
+           for i, (navn, q, sv, rigtig, tid, fig) in enumerate(SP, 1)],
+          open(os.path.join(FIGDIR, 'quiz.json'), 'w'), ensure_ascii=False, indent=1)
+print('skrevet: ', os.path.join(FIGDIR, 'quiz.json'))
+
 # ---------------------------------------------------- overblik til læreren
 rk = []
 for i, (navn, q, sv, rigtig, tid, fig) in enumerate(SP, 1):

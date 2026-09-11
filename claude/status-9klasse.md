@@ -58,6 +58,15 @@ moduler og lektier ligger i `facit/` som PDF.
   observationerne som prikker, så typetallet kan ses som den højeste stak.
 - **Testen er ikke en lektie.** Multiple choice bruges kun som quiz, jf. reglen.
 - **`claude/tjek.py` kender nu serien `kahoot`** i facit-mappens navnemønster.
+- **Kahoot-editoren tog ikke regnearket.** Brugerens udgave (Kahoot! GO) har kun
+  slide-import: .ppt, .pptx, .key og .pdf. Derfor bygger
+  `claude/byg_quiz_pptx.mjs` nu også en PPTX — ét spørgsmål pr. slide med figur,
+  fire svarfelter i Kahoots farver, og det rigtige svar i slidets noter, så
+  ungerne ikke kan se det. Regnearket beholdes til den udgave af editoren, der
+  har regnearksimport.
+- **PPTX'en er ikke renderet visuelt.** LibreOffice bruges ikke i dette projekt,
+  så den er kontrolleret geometrisk i stedet: alle figurer ligger inden for
+  lærredet, og billedet overlapper ingen svarfelter. `validate.py` siger OK.
 
 ## Rettet 31. august 2026
 
