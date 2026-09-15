@@ -1129,3 +1129,55 @@ def aarslinje(raekker, W=880, rh=66, farver=None):
                      f'fill="{MUT}" font-size="9">{nr}</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+def procesdiagram(trin, W=640, farver=None, legende=()):
+    """Lodret procesdiagram: nummererede kasser med pil imellem.
+
+    trin  [(overskrift, undertekst, gruppe)] — gruppen bestemmer farven.
+    Kassehøjden afhænger af, om der er en undertekst, og alle koordinater
+    beregnes, så pilene altid rammer mellem to kasser.
+    """
+    F = farver or {}
+    KH, KH2, LUFT, PIL = 34, 50, 16, 14
+    x, b = 10, W - 20
+    hojder = [KH2 if u else KH for _, u, _ in trin]
+    H = sum(hojder) + (len(trin) - 1) * (LUFT + PIL) + (30 if legende else 6)
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Processen '
+         f'i {len(trin)} trin." {FONT}>']
+    y = 2
+    for i, (overskrift, under, gruppe) in enumerate(trin):
+        h = hojder[i]
+        farve = F.get(gruppe, BLA)
+        s.append(f'<rect x="{x}" y="{y}" width="{b}" height="{h}" rx="9" '
+                 f'fill="{farve}"/>')
+        s.append(f'<circle cx="{x + 22}" cy="{y + h / 2:.1f}" r="12" fill="#fff" '
+                 f'fill-opacity="0.22"/>')
+        s.append(f'<text x="{x + 22}" y="{y + h / 2 + 4:.1f}" text-anchor="middle" '
+                 f'fill="#fff" font-weight="700">{i + 1}</text>')
+        ty = y + (20 if under else h / 2 + 4)
+        s.append(f'<text x="{x + 46}" y="{ty:.1f}" fill="#fff" font-weight="700" '
+                 f'font-size="12.5">{overskrift}</text>')
+        if under:
+            s.append(f'<text x="{x + 46}" y="{y + 37:.1f}" fill="#fff" '
+                     f'fill-opacity="0.9" font-size="10.5">{under}</text>')
+        y += h
+        if i < len(trin) - 1:                      # pil ned til naeste kasse
+            mx = x + 26
+            s.append(f'<line x1="{mx}" y1="{y + 3}" x2="{mx}" y2="{y + LUFT + PIL - 6}" '
+                     f'stroke="{LIN}" stroke-width="2"/>')
+            s.append(f'<path d="M {mx - 4} {y + LUFT + PIL - 9} L {mx} '
+                     f'{y + LUFT + PIL - 3} L {mx + 4} {y + LUFT + PIL - 9} Z" '
+                     f'fill="{LIN}"/>')
+            y += LUFT + PIL
+    if legende:
+        ly, lx = H - 8, x
+        for navn, gruppe in legende:
+            s.append(f'<rect x="{lx}" y="{ly - 9}" width="11" height="11" rx="3" '
+                     f'fill="{F.get(gruppe, BLA)}"/>')
+            s.append(f'<text x="{lx + 17}" y="{ly}" fill="{MUT}" font-size="10">'
+                     f'{navn}</text>')
+            lx += 30 + len(navn) * 6
+    s.append('</svg>')
+    return ''.join(s)

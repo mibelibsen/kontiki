@@ -17,15 +17,15 @@ UD = 'samfundsfag-tekster.html'
 
 # (titel, kilde, dato, sider, forloeb, beskrivelse, link, fil)
 # link: adressen i Teams, naar rettighederne er begraensede.
-# fil:  vores eget materiale i materiale/, aabent for alle.
+# fil:  vores eget — enten en side paa sitet (.html) eller en PDF i materiale/.
 TEKSTER = [
  ('Den demokratiske beslutningsproces i Danmark',
   'Lavet til klassen', '', 1, 'Politiske processer · uge 32-39',
   'Vejen fra idé til gældende lov, trin for trin: lovforberedelse i '
   'ministeriet, høring, høringsnotat, fremsættelse med L-nummer, og de tre '
   'behandlinger i Folketinget med udvalgsarbejde imellem. Brug den som '
-  'opslag, når et konkret lovforslag skal følges.',
-  '', 'lovprocessen-i-danmark'),
+  'opslag, når et konkret lovforslag skal følges. Siden kan printes.',
+  '', 'lovprocessen.html'),
  ('Tech-ekspert: Big Tech tjener nu magthaverne før brugerne',
   'Debatindlæg af Aaron Zamost i Politiken', '9. december 2025', 5,
   'Politik og teknologi · uge 32-39',
@@ -53,14 +53,19 @@ for titel, kilde, dato, sider, forloeb, tekst, link, fil in TEKSTER:
                                   f'{sider} side' + ('r' if sider > 1 else '')) if x)
     forside = ''
     if fil:
-        pdf, jpg = f'materiale/{fil}.pdf', f'materiale/{fil}-forside.jpg'
-        for sti in (pdf, jpg):
-            assert os.path.exists(sti), f'mangler: {sti}'
-        knap = (f'<a class="btnlink" href="{pdf}" target="_blank" rel="noopener">'
-                f'Åbn teksten</a> <span class="aaben">Åben for alle</span>')
-        forside = (f'<a class="forside" href="{pdf}" target="_blank" rel="noopener">'
-                   f'<img src="{jpg}" alt="Forsiden af {html.escape(titel)}" '
-                   f'loading="lazy"></a>')
+        side = fil.endswith('.html')
+        sti = fil if side else f'materiale/{fil}.pdf'
+        assert os.path.exists(sti), f'mangler: {sti}'
+        maal = '' if side else ' target="_blank" rel="noopener"'
+        knap = (f'<a class="btnlink" href="{sti}"{maal}>'
+                f'{"Åbn siden" if side else "Åbn teksten"}</a> '
+                f'<span class="aaben">Åben for alle</span>')
+        if not side:
+            jpg = f'materiale/{fil}-forside.jpg'
+            assert os.path.exists(jpg), f'mangler: {jpg}'
+            forside = (f'<a class="forside" href="{sti}" target="_blank" '
+                       f'rel="noopener"><img src="{jpg}" alt="Forsiden af '
+                       f'{html.escape(titel)}" loading="lazy"></a>')
     elif link:
         knap = (f'<a class="btnlink" href="{link}" target="_blank" rel="noopener">'
                 f'Åbn teksten i Teams</a> <span class="laast">Kun for klassen</span>')

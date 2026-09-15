@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lovprocessen i Danmark · 9. klasse</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;--warn:#b5710a;--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a,nav.tabs span{font-size:.86rem;padding:6px 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+nav.tabs span.soon{color:#9aa6ba;cursor:default}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:2rem}
+.hero p{margin:0;color:var(--muted);max-width:70ch}
+.pill{display:inline-block;font-size:.74rem;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;background:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.card.soon{opacity:.6}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:12px}
+.tag.klar{background:#eaf7f0;color:var(--good);border:1px solid #bfe6d2}
+.tag.kommer{background:#f4f6fb;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
+.num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 0}
+.btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btnlink.ghost:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+.plan{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+.plan th,.plan td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+.plan th{background:var(--panel2);font-weight:700;position:sticky;top:60px}
+.plan tr.block td{background:var(--accent);color:#fff;font-weight:800;font-size:1rem}
+.plan tr.break td{background:#fff7e9;color:var(--warn);font-weight:600;font-style:italic}
+.plan td.uge{white-space:nowrap;font-weight:700;color:var(--accent);width:52px}
+.plan td.per{white-space:nowrap;color:var(--muted);width:110px}
+.plan ul{margin:0;padding-left:18px}.plan li{margin:2px 0}
+.mat{color:var(--muted);font-size:.9rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;text-align:left}.mini th{background:var(--panel2)}
+@media print{header.top,nav.tabs,.btnlink{display:none!important}.hero,.card,.note{box-shadow:none}.plan th{position:static}.plan tr.block td{background:#fff!important;color:#000;border:1px solid #000}body{color:#000}}
+
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:18px;margin:18px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.trin{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--accent);
+border-radius:14px;padding:18px 22px;margin:14px 0;box-shadow:var(--shadow)}
+.trin.min{border-left-color:var(--good)}
+.trin.efter{border-left-color:var(--warn)}
+.trin h2{font-size:1.2rem;margin:0 0 6px;display:flex;align-items:center;gap:12px}
+.trin .num{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+font-weight:800;font-size:.95rem;background:var(--accent);color:#fff;flex:0 0 auto}
+.trin.min .num{background:var(--good)}
+.trin.efter .num{background:var(--warn)}
+.trin p{margin:6px 0;color:var(--muted);font-size:.97rem;max-width:74ch}
+.trin p.kort{color:var(--ink);font-weight:600;font-size:.95rem}
+.ordliste{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+.ordliste th,.ordliste td{border:1px solid var(--line);padding:10px 12px;
+text-align:left;vertical-align:top}
+.ordliste th{background:var(--panel2);white-space:nowrap}
+.printbtn{background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;color:var(--ink);
+font-family:inherit;margin:6px 8px 0 0}
+.printbtn:hover{border-color:var(--accent);color:var(--accent)}
+h2.sec{font-size:1.4rem;margin:30px 0 6px}
+@media print{header.top,.printbtn,.btnlink{display:none!important}
+.trin,.figur{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+body{font-size:11pt}main{padding:0}@page{size:A4;margin:14mm}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="active" href="samfundsfag.html">Samfundsfag</a><a class="" href="tysk.html">Tysk</a><span class="soon">Fysik</span></nav></div></header><main><section class="hero"><span class="pill">Samfundsfag · Politiske processer</span>
+<h1>Den demokratiske beslutningsproces i Danmark</h1>
+<p>Fra idé til gældende lov — med høring og tre behandlinger. Ni trin, og hvert
+trin er et sted, hvor loven kan blive ændret eller stoppet.</p>
+<button class="printbtn" onclick="window.print()">Print siden</button>
+<a class="btnlink ghost" href="samfundsfag-tekster.html">Tilbage til teksterne</a>
+</section>
+<div class="figur"><svg viewBox="0 0 640 720" width="100%" style="max-width:640px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Processen i 9 trin." font-family="Consolas, monospace" font-size="11"><rect x="10" y="2" width="620" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="27.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="31.0" text-anchor="middle" fill="#fff" font-weight="700">1</text><text x="56" y="22.0" fill="#fff" font-weight="700" font-size="12.5">Idé og lovforberedelse</text><text x="56" y="39.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Ministeriet skriver et udkast til lovforslag</text><line x1="36" y1="55" x2="36" y2="76" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 73 L 36 79 L 40 73 Z" fill="#c9d2e0"/><rect x="10" y="82" width="620" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="107.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="111.0" text-anchor="middle" fill="#fff" font-weight="700">2</text><text x="56" y="102.0" fill="#fff" font-weight="700" font-size="12.5">Høring</text><text x="56" y="119.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Organisationer, kommuner og eksperter afgiver høringssvar</text><line x1="36" y1="135" x2="36" y2="156" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 153 L 36 159 L 40 153 Z" fill="#c9d2e0"/><rect x="10" y="162" width="620" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="187.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="191.0" text-anchor="middle" fill="#fff" font-weight="700">3</text><text x="56" y="182.0" fill="#fff" font-weight="700" font-size="12.5">Høringsnotat</text><text x="56" y="199.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Ministeren samler svarene og retter forslaget til</text><line x1="36" y1="215" x2="36" y2="236" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 233 L 36 239 L 40 233 Z" fill="#c9d2e0"/><rect x="10" y="242" width="620" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="267.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="271.0" text-anchor="middle" fill="#fff" font-weight="700">4</text><text x="56" y="262.0" fill="#fff" font-weight="700" font-size="12.5">Fremsættelse i Folketinget</text><text x="56" y="279.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Forslaget får et L-nummer og bliver offentligt</text><line x1="36" y1="295" x2="36" y2="316" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 313 L 36 319 L 40 313 Z" fill="#c9d2e0"/><rect x="10" y="322" width="620" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="347.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="351.0" text-anchor="middle" fill="#fff" font-weight="700">5</text><text x="56" y="342.0" fill="#fff" font-weight="700" font-size="12.5">1. behandling</text><text x="56" y="359.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Debat om forslagets hovedidé — derefter i udvalg</text><line x1="36" y1="375" x2="36" y2="396" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 393 L 36 399 L 40 393 Z" fill="#c9d2e0"/><rect x="10" y="402" width="620" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="427.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="431.0" text-anchor="middle" fill="#fff" font-weight="700">6</text><text x="56" y="422.0" fill="#fff" font-weight="700" font-size="12.5">Udvalgsbehandling</text><text x="56" y="439.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Spørgsmål til ministeren, ændringsforslag og betænkning</text><line x1="36" y1="455" x2="36" y2="476" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 473 L 36 479 L 40 473 Z" fill="#c9d2e0"/><rect x="10" y="482" width="620" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="507.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="511.0" text-anchor="middle" fill="#fff" font-weight="700">7</text><text x="56" y="502.0" fill="#fff" font-weight="700" font-size="12.5">2. behandling</text><text x="56" y="519.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Debat om detaljerne og afstemning om ændringsforslag</text><line x1="36" y1="535" x2="36" y2="556" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 553 L 36 559 L 40 553 Z" fill="#c9d2e0"/><rect x="10" y="562" width="620" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="587.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="591.0" text-anchor="middle" fill="#fff" font-weight="700">8</text><text x="56" y="582.0" fill="#fff" font-weight="700" font-size="12.5">3. behandling</text><text x="56" y="599.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Sidste debat og endelig afstemning om hele forslaget</text><line x1="36" y1="615" x2="36" y2="636" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 633 L 36 639 L 40 633 Z" fill="#c9d2e0"/><rect x="10" y="642" width="620" height="50" rx="9" fill="#b5710a"/><circle cx="32" cy="667.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="671.0" text-anchor="middle" fill="#fff" font-weight="700">9</text><text x="56" y="662.0" fill="#fff" font-weight="700" font-size="12.5">Kongelig stadfæstelse</text><text x="56" y="679.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Loven kundgøres i Lovtidende og træder i kraft</text><rect x="10" y="703" width="11" height="11" rx="3" fill="#1a8f5e"/><text x="27" y="712" fill="#586074" font-size="10">Ministeriet</text><rect x="106" y="703" width="11" height="11" rx="3" fill="#1f6fd6"/><text x="123" y="712" fill="#586074" font-size="10">Folketinget</text><rect x="202" y="703" width="11" height="11" rx="3" fill="#b5710a"/><text x="219" y="712" fill="#586074" font-size="10">Efter vedtagelsen</text></svg></div>
+<h2 class="sec">Trin for trin</h2>
+<section class="trin min"><h2><span class="num">1</span>Idé og lovforberedelse</h2><p class="kort">Ministeriet skriver et udkast til lovforslag</p><p>Idéen kan komme fra regeringen, fra en aftale mellem partier, fra EU-regler eller fra pres udefra — organisationer, medier og borgere. Embedsmændene i ministeriet skriver selve lovteksten og bemærkningerne, der forklarer, hvad loven skal, og hvad den kommer til at koste.</p></section><section class="trin min"><h2><span class="num">2</span>Høring</h2><p class="kort">Organisationer, kommuner og eksperter afgiver høringssvar</p><p>Udkastet sendes ud til dem, loven kommer til at ramme: fagforeninger, kommuner, brancheforeninger, forskere og interesseorganisationer. De skriver høringssvar, hvor de roser, kritiserer eller foreslår ændringer. Svarene er offentlige — det er her, du kan se, hvem der prøver at påvirke loven.</p></section><section class="trin min"><h2><span class="num">3</span>Høringsnotat</h2><p class="kort">Ministeren samler svarene og retter forslaget til</p><p>Ministeriet skriver et notat med hvert kritikpunkt og et svar på hvert af dem: rettes forslaget, eller fastholdes det? Mange forslag bliver lavet om her, før de overhovedet når til Folketinget.</p></section><section class="trin ft"><h2><span class="num">4</span>Fremsættelse i Folketinget</h2><p class="kort">Forslaget får et L-nummer og bliver offentligt</p><p>Ministeren fremsætter forslaget i Folketingssalen. Fra det øjeblik har det et nummer — for eksempel L 42 — og alt om det kan følges på ft.dk: teksten, bemærkningerne, spørgsmålene og senere afstemningen.</p></section><section class="trin ft"><h2><span class="num">5</span>1. behandling</h2><p class="kort">Debat om forslagets hovedidé — derefter i udvalg</p><p>Her diskuteres idéen, ikke detaljerne: er det overhovedet en god lov? Der stemmes ikke om indholdet ved 1. behandling. Til sidst sendes forslaget videre til det udvalg, der har emnet.</p></section><section class="trin ft"><h2><span class="num">6</span>Udvalgsbehandling</h2><p class="kort">Spørgsmål til ministeren, ændringsforslag og betænkning</p><p>Det er her det meste arbejde sker. Udvalget stiller skriftlige spørgsmål til ministeren, kan holde høringer og kalde eksperter ind, og partierne stiller ændringsforslag. Til sidst skriver udvalget en betænkning: hvad mener hvert parti, og hvordan vil de stemme?</p></section><section class="trin ft"><h2><span class="num">7</span>2. behandling</h2><p class="kort">Debat om detaljerne og afstemning om ændringsforslag</p><p>Nu handler det om paragrafferne. Der stemmes om ændringsforslagene ét for ét. Bliver forslaget ændret meget, kan det sendes tilbage i udvalg igen.</p></section><section class="trin ft"><h2><span class="num">8</span>3. behandling</h2><p class="kort">Sidste debat og endelig afstemning om hele forslaget</p><p>Den sidste runde. Der stemmes om forslaget som helhed, og et flertal af de afgivne stemmer afgør det. Falder forslaget her, er det slut.</p></section><section class="trin efter"><h2><span class="num">9</span>Kongelig stadfæstelse</h2><p class="kort">Loven kundgøres i Lovtidende og træder i kraft</p><p>Monarken og en minister skriver under — det hedder stadfæstelse. Derefter kundgøres loven i Lovtidende, og den træder i kraft på den dato, der står i loven selv. Først dér gælder den for os alle sammen.</p></section>
+<h2 class="sec">To paragraffer i grundloven</h2>
+<div class="box note" style="background:#fff7e9;border:1px solid var(--line);
+border-left:4px solid var(--warn);border-radius:12px;padding:16px 20px;margin:14px 0">
+<p style="margin:0 0 8px"><b>§ 41:</b> et lovforslag skal behandles <b>tre gange</b>
+i Folketinget, før det kan vedtages endeligt. At der skal gå mindst to dage
+mellem behandlingerne, står i Folketingets forretningsorden.</p>
+<p style="margin:0"><b>§ 42:</b> en <b>tredjedel</b> af Folketingets medlemmer kan
+kræve, at en vedtaget lov sendes til folkeafstemning. Nogle love er undtaget —
+blandt andet finanslove og skattelove.</p></div>
+<h2 class="sec">Ord du skal kunne</h2>
+<table class="ordliste"><thead><tr><th>Ord</th><th>Betyder</th></tr></thead><tbody>
+<tr><th>Høringssvar</th><td>Det, en organisation eller kommune svarer, når den har læst udkastet. Offentligt — alle kan læse det.</td></tr><tr><th>L-nummer</th><td>Lovforslagets nummer i Folketinget, fx L 42. Nummeret gør det muligt at følge præcis det ene forslag.</td></tr><tr><th>Ændringsforslag</th><td>Et forslag om at rette i lovforslaget undervejs. Der stemmes om dem ved 2. behandling.</td></tr><tr><th>Betænkning</th><td>Udvalgets skriftlige indstilling. Her står, hvad hvert parti mener, og hvad de vil stemme.</td></tr><tr><th>Stadfæstelse</th><td>Underskriften fra monarken og en minister, efter at Folketinget har vedtaget loven.</td></tr><tr><th>Lovtidende</th><td>Det officielle sted, hvor love bliver kundgjort. En lov, der ikke er kundgjort, gælder ikke.</td></tr>
+</tbody></table>
+<button class="printbtn" onclick="window.print()">Print siden</button></main><footer>Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>

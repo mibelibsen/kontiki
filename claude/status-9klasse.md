@@ -46,6 +46,13 @@ moduler og lektier ligger i `facit/` som PDF.
   lovprocessen, Politikens debatindlæg om Big Tech, og en side fra
   alkoholpolitik-guiden. Bygges af `claude/byg_tekster.py` — en tekst mere er én
   linje i `TEKSTER` plus en `pdftoppm`-kommando til forsiden.
+- **Lovprocessen er nu en side, ikke en PDF:** `lovprocessen.html`, bygget af
+  `claude/byg_lovprocessen.py`. Procesdiagrammet tegnes af den nye
+  `FG.procesdiagram()`, de ni trin er uddybet, der er en ordliste, og siden kan
+  printes — den fylder fem A4-sider.
+- **Rettet undervejs:** PDF'en skrev, at to-dages-reglen står i grundlovens
+  § 41. Grundloven kræver tre behandlinger; at der skal gå mindst to dage
+  mellem dem står i Folketingets forretningsorden. Siden siger det nu korrekt.
 - **To slags materiale, to mapper.** `materiale/` er vores eget og ligger
   åbent på sitet — lovprocessen ligger der med forside og kan åbnes af enhver.
   `tekster/` er tekster med begrænset rettighed og er udelukket i
