@@ -72,7 +72,7 @@ FERIER = [('Uge 40', 'Studietur til Hamborg'), ('Uge 42', 'Efterårsferie'),
           ('Uge 52 - 53', 'Juleferie'),
           ('Uge 4 - 6', 'OPO — obligatorisk projektopgave'),
           ('Uge 7', 'Vinterferie'), ('Uge 12', 'Påskeferie'),
-          ('Uge 20', 'Lejrskole på Bornholm')]
+          ('Uge 20', 'Lejrskole på Bornholm — der arbejdes samfundsfagligt')]
 AFLEVERINGER = [('Uge 51', 'Samfundsfagsrapport · selvvalgt emne med en vinkel '
                  'på teknologi. 2 sider. Afleveres før juleferien.'),
                 ('Uge 17', 'Samfundsfagsrapport · frit emne. Fagets metoder samt '
@@ -156,9 +156,7 @@ lagt uden om OPO og ferierne. To samfundsfagsrapporter afleveres undervejs.</p>
 <table class="mini"><thead><tr><th>Uge</th><th>Opgave</th></tr></thead><tbody>
 {''.join(f'<tr><td>{u}</td><td>{t}</td></tr>' for u, t in AFLEVERINGER)}
 </tbody></table>
-<div class="note"><b>Lejrskolen i uge 20</b> ligger inde i opsamlingen, så det
-forløb har to undervisningsuger og ikke tre. Ellers rammer ingen af forløbene en
-ferie eller OPO.</div>'''
+'''
 
 DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<meta name="viewport" content="width=device-width,initial-scale=1">'
