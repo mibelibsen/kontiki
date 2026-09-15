@@ -152,7 +152,10 @@ def tjek_links():
 # 6. Hver side skal have mindst én figur (reglen om visuelle eksempler)
 # ---------------------------------------------------------------------------
 UDEN_KRAV = {'index.html', 'matematik.html', 'samfundsfag.html', 'tysk.html',
-             'aarsplan-matematik.html'}
+             'aarsplan-matematik.html',
+             # oversigt over PDF'er: hvert kort viser tekstens forside som
+             # billede, saa der er noget at se paa uden en tegnet figur
+             'samfundsfag-tekster.html'}
 
 
 def tjek_figurer():
