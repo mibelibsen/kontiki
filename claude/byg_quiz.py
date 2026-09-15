@@ -245,7 +245,7 @@ FORKLARING = {
  'typetal': 'Typetallet er det tal, der optræder flest gange. 5 kommer to '
             'gange, alle andre kun én.',
  'variationsbredde': 'Variationsbredde = største minus mindste: 13 − 3 = 10.',
- 'gennemsnit': 'Læg sammen og del med antallet: 49 ÷ 7 = 7.',
+ 'gennemsnit': "Læg sammen og del med antallet: <span class='frac'><span>49</span><span>7</span></span> = 7.",
  'nedre-kvartil': 'Nedre kvartil er medianen af den nederste halvdel. Det '
                   'midterste tal udelades: 3, 5, 5 → 5.',
  'oevre-kvartil': 'Øvre kvartil er medianen af den øverste halvdel: 8, 9, 13 → 9.',
@@ -256,10 +256,10 @@ FORKLARING = {
  'boksplot-aflaes': 'Medianen er den røde streg inde i kassen. Her står den ved 6.',
  'median-robust': 'Medianen er det midterste tal. Det ændrer sig ikke, når det '
                   'største tal bliver større — kun gennemsnittet gør.',
- 'gennemsnit-b': '4 + 6 + 8 + 10 + 12 = 40, og 40 ÷ 5 = 8.',
+ 'gennemsnit-b': "4 + 6 + 8 + 10 + 12 = 40, og <span class='frac'><span>40</span><span>5</span></span> = 8.",
  'cirkel-grader-haand': '15 ud af 40 er 37,5 %. 37,5 % af 360° = 135°.',
  'cirkel-grader-svoem': '8 ud af 40 er 20 %. 20 % af 360° = 72°.',
- 'cirkel-procent': '10 ud af 40 = 10/40 = 0,25 = 25 %.',
+ 'cirkel-procent': "10 ud af 40 = <span class='frac'><span>10</span><span>40</span></span> = 0,25 = 25 %.",
  'cirkel-stoerst': 'Håndbold har 15 — flere end fodbold (10), svømning (8) og '
                    'andet (7).',
  'frekvens-sum': 'Frekvenserne er alle delene af det hele, så de giver 100 % '
@@ -280,8 +280,8 @@ FORKLARING = {
  'procentpoint': 'Procentpoint er den rene forskel mellem to procenttal: '
                  '21 − 15 = 6 procentpoint.',
  'procent-stigning': 'Stigningen måles i forhold til udgangspunktet: '
-                     '6 ÷ 15 = 0,40 = 40 %.',
- 'svarprocent': '38 ud af 400 er 38/400 = 0,095 = 9,5 %. De øvrige 90,5 % er '
+                     "<span class='frac'><span>6</span><span>15</span></span> = 0,40 = 40 %.",
+ 'svarprocent': "38 ud af 400 er <span class='frac'><span>38</span><span>400</span></span> = 0,095 = 9,5 %. De øvrige 90,5 % er "
                 'bortfald — dem ved vi intet om.',
  'afskaaret-akse': 'Når aksen ikke starter i 0, bliver en lille forskel til en '
                    'høj søjle. Øjet ser forskellen i højde, ikke i tal.',
@@ -384,7 +384,7 @@ for i, (navn, q, sv, rigtig, tid, fig) in enumerate(SP, 1):
                '<div class="ingen">Ingen illustration til dette spørgsmål</div>')
     rk.append(f'<section><h2><span class="nr">{i}</span>{html.escape(q)}</h2>'
               f'<ol class="sv">{valg}</ol>{billede}'
-              f'<div class="meta">{html.escape(FORKLARING[navn])}<br>'
+              f'<div class="meta">{FORKLARING[navn]}<br>'
               f'{tid} sekunder · billedfil: {i:02d}-{navn}.png</div></section>')
 OVER = ('<!DOCTYPE html><html lang="da"><head><meta charset="utf-8">'
         '<title>Statistik-quiz · overblik</title><style>'
@@ -405,6 +405,10 @@ OVER = ('<!DOCTYPE html><html lang="da"><head><meta charset="utf-8">'
         'padding:10px;margin:8px 0}.fig svg{width:100%;height:auto;display:block}'
         '.ingen{color:#8a93a6;font-size:.86rem;font-style:italic;margin:8px 0}'
         '.meta{color:#586074;font-size:.82rem}'
+        '.frac{display:inline-block;vertical-align:middle;text-align:center;'
+        'line-height:1.16;font-size:.88em;margin:0 .16em}'
+        '.frac>span{display:block;padding:0 .3em;white-space:nowrap}'
+        '.frac>span:first-child{border-bottom:1.4px solid currentColor}'
         '@page{size:A4;margin:12mm}</style></head><body><main>'
         '<h1>Statistik · 30 spørgsmål til Kahoot</h1>'
         '<p class="lead">Det grønne svar er det rigtige. Billedfilen til hvert '

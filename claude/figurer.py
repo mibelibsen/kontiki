@@ -44,6 +44,44 @@ def _dk(x):
     return s.replace('.', ',')
 
 
+# ------------------------------------------------------------------- broeker
+# Broeker saettes med vandret broekstreg, ogsaa inde i figurerne. Paa siderne
+# goer .frac-komponenten det i HTML; her tegnes den samme form i SVG.
+
+def svg_broek(x, y, taeller, naevner, farve=INK, storrelse=10):
+    """Tegner en broek centreret om x, med broekstregen i hoejden y.
+
+    Returnerer (svg, bredde). Bredden er beregnet ud fra det bredeste af de to
+    tal, saa kaldere kan placere det, der kommer efter broeken.
+    """
+    t, n = str(taeller), str(naevner)
+    bredde = max(len(t), len(n)) * storrelse * 0.62 + 4
+    s = (f'<text x="{x:.1f}" y="{y - 3:.1f}" text-anchor="middle" fill="{farve}" '
+         f'font-size="{storrelse}">{t}</text>'
+         f'<line x1="{x - bredde / 2:.1f}" y1="{y + 0.5:.1f}" '
+         f'x2="{x + bredde / 2:.1f}" y2="{y + 0.5:.1f}" stroke="{farve}" '
+         f'stroke-width="1.1"/>'
+         f'<text x="{x:.1f}" y="{y + storrelse + 1:.1f}" text-anchor="middle" '
+         f'fill="{farve}" font-size="{storrelse}">{n}</text>')
+    return s, bredde
+
+
+def svg_tekstlinje(x, y, dele, farve=INK, storrelse=11):
+    """Skriver en raekke af tekststumper, hvor en tuple (taeller, naevner)
+    bliver til en rigtig broek. Bruges til figurtekster som y = 1/2 x + 2."""
+    s, cx = [], x
+    for d in dele:
+        if isinstance(d, (tuple, list)):
+            b_svg, b = svg_broek(cx + 6, y - 3, d[0], d[1], farve, storrelse - 1)
+            s.append(b_svg)
+            cx += b + 6
+        else:
+            s.append(f'<text x="{cx:.1f}" y="{y:.1f}" fill="{farve}" '
+                     f'font-size="{storrelse}">{d}</text>')
+            cx += len(d) * storrelse * 0.6
+    return ''.join(s), cx - x
+
+
 # ---------------------------------------------------------------- boksplot
 def boksplot(mini, q1, med, q3, maks, titel='', vis_tal=True, vis_navne=True):
     X0, X1, YB = 46, 494, 92          # akse
@@ -405,7 +443,10 @@ def procentpoint(fra, til):
     s.append(f'<text x="352" y="96" fill="{BLA}" font-weight="700">+{pp} procentpoint</text>')
     s.append(f'<text x="352" y="114" fill="{MUT}" font-size="9.5">{til} − {fra} = {pp}</text>')
     s.append(f'<text x="352" y="142" fill="{ROD}" font-weight="700">+{_dk(rel)} %</text>')
-    s.append(f'<text x="352" y="160" fill="{MUT}" font-size="9.5">{pp} ÷ {fra} = {_dk(rel)} %</text>')
+    b_svg, b_bredde = svg_broek(360, 158, pp, fra, MUT, 9.5)
+    s.append(b_svg)
+    s.append(f'<text x="{360 + b_bredde / 2 + 5:.0f}" y="161" fill="{MUT}" '
+             f'font-size="9.5">= {_dk(rel)} %</text>')
     s.append('</g></svg>')
     return ''.join(s)
 
@@ -550,7 +591,9 @@ def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
        punkter: [(x, y, farve, navn)]."""
     xmin, xmax, ymin, ymax = F(xmin), F(xmax), F(ymin), F(ymax)
     X0, X1, YT, YB, X, Y = _koord_ramme(xmin, xmax, ymin, ymax)
-    s = [f'<svg viewBox="0 0 470 360" role="img" aria-label="Koordinatsystem'
+    # en broek i signaturen har en naevner under linjen og skal have plads
+    H = 368 if any(isinstance(l[3], (tuple, list)) for l in linjer) else 360
+    s = [f'<svg viewBox="0 0 470 {H}" role="img" aria-label="Koordinatsystem'
          + (f' med {len(linjer)} rette linjer' if linjer else '') + '.">', f'<g {FONT}>']
     if titel:
         s.append(f'<text x="235" y="16" text-anchor="middle" fill="{MUT}">{titel}</text>')
@@ -587,8 +630,13 @@ def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
         for farve, navn in signatur:
             s.append(f'<line x1="{bx}" y1="{YB+26}" x2="{bx+22}" y2="{YB+26}" '
                      f'stroke="{farve}" stroke-width="3"/>')
-            s.append(f'<text x="{bx+28}" y="{YB+30}" fill="{INK}">{navn}</text>')
-            bx += 34 + len(navn) * 7
+            if isinstance(navn, (tuple, list)):
+                t_svg, t_bredde = svg_tekstlinje(bx + 28, YB + 30, navn)
+                s.append(t_svg)
+                bx += 34 + t_bredde
+            else:
+                s.append(f'<text x="{bx+28}" y="{YB+30}" fill="{INK}">{navn}</text>')
+                bx += 34 + len(navn) * 7
     s.append('</g></svg>')
     return ''.join(s)
 

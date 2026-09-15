@@ -286,6 +286,12 @@ ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margi
     .caption{color:#333}
   }
 
+  /* Brøker med vandret brøkstreg */
+  .frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.16;font-size:.88em;margin:0 .16em}
+  .frac>span{display:block;padding:0 .3em;white-space:nowrap}
+  .frac>span:first-child{border-bottom:1.6px solid currentColor;padding-bottom:.05em}
+  .frac>span:last-child{padding-top:.05em}
+
   .qfig{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
         padding:10px 12px;margin:10px 0 12px;text-align:center}
   .qfig svg{max-width:100%;height:auto}

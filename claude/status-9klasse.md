@@ -52,11 +52,16 @@ moduler og lektier ligger i `facit/` som PDF.
   browser. Brøkerne står med streg og tæller over nævner, quizzen svarer med
   feedback, og der er ingen JS-fejl i konsollen.
 
-**Pas på ved næste kørsel af generatorerne:** `test-statistik.html` bygges af
-`claude/byg_test_side.py`, og procentpoint-figuren kommer fra
-`claude/figurer.py`. Kører man dem uden først at rette brøken i `figurer.py`,
-skrives ÷-udgaven tilbage. Det samme gælder de to lektier i `kommende/`, hvis de
-bygges om.
+- **Generatorerne laver nu selv brøkerne**, så hullet er lukket:
+  `figurer.py` har fået `svg_broek()` og `svg_tekstlinje()`, procentpoint-figuren
+  tegner `6/15` med streg i stedet for `÷`, og `koordinatsystem()` tager nu en
+  signatur som liste — `('y = ', ('1','2'), 'x + 2')` — og hæver selv viewBox fra
+  360 til 368, når der er en brøk i den. `byg_quiz.py` skriver forklaringerne med
+  `.frac`, og `byg_test_side.py` escaper kun `&` og `"` i `data-exp`, så markup'en
+  overlever. Der er ingen `÷` tilbage i `figurer.py`.
+  Kontrolleret ved at bygge `test-statistik.html` om og sammenligne med den fil,
+  brugeren leverede: eneste forskel er brøkens placering i procentpoint-figuren,
+  5 px, og hvor `.frac`-reglerne står i stylesheetet.
 
 ## Rettet 11. september 2026
 

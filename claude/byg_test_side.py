@@ -57,6 +57,15 @@ EKSTRA_CSS = """
   .fejlliste{color:var(--bad);font-size:.9rem}
 """
 
+
+def attr(tekst):
+    """Escaper kun det, en dobbeltcitationsafgraenset attribut ikke taaler.
+
+    Forklaringerne indeholder markup til broeker og saettes med innerHTML, saa
+    < og > skal staa uroerte. Broekerne bruger enkeltcitationstegn netop derfor.
+    """
+    return tekst.replace('&', '&amp;').replace('"', '&quot;')
+
 # --------------------------------------------------------------- spørgsmål
 BOGSTAV = 'ABCD'
 
@@ -66,7 +75,7 @@ def q_html(s, nr_i_modul):
         f'<button class="opt"><span class="mk">{BOGSTAV[j]}</span> '
         f'{html.escape(sv)}</button>' for j, sv in enumerate(s['sv']))
     return (f'<div class="q" data-answer="{s["rigtig"]}" '
-            f'data-exp="{html.escape(s["forklaring"], quote=True)}">'
+            f'data-exp="{attr(s["forklaring"])}">'
             f'<div class="qtext"><span class="qn">{nr_i_modul}.</span> '
             f'{html.escape(s["q"])}</div>'
             f'<div class="qfig">{s["svg"]}</div>'
