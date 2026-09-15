@@ -46,12 +46,12 @@ moduler og lektier ligger i `facit/` som PDF.
   lovprocessen, Politikens debatindlæg om Big Tech, og en side fra
   alkoholpolitik-guiden. Bygges af `claude/byg_tekster.py` — en tekst mere er én
   linje i `TEKSTER` plus en `pdftoppm`-kommando til forsiden.
-- **PDF'erne ligger ikke på sitet.** `tekster/` er udelukket i `.vercelignore`,
-  fordi debatindlægget er Politikens og guiden en andens udgivelse. Siden er
-  overskrifter og beskrivelser, der linker til klassens Teams, hvor ungerne
-  er logget ind. `claude/tjek.py` kontrollerer nu også, at `tekster/` er
-  udelukket.
-- **Lovprocessen mangler sit Teams-link** og står markeret på siden.
+- **To slags materiale, to mapper.** `materiale/` er vores eget og ligger
+  åbent på sitet — lovprocessen ligger der med forside og kan åbnes af enhver.
+  `tekster/` er tekster med begrænset rettighed og er udelukket i
+  `.vercelignore`; de vises kun som overskrift med et link til klassens Teams.
+  `claude/tjek.py` kontrollerer, at `tekster/` er udelukket.
+  `byg_tekster.py` afviser en tekst, der både har `fil` og `link`.
 
 - **Årsplanen for samfundsfag er lagt op** som `aarsplan-samfundsfag.html`,
   bygget af `claude/byg_aarsplan_samf.py` ud fra lærerens egen PDF. Indholdet er
