@@ -20,7 +20,7 @@ til `main`. Deploy-kæden virker; Claudes Vercel-adgang bruges ikke.
 uge 35 og 36 klar i `kommende/` med planlagte Routines. Facitlister til alle
 moduler og lektier ligger i `facit/` som PDF.
 
-**Samfundsfag og tysk** er tomme faner. **Fysik** findes ikke endnu.
+**Samfundsfag** har årsplan. **Tysk** er en tom fane. **Fysik** findes ikke endnu.
 
 ## Næste skridt
 
@@ -30,7 +30,8 @@ moduler og lektier ligger i `facit/` som PDF.
    efterregnet programmatisk.
 2. **Lektier fra uge 37.** Der er lavet til og med uge 36. Aftalt at indholdet
    skal gennemgås, før der laves mere.
-3. **Årsplaner til samfundsfag og tysk.** Afventer at brugeren sender dem.
+3. **Årsplan til tysk.** Afventer at brugeren sender den. Samfundsfag er lagt op
+   15. september.
 4. **Fire gamle facit-filer** i `facit/` er ikke omskrevet til det nye
    PDF-format: `facitark-funktioner-og-ligninger.html`, `facitark-manipulation.pdf`,
    `facit-lektier-manipulation.pdf`, `facit-statistik-hjemmeopgaver.pdf`,
@@ -39,6 +40,16 @@ moduler og lektier ligger i `facit/` som PDF.
    `matematik.html`.
 
 ## Rettet 15. september 2026
+
+- **Årsplanen for samfundsfag er lagt op** som `aarsplan-samfundsfag.html`,
+  bygget af `claude/byg_aarsplan_samf.py` ud fra lærerens egen PDF. Indholdet er
+  skrevet af, ikke omskrevet. Ugernes datoer beregnes med ISO-uger, så de passer
+  med matematikårsplanen, og ferier og OPO er hentet derfra, så de to planer
+  siger det samme. `samfundsfag.html` er ikke længere en tom fane.
+- **To ting står til afklaring på siden:** planen har indhold i uge 4, 5 og 6,
+  som er OPO-uger, og påskeferien i uge 12 ligger inde i forløbet om den nye
+  verdens(u)orden. Begge dele står som en note, og ugerne er skrevet af som de
+  er — ikke flyttet.
 
 - **Brøker står nu med vandret brøkstreg** på alle matematiksider. Syv færdige
   filer er lagt ind som de var — indholdet er gennemgået og renderet af
