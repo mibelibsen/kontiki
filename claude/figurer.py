@@ -1086,3 +1086,46 @@ def prikplot(vals, titel='', W=540, H=None):
                  f'r="{R}" fill="{BLA}"/>')
     s.append('</svg>')
     return ''.join(s)
+
+
+def aarslinje(raekker, W=880, rh=66, farver=None):
+    """Tidslinje over et skoleår. Bruges i årsplanerne.
+
+    raekker  [(overskrift, [ugenumre i rækkefølge], [blokke])]
+             blok = (fra_uge, til_uge, tekst, art) hvor art er
+             'forloeb', 'ferie' eller 'opo'.
+    Bredden af hver blok beregnes ud fra, hvor mange uger den fylder, så to
+    forløb med lige mange uger også fylder lige meget på tegningen.
+    """
+    FARVE = farver or {'forloeb': BLA, 'ferie': '#e9edf4', 'opo': ORA}
+    X0, X1 = 14, W - 14
+    H = 26 + len(raekker) * rh + 6
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tidslinje '
+         f'over skoleårets forløb." {FONT}>']
+    for r, (titel, uger, blokke) in enumerate(raekker):
+        y = 26 + r * rh
+        bredde = (X1 - X0) / len(uger)
+        s.append(f'<text x="{X0}" y="{y - 7}" fill="{MUT}" font-size="10">{titel}</text>')
+        for fra, til, tekst, art in blokke:
+            i, j = uger.index(fra), uger.index(til)
+            x, b = X0 + i * bredde, (j - i + 1) * bredde
+            fyld = FARVE[art]
+            tekstfarve = '#fff' if art != 'ferie' else MUT
+            s.append(f'<rect x="{x:.1f}" y="{y}" width="{b - 2:.1f}" height="30" '
+                     f'rx="5" fill="{fyld}"/>')
+            # teksten maa ikke klippes midt i et ord: en blok kan give en kort
+            # form med, og er der stadig ikke plads, skrives der ingenting
+            lang, kort = (tekst if isinstance(tekst, (tuple, list))
+                          else (tekst, tekst))
+            valgt = (lang if b > len(lang) * 5.8 + 8 else
+                     kort if b > len(kort) * 5.4 + 6 else None)
+            if valgt:
+                st = 10 if valgt == lang else 9
+                s.append(f'<text x="{x + b / 2:.1f}" y="{y + 19}" text-anchor="middle" '
+                         f'fill="{tekstfarve}" font-size="{st}">{valgt}</text>')
+            nr = f'{fra}' if fra == til else f'{fra}–{til}'
+            s.append(f'<text x="{x + b / 2:.1f}" y="{y + 44}" text-anchor="middle" '
+                     f'fill="{MUT}" font-size="9">{nr}</text>')
+    s.append('</svg>')
+    return ''.join(s)

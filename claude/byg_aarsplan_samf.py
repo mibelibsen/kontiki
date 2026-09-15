@@ -44,38 +44,27 @@ TEMA2 = [
   ['Samfundsøkonomi',
    'Finanslovens effekt på politik og almindelige mennesker — konkrete '
    'eksempler og privatøkonomi']),
- (2027, 8, 9, 'Magt og medier',
-  ['Magtudredningen og magtdefinitionerne', 'Magt og medier']),
- (2027, 10, 13, 'Den nye verdens(u)orden',
+ (2027, 8, 11, 'Den nye verdens(u)orden',
   ['Krig i Europa, Kinas teknologiske vækst og det nye USA',
    'EU og tidens omvæltningers indvirkning på danskernes hverdag — EU basis: '
    'institutioner og processer',
    'Global migration og de politiske, økonomiske og sociale konsekvenser — '
    'den danske model']),
- (2027, 14, 17, 'Politik er magt',
+ (2027, 13, 17, 'Politik er magt',
   ['Borgerforslag og politiske holdningsskift — nye alliancer, nye holdninger '
    'og gammel ideologi',
+   'Magtudredningen og magtdefinitionerne',
    '<b>Samfundsfagsrapport om frit emne</b>, med fagets metoder og politik, '
    'økonomi og sociale forhold som pligtstof']),
  (2027, 18, 20, 'Opsamling og muligvis prøveforberedelse', []),
 ]
 
-# Magt-temaet er flyttet, saa det ikke rammer OPO i uge 4, 5 og 6. Der er 16
-# kalenderuger tilbage i foraaret mod planens oprindelige 19, saa tre uger er
-# taget ud - de staar i FLYTTET og vises paa siden.
-FLYTTET = [('Økonomi er magt', 'uge 1 - 4', 'uge 1 - 3', 'én uge kortere'),
-           ('Magt og medier', 'uge 5 - 6', 'uge 8 - 9', 'flyttet forbi OPO og vinterferie'),
-           ('Den nye verdens(u)orden', 'uge 8 - 12', 'uge 10 - 13', 'én uge kortere'),
-           ('Politik er magt', 'uge 13 - 17', 'uge 14 - 17', 'én uge kortere'),
-           ('Opsamling', 'uge 18 - 20', 'uge 18 - 20', 'uændret')]
-
 # hvor der skal skydes en ferie- eller OPO-raekke ind, og hvad der staar i den
 BRUD = {
  (2026, 41): 'Uge 42 — efterårsferie',
  (2026, 51): 'Uge 52 og 53 — juleferie',
- (2027, 3): 'Uge 4, 5 og 6 — OPO, obligatorisk projektopgave. Uge 7 — vinterferie. '
-            'Magt-temaet er lagt uden om begge dele.',
- (2027, 13): 'Uge 12 — påskeferie ligger inde i forløbet',
+ (2027, 3): 'Uge 4, 5 og 6 — OPO, obligatorisk projektopgave. Uge 7 — vinterferie.',
+ (2027, 11): 'Uge 12 — påskeferie',
  (2027, 20): 'Uge 20 — lejrskole på Bornholm',
 }
 
@@ -109,20 +98,42 @@ def raekker(blok):
 
 
 U1, U2 = uger(TEMA1), uger(TEMA2)
-assert U1 == 19 and U2 == 16, (U1, U2)  # 16 kalenderuger er alt, der er plads til
+assert U1 == 19 and U2 == 15, (U1, U2)
+EFTERAAR = list(range(32, 54))
+FORAAR = list(range(1, 21))
+linje = FG.aarslinje([
+    ('Efterår 2026 · tema 1 · teknologi', EFTERAAR,
+     [(32, 39, ('Teknologi og global økonomi', 'Teknologi'), 'forloeb'),
+      (40, 41, ('Digital socialisering', 'Digital soc.'), 'forloeb'),
+      (42, 42, ('Efterårsferie', 'Ferie'), 'ferie'),
+      (43, 47, ('Kriminalitet og overvågning', 'Kriminalitet'), 'forloeb'),
+      (48, 51, ('Teknologi og velfærdsstaten', 'Velfærdsstaten'), 'forloeb'),
+      (52, 53, ('Juleferie', 'Jul'), 'ferie')]),
+    ('Forår 2027 · tema 2 · magt', FORAAR,
+     [(1, 3, 'Økonomi er magt', 'forloeb'),
+      (4, 6, 'OPO', 'opo'),
+      (7, 7, ('Vinterferie', 'Ferie'), 'ferie'),
+      (8, 11, ('Den nye verdens(u)orden', 'Verdens(u)orden'), 'forloeb'),
+      (12, 12, ('Påskeferie', 'Påske'), 'ferie'),
+      (13, 17, 'Politik er magt', 'forloeb'),
+      (18, 20, 'Opsamling', 'forloeb')])])
 fig = FG.mini_soejler([U1, U2])
 
 CSS = open('aarsplan-matematik.html').read()
 CSS = CSS[CSS.find('<style>') + 7:CSS.find('</style>')]
+CSS += ('\n.tidslinje{background:var(--panel2);border:1px solid var(--line);'
+        'border-radius:14px;padding:16px 18px 10px;margin:18px 0;overflow-x:auto}'
+        '\n.tidslinje svg{display:block;min-width:620px}'
+        '\n@media print{.tidslinje{break-inside:avoid}}')
 
 KROP = f'''<section class="hero"><span class="pill">Samfundsfag · Årsplan 2026/27</span>
 <h1>Årsplan · samfundsfag · 9. klasse</h1>
-<p>Året har to overordnede temaer: <b>Teknologi</b> og <b>Magt</b>. Teknologi
-fylder efteråret fra uge 32 til uge 51 med {U1} uger. Magt fylder foråret og er
-lagt uden om OPO i uge 4, 5 og 6 — det giver {U2} uger. To samfundsfagsrapporter
-afleveres undervejs.</p>
+<p>Året har to overordnede temaer. <b>Teknologi</b> fylder efteråret fra uge 32
+til uge 51, {U1} uger. <b>Magt</b> fylder foråret fra uge 1 til uge 20, {U2} uger
+lagt uden om OPO og ferierne. To samfundsfagsrapporter afleveres undervejs.</p>
 <a class="btnlink ghost" href="samfundsfag.html">Tilbage til samfundsfag</a>
 <a class="btnlink ghost" href="index.html">Fagoversigt</a></section>
+<div class="tidslinje">{linje}</div>
 <table class="plan"><thead><tr><th>Uge</th><th>Periode</th><th>Forløb</th>
 <th>Indhold</th></tr></thead><tbody>
 <tr class="block"><td colspan="4">Tema 1 · Teknologi — uge 32 til 51</td></tr>
@@ -145,19 +156,9 @@ afleveres undervejs.</p>
 <table class="mini"><thead><tr><th>Uge</th><th>Opgave</th></tr></thead><tbody>
 {''.join(f'<tr><td>{u}</td><td>{t}</td></tr>' for u, t in AFLEVERINGER)}
 </tbody></table>
-<h2 class="sec"><span class="num">&#8644;</span> Hvad der er flyttet</h2>
-<p class="mat">Magt-temaet lå oprindeligt i uge 1 til 20 med 19 uger. OPO i uge
-4, 5 og 6 og vinterferien i uge 7 tager fem af dem, så der er 16 kalenderuger
-tilbage. Tre uger er taget ud, fordelt på tre forløb — opsamlingen før prøven er
-holdt intakt.</p>
-<table class="mini"><thead><tr><th>Forløb</th><th>Oprindeligt</th><th>Nu</th>
-<th>Ændring</th></tr></thead><tbody>
-{''.join(f'<tr><td>{a}</td><td>{b}</td><td>{c}</td><td>{d}</td></tr>'
-         for a, b, c, d in FLYTTET)}
-</tbody></table>
-<div class="note"><b>Påskeferien i uge 12</b> ligger stadig inde i forløbet om den
-nye verdens(u)orden, og <b>lejrskolen i uge 20</b> inde i opsamlingen. Begge
-forløb har derfor én undervisningsuge mindre, end ugetallet viser.</div>'''
+<div class="note"><b>Lejrskolen i uge 20</b> ligger inde i opsamlingen, så det
+forløb har to undervisningsuger og ikke tre. Ellers rammer ingen af forløbene en
+ferie eller OPO.</div>'''
 
 DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<meta name="viewport" content="width=device-width,initial-scale=1">'

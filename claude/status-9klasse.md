@@ -46,10 +46,15 @@ moduler og lektier ligger i `facit/` som PDF.
   skrevet af, ikke omskrevet. Ugernes datoer beregnes med ISO-uger, så de passer
   med matematikårsplanen, og ferier og OPO er hentet derfra, så de to planer
   siger det samme. `samfundsfag.html` er ikke længere en tom fane.
-- **To ting står til afklaring på siden:** planen har indhold i uge 4, 5 og 6,
-  som er OPO-uger, og påskeferien i uge 12 ligger inde i forløbet om den nye
-  verdens(u)orden. Begge dele står som en note, og ugerne er skrevet af som de
-  er — ikke flyttet.
+- **Opdateret efter anden udgave af planen.** Magt-temaet rammer ikke længere
+  OPO: uge 1-3 Økonomi er magt, uge 8-11 Den nye verdens(u)orden, uge 13-17
+  Politik er magt med Magtudredningen lagt ind, uge 18-20 opsamling. "Magt og
+  medier" er ude. 19 uger teknologi, 15 uger magt.
+- **Siden har fået en tidslinje** øverst — to bånd, ét pr. halvår, hvor hvert
+  forløb fylder efter sit ugetal, og OPO og ferier er markeret. Tegnes af
+  `FG.aarslinje()`, som er ny i figurbiblioteket og kan bruges til tyskplanen
+  også. Blokke kan give en kort form af deres tekst med, så en etiket aldrig
+  klippes midt i et ord.
 
 - **Brøker står nu med vandret brøkstreg** på alle matematiksider. Syv færdige
   filer er lagt ind som de var — indholdet er gennemgået og renderet af
