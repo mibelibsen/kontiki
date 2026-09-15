@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-09-11
+Sidst opdateret: 2026-09-15
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -37,6 +37,26 @@ moduler og lektier ligger i `facit/` som PDF.
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
+
+## Rettet 15. september 2026
+
+- **Brøker står nu med vandret brøkstreg** på alle matematiksider. Syv færdige
+  filer er lagt ind som de var — indholdet er gennemgået og renderet af
+  brugeren og er ikke rørt her. Hver side har fået en `.frac`-komponent i sin
+  egen `<style>`, så siderne stadig er selvbærende, og brøkerne er sat som
+  `<span class="frac"><span>tæller</span><span>nævner</span></span>`.
+- **To figurer havde brøken tegnet direkte i SVG'en** og er tegnet om: legenden
+  `y = ½x + 2` på funktionssiden, hvor viewBox samtidig er hævet fra 360 til
+  368, og `6 ÷ 15 = 40 %` i procentpoint-figuren på test-statistik.
+- **Kontrolleret:** `claude/tjek.py` giver 0 fejl, og begge sider er åbnet i
+  browser. Brøkerne står med streg og tæller over nævner, quizzen svarer med
+  feedback, og der er ingen JS-fejl i konsollen.
+
+**Pas på ved næste kørsel af generatorerne:** `test-statistik.html` bygges af
+`claude/byg_test_side.py`, og procentpoint-figuren kommer fra
+`claude/figurer.py`. Kører man dem uden først at rette brøken i `figurer.py`,
+skrives ÷-udgaven tilbage. Det samme gælder de to lektier i `kommende/`, hvis de
+bygges om.
 
 ## Rettet 11. september 2026
 

@@ -43,6 +43,12 @@
     .keyrow td,th{background:#fff !important}
     td.sv{color:#000}
   }
+
+  /* Brøker med vandret brøkstreg */
+  .frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.16;font-size:.88em;margin:0 .16em}
+  .frac>span{display:block;padding:0 .3em;white-space:nowrap}
+  .frac>span:first-child{border-bottom:1.6px solid currentColor;padding-bottom:.05em}
+  .frac>span:last-child{padding-top:.05em}
 </style>
 </head>
 <body>
@@ -65,7 +71,7 @@
       <tr><td class="n">3</td><td><code>4x + 3x = 28</code></td><td class="sv">B · x = 4</td><td>Saml x-leddene: 7x = 28. Divider med 7: x = 4.</td></tr>
       <tr><td class="n">4</td><td><code>4x − 2 = x + 10</code></td><td class="sv">A · x = 4</td><td>Træk x fra: 3x − 2 = 10. Læg 2 til: 3x = 12. x = 4.</td></tr>
       <tr><td class="n">5</td><td><code>3(x + 2) = 18</code></td><td class="sv">C · x = 4</td><td>Gang ind: 3x + 6 = 18. Træk 6 fra: 3x = 12. x = 4.</td></tr>
-      <tr><td class="n">6</td><td><code>x/4 + 3 = 5</code></td><td class="sv">B · x = 8</td><td>Træk 3 fra: x/4 = 2. Gang med 4: x = 8.</td></tr>
+      <tr><td class="n">6</td><td><code><span class="frac"><span>x</span><span>4</span></span> + 3 = 5</code></td><td class="sv">B · x = 8</td><td>Træk 3 fra: <span class="frac"><span>x</span><span>4</span></span> = 2. Gang med 4: x = 8.</td></tr>
       <tr><td class="n">7</td><td><code>2(x + 3) = 4(x − 1)</code></td><td class="sv">C · x = 5</td><td>Gang ind i begge parenteser: 2x + 6 = 4x − 4. Saml: 10 = 2x, så x = 5.</td></tr>
     </tbody>
   </table>
@@ -77,10 +83,10 @@
       <tr><td class="n">1</td><td>Hældningen a i <code>y = 3x − 5</code></td><td class="sv">B · a = 3</td><td>Tallet foran x er hældningen. Her a = 3.</td></tr>
       <tr><td class="n">2</td><td>Skæring med y-aksen for <code>y = 3x − 5</code></td><td class="sv">C · (0, −5)</td><td>b = −5, så linjen skærer y-aksen i (0, −5).</td></tr>
       <tr><td class="n">3</td><td>y i <code>y = 2x + 1</code>, når x = 3</td><td class="sv">B · y = 7</td><td>y = 2·3 + 1 = 7.</td></tr>
-      <tr><td class="n">4</td><td>Hældning for linje gennem (2, 4) og (5, 13)</td><td class="sv">A · a = 3</td><td>a = (13 − 4) / (5 − 2) = 9 / 3 = 3.</td></tr>
+      <tr><td class="n">4</td><td>Hældning for linje gennem (2, 4) og (5, 13)</td><td class="sv">A · a = 3</td><td>a = <span class="frac"><span>13 − 4</span><span>5 − 2</span></span> = <span class="frac"><span>9</span><span>3</span></span> = 3.</td></tr>
       <tr><td class="n">5</td><td>Nulpunkt for <code>y = 2x − 8</code></td><td class="sv">C · (4, 0)</td><td>Sæt y = 0: 0 = 2x − 8, så 2x = 8 og x = 4. Nulpunkt (4, 0).</td></tr>
       <tr><td class="n">6</td><td>Parallel med <code>y = 4x − 7</code></td><td class="sv">B · y = 4x + 1</td><td>Parallelle linjer har samme hældning. a = 4 i begge.</td></tr>
-      <tr><td class="n">7</td><td>Forskrift for linje gennem (1, 5) og (3, 11)</td><td class="sv">A · y = 3x + 2</td><td>a = (11 − 5)/(3 − 1) = 3. Indsæt (1, 5): 5 = 3 + b, så b = 2. y = 3x + 2.</td></tr>
+      <tr><td class="n">7</td><td>Forskrift for linje gennem (1, 5) og (3, 11)</td><td class="sv">A · y = 3x + 2</td><td>a = <span class="frac"><span>11 − 5</span><span>3 − 1</span></span> = 3. Indsæt (1, 5): 5 = 3 + b, så b = 2. y = 3x + 2.</td></tr>
     </tbody>
   </table>
 

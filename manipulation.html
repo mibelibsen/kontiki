@@ -289,6 +289,12 @@ ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margi
     .to-figurer{gap:10px}
     .caption{color:#333}
   }
+
+  /* Brøker med vandret brøkstreg */
+  .frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.16;font-size:.88em;margin:0 .16em}
+  .frac>span{display:block;padding:0 .3em;white-space:nowrap}
+  .frac>span:first-child{border-bottom:1.6px solid currentColor;padding-bottom:.05em}
+  .frac>span:last-child{padding-top:.05em}
 </style>
 </head>
 <body data-store-key="man9_state_v1" data-modules="Modul 1: Stikprøven|Modul 2: Diagrammet|Modul 3: Tallet og teksten|Blandet quiz">
@@ -824,7 +830,7 @@ ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margi
       <div class="fb"></div>
     </div>
 
-    <div class="q" data-answer="1" data-exp="Fra 100,0 til 101,3 er stigningen 1,3 ÷ 100 = 0,013, altså 1,3 %.">
+    <div class="q" data-answer="1" data-exp="Fra 100,0 til 101,3 er stigningen <span class='frac'><span>1,3</span><span>100</span></span> = 0,013, altså 1,3 %.">
       <div class="qtext"><span class="qn">5.</span> Kurven går fra 100,0 til 101,3. Hvor mange procent er det steget? <span class="lvl">Svær</span></div>
       <div class="opts">
         <button class="opt"><span class="mk">A</span> 13 %</button>
@@ -857,7 +863,7 @@ ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margi
 
     <div class="steps">
       <div class="row"><div class="calc">18.000, 19.000, 20.000, 21.000, 92.000</div><div class="why">Fem ansatte i en lille virksomhed, månedsløn i kroner.</div></div>
-      <div class="row"><div class="calc">gns = 170.000 ÷ 5 = 34.000</div><div class="why">"Vores medarbejdere tjener i gennemsnit 34.000."</div></div>
+      <div class="row"><div class="calc"><span>gns = <span class="frac"><span>170.000</span><span>5</span></span> = 34.000</span></div><div class="why">"Vores medarbejdere tjener i gennemsnit 34.000."</div></div>
       <div class="row"><div class="calc">median = 20.000</div><div class="why">Fire ud af fem tjener 21.000 eller mindre.</div></div>
     </div>
 
@@ -913,7 +919,7 @@ ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margi
     <div class="qhead"><span class="qtag">Quiz · Modul 3</span><h3>Test dig selv: tallet og teksten</h3></div>
     <p class="qsub">Regn med, før du svarer.</p>
 
-    <div class="q" data-answer="1" data-exp="Fra 4 % til 6 % er 2 procentpoint. I procent er stigningen 2 ÷ 4 = 50 %.">
+    <div class="q" data-answer="1" data-exp="Fra 4 % til 6 % er 2 procentpoint. I procent er stigningen <span class='frac'><span>2</span><span>4</span></span> = 50 %.">
       <div class="qtext"><span class="qn">1.</span> Noget går fra 4 % til 6 %. Hvor mange procentpoint er det steget? <span class="lvl">Let</span></div>
       <div class="opts">
         <button class="opt"><span class="mk">A</span> 50 procentpoint</button>
@@ -1021,7 +1027,7 @@ ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margi
       <div class="fb"></div>
     </div>
 
-    <div class="q" data-answer="2" data-exp="Fra 8 % til 12 % er 4 procentpoint. I procent er det 4 ÷ 8 = 50 %.">
+    <div class="q" data-answer="2" data-exp="Fra 8 % til 12 % er 4 procentpoint. I procent er det <span class='frac'><span>4</span><span>8</span></span> = 50 %.">
       <div class="qtext"><span class="qn">5.</span> Tilslutningen går fra 8 % til 12 %. Hvad er stigningen i procent? <span class="lvl">Svær</span></div>
       <div class="opts">
         <button class="opt"><span class="mk">A</span> 4 %</button>
