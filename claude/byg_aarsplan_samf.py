@@ -167,7 +167,6 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<a class="active" href="samfundsfag.html">Samfundsfag</a>'
        '<a class="" href="tysk.html">Tysk</a><span class="soon">Fysik</span>'
        '</nav></div></header><main>' + KROP + '</main><footer>'
-       'Undervisningsmateriale · 9. klasse · Mibelibsen. Årsplanen er skrevet af '
-       'fra lærerens egen plan.</footer></body></html>')
+       'Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>')
 open(UD, 'w').write(DOK)
 print(f'skrevet:  {UD}  ·  {U1} uger teknologi, {U2} uger magt')
