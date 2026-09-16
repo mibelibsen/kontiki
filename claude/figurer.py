@@ -1211,7 +1211,8 @@ def pyramide(niveauer, W=560, nh=62, farver=None):
         if under:
             s.append(f'<text x="{W / 2}" y="{y + 42}" text-anchor="middle" '
                      f'fill="#fff" fill-opacity="0.92" font-size="10.5">{under}</text>')
-        s.append(f'<text x="{x1 - 12:.1f}" y="{y + 30}" text-anchor="end" '
-                 f'fill="{MUT}" font-size="11" font-weight="700">{i + 1}.</text>')
+        # numrene staar i en fast kolonne til venstre, ikke op ad skraakanten
+        s.append(f'<text x="26" y="{y + 30}" text-anchor="middle" '
+                 f'fill="{MUT}" font-size="12" font-weight="700">{i + 1}.</text>')
     s.append('</svg>')
     return ''.join(s)
