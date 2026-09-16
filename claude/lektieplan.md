@@ -1,6 +1,6 @@
 # Lektieplan · hvornår hvad udgives
 
-Sidst opdateret: 2026-08-31
+Sidst opdateret: 2026-09-16
 
 ## Reglerne
 
@@ -42,7 +42,7 @@ dokumenteres bedre først.
 | 35 | 24.08 – 28.08 | Manipulation | `kommende/lektier-uge35-manipulation.html` | ⏳ ikke udgivet — ugen passerede |
 | 36 | 31.08 – 04.09 | Manipulation (fortsat) | `lektier-uge36-manipulation-diagrammer.html` | ✅ udgivet 31.08 |
 | 37 | 07.09 – 11.09 | Sandsynligheder i verden | — | ikke lavet, afventer |
-| 38 | 14.09 – 18.09 | Ligninger og CAS | `kommende/lektier-uge38-ligninger.html` | ⏳ planlagt til 14.09 kl. 08.00 |
+| 38 | 14.09 – 18.09 | Ligninger og CAS | `lektier-uge38-ligninger.html` | ✅ udgivet 16.09 |
 | 39 | 21.09 – 25.09 | Ligninger og CAS (fortsat) | `kommende/lektier-uge39-ligninger-cas.html` | ⏳ planlagt til 21.09 kl. 08.00 |
 | 41 | 05.10 – 09.10 | Lineære funktioner og grafer | `kommende/lektier-uge41-funktioner-grafer.html` | ⏳ planlagt til 05.10 kl. 08.00 |
 
@@ -58,15 +58,13 @@ lektiearket uden facit, og facitlisten.
 
 | Uge | Id | Fyrer |
 |---|---|---|
-| 38 | `trig_012VrUnEVe8V3Yhmvqt1NfLL` | 14.09.2026 kl. 06:00 UTC = 08:00 dansk |
 | 39 | `trig_01UK86RQ65zNK8DEy547snQ5` | 21.09.2026 kl. 06:00 UTC = 08:00 dansk |
 | 41 | `trig_01WNjbJiGwuiXTWABjiqft1a` | 05.10.2026 kl. 06:00 UTC = 08:00 dansk |
 
 Hver flytter sin fil op i roden, tilføjer kortet på `matematik.html`,
 verificerer i browser, pusher til `main` og sender de to PDF'er i chatten.
 
-**Uge 35 og 36 blev udgivet i hånden den 31. august**, fordi de to Routines ikke
-fyrede som planlagt. Kontrollér med `list_triggers`, at de resterende faktisk er
+**Uge 35, 36 og 38 er udgivet i hånden**, fordi Routines ikke fyrede som planlagt. Kontrollér med `list_triggers`, at de resterende faktisk er
 aktive, i stedet for at regne med dem.
 
 Routines kan ses og slettes med `list_triggers` og `delete_trigger`. Skal
