@@ -1181,3 +1181,37 @@ def procesdiagram(trin, W=640, farver=None, legende=()):
             lx += 30 + len(navn) * 6
     s.append('</svg>')
     return ''.join(s)
+
+
+def pyramide(niveauer, W=560, nh=62, farver=None):
+    """Regnepyramide: øverste lag gøres først.
+
+    niveauer  [(overskrift, undertekst, farve)] — øverst først.
+    Trapezerne beregnes, så pyramiden bliver symmetrisk og hvert lag er lige
+    højt. Bredden vokser jævnt nedad.
+    """
+    n = len(niveauer)
+    H = 26 + n * nh + 6
+    top, bund = W * 0.30, W * 0.94
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Regnepyramide '
+         f'med {n} lag; det øverste gøres først." {FONT}>']
+    s.append(f'<text x="{W / 2}" y="14" text-anchor="middle" fill="{MUT}" '
+             f'font-size="10">Øverst gøres først</text>')
+    for i, (overskrift, under, farve) in enumerate(niveauer):
+        y = 22 + i * nh
+        b1 = top + (bund - top) * i / n
+        b2 = top + (bund - top) * (i + 1) / n
+        x1, x2 = (W - b1) / 2, (W - b2) / 2
+        s.append(f'<path d="M {x1:.1f} {y} L {x1 + b1:.1f} {y} '
+                 f'L {x2 + b2:.1f} {y + nh - 4} L {x2:.1f} {y + nh - 4} Z" '
+                 f'fill="{farve}"/>')
+        s.append(f'<text x="{W / 2}" y="{y + 25}" text-anchor="middle" fill="#fff" '
+                 f'font-weight="700" font-size="14">{overskrift}</text>')
+        if under:
+            s.append(f'<text x="{W / 2}" y="{y + 42}" text-anchor="middle" '
+                     f'fill="#fff" fill-opacity="0.92" font-size="10.5">{under}</text>')
+        s.append(f'<text x="{x1 - 12:.1f}" y="{y + 30}" text-anchor="end" '
+                 f'fill="{MUT}" font-size="11" font-weight="700">{i + 1}.</text>')
+    s.append('</svg>')
+    return ''.join(s)

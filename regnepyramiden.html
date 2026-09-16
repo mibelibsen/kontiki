@@ -1,0 +1,102 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Regnepyramiden · 9. klasse</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;--warn:#b5710a;--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a,nav.tabs span{font-size:.86rem;padding:6px 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+nav.tabs span.soon{color:#9aa6ba;cursor:default}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:2rem}
+.hero p{margin:0;color:var(--muted);max-width:70ch}
+.pill{display:inline-block;font-size:.74rem;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;background:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.card.soon{opacity:.6}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:12px}
+.tag.klar{background:#eaf7f0;color:var(--good);border:1px solid #bfe6d2}
+.tag.kommer{background:#f4f6fb;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
+.num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 0}
+.btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btnlink.ghost:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+.plan{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+.plan th,.plan td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+.plan th{background:var(--panel2);font-weight:700;position:sticky;top:60px}
+.plan tr.block td{background:var(--accent);color:#fff;font-weight:800;font-size:1rem}
+.plan tr.break td{background:#fff7e9;color:var(--warn);font-weight:600;font-style:italic}
+.plan td.uge{white-space:nowrap;font-weight:700;color:var(--accent);width:52px}
+.plan td.per{white-space:nowrap;color:var(--muted);width:110px}
+.plan ul{margin:0;padding-left:18px}.plan li{margin:2px 0}
+.mat{color:var(--muted);font-size:.9rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;text-align:left}.mini th{background:var(--panel2)}
+@media print{header.top,nav.tabs,.btnlink{display:none!important}.hero,.card,.note{box-shadow:none}.plan th{position:static}.plan tr.block td{background:#fff!important;color:#000;border:1px solid #000}body{color:#000}}
+
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:18px;margin:18px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+table.eks{width:100%;border-collapse:collapse;margin:14px 0;font-size:.96rem}
+table.eks th,table.eks td{border:1px solid var(--line);padding:10px 12px;
+text-align:left;vertical-align:top}
+table.eks th{background:var(--panel2);white-space:nowrap}
+table.eks td.ud{font-family:Consolas,"Courier New",monospace;font-size:1.05rem;
+white-space:nowrap;color:#111}
+table.eks td.rigtig{font-weight:800;color:var(--good);white-space:nowrap}
+table.eks td.forkert{color:var(--muted);white-space:nowrap}
+table.eks td.forkert span{color:#9aa6ba;font-size:.85rem;white-space:normal}
+.regel{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:16px 20px;
+margin:12px 0;box-shadow:var(--shadow)}
+.regel h3{margin:0 0 6px;font-size:1.1rem}
+.regel p{margin:0;color:var(--muted);font-size:.97rem;max-width:74ch}
+code{font-family:Consolas,"Courier New",monospace;background:var(--panel2);
+border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:#111}
+.printbtn{background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;color:var(--ink);
+font-family:inherit;margin:6px 8px 0 0}
+.printbtn:hover{border-color:var(--accent);color:var(--accent)}
+@media print{header.top,.printbtn,.btnlink{display:none!important}
+.regel,.figur{box-shadow:none;break-inside:avoid}body{font-size:11pt}
+main{padding:0}@page{size:A4;margin:14mm}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="active" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="" href="tysk.html">Tysk</a><span class="soon">Fysik</span></nav></div></header><main><section class="hero"><span class="pill">Matematik · Regneregler</span>
+<h1>Regnepyramiden</h1>
+<p>Når der står flere regnearter i det samme stykke, er der én rækkefølge, der
+er den rigtige. Pyramiden viser den: øverst gøres først. Nederst på siden står
+de simple regler, der driller flest.</p>
+<button class="printbtn" onclick="window.print()">Print siden</button>
+<a class="btnlink ghost" href="matematik.html">Tilbage til matematik</a></section>
+
+<div class="figur"><svg viewBox="0 0 560 280" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Regnepyramide med 4 lag; det øverste gøres først." font-family="Consolas, monospace" font-size="11"><text x="280.0" y="14" text-anchor="middle" fill="#586074" font-size="10">Øverst gøres først</text><path d="M 196.0 22 L 364.0 22 L 408.8 80 L 151.2 80 Z" fill="#1f6fd6"/><text x="280.0" y="47" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">Parenteser</text><text x="280.0" y="64" text-anchor="middle" fill="#fff" fill-opacity="0.92" font-size="10.5">Alt inde i en parentes først</text><text x="184.0" y="52" text-anchor="end" fill="#586074" font-size="11" font-weight="700">1.</text><path d="M 151.2 84 L 408.8 84 L 453.6 142 L 106.4 142 Z" fill="#1a8f5e"/><text x="280.0" y="109" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">Potenser og rødder</text><text x="280.0" y="126" text-anchor="middle" fill="#fff" fill-opacity="0.92" font-size="10.5">3² og √9</text><text x="139.2" y="114" text-anchor="end" fill="#586074" font-size="11" font-weight="700">2.</text><path d="M 106.4 146 L 453.6 146 L 498.4 204 L 61.6 204 Z" fill="#b5710a"/><text x="280.0" y="171" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">Gange og dividere</text><text x="280.0" y="188" text-anchor="middle" fill="#fff" fill-opacity="0.92" font-size="10.5">Fra venstre mod højre</text><text x="94.4" y="176" text-anchor="end" fill="#586074" font-size="11" font-weight="700">3.</text><path d="M 61.6 208 L 498.4 208 L 543.2 266 L 16.8 266 Z" fill="#c23b4b"/><text x="280.0" y="233" text-anchor="middle" fill="#fff" font-weight="700" font-size="14">Plus og minus</text><text x="280.0" y="250" text-anchor="middle" fill="#fff" fill-opacity="0.92" font-size="10.5">Fra venstre mod højre</text><text x="49.6" y="238" text-anchor="end" fill="#586074" font-size="11" font-weight="700">4.</text></svg></div>
+
+<div class="note"><b>To ting, pyramiden ikke siger med det samme:</b> står to
+regnearter i <b>samme</b> lag — fx gange og dividere — regner du dem fra
+<b>venstre mod højre</b>. Og en parentes inden i en parentes regnes indefra og ud.</div>
+
+<h2 class="sec"><span class="num">1</span> Se forskellen</h2>
+<p class="mat">Den sidste søjle er det svar, man får, hvis man ikke følger
+pyramiden. Læg mærke til hvor stor forskellen bliver.</p>
+<table class="eks"><thead><tr><th>Stykke</th><th>Rigtigt</th><th>Hvorfor</th>
+<th>Forkert svar</th></tr></thead><tbody><tr><td class="ud">2 + 3 · 4</td><td class="rigtig">14</td><td>Gange står højere end plus, så 3 · 4 gøres først.</td><td class="forkert">20 <span>— hvis man bare regner forfra</span></td></tr><tr><td class="ud">(2 + 3) · 4</td><td class="rigtig">20</td><td>Parentesen er øverst i pyramiden.</td><td class="forkert">14 <span>— hvis man overser parentesen</span></td></tr><tr><td class="ud">12 − 4 + 2</td><td class="rigtig">10</td><td>Plus og minus står i samme lag — så gælder venstre mod højre.</td><td class="forkert">6 <span>— hvis man tager plusset først</span></td></tr><tr><td class="ud">2 · 3²</td><td class="rigtig">18</td><td>Potensen står højere end gange: 3² = 9 først.</td><td class="forkert">36 <span>— hvis man ganger, før man kvadrerer</span></td></tr><tr><td class="ud">100 : 5 : 2</td><td class="rigtig">10</td><td>Gange og dividere er samme lag — venstre mod højre.</td><td class="forkert">40 <span>— hvis man tager den sidste division først</span></td></tr><tr><td class="ud">20 − 3 · 2²</td><td class="rigtig">8</td><td>Først 2² = 4, så 3 · 4 = 12, så 20 − 12.</td><td class="forkert">1.156 <span>— hvis man regner hele stykket forfra</span></td></tr></tbody></table>
+
+<h2 class="sec"><span class="num">2</span> De simple regler</h2>
+<section class="regel"><h3>Brøkstregen er en parentes</h3><p><code>(12 + 6) : 3 = 6</code>, og det er også det, brøkstregen betyder. Regn tælleren færdig først. <code>12 + 6 : 3 = 14</code> er noget andet.</p></section><section class="regel"><h3>Minus foran en parentes vender alle fortegn</h3><p><code>−(4 + 3) = −4 − 3 = −7</code>. Minusset gælder <b>hvert</b> led inde i parentesen, ikke kun det første.</p></section><section class="regel"><h3>Et tal uden for en parentes ganges ind på alle led</h3><p><code>2 · (5 + 3) = 2 · 5 + 2 · 3 = 16</code>. Du kan regne parentesen først eller gange ind — svaret er det samme.</p></section><section class="regel"><h3>To minusser giver plus</h3><p><code>7 − (−3) = 7 + 3 = 10</code> og <code>(−2) · (−5) = 10</code>. Ét minus alene giver stadig minus: <code>(−2) · 5 = −10</code>.</p></section><section class="regel"><h3>Potens er gange med sig selv</h3><p><code>3² = 3 · 3 = 9</code>. Det er <b>ikke</b> 3 · 2 = 6. Det er den hyppigste fejl med potenser.</p></section><section class="regel"><h3>0 og 1 opfører sig særligt</h3><p><code>0 · 9 = 0</code>, <code>9 · 1 = 9</code>, <code>9 : 1 = 9</code>. Og du må aldrig dividere med 0 — det har intet svar.</p></section>
+
+<div class="note"><b>Tjek dig selv:</b> regn <code>5 + 2 · (8 − 6)²</code> uden
+lommeregner, og brug pyramiden lag for lag. Parentesen giver 2, potensen giver 4,
+gange giver 8, og til sidst 5 + 8 = <b>13</b>.</div>
+<button class="printbtn" onclick="window.print()">Print siden</button></main><footer>Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>
