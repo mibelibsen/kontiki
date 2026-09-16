@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-09-15
+Sidst opdateret: 2026-09-16
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -38,6 +38,21 @@ moduler og lektier ligger i `facit/` som PDF.
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
+
+## Rettet 16. september 2026
+
+- **Lektien til uge 38 er udgivet** — Opgave A og B om ligninger.
+- **Udgivelse er ikke længere automatisk.** De to sidste udgivelses-Routines
+  (uge 39 og 41) er slettet. Klassens tempo svinger i forhold til årsplanen, så
+  læreren afgør selv hvornår en lektie gives — og Routines fyrede alligevel
+  ikke pålideligt: uge 35, 36 og 38 måtte udgives i hånden.
+  I stedet kommer der en **mandagsmail**, `trig_01X2DGTRBWt12ZNRiuZUD8eo`, der
+  kun fortæller hvad der ligger klar. Den har direkte besked på ikke at udgive.
+- **"og CAS" er væk fra lektiearkenes overskrift** — ungerne ved ikke hvad det
+  betyder. Forkortelsen står stadig i årsplanen og i læringsmålene, hvor den
+  hører hjemme.
+- **To nye opslag på matematiksiden:** `regnepyramiden.html` og
+  `broekregning.html`, begge med figurer, fælder og printknap.
 
 ## Rettet 15. september 2026
 

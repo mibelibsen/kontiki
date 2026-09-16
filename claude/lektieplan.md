@@ -39,40 +39,35 @@ dokumenteres bedre først.
 |---|---|---|---|---|
 | 33 | 10.08 – 14.08 | Statistik: beskriv data | `lektier-uge33-beskriv-data.html` | ✅ udgivet |
 | 34 | 17.08 – 21.08 | Statistik: diagrammer og sumkurve | `lektier-uge34-diagrammer.html` | ✅ udgivet |
-| 35 | 24.08 – 28.08 | Manipulation | `kommende/lektier-uge35-manipulation.html` | ⏳ ikke udgivet — ugen passerede |
+| 35 | 24.08 – 28.08 | Manipulation | `kommende/lektier-uge35-manipulation.html` | ikke udgivet — ugen passerede |
 | 36 | 31.08 – 04.09 | Manipulation (fortsat) | `lektier-uge36-manipulation-diagrammer.html` | ✅ udgivet 31.08 |
 | 37 | 07.09 – 11.09 | Sandsynligheder i verden | — | ikke lavet, afventer |
 | 38 | 14.09 – 18.09 | Ligninger og CAS | `lektier-uge38-ligninger.html` | ✅ udgivet 16.09 |
-| 39 | 21.09 – 25.09 | Ligninger og CAS (fortsat) | `kommende/lektier-uge39-ligninger-cas.html` | ⏳ planlagt til 21.09 kl. 08.00 |
-| 41 | 05.10 – 09.10 | Lineære funktioner og grafer | `kommende/lektier-uge41-funktioner-grafer.html` | ⏳ planlagt til 05.10 kl. 08.00 |
+| 39 | 21.09 – 25.09 | Ligninger (fortsat) | `kommende/lektier-uge39-ligninger-cas.html` | klar, udgives når klassen er der |
+| 41 | 05.10 – 09.10 | Lineære funktioner og grafer | `kommende/lektier-uge41-funktioner-grafer.html` | klar, udgives når klassen er der |
 
 Uge 33 og 34 er udgivet samtidig, fordi uge 33 allerede var passeret, da lektierne
 blev lavet.
 
-## Planlagt udgivelse
+## Udgivelse sker i hånden
 
-Lektierne udgives automatisk af Routines. Hver fyrer i en frisk session,
-uafhængigt af den samtale der oprettede den, og sender push og mail til ejeren
-når den er færdig. Hver Routine sender også to PDF'er i chatten: selve
-lektiearket uden facit, og facitlisten.
+**Lektier udgives ikke automatisk.** Klassens tempo svinger i forhold til
+årsplanen, så det er læreren, der afgør hvornår en lektie gives. De Routines,
+der udgav af sig selv, er slettet — de fyrede alligevel ikke pålideligt: uge 35,
+36 og 38 måtte udgives i hånden.
 
-| Uge | Id | Fyrer |
+I stedet kommer der en **mandagsmail**:
+
+| Routine | Id | Fyrer |
 |---|---|---|
-| 39 | `trig_01UK86RQ65zNK8DEy547snQ5` | 21.09.2026 kl. 06:00 UTC = 08:00 dansk |
-| 41 | `trig_01WNjbJiGwuiXTWABjiqft1a` | 05.10.2026 kl. 06:00 UTC = 08:00 dansk |
+| Mandagsmail · hvilke lektier ligger klar | `trig_01X2DGTRBWt12ZNRiuZUD8eo` | hver mandag kl. 06:00 UTC = 08:00 dansk, 07:00 om vinteren |
 
-Hver flytter sin fil op i roden, tilføjer kortet på `matematik.html`,
-verificerer i browser, pusher til `main` og sender de to PDF'er i chatten.
+Mailen fortæller hvilken uge det er, hvad årsplanen siger, hvad der ligger klar
+i `kommende/`, og hvad der sidst blev udgivet. **Den udgiver ingenting** — den
+har direkte besked på hverken at flytte filer, committe eller pushe.
 
-**Uge 35, 36 og 38 er udgivet i hånden**, fordi Routines ikke fyrede som planlagt. Kontrollér med `list_triggers`, at de resterende faktisk er
-aktive, i stedet for at regne med dem.
-
-Routines kan ses og slettes med `list_triggers` og `delete_trigger`. Skal
-udgivelsen aflyses eller flyttes, så ret eller slet den Routine — lav ikke en ny
-ved siden af.
-
-Bemærk: den fyrede session har ingen MCP-connectors, kun almindelige værktøjer.
-Det er nok, fordi den bruger `git` direkte og ikke Vercels API.
+Skal en lektie ud, siger du det bare her i Code: filen flyttes op i roden,
+kortet sættes på `matematik.html`, tjekket køres, og de to PDF'er sendes.
 
 ## Hvilken modulopgave svarer lektien til
 
