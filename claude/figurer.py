@@ -1216,3 +1216,57 @@ def pyramide(niveauer, W=560, nh=62, farver=None):
                  f'fill="{MUT}" font-size="12" font-weight="700">{i + 1}.</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+def broekbjaelke(taeller, naevner, W=420, H=54, farve=None, tekst='', vis_dele=True):
+    """En bjælke delt i `naevner` lige store dele, hvor `taeller` er farvet.
+
+    Delene beregnes, så de bliver nøjagtigt lige brede — en brøkfigur, der er
+    tegnet på øjemål, viser jo ikke det, den påstår.
+    """
+    farve = farve or BLA
+    X0, X1 = 4, W - 4
+    b = (X1 - X0) / naevner
+    y, h = (18 if tekst else 4), H - (22 if tekst else 8)
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bjælke delt '
+         f'i {naevner} dele, hvor {taeller} er farvet." {FONT}>']
+    if tekst:
+        s.append(f'<text x="{X0}" y="12" fill="{MUT}" font-size="11">{tekst}</text>')
+    for i in range(naevner):
+        x = X0 + i * b
+        s.append(f'<rect x="{x:.2f}" y="{y}" width="{b:.2f}" height="{h}" '
+                 f'fill="{farve if i < taeller else "#fff"}" stroke="{INK}" '
+                 f'stroke-width="1"/>')
+    if vis_dele and naevner <= 12:
+        for i in range(naevner):
+            s.append(f'<text x="{X0 + (i + .5) * b:.2f}" y="{y + h / 2 + 4:.1f}" '
+                     f'text-anchor="middle" fill="{"#fff" if i < taeller else MUT}" '
+                     f'font-size="10">1/{naevner}</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+def broekgitter(t1, n1, t2, n2, W=300):
+    """Arealmodel for gange med brøker: n1 søjler gange n2 rækker.
+
+    Det farvede felt er t1/n1 af t2/n2 — altså produktet, tælt i småfelter.
+    """
+    X0, Y0 = 6, 20
+    b, h = (W - 12) / n1, (W - 12) / n2
+    H = Y0 + h * n2 + 22
+    s = [f'<svg viewBox="0 0 {W} {H:.0f}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gitter med '
+         f'{n1} gange {n2} felter; {t1 * t2} er farvet." {FONT}>']
+    for i in range(n1):
+        for j in range(n2):
+            inde = i < t1 and j < t2
+            s.append(f'<rect x="{X0 + i * b:.2f}" y="{Y0 + j * h:.2f}" '
+                     f'width="{b:.2f}" height="{h:.2f}" '
+                     f'fill="{GRO if inde else "#fff"}" stroke="{INK}" stroke-width="1"/>')
+    s.append(f'<text x="{X0}" y="13" fill="{MUT}" font-size="11">'
+             f'{t1}/{n1} af {t2}/{n2}</text>')
+    s.append(f'<text x="{X0}" y="{H - 6:.0f}" fill="{GRO}" font-size="11" '
+             f'font-weight="700">{t1 * t2} farvede felter ud af {n1 * n2}</text>')
+    s.append('</svg>')
+    return ''.join(s)
