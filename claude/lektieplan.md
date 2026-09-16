@@ -42,8 +42,8 @@ dokumenteres bedre først.
 | 35 | 24.08 – 28.08 | Manipulation | `kommende/lektier-uge35-manipulation.html` | ikke udgivet — ugen passerede |
 | 36 | 31.08 – 04.09 | Manipulation (fortsat) | `lektier-uge36-manipulation-diagrammer.html` | ✅ udgivet 31.08 |
 | 37 | 07.09 – 11.09 | Sandsynligheder i verden | — | ikke lavet, afventer |
-| 38 | 14.09 – 18.09 | Ligninger og CAS | `lektier-uge38-ligninger.html` | ✅ udgivet 16.09 |
-| 39 | 21.09 – 25.09 | Ligninger (fortsat) | `kommende/lektier-uge39-ligninger-cas.html` | klar, udgives når klassen er der |
+| 38 | 14.09 – 18.09 | Ligninger | `lektier-uge38-ligninger.html` | ✅ udgivet 16.09 |
+| 39 | 21.09 – 25.09 | Ligninger (fortsat) | `kommende/lektier-uge39-ligninger-fortsat.html` | klar, udgives når klassen er der |
 | 41 | 05.10 – 09.10 | Lineære funktioner og grafer | `kommende/lektier-uge41-funktioner-grafer.html` | klar, udgives når klassen er der |
 
 Uge 33 og 34 er udgivet samtidig, fordi uge 33 allerede var passeret, da lektierne
