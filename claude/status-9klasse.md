@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-09-16
+Sidst opdateret: 2026-09-18
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -38,6 +38,24 @@ moduler og lektier ligger i `facit/` som PDF.
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
+
+## Rettet 18. september 2026
+
+- **Feature til naturfagsfestivalen: `feature-plastik-og-foedevarer.html`.**
+  Forløb på 3½ time om plastik og fødevarer med tre forsøg: emballagetest med
+  vejning og procentregning, plastsortering ved flyde-synke i vand og mættet
+  saltvand, og hjemmelavet bioplast af kartoffelmel. Kortet ligger på forsiden
+  med mærkatet Feature.
+- **Elevark og lærervejledning bygges af `claude/byg_feature_plastik.py`.**
+  Elevarket ligger åbent i `materiale/`; lærervejledningen med indkøbsliste og
+  forventede resultater ligger i `facit/`, som ikke udgives.
+  Indkøbslisten regnes ud fra 3 hold × 6 grupper, så mængderne ikke kan modsige
+  programmet, og densitetstabellen kontrolleres mod tallene: scriptet nægter at
+  skrive filerne, hvis fx PS står som flydende i vand.
+- **Nyt i figurbiblioteket:** `tomt_soejlegitter()` til at tegne søjler i hånden.
+  Og `procesdiagram()` vælger nu tekstfarve efter feltets lyshed — pausefeltet
+  havde hvid tekst på lys grå og kunne ikke læses.
+- **`claude/tjek.py` kender serien `laerer`** i facit-mappens navnemønster.
 
 ## Rettet 16. september 2026
 

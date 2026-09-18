@@ -1111,7 +1111,10 @@ def aarslinje(raekker, W=880, rh=66, farver=None):
             i, j = uger.index(fra), uger.index(til)
             x, b = X0 + i * bredde, (j - i + 1) * bredde
             fyld = FARVE[art]
-            tekstfarve = '#fff' if art != 'ferie' else MUT
+            # tekstfarven bestemmes af, hvor lys fylden er - ikke af navnet paa
+            # arten, for et lyst felt med hvid tekst kan ikke laeses
+            lys = sum(int(fyld[i:i + 2], 16) for i in (1, 3, 5)) / 3 > 170
+            tekstfarve = MUT if lys else '#fff'
             s.append(f'<rect x="{x:.1f}" y="{y}" width="{b - 2:.1f}" height="30" '
                      f'rx="5" fill="{fyld}"/>')
             # teksten maa ikke klippes midt i et ord: en blok kan give en kort
@@ -1150,17 +1153,21 @@ def procesdiagram(trin, W=640, farver=None, legende=()):
     for i, (overskrift, under, gruppe) in enumerate(trin):
         h = hojder[i]
         farve = F.get(gruppe, BLA)
+        # tekstfarven foelger fyldens lyshed - hvid tekst paa et lyst felt kan
+        # ikke laeses, og pausefelterne er lyse
+        lys = sum(int(farve[k:k + 2], 16) for k in (1, 3, 5)) / 3 > 170
+        tf = INK if lys else '#fff'
         s.append(f'<rect x="{x}" y="{y}" width="{b}" height="{h}" rx="9" '
                  f'fill="{farve}"/>')
-        s.append(f'<circle cx="{x + 22}" cy="{y + h / 2:.1f}" r="12" fill="#fff" '
-                 f'fill-opacity="0.22"/>')
+        s.append(f'<circle cx="{x + 22}" cy="{y + h / 2:.1f}" r="12" '
+                 f'fill="{"#fff" if not lys else MUT}" fill-opacity="0.22"/>')
         s.append(f'<text x="{x + 22}" y="{y + h / 2 + 4:.1f}" text-anchor="middle" '
-                 f'fill="#fff" font-weight="700">{i + 1}</text>')
+                 f'fill="{tf}" font-weight="700">{i + 1}</text>')
         ty = y + (20 if under else h / 2 + 4)
-        s.append(f'<text x="{x + 46}" y="{ty:.1f}" fill="#fff" font-weight="700" '
+        s.append(f'<text x="{x + 46}" y="{ty:.1f}" fill="{tf}" font-weight="700" '
                  f'font-size="12.5">{overskrift}</text>')
         if under:
-            s.append(f'<text x="{x + 46}" y="{y + 37:.1f}" fill="#fff" '
+            s.append(f'<text x="{x + 46}" y="{y + 37:.1f}" fill="{tf}" '
                      f'fill-opacity="0.9" font-size="10.5">{under}</text>')
         y += h
         if i < len(trin) - 1:                      # pil ned til naeste kasse
@@ -1268,5 +1275,47 @@ def broekgitter(t1, n1, t2, n2, W=300):
              f'{t1}/{n1} af {t2}/{n2}</text>')
     s.append(f'<text x="{X0}" y="{H - 6:.0f}" fill="{GRO}" font-size="11" '
              f'font-weight="700">{t1 * t2} farvede felter ud af {n1 * n2}</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+def tomt_soejlegitter(kategorier, ymaks, ynavn='', titel='', trin=None,
+                      W=560, H=320):
+    """Tomme akser med navngivne søjlepladser — til at tegne i i hånden.
+
+    Gitterlinjerne beregnes, så mellemrummene bliver lige store og tallene på
+    y-aksen går præcis op i ymaks.
+    """
+    trin = trin or _skridt(ymaks)
+    X0, X1, YT, YB = 74, W - 16, 26, H - 54
+    n = len(kategorier)
+    bredde = (X1 - X0) / n
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tomme akser '
+         f'til at tegne et søjlediagram i." {FONT}>',
+         f'<rect x="0" y="0" width="{W}" height="{H}" fill="#fff" stroke="{LIN}"/>']
+    if titel:
+        s.append(f'<text x="{W / 2}" y="17" text-anchor="middle" fill="{MUT}">{titel}</text>')
+    v = 0
+    while v <= ymaks + 1e-9:
+        y = YB - v / ymaks * (YB - YT)
+        s.append(f'<line x1="{X0}" y1="{y:.1f}" x2="{X1}" y2="{y:.1f}" '
+                 f'stroke="{LIN}" stroke-dasharray="2 3"/>')
+        s.append(f'<text x="{X0 - 7}" y="{y + 4:.1f}" text-anchor="end" '
+                 f'fill="{MUT}">{_dk(v)}</text>')
+        v += trin
+    for i, k in enumerate(kategorier):
+        x = X0 + (i + .5) * bredde
+        s.append(f'<line x1="{X0 + i * bredde:.1f}" y1="{YT}" '
+                 f'x2="{X0 + i * bredde:.1f}" y2="{YB}" stroke="{LIN}" '
+                 f'stroke-width="0.6"/>')
+        for j, linje in enumerate(str(k).split('|')):
+            s.append(f'<text x="{x:.1f}" y="{YB + 16 + j * 12}" text-anchor="middle" '
+                     f'fill="{INK}" font-size="10">{linje}</text>')
+    s.append(f'<line x1="{X0}" y1="{YB}" x2="{X1}" y2="{YB}" stroke="{INK}"/>')
+    s.append(f'<line x1="{X0}" y1="{YT}" x2="{X0}" y2="{YB}" stroke="{INK}"/>')
+    if ynavn:
+        s.append(f'<text x="14" y="{(YT + YB) / 2}" text-anchor="middle" fill="{MUT}" '
+                 f'transform="rotate(-90 14 {(YT + YB) / 2})">{ynavn}</text>')
     s.append('</svg>')
     return ''.join(s)

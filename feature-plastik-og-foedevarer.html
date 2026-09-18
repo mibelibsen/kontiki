@@ -1,0 +1,121 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Plastik og fødevarer · Naturfagsfestival</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;--warn:#b5710a;--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a,nav.tabs span{font-size:.86rem;padding:6px 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+nav.tabs span.soon{color:#9aa6ba;cursor:default}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:2rem}
+.hero p{margin:0;color:var(--muted);max-width:70ch}
+.pill{display:inline-block;font-size:.74rem;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;background:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.card.soon{opacity:.6}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:12px}
+.tag.klar{background:#eaf7f0;color:var(--good);border:1px solid #bfe6d2}
+.tag.kommer{background:#f4f6fb;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
+.num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 0}
+.btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btnlink.ghost:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+.plan{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+.plan th,.plan td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+.plan th{background:var(--panel2);font-weight:700;position:sticky;top:60px}
+.plan tr.block td{background:var(--accent);color:#fff;font-weight:800;font-size:1rem}
+.plan tr.break td{background:#fff7e9;color:var(--warn);font-weight:600;font-style:italic}
+.plan td.uge{white-space:nowrap;font-weight:700;color:var(--accent);width:52px}
+.plan td.per{white-space:nowrap;color:var(--muted);width:110px}
+.plan ul{margin:0;padding-left:18px}.plan li{margin:2px 0}
+.mat{color:var(--muted);font-size:.9rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;text-align:left}.mini th{background:var(--panel2)}
+@media print{header.top,nav.tabs,.btnlink{display:none!important}.hero,.card,.note{box-shadow:none}.plan th{position:static}.plan tr.block td{background:#fff!important;color:#000;border:1px solid #000}body{color:#000}}
+
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:16px;margin:16px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.blok{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:18px 22px;
+margin:14px 0;box-shadow:var(--shadow)}
+.blok.gron{border-left-color:var(--good)}
+.blok.advar{border-left-color:var(--bad);background:var(--bad-soft)}
+.blok h3{margin:0 0 8px;font-size:1.15rem}
+.blok p,.blok li{color:var(--muted);font-size:.97rem}
+.blok p{margin:6px 0;max-width:74ch}
+table.t{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+table.t th,table.t td{border:1px solid var(--line);padding:9px 11px;
+text-align:left;vertical-align:top}
+table.t th{background:var(--panel2)}
+table.t td.tal{text-align:right;white-space:nowrap}
+table.t tr.tom td{height:30px}
+.skriv{border-bottom:1px solid var(--line);display:inline-block;min-width:120px}
+.printbtn{background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;color:var(--ink);
+font-family:inherit;margin:6px 8px 0 0}
+.printbtn:hover{border-color:var(--accent);color:var(--accent)}
+@media print{header.top,.printbtn,.btnlink{display:none!important}
+.blok,.figur{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+body{font-size:10.5pt}main{padding:0}@page{size:A4;margin:13mm}
+h2.sec{page-break-after:avoid}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="" href="tysk.html">Tysk</a><span class="soon">Fysik</span></nav></div></header><main><section class="hero"><span class="pill">Feature · Naturfagsfestival</span>
+<h1>Plastik og fødevarer</h1>
+<p>Et forløb på 3½ time om det, der både er problemet og løsningen: plast om
+maden. Tre blandede hold fra 8. og 9. klasse kører det samme forløb — onsdag,
+torsdag og fredag. Tre forsøg, egne måledata, og et dilemma til sidst, som
+ingen kan svare på uden tallene.</p>
+<a class="btnlink" href="materiale/elevark-plastik-og-foedevarer.pdf">Hent elevarket som PDF</a>
+<a class="btnlink ghost" href="index.html">Fagoversigt</a></section>
+
+<div class="figur"><svg viewBox="0 0 660 624" width="100%" style="max-width:660px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Processen i 8 trin." font-family="Consolas, monospace" font-size="11"><rect x="10" y="2" width="640" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="27.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="31.0" text-anchor="middle" fill="#fff" font-weight="700">1</text><text x="56" y="22.0" fill="#fff" font-weight="700" font-size="12.5">0:00 – 0:15 · Velkomst og spørgsmålet</text><text x="56" y="39.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Dagens spørgsmål stilles, og grupperne fordeler rollerne mellem sig.</text><line x1="36" y1="55" x2="36" y2="76" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 73 L 36 79 L 40 73 Z" fill="#c9d2e0"/><rect x="10" y="82" width="640" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="107.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="111.0" text-anchor="middle" fill="#fff" font-weight="700">2</text><text x="56" y="102.0" fill="#fff" font-weight="700" font-size="12.5">0:15 – 0:45 · Forsøg 1 sættes op</text><text x="56" y="119.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Madprøverne vejes og pakkes ind på fem måder. De skal stå urørt i to timer.</text><line x1="36" y1="135" x2="36" y2="156" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 153 L 36 159 L 40 153 Z" fill="#c9d2e0"/><rect x="10" y="162" width="640" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="187.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="191.0" text-anchor="middle" fill="#fff" font-weight="700">3</text><text x="56" y="182.0" fill="#fff" font-weight="700" font-size="12.5">0:45 – 1:30 · Forsøg 2 · Hvilken plast er det?</text><text x="56" y="199.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Flyde-synke-test i vand og saltvand. Gæt først, mål bagefter, tjek koden til sidst.</text><line x1="36" y1="215" x2="36" y2="236" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 233 L 36 239 L 40 233 Z" fill="#c9d2e0"/><rect x="10" y="242" width="640" height="34" rx="9" fill="#e9edf4"/><circle cx="32" cy="259.0" r="12" fill="#586074" fill-opacity="0.22"/><text x="32" y="263.0" text-anchor="middle" fill="#1a2233" font-weight="700">4</text><text x="56" y="263.0" fill="#1a2233" font-weight="700" font-size="12.5">1:30 – 1:45 · Pause</text><line x1="36" y1="279" x2="36" y2="300" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 297 L 36 303 L 40 297 Z" fill="#c9d2e0"/><rect x="10" y="306" width="640" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="331.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="335.0" text-anchor="middle" fill="#fff" font-weight="700">5</text><text x="56" y="326.0" fill="#fff" font-weight="700" font-size="12.5">1:45 – 2:45 · Forsøg 3 · Lav din egen bioplast</text><text x="56" y="343.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Kartoffelmel, vand, glycerin og eddike koges til en film, der sættes til tørring.</text><line x1="36" y1="359" x2="36" y2="380" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 377 L 36 383 L 40 377 Z" fill="#c9d2e0"/><rect x="10" y="386" width="640" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="411.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="415.0" text-anchor="middle" fill="#fff" font-weight="700">6</text><text x="56" y="406.0" fill="#fff" font-weight="700" font-size="12.5">2:45 – 3:10 · Vejning nummer to</text><text x="56" y="423.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Prøverne vejes igen. Vægttabet regnes om til procent og tegnes som søjlediagram.</text><line x1="36" y1="439" x2="36" y2="460" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 457 L 36 463 L 40 457 Z" fill="#c9d2e0"/><rect x="10" y="466" width="640" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="491.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="495.0" text-anchor="middle" fill="#fff" font-weight="700">7</text><text x="56" y="486.0" fill="#fff" font-weight="700" font-size="12.5">3:10 – 3:25 · Dilemmaet</text><text x="56" y="503.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Hver gruppe tager stilling — med egne tal.</text><line x1="36" y1="519" x2="36" y2="540" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 537 L 36 543 L 40 537 Z" fill="#c9d2e0"/><rect x="10" y="546" width="640" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="571.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="575.0" text-anchor="middle" fill="#fff" font-weight="700">8</text><text x="56" y="566.0" fill="#fff" font-weight="700" font-size="12.5">3:25 – 3:30 · Oprydning</text><text x="56" y="583.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Bioplasten er tør nok til at tages med hjem.</text><rect x="10" y="607" width="11" height="11" rx="3" fill="#1f6fd6"/><text x="27" y="616" fill="#586074" font-size="10">Fælles</text><rect x="76" y="607" width="11" height="11" rx="3" fill="#1a8f5e"/><text x="93" y="616" fill="#586074" font-size="10">Forsøg i grupper</text></svg></div>
+
+<h2 class="sec">Dagens spørgsmål</h2>
+<div class="blok"><h3>Hvornår er plast om maden det klogeste valg?</h3>
+<p>Plast i naturen er noget skidt. Plast om en agurk kan være det, der gør, at
+agurken bliver spist i stedet for smidt ud. Begge ting er sande på samme tid, og
+det er derfor spørgsmålet er værd at bruge en dag på. I slutningen af dagen skal
+hver gruppe svare — med deres egne måletal i hånden, ikke med en mavefornemmelse.</p></div>
+
+<h2 class="sec">De tre forsøg</h2>
+<div class="blok gron"><h3>1 · Emballagetesten</h3>
+<p>Fem ens stykker agurk vejes, pakkes ind på fem forskellige måder og vejes igen
+to timer senere. Det, der er forsvundet, er vand. Vægttabet regnes om til
+procent, så stykker med forskellig startvægt kan sammenlignes, og tegnes som
+søjlediagram.</p></div>
+<div class="blok gron"><h3>2 · Hvilken plast er det?</h3>
+<p>Stumper af madindpakning lægges i vand og i mættet saltvand. Om de flyder
+eller synker afhænger af massefylden, og det afgør hvilken plasttype det er.
+Først gætter grupperne, så måler de, og til sidst tjekker de mod
+genbrugstrekanten på emballagen — passer det?</p></div>
+<div class="blok gron"><h3>3 · Lav din egen bioplast</h3>
+<p>Kartoffelmel, vand, glycerin og eddike varmes til en klar, sej masse, der
+støbes tyndt ud og tørrer til en film. To hold med forskellig mængde glycerin
+viser, at plast ikke er ét materiale, men noget man kan skrue på.</p></div>
+
+<h2 class="sec">Programmet</h2>
+<table class="t"><thead><tr><th>Tid</th><th>Modul</th><th>Hvad der sker</th></tr></thead><tbody><tr><td class="">0:00 – 0:15</td><td class=""><b>Velkomst og spørgsmålet</b></td><td class="">Dagens spørgsmål stilles, og grupperne fordeler rollerne mellem sig.</td></tr><tr><td class="">0:15 – 0:45</td><td class=""><b>Forsøg 1 sættes op</b></td><td class="">Madprøverne vejes og pakkes ind på fem måder. De skal stå urørt i to timer.</td></tr><tr><td class="">0:45 – 1:30</td><td class=""><b>Forsøg 2 · Hvilken plast er det?</b></td><td class="">Flyde-synke-test i vand og saltvand. Gæt først, mål bagefter, tjek koden til sidst.</td></tr><tr><td class="">1:30 – 1:45</td><td class=""><b>Pause</b></td><td class=""></td></tr><tr><td class="">1:45 – 2:45</td><td class=""><b>Forsøg 3 · Lav din egen bioplast</b></td><td class="">Kartoffelmel, vand, glycerin og eddike koges til en film, der sættes til tørring.</td></tr><tr><td class="">2:45 – 3:10</td><td class=""><b>Vejning nummer to</b></td><td class="">Prøverne vejes igen. Vægttabet regnes om til procent og tegnes som søjlediagram.</td></tr><tr><td class="">3:10 – 3:25</td><td class=""><b>Dilemmaet</b></td><td class="">Hver gruppe tager stilling — med egne tal.</td></tr><tr><td class="">3:25 – 3:30</td><td class=""><b>Oprydning</b></td><td class="">Bioplasten er tør nok til at tages med hjem.</td></tr></tbody></table>
+
+<h2 class="sec">Roller i gruppen</h2>
+<p class="mat">Fire roller, så alle fire i gruppen har noget at gøre hele tiden.
+Rollerne byttes ikke undervejs.</p>
+<table class="t"><thead><tr><th>Rolle</th><th>Opgave</th></tr></thead><tbody><tr><td class=""><b>Vejemester</b></td><td class="">Læser vægten af og siger tallet højt. Det er den eneste, der rører vægten.</td></tr><tr><td class=""><b>Skriver</b></td><td class="">Skriver alle tal ind i skemaet med det samme — ikke bagefter.</td></tr><tr><td class=""><b>Materialemester</b></td><td class="">Henter og rydder op, og holder styr på, at prøverne står, hvor de skal.</td></tr><tr><td class=""><b>Tidsholder</b></td><td class="">Holder øje med klokken og siger til fem minutter før hver deadline.</td></tr></tbody></table>
+
+<div class="blok advar"><h3>Sikkerhed</h3>
+<p>Stivelsesmassen bliver over 90 grader varm og klistrer til huden — brug
+handsker, og rør kun i den med spatel. Sprit må aldrig stå på eller ved
+kogepladen. Og <b>ingenting fra forsøgene må spises</b>, heller ikke agurken.</p></div></main><footer>Undervisningsmateriale · Mibelibsen · Naturfagsfestival 2026.</footer></body></html>
