@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Bygger naturfagsfestivalens forløb: Plastik og fødevarer.
+"""Bygger Naturfagsuge 2026-forløbet: Plastik og fødevarer.
 
 Tre dele:
   * feature-plastik-og-foedevarer.html  — siden til sitet (åben for alle)
-  * elevark-plastik-og-foedevarer.html  — elevarkets kilde, bliver PDF
-  * laerervejledning-plastik.html       — lærervejledning + indkøbsliste, PDF
+  * ungeark-plastik-og-foedevarer.html  — ungearkets kilde, bliver PDF
+  * vejledning-plastik.html            — vejledning + indkoebsliste, PDF
 
 Indkøbslisten regnes ud fra HOLD, GRUPPER og forbruget pr. gruppe, så tallene
 ikke kan komme til at modsige programmet.
@@ -16,8 +16,8 @@ import figurer as FG
 SCRATCH = sys.argv[1] if len(sys.argv) > 1 else '.'
 
 # ------------------------------------------------------------------ rammer
-# To klasser, 44 elever i alt, fordelt paa tre hold der kommer hver sin dag.
-ELEVER = 44
+# To klasser, 44 unger i alt, fordelt paa tre hold der kommer hver sin dag.
+UNGER = 44
 HOLD = 3
 PR_GRUPPE = 4                # fire roller, altsaa fire i en fuld gruppe
 DAGE = [('Onsdag', '23. september'), ('Torsdag', '24. september'),
@@ -27,9 +27,9 @@ INDPAK = ['Husholdningsfilm', 'Frysepose med lynlås', 'Papirspose',
 assert len(DAGE) == HOLD
 
 # holdene gores saa lige store som muligt: 15, 15, 14
-HOLDSTOERRELSER = [ELEVER // HOLD + (1 if i < ELEVER % HOLD else 0)
+HOLDSTOERRELSER = [UNGER // HOLD + (1 if i < UNGER % HOLD else 0)
                    for i in range(HOLD)]
-assert sum(HOLDSTOERRELSER) == ELEVER
+assert sum(HOLDSTOERRELSER) == UNGER
 GRUPPER_PR_DAG = [math.ceil(n / PR_GRUPPE) for n in HOLDSTOERRELSER]
 TOTAL_GRUPPER = sum(GRUPPER_PR_DAG)
 GRUPPER = max(GRUPPER_PR_DAG)            # det største hold sætter udstyrsbehovet
@@ -198,7 +198,7 @@ def side(titel, pill, krop, aktiv='matematik', fane=True):
             '</style></head><body><header class="top"><div class="top-inner">'
             '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>'
             + nav + '</div></header><main>' + krop + '</main><footer>'
-            'Undervisningsmateriale · Mibelibsen · Naturfagsfestival 2026.'
+            'Undervisningsmateriale · Mibelibsen · Naturfagsuge 2026.'
             '</footer></body></html>')
 
 
@@ -216,13 +216,13 @@ PROGRAMTABEL = tabel(
     [(f'{a} – {b}', f'<b>{html.escape(t)}</b>', html.escape(u)) for a, b, t, u, _ in PROGRAM])
 
 # =========================================================== 1 · sitets side
-KROP_SITE = f'''<section class="hero"><span class="pill">Feature · Naturfagsfestival</span>
+KROP_SITE = f'''<section class="hero"><span class="pill">Feature · Naturfagsuge 2026</span>
 <h1>Plastik og fødevarer</h1>
 <p>Et forløb på 3½ time om det, der både er problemet og løsningen: plast om
-maden. To klasser, {ELEVER} elever i alt, fordelt på tre blandede hold fra 8. og
+maden. To klasser, {UNGER} unger i alt, fordelt på tre blandede hold fra 8. og
 9. klasse — ét hold om dagen, onsdag, torsdag og fredag. Tre forsøg, egne
 måledata, og et dilemma til sidst, som ingen kan svare på uden tallene.</p>
-<a class="btnlink" href="materiale/elevark-plastik-og-foedevarer.pdf">Hent elevarket som PDF</a>
+<a class="btnlink" href="materiale/ungeark-plastik-og-foedevarer.pdf">Hent ungearket som PDF</a>
 <a class="btnlink ghost" href="index.html">Fagoversigt</a></section>
 
 <div class="figur">{program_fig}</div>
@@ -265,9 +265,9 @@ handsker, og rør kun i den med spatel. Sprit må aldrig stå på eller ved
 kogepladen. Og <b>ingenting fra forsøgene må spises</b>, heller ikke agurken.</p></div>'''
 
 open('feature-plastik-og-foedevarer.html', 'w').write(
-    side('Plastik og fødevarer · Naturfagsfestival', 'Feature', KROP_SITE))
+    side('Plastik og fødevarer · Naturfagsuge 2026', 'Feature', KROP_SITE))
 
-# =============================================================== 2 · elevark
+# =============================================================== 2 · ungeark
 vejeskema = tabel(
     ['Indpakning', 'Vægt før (g)', 'Vægt efter (g)', 'Tab (g)', 'Tab i %'],
     [(i, '', '', '', '') for i in INDPAK] + [('<b>Kontrol: intet må mangle</b>',
@@ -278,7 +278,7 @@ plastskema = tabel(
      'Vores gæt på plasttype', 'Koden på emballagen'],
     [('', '', '', '', '') for _ in range(5)])
 
-KROP_ELEV = f'''<section class="hero"><span class="pill">Naturfagsfestival · elevark</span>
+KROP_UNGE = f'''<section class="hero"><span class="pill">Naturfagsuge 2026 · ungeark</span>
 <h1>Plastik og fødevarer</h1>
 <p><b>Navn:</b> <span class="skriv"></span> &nbsp; <b>Klasse:</b>
 <span class="skriv"></span> &nbsp; <b>Gruppe:</b> <span class="skriv"></span>
@@ -297,7 +297,7 @@ et tal, man husker forkert, er værdiløst.</p>
 <p>1. Skær fem stykker agurk, der er så ens som muligt. 2. Vej hvert stykke, og
 skriv vægten i skemaet <b>før</b> I pakker det ind. 3. Pak hvert stykke ind på
 sin måde. 4. Mærk prøverne med gruppe og indpakning. 5. Stil dem sammen på det
-sted, læreren viser — og rør dem ikke i to timer.</p></div>
+sted, den voksne viser — og rør dem ikke i to timer.</p></div>
 
 <div class="blok"><h3>Vores hypotese</h3>
 <p>Vi tror, at <span class="skriv"></span> holder maden bedst, fordi
@@ -364,13 +364,13 @@ jeres eget forsøg.</p>
 <p>Handsker på ved kogepladen. Ingenting fra forsøgene må spises — heller ikke
 agurken.</p></div>'''
 
-open(os.path.join(SCRATCH, 'elevark-plastik.html'), 'w').write(
-    side('Elevark · Plastik og fødevarer', 'Elevark', KROP_ELEV, fane=False))
+open(os.path.join(SCRATCH, 'ungeark-plastik.html'), 'w').write(
+    side('Ungeark · Plastik og fødevarer', 'Ungeark', KROP_UNGE, fane=False))
 
-# ====================================================== 3 · lærervejledning
+# ========================================================= 3 · vejledning
 dage_tabel = tabel(
-    ['Dag', 'Dato', 'Hold', 'Elever', 'Grupper'],
-    [(d, dato, f'Hold {i} · blandet 8. og 9. klasse', f'{n} elever',
+    ['Dag', 'Dato', 'Hold', 'Unger', 'Grupper'],
+    [(d, dato, f'Hold {i} · blandet 8. og 9. klasse', f'{n} unger',
       f'{g} grupper')
      for i, ((d, dato), n, g) in enumerate(
          zip(DAGE, HOLDSTOERRELSER, GRUPPER_PR_DAG), 1)],
@@ -387,9 +387,9 @@ densitet_tabel = tabel(
 forventet_tabel = tabel(['Indpakning', 'Forventet resultat'],
                         [(f'<b>{a}</b>', b) for a, b in FORVENTET])
 
-KROP_LAERER = f'''<section class="hero"><span class="pill">Vejledning til læreren</span>
+KROP_LAERER = f'''<section class="hero"><span class="pill">Vejledning til den voksne</span>
 <h1>Plastik og fødevarer</h1>
-<p>Forløb på 3½ time til naturfagsfestivalen. To klasser, {ELEVER} elever i alt,
+<p>Forløb på 3½ time til Naturfagsuge 2026. To klasser, {UNGER} unger i alt,
 fordelt på {HOLD} blandede hold fra 8. og 9. klasse. Ét hold om dagen, samme
 program alle tre dage. Grupperne er på {PR_GRUPPE} — i alt {TOTAL_GRUPPER}
 grupper over de tre dage.</p>
@@ -425,7 +425,7 @@ kan holdene ikke sammenligne.</p></div>
 
 <h2 class="sec">Indkøb til alle tre dage</h2>
 <p class="mat">Mængderne er regnet ud fra de {TOTAL_GRUPPER} grupper, de
-{ELEVER} elever fordeler sig på over tre dage
+{UNGER} unger fordeler sig på over tre dage
 ({' + '.join(str(g) for g in GRUPPER_PR_DAG)} grupper). Kolonnen <b>Køb</b> er
 lagt 20 % oven i, fordi noget altid spildes.</p>
 {indkoeb_tabel}
@@ -494,7 +494,7 @@ open(os.path.join(SCRATCH, 'vejledning-plastik.html'), 'w').write(
     side('Vejledning · Plastik og fødevarer', 'Vejledning', KROP_LAERER, fane=False))
 
 print(f'skrevet:  feature-plastik-og-foedevarer.html')
-print(f'skrevet:  {SCRATCH}/elevark-plastik.html')
+print(f'skrevet:  {SCRATCH}/ungeark-plastik.html')
 print(f'skrevet:  {SCRATCH}/vejledning-plastik.html')
-print(f'rammer:   {ELEVER} elever på {HOLD} hold ({HOLDSTOERRELSER}) · '
+print(f'rammer:   {UNGER} unger på {HOLD} hold ({HOLDSTOERRELSER}) · '
       f'{GRUPPER_PR_DAG} grupper pr. dag = {TOTAL_GRUPPER} grupper i alt')

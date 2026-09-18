@@ -41,16 +41,16 @@ moduler og lektier ligger i `facit/` som PDF.
 
 ## Rettet 18. september 2026
 
-- **Feature til naturfagsfestivalen: `feature-plastik-og-foedevarer.html`.**
+- **Feature til Naturfagsuge 2026: `feature-plastik-og-foedevarer.html`.**
   Forløb på 3½ time om plastik og fødevarer med tre forsøg: emballagetest med
   vejning og procentregning, plastsortering ved flyde-synke i vand og mættet
   saltvand, og hjemmelavet bioplast af kartoffelmel. Kortet ligger på forsiden
   med mærkatet Feature.
-- **Elevark og vejledning bygges af `claude/byg_feature_plastik.py`.**
-  Elevarket ligger åbent i `materiale/`; vejledningen ligger i den nye mappe
+- **Ungeark og vejledning bygges af `claude/byg_feature_plastik.py`.**
+  Ungearket ligger åbent i `materiale/`; vejledningen ligger i den nye mappe
   `vejledning/`, som er udelukket fra deploy — den hedder ikke facit, for det er
-  den ikke, men den indeholder forventede resultater og hører til læreren.
-  Rammen er **44 elever på tre hold** (15, 15 og 14), ét hold om dagen, fire
+  den ikke, men den indeholder forventede resultater og hører til den voksne.
+  Rammen er **44 unger på tre hold** (15, 15 og 14), ét hold om dagen, fire
   grupper pr. dag — i alt 12 grupper. Indkøbslisten regnes ud fra det, og
   densitetstabellen kontrolleres mod massefylderne: scriptet nægter at skrive
   filerne, hvis fx PS står som flydende i vand.
@@ -61,6 +61,12 @@ moduler og lektier ligger i `facit/` som PDF.
   Og `procesdiagram()` vælger nu tekstfarve efter feltets lyshed — pausefeltet
   havde hvid tekst på lys grå og kunne ikke læses.
 - **`claude/tjek.py` kender serien `laerer`** i facit-mappens navnemønster.
+- **Ordlyden rettet i hele feature-forløbet:** "Naturfagsfestival" hedder nu
+  **Naturfagsuge 2026** (forside, side, ungeark, vejledning), der står **unger**
+  og ikke elever, og **læreren** er skiftet ud med **den voksne** i rette
+  bøjninger — vejledningen hedder "Vejledning til den voksne". Elevarket er
+  omdøbt til `materiale/ungeark-plastik-og-foedevarer.pdf`, og begge PDF'er er
+  gengivet på ny.
 
 ## Rettet 16. september 2026
 
