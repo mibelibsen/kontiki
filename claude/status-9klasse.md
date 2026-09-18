@@ -61,6 +61,20 @@ moduler og lektier ligger i `facit/` som PDF.
   Og `procesdiagram()` vælger nu tekstfarve efter feltets lyshed — pausefeltet
   havde hvid tekst på lys grå og kunne ikke læses.
 - **`claude/tjek.py` kender serien `laerer`** i facit-mappens navnemønster.
+- **Ingen klokkeslæt i det, ungerne ser.** Tid og pauser styres på dagen, så
+  sitets side og ungearket har programmet som nummererede trin uden tider, og
+  "urørt i to timer" er skiftet til "til de vejes igen". Vejledningen til den
+  voksne beholder programmet minut for minut — `byg_feature_plastik.py` bygger
+  begge varianter af samme `PROGRAM`, så de ikke kan komme til at sige noget
+  forskelligt om rækkefølgen.
+- **Forsidens felt er kortet ned** til "Naturfagsuge 2026 · Plast og fødevarer –
+  værksted".
+- **Vejledningen findes nu også som Word-fil.** `claude/byg_vejledning_docx.py`
+  læser den samme HTML, som PDF'en gengives fra, og bygger
+  `vejledning/vejledning-plastik-og-foedevarer.docx` ud af overskrifter, afsnit,
+  tabeller og procesdiagrammet (gengivet som PNG). Ingen tekst skrives af i
+  hånden, så Word-filen og PDF'en kan ikke drive fra hinanden. Mappen er fortsat
+  udelukket i `.vercelignore`.
 - **Ordlyden rettet i hele feature-forløbet:** "Naturfagsfestival" hedder nu
   **Naturfagsuge 2026** (forside, side, ungeark, vejledning), der står **unger**
   og ikke elever, og **læreren** er skiftet ud med **den voksne** i rette

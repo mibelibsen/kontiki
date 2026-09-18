@@ -62,8 +62,8 @@ ROLLER = [
  ('Skriver', 'Skriver alle tal ind i skemaet med det samme — ikke bagefter.'),
  ('Materialemester', 'Henter og rydder op, og holder styr på, at prøverne står, '
   'hvor de skal.'),
- ('Tidsholder', 'Holder øje med klokken og siger til fem minutter før hver '
-  'deadline.'),
+ ('Tidsholder', 'Holder øje med, at gruppen kommer videre, og siger til, '
+  'når der er lidt tid igen til et punkt.'),
 ]
 assert len(ROLLER) == PR_GRUPPE  # én rolle pr. plads i en fuld gruppe
 
@@ -146,8 +146,20 @@ FORVENTET = [
 ]
 
 # ---------------------------------------------------------------- figurer
+# Klokkeslættene hører til den voksne. Ungerne og sitets side får samme
+# rækkefølge uden tider — vi ved ikke på forhånd, hvor længe hvert element
+# tager, og tid og pauser styres på dagen.
 program_fig = FG.procesdiagram(
     [(f'{a} – {b} · {t}', u, g) for a, b, t, u, g in PROGRAM],
+    W=660, farver=FARVER,
+    legende=[('Fælles', 'faelles'), ('Forsøg i grupper', 'forsog')])
+UDEN_VARIGHED = {'Madprøverne vejes og pakkes ind på fem måder. De skal stå '
+                 'urørt i to timer.':
+                 'Madprøverne vejes og pakkes ind på fem måder. De står urørt, '
+                 'til de vejes igen.'}
+assert set(UDEN_VARIGHED) <= {u for _, _, _, u, _ in PROGRAM}
+program_fig_uden_tid = FG.procesdiagram(
+    [(t, UDEN_VARIGHED.get(u, u), g) for _, _, t, u, g in PROGRAM],
     W=660, farver=FARVER,
     legende=[('Fælles', 'faelles'), ('Forsøg i grupper', 'forsog')])
 graf_fig = FG.tomt_soejlegitter(
@@ -214,6 +226,10 @@ def tabel(hoved, raekker, klasser=None):
 PROGRAMTABEL = tabel(
     ['Tid', 'Modul', 'Hvad der sker'],
     [(f'{a} – {b}', f'<b>{html.escape(t)}</b>', html.escape(u)) for a, b, t, u, _ in PROGRAM])
+PROGRAMTABEL_UDEN_TID = tabel(
+    ['Nr.', 'Modul', 'Hvad der sker'],
+    [(str(i), f'<b>{html.escape(t)}</b>', html.escape(UDEN_VARIGHED.get(u, u)))
+     for i, (_, _, t, u, _) in enumerate(PROGRAM, 1)], ['tal', '', ''])
 
 # =========================================================== 1 · sitets side
 KROP_SITE = f'''<section class="hero"><span class="pill">Feature · Naturfagsuge 2026</span>
@@ -225,7 +241,7 @@ måledata, og et dilemma til sidst, som ingen kan svare på uden tallene.</p>
 <a class="btnlink" href="materiale/ungeark-plastik-og-foedevarer.pdf">Hent ungearket som PDF</a>
 <a class="btnlink ghost" href="index.html">Fagoversigt</a></section>
 
-<div class="figur">{program_fig}</div>
+<div class="figur">{program_fig_uden_tid}</div>
 
 <h2 class="sec">Dagens spørgsmål</h2>
 <div class="blok"><h3>Hvornår er plast om maden det klogeste valg?</h3>
@@ -237,7 +253,7 @@ hver gruppe svare — med deres egne måletal i hånden, ikke med en mavefornemm
 <h2 class="sec">De tre forsøg</h2>
 <div class="blok gron"><h3>1 · Emballagetesten</h3>
 <p>Fem ens stykker agurk vejes, pakkes ind på fem forskellige måder og vejes igen
-to timer senere. Det, der er forsvundet, er vand. Vægttabet regnes om til
+senere på dagen. Det, der er forsvundet, er vand. Vægttabet regnes om til
 procent, så stykker med forskellig startvægt kan sammenlignes, og tegnes som
 søjlediagram.</p></div>
 <div class="blok gron"><h3>2 · Hvilken plast er det?</h3>
@@ -251,7 +267,7 @@ støbes tyndt ud og tørrer til en film. To hold med forskellig mængde glycerin
 viser, at plast ikke er ét materiale, men noget man kan skrue på.</p></div>
 
 <h2 class="sec">Programmet</h2>
-{PROGRAMTABEL}
+{PROGRAMTABEL_UDEN_TID}
 
 <h2 class="sec">Roller i gruppen</h2>
 <p class="mat">Fire roller, så alle i gruppen har noget at gøre hele tiden.
@@ -297,7 +313,7 @@ et tal, man husker forkert, er værdiløst.</p>
 <p>1. Skær fem stykker agurk, der er så ens som muligt. 2. Vej hvert stykke, og
 skriv vægten i skemaet <b>før</b> I pakker det ind. 3. Pak hvert stykke ind på
 sin måde. 4. Mærk prøverne med gruppe og indpakning. 5. Stil dem sammen på det
-sted, den voksne viser — og rør dem ikke i to timer.</p></div>
+sted, den voksne viser — og rør dem ikke, før I skal veje igen. Den voksne siger til.</p></div>
 
 <div class="blok"><h3>Vores hypotese</h3>
 <p>Vi tror, at <span class="skriv"></span> holder maden bedst, fordi
