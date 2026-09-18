@@ -46,12 +46,17 @@ moduler og lektier ligger i `facit/` som PDF.
   vejning og procentregning, plastsortering ved flyde-synke i vand og mættet
   saltvand, og hjemmelavet bioplast af kartoffelmel. Kortet ligger på forsiden
   med mærkatet Feature.
-- **Elevark og lærervejledning bygges af `claude/byg_feature_plastik.py`.**
-  Elevarket ligger åbent i `materiale/`; lærervejledningen med indkøbsliste og
-  forventede resultater ligger i `facit/`, som ikke udgives.
-  Indkøbslisten regnes ud fra 3 hold × 6 grupper, så mængderne ikke kan modsige
-  programmet, og densitetstabellen kontrolleres mod tallene: scriptet nægter at
-  skrive filerne, hvis fx PS står som flydende i vand.
+- **Elevark og vejledning bygges af `claude/byg_feature_plastik.py`.**
+  Elevarket ligger åbent i `materiale/`; vejledningen ligger i den nye mappe
+  `vejledning/`, som er udelukket fra deploy — den hedder ikke facit, for det er
+  den ikke, men den indeholder forventede resultater og hører til læreren.
+  Rammen er **44 elever på tre hold** (15, 15 og 14), ét hold om dagen, fire
+  grupper pr. dag — i alt 12 grupper. Indkøbslisten regnes ud fra det, og
+  densitetstabellen kontrolleres mod massefylderne: scriptet nægter at skrive
+  filerne, hvis fx PS står som flydende i vand.
+- **Fejl fanget i indkøbslisten:** saltet stod som 400 g *pr. gruppe* og gav
+  4,8 kg. Saltvandet er én liter **pr. dag**, ikke pr. gruppe. Listen har nu en
+  egen tabel over det, der hører til dagen — 1.080 g salt i alt.
 - **Nyt i figurbiblioteket:** `tomt_soejlegitter()` til at tegne søjler i hånden.
   Og `procesdiagram()` vælger nu tekstfarve efter feltets lyshed — pausefeltet
   havde hvid tekst på lys grå og kunne ikke læses.

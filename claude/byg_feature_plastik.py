@@ -16,15 +16,23 @@ import figurer as FG
 SCRATCH = sys.argv[1] if len(sys.argv) > 1 else '.'
 
 # ------------------------------------------------------------------ rammer
-HOLD = 3                     # ét blandet hold pr. dag
-GRUPPER = 6                  # grupper pr. hold
-PR_GRUPPE = 4                # unger pr. gruppe
+# To klasser, 44 elever i alt, fordelt paa tre hold der kommer hver sin dag.
+ELEVER = 44
+HOLD = 3
+PR_GRUPPE = 4                # fire roller, altsaa fire i en fuld gruppe
 DAGE = [('Onsdag', '23. september'), ('Torsdag', '24. september'),
         ('Fredag', '25. september')]
 INDPAK = ['Husholdningsfilm', 'Frysepose med lynlås', 'Papirspose',
           'Alufolie', 'Ingen indpakning']
 assert len(DAGE) == HOLD
-ELEVER = HOLD * GRUPPER * PR_GRUPPE
+
+# holdene gores saa lige store som muligt: 15, 15, 14
+HOLDSTOERRELSER = [ELEVER // HOLD + (1 if i < ELEVER % HOLD else 0)
+                   for i in range(HOLD)]
+assert sum(HOLDSTOERRELSER) == ELEVER
+GRUPPER_PR_DAG = [math.ceil(n / PR_GRUPPE) for n in HOLDSTOERRELSER]
+TOTAL_GRUPPER = sum(GRUPPER_PR_DAG)
+GRUPPER = max(GRUPPER_PR_DAG)            # det største hold sætter udstyrsbehovet
 
 # ------------------------------------------------------------------ program
 PROGRAM = [
@@ -57,7 +65,7 @@ ROLLER = [
  ('Tidsholder', 'Holder øje med klokken og siger til fem minutter før hver '
   'deadline.'),
 ]
-assert len(ROLLER) == PR_GRUPPE
+assert len(ROLLER) == PR_GRUPPE  # én rolle pr. plads i en fuld gruppe
 
 # ------------------------------------------------- densiteter til forsøg 2
 DENSITET = [
@@ -91,17 +99,28 @@ FORBRUG = [
  ('Husholdningseddike', 5, 'ml', '1 tsk pr. gruppe'),
  ('Frysepose med lynlås', 1, 'stk', 'Én pr. gruppe'),
  ('Papirspose eller madpapir', 1, 'stk', 'Én pr. gruppe'),
- ('Salt', 400, 'g', 'Til mættet saltvand — cirka 360 g pr. liter vand'),
  ('Gennemsigtige glas eller bægre', 3, 'stk', 'Vand, saltvand og skylning'),
  ('Engangsbæger til bioplast', 2, 'stk', 'Ét til at blande, ét til at støbe'),
 ]
-TOTAL_GRUPPER = HOLD * GRUPPER
+# (vare, maengde pr. dag, enhed, note) — det der bruges pr. hold, ikke pr. gruppe
+DAGSFORBRUG = [
+ ('Salt til mættet saltvand', 360, 'g', 'Cirka 360 g pr. liter vand. '
+  'Én liter rækker til et hold og kan genbruges dagen efter'),
+ ('Vand til saltvandet', 1, 'liter', 'Lunkent, så saltet opløses'),
+]
 indkoeb = []
 for vare, pr_gruppe, enhed, note in FORBRUG:
     ialt = pr_gruppe * TOTAL_GRUPPER
     buffer = math.ceil(ialt * 1.2)
     indkoeb.append((vare, f'{FG._dk(pr_gruppe)} {enhed}',
                     f'{FG._dk(ialt)} {enhed}', f'{buffer} {enhed}', note))
+
+dagsindkoeb = []
+for vare, pr_dag, enhed, note in DAGSFORBRUG:
+    ialt = pr_dag * HOLD
+    dagsindkoeb.append((vare, f'{FG._dk(pr_dag)} {enhed}',
+                        f'{FG._dk(ialt)} {enhed}',
+                        f'{FG._dk(math.ceil(ialt * 1.2))} {enhed}', note))
 
 FAST = [
  ('Køkkenvægt med to decimaler', '3 stk', 'Grupperne kan dele. To decimaler er '
@@ -200,9 +219,9 @@ PROGRAMTABEL = tabel(
 KROP_SITE = f'''<section class="hero"><span class="pill">Feature · Naturfagsfestival</span>
 <h1>Plastik og fødevarer</h1>
 <p>Et forløb på 3½ time om det, der både er problemet og løsningen: plast om
-maden. Tre blandede hold fra 8. og 9. klasse kører det samme forløb — onsdag,
-torsdag og fredag. Tre forsøg, egne måledata, og et dilemma til sidst, som
-ingen kan svare på uden tallene.</p>
+maden. To klasser, {ELEVER} elever i alt, fordelt på tre blandede hold fra 8. og
+9. klasse — ét hold om dagen, onsdag, torsdag og fredag. Tre forsøg, egne
+måledata, og et dilemma til sidst, som ingen kan svare på uden tallene.</p>
 <a class="btnlink" href="materiale/elevark-plastik-og-foedevarer.pdf">Hent elevarket som PDF</a>
 <a class="btnlink ghost" href="index.html">Fagoversigt</a></section>
 
@@ -235,8 +254,9 @@ viser, at plast ikke er ét materiale, men noget man kan skrue på.</p></div>
 {PROGRAMTABEL}
 
 <h2 class="sec">Roller i gruppen</h2>
-<p class="mat">Fire roller, så alle fire i gruppen har noget at gøre hele tiden.
-Rollerne byttes ikke undervejs.</p>
+<p class="mat">Fire roller, så alle i gruppen har noget at gøre hele tiden.
+Rollerne byttes ikke undervejs. Er gruppen kun tre, tager den ene både
+tidsholder og materialemester.</p>
 {tabel(['Rolle', 'Opgave'], [(f'<b>{n}</b>', t) for n, t in ROLLER])}
 
 <div class="blok advar"><h3>Sikkerhed</h3>
@@ -348,9 +368,13 @@ open(os.path.join(SCRATCH, 'elevark-plastik.html'), 'w').write(
     side('Elevark · Plastik og fødevarer', 'Elevark', KROP_ELEV, fane=False))
 
 # ====================================================== 3 · lærervejledning
-dage_tabel = tabel(['Dag', 'Dato', 'Hold'],
-                   [(d, dato, f'Blandet hold {i} · 8. og 9. klasse')
-                    for i, (d, dato) in enumerate(DAGE, 1)])
+dage_tabel = tabel(
+    ['Dag', 'Dato', 'Hold', 'Elever', 'Grupper'],
+    [(d, dato, f'Hold {i} · blandet 8. og 9. klasse', f'{n} elever',
+      f'{g} grupper')
+     for i, ((d, dato), n, g) in enumerate(
+         zip(DAGE, HOLDSTOERRELSER, GRUPPER_PR_DAG), 1)],
+    ['', '', '', 'tal', 'tal'])
 indkoeb_tabel = tabel(
     ['Vare', 'Pr. gruppe', f'I alt til {TOTAL_GRUPPER} grupper', 'Køb', 'Note'],
     indkoeb, ['', 'tal', 'tal', 'tal', ''])
@@ -363,11 +387,12 @@ densitet_tabel = tabel(
 forventet_tabel = tabel(['Indpakning', 'Forventet resultat'],
                         [(f'<b>{a}</b>', b) for a, b in FORVENTET])
 
-KROP_LAERER = f'''<section class="hero"><span class="pill">Lærervejledning</span>
+KROP_LAERER = f'''<section class="hero"><span class="pill">Vejledning til læreren</span>
 <h1>Plastik og fødevarer</h1>
-<p>Forløb på 3½ time til naturfagsfestivalen. {HOLD} blandede hold fra 8. og
-9. klasse, {GRUPPER} grupper pr. hold, {PR_GRUPPE} unger pr. gruppe — i alt
-{ELEVER} unger over tre dage. Samme program alle tre dage.</p>
+<p>Forløb på 3½ time til naturfagsfestivalen. To klasser, {ELEVER} elever i alt,
+fordelt på {HOLD} blandede hold fra 8. og 9. klasse. Ét hold om dagen, samme
+program alle tre dage. Grupperne er på {PR_GRUPPE} — i alt {TOTAL_GRUPPER}
+grupper over de tre dage.</p>
 <button class="printbtn" onclick="window.print()">Print vejledningen</button></section>
 
 {dage_tabel}
@@ -399,10 +424,14 @@ solen eller i træk giver ustabile tal.</p>
 kan holdene ikke sammenligne.</p></div>
 
 <h2 class="sec">Indkøb til alle tre dage</h2>
-<p class="mat">Mængderne er regnet ud fra {GRUPPER} grupper pr. dag i
-{HOLD} dage, altså {TOTAL_GRUPPER} grupper. Kolonnen <b>Køb</b> er lagt 20 %
-oven i, fordi noget altid spildes.</p>
+<p class="mat">Mængderne er regnet ud fra de {TOTAL_GRUPPER} grupper, de
+{ELEVER} elever fordeler sig på over tre dage
+({' + '.join(str(g) for g in GRUPPER_PR_DAG)} grupper). Kolonnen <b>Køb</b> er
+lagt 20 % oven i, fordi noget altid spildes.</p>
 {indkoeb_tabel}
+<h3>Pr. dag — ikke pr. gruppe</h3>
+{tabel(['Vare', 'Pr. dag', f'I alt til {HOLD} dage', 'Køb', 'Note'],
+       dagsindkoeb, ['', 'tal', 'tal', 'tal', ''])}
 <h3>Udstyr, der ikke bruges op</h3>
 {fast_tabel}
 
@@ -461,11 +490,11 @@ og 3 sammenligne med dem, der var der før — og fredagens hold har tre datasæ
 konkludere på. Det er den bedste gratis gevinst ved at køre samme forløb tre
 dage i træk.</p></div>'''
 
-open(os.path.join(SCRATCH, 'laerervejledning-plastik.html'), 'w').write(
-    side('Lærervejledning · Plastik og fødevarer', 'Lærer', KROP_LAERER, fane=False))
+open(os.path.join(SCRATCH, 'vejledning-plastik.html'), 'w').write(
+    side('Vejledning · Plastik og fødevarer', 'Vejledning', KROP_LAERER, fane=False))
 
 print(f'skrevet:  feature-plastik-og-foedevarer.html')
 print(f'skrevet:  {SCRATCH}/elevark-plastik.html')
-print(f'skrevet:  {SCRATCH}/laerervejledning-plastik.html')
-print(f'rammer:   {HOLD} hold · {GRUPPER} grupper · {PR_GRUPPE} pr. gruppe '
-      f'= {ELEVER} unger · {TOTAL_GRUPPER} grupper i alt')
+print(f'skrevet:  {SCRATCH}/vejledning-plastik.html')
+print(f'rammer:   {ELEVER} elever på {HOLD} hold ({HOLDSTOERRELSER}) · '
+      f'{GRUPPER_PR_DAG} grupper pr. dag = {TOTAL_GRUPPER} grupper i alt')

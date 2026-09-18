@@ -74,7 +74,8 @@ def tjek_facit_skjult():
         return
     ignoreret = {l.strip().rstrip('/') for l in open('.vercelignore', encoding='utf-8')
                  if l.strip() and not l.startswith('#')}
-    for mappe in ('facit', 'kommende', 'lektieark', 'claude', 'tekster'):
+    for mappe in ('facit', 'kommende', 'lektieark', 'claude', 'tekster',
+                  'vejledning'):
         if os.path.isdir(mappe) and mappe not in ignoreret:
             fejl('facit skjult', f'mappen {mappe}/ er IKKE udelukket i .vercelignore')
     # ingen facit-filer i roden
@@ -82,8 +83,8 @@ def tjek_facit_skjult():
         if os.path.isfile(f):
             fejl('facit skjult', f'{f} ligger i roden og ville blive udgivet')
     if not FEJL:
-        ok('facit skjult', 'facit/, kommende/, lektieark/, tekster/ og claude/ '
-           'er udelukket fra deploy')
+        ok('facit skjult', 'facit/, kommende/, lektieark/, tekster/, vejledning/ '
+           'og claude/ er udelukket fra deploy')
 
 
 # ---------------------------------------------------------------------------
@@ -281,7 +282,7 @@ def tjek_aarsplan():
 def tjek_filnavne():
     for f in glob.glob('facit/*.pdf'):
         n = os.path.basename(f)
-        if not re.match(r'facit-(online|lektier|kahoot|laerer)-\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.pdf$', n):
+        if not re.match(r'facit-(online|lektier|kahoot)-\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.pdf$', n):
             advar('filnavne', f'facit/{n} følger ikke facit-<serie>-<ÅÅÅÅ-MM-DD>-<emne>.pdf')
     for f in glob.glob('lektieark/*.pdf'):
         n = os.path.basename(f)
