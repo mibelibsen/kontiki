@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""Bygger vejledningen til den voksne som Word-fil.
+"""Bygger en vejledning som Word-fil ud af den HTML, PDF'en gengives fra.
 
-Kilden er den samme HTML, som PDF'en gengives fra — filen som
-`claude/byg_feature_plastik.py` skriver. Ingen tekst skrives af i hånden her:
-scriptet læser overskrifter, afsnit, tabeller og figuren ud af HTML'en, så
-Word-filen og PDF'en aldrig kan komme til at sige noget forskelligt.
+Ingen tekst skrives af i hånden: scriptet læser overskrifter, afsnit, tabeller
+og figurer ud af HTML'en, så Word-filen og PDF'en ikke kan komme til at sige
+noget forskelligt.
 
-    python3 claude/byg_vejledning_docx.py <mappe-med-vejledning-plastik.html>
+    python3 claude/byg_vejledning_docx.py <kilde.html> <ud.docx>
 
-Figuren er en SVG i HTML'en. Den gengives som PNG med Chromium (Playwright) og
-lægges ind samme sted i dokumentet, som den står på siden.
+Figurerne er SVG i HTML'en. De gengives som PNG med Chromium (Playwright) og
+lægges ind samme sted i dokumentet, som de står på siden.
 """
+import json
+import math
 import os
 import re
 import subprocess
@@ -24,10 +25,9 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 from docx.shared import Cm, Pt, RGBColor
 
-SCRATCH = sys.argv[1] if len(sys.argv) > 1 else '.'
-KILDE = os.path.join(SCRATCH, 'vejledning-plastik.html')
+KILDE, UD = sys.argv[1], sys.argv[2]
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-UD = os.path.join(ROD, 'vejledning', 'vejledning-plastik-og-foedevarer.docx')
+ARBEJDE = os.path.dirname(os.path.abspath(KILDE))
 
 SKRIFT = 'Calibri'
 INK = RGBColor(0x1A, 0x22, 0x33)
@@ -165,30 +165,46 @@ laeser.feed(html[html.index('<body'):])
 BLOKKE = laeser.blokke
 
 assert BLOKKE and BLOKKE[0][0] == 'h1', 'forventede en h1 først i vejledningen'
-assert sum(1 for s, _ in BLOKKE if s == 'tabel') == 7, 'forventede 7 tabeller'
-assert sum(1 for s, _ in BLOKKE if s == 'figur') == 1, 'forventede én figur'
+assert any(s == 'p' for s, _ in BLOKKE), 'fandt ingen brødtekst'
+_pill = re.search(r'class="pill">([^<]+)<', html)
+UNDERTITEL = _pill.group(1) if _pill else ''
 
 # =============================================================== 2 · figuren
 
-FIGUR = os.path.join(SCRATCH, 'vejledning-figur.png')
-svg = html[html.index('<svg'):html.index('</svg>') + 6]
-bredde_px, hoejde_px = (int(v) for v in
-                        re.search(r'viewBox="0 0 (\d+) (\d+)"', svg).groups())
-fast_bredde = svg.replace('width="100%"', f'width="{bredde_px}"', 1)
-open(os.path.join(SCRATCH, '_figur.html'), 'w', encoding='utf-8').write(
-    '<!doctype html><meta charset="utf-8">'
-    '<body style="margin:0;background:#fff">' + fast_bredde + '</body>')
-subprocess.run(['node', '-e', f'''
+SVGER = re.findall(r'<svg.*?</svg>', html, re.S)
+assert len(SVGER) == sum(1 for s, _ in BLOKKE if s == 'figur'), \
+    'parseren fandt ikke lige så mange figurer, som HTML-filen har'
+
+# Hver SVG gengives som PNG i tre gange opløsning, så stregerne holder i print.
+JOBS = []
+for nr, svg in enumerate(SVGER):
+    b, h = (float(v) for v in
+            re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg).groups())
+    fast = re.sub(r'width="100%"', f'width="{b:.0f}"', svg, count=1)
+    open(os.path.join(ARBEJDE, f'_figur{nr}.html'), 'w', encoding='utf-8').write(
+        '<!doctype html><meta charset="utf-8">'
+        '<body style="margin:0;background:#fff">' + fast + '</body>')
+    JOBS.append([nr, math.ceil(b), math.ceil(h)])
+
+subprocess.run(['node', '-e', f"""
 import('/opt/node22/lib/node_modules/playwright/index.mjs').then(async (m) => {{
+  const mappe = {json.dumps(os.path.abspath(ARBEJDE))};
   const b = await m.chromium.launch();
-  const p = await (await b.newContext({{deviceScaleFactor: 3}})).newPage();
-  await p.setViewportSize({{width: {bredde_px}, height: {hoejde_px}}});
-  await p.goto('file://{os.path.abspath(SCRATCH)}/_figur.html');
-  await p.waitForTimeout(200);
-  await p.screenshot({{path: '{FIGUR}'}});
+  const c = await b.newContext({{deviceScaleFactor: 3}});
+  for (const [nr, bredde, hoejde] of {json.dumps(JOBS)}) {{
+    const p = await c.newPage();
+    await p.setViewportSize({{width: bredde, height: hoejde}});
+    await p.goto('file://' + mappe + '/_figur' + nr + '.html');
+    await p.waitForTimeout(200);
+    await p.screenshot({{path: mappe + '/_vejl-figur' + nr + '.png'}});
+    await p.close();
+  }}
   await b.close();
-}});'''], check=True)
-assert os.path.getsize(FIGUR) > 5000, 'figuren blev ikke gengivet'
+}});"""], check=True)
+
+FIGUR_KOE = [os.path.join(ARBEJDE, f'_vejl-figur{nr}.png') for nr, _, _ in JOBS]
+for png in FIGUR_KOE:
+    assert os.path.getsize(png) > 2000, f'{png} blev ikke gengivet'
 
 # =============================================================== 3 · skriv docx
 
@@ -255,7 +271,7 @@ for slags, indhold in BLOKKE:
         skriv(p, indhold, storrelse=24, fed_alt=True)
         u = doc.add_paragraph()
         u.paragraph_format.space_after = Pt(14)
-        skriv(u, [('Vejledning til den voksne', False, False)],
+        skriv(u, [(UNDERTITEL, False, False)],
               storrelse=11, farve=ACCENT, fed_alt=True)
     elif slags in ('h2', 'h3'):
         p = doc.add_paragraph()
@@ -269,7 +285,7 @@ for slags, indhold in BLOKKE:
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p.paragraph_format.space_before = Pt(8)
-        p.add_run().add_picture(FIGUR, width=min(BRED, Cm(14)))
+        p.add_run().add_picture(FIGUR_KOE.pop(0), width=min(BRED, Cm(15)))
     elif slags == 'tabel':
         kolonner = len(indhold['hoved'])
         t = doc.add_table(rows=1, cols=kolonner)

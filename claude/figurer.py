@@ -1319,3 +1319,217 @@ def tomt_soejlegitter(kategorier, ymaks, ynavn='', titel='', trin=None,
                  f'transform="rotate(-90 14 {(YT + YB) / 2})">{ynavn}</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+# ============================================================================
+#  Tekniske rids til sløjd
+# ============================================================================
+# Et rids er en arbejdstegning: der tegnes i millimeter, og hvert mål regnes
+# ud af de samme tal, som tegningen bruger. Et mål kan derfor ikke komme til
+# at sige 45, mens stregen viser 48 — det er den samme variabel.
+
+TRAE, TRAE2, TRAE3, KANT = '#f0e0c4', '#e2cba2', '#d8bd91', '#9a7742'
+
+
+class Rids:
+    """Målsat teknisk tegning i millimeter.
+
+    Der regnes i mm med y opad. Klassen laver selv om til SVG med y nedad, så
+    figuren kan skrives med de mål, der står i styklisten.
+
+        r = Rids(0, 270, -40, 130, skala=1.6, titel='Set fra siden')
+        r.rekt(0, 0, 270, 18, TRAE)          # grundpladen
+        r.hul(45, -9, 6.5)                   # akselhul
+        r.maal_v(0, 270, -34, retning=-1)    # længdemål under tegningen
+        svg = r.svg()
+    """
+
+    def __init__(self, xmin, xmax, ymin, ymax, skala=1.6, titel='',
+                 margen=(30, 24, 26, 30), alt=''):
+        self.x0, self.x1, self.y0, self.y1 = xmin, xmax, ymin, ymax
+        self.s = skala
+        self.mv, self.mh, self.mt, self.mb = margen
+        self.titel, self.alt = titel, alt
+        self.d = []
+        self.W = self.mv + (xmax - xmin) * skala + self.mh
+        self.H = self.mt + (ymax - ymin) * skala + self.mb + (18 if titel else 0)
+        self._toptekst = 18 if titel else 0
+
+    # -- koordinater ------------------------------------------------------
+    def px(self, x):
+        return self.mv + (x - self.x0) * self.s
+
+    def py(self, y):
+        return self._toptekst + self.mt + (self.y1 - y) * self.s
+
+    # -- former -----------------------------------------------------------
+    def rekt(self, x, y, b, h, fyld=TRAE, kant=KANT, rx=0, opacitet=1):
+        """x, y er nederste venstre hjørne i mm."""
+        self.d.append(
+            f'<rect x="{self.px(x):.1f}" y="{self.py(y + h):.1f}" '
+            f'width="{b * self.s:.1f}" height="{h * self.s:.1f}" rx="{rx}" '
+            f'fill="{fyld}" fill-opacity="{opacitet}" stroke="{kant}" '
+            f'stroke-width="1.2"/>')
+
+    def poly(self, punkter, fyld=TRAE, kant=KANT, opacitet=1, stiplet=False):
+        p = ' '.join(f'{self.px(x):.1f},{self.py(y):.1f}' for x, y in punkter)
+        stil = ' stroke-dasharray="5 4"' if stiplet else ''
+        self.d.append(f'<polygon points="{p}" fill="{fyld}" '
+                      f'fill-opacity="{opacitet}" stroke="{kant}" '
+                      f'stroke-width="1.2"{stil}/>')
+
+    def skive(self, x, y, d, fyld=TRAE2, kant=KANT):
+        self.d.append(f'<circle cx="{self.px(x):.1f}" cy="{self.py(y):.1f}" '
+                      f'r="{d / 2 * self.s:.1f}" fill="{fyld}" stroke="{kant}" '
+                      f'stroke-width="1.2"/>')
+
+    def hul(self, x, y, d, farve=BLA, kryds=True):
+        """Hul med centerkryds — diameteren er hullets, ikke borets."""
+        r = d / 2 * self.s
+        cx, cy = self.px(x), self.py(y)
+        self.d.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r:.1f}" '
+                      f'fill="#fff" stroke="{farve}" stroke-width="1.3"/>')
+        if kryds:
+            k = r + 4
+            self.d.append(
+                f'<path d="M {cx - k:.1f} {cy:.1f} H {cx + k:.1f} M {cx:.1f} '
+                f'{cy - k:.1f} V {cy + k:.1f}" stroke="{farve}" '
+                f'stroke-width="0.8" stroke-dasharray="4 2"/>')
+
+    def pind(self, x, y, d, farve=ORA):
+        self.d.append(f'<circle cx="{self.px(x):.1f}" cy="{self.py(y):.1f}" '
+                      f'r="{d / 2 * self.s:.1f}" fill="{farve}" '
+                      f'stroke="{KANT}" stroke-width="1"/>')
+
+    def linje(self, x1, y1, x2, y2, farve=MUT, bredde=1, stiplet=False):
+        stil = ' stroke-dasharray="6 4"' if stiplet else ''
+        self.d.append(
+            f'<line x1="{self.px(x1):.1f}" y1="{self.py(y1):.1f}" '
+            f'x2="{self.px(x2):.1f}" y2="{self.py(y2):.1f}" stroke="{farve}" '
+            f'stroke-width="{bredde}"{stil} stroke-linecap="round"/>')
+
+    def bue(self, cx, cy, r, a1, a2, farve=MUT, stiplet=True):
+        """Cirkelbue fra vinkel a1 til a2 (grader, mod uret, 0 = mod højre)."""
+        p1 = (cx + r * math.cos(math.radians(a1)), cy + r * math.sin(math.radians(a1)))
+        p2 = (cx + r * math.cos(math.radians(a2)), cy + r * math.sin(math.radians(a2)))
+        stor = 1 if abs(a2 - a1) > 180 else 0
+        stil = ' stroke-dasharray="5 4"' if stiplet else ''
+        self.d.append(
+            f'<path d="M {self.px(p1[0]):.1f} {self.py(p1[1]):.1f} '
+            f'A {r * self.s:.1f} {r * self.s:.1f} 0 {stor} 0 '
+            f'{self.px(p2[0]):.1f} {self.py(p2[1]):.1f}" fill="none" '
+            f'stroke="{farve}" stroke-width="1.1"{stil}/>')
+
+    # -- mål --------------------------------------------------------------
+    def _pil(self, x, y, dx, dy):
+        n = math.hypot(dx, dy) or 1
+        dx, dy = dx / n * 6, dy / n * 6
+        vx, vy = -dy * 0.35, dx * 0.35
+        self.d.append(f'<path d="M {x:.1f} {y:.1f} L {x + dx + vx:.1f} '
+                      f'{y + dy + vy:.1f} L {x + dx - vx:.1f} {y + dy - vy:.1f} Z" '
+                      f'fill="{BLA}"/>')
+
+    def _maalstreg(self, ax, ay, bx, by, tekst, tx, ty, drej=0):
+        self.d.append(f'<line x1="{ax:.1f}" y1="{ay:.1f}" x2="{bx:.1f}" '
+                      f'y2="{by:.1f}" stroke="{BLA}" stroke-width="1"/>')
+        self._pil(ax, ay, bx - ax, by - ay)
+        self._pil(bx, by, ax - bx, ay - by)
+        d = f' transform="rotate({drej} {tx:.1f} {ty:.1f})"' if drej else ''
+        self.d.append(f'<text x="{tx:.1f}" y="{ty:.1f}" text-anchor="middle" '
+                      f'fill="{BLA}" font-size="10.5" font-weight="700"{d}>'
+                      f'{tekst}</text>')
+
+    def maal_v(self, x1, x2, y, tekst=None, hjaelp_fra=None):
+        """Vandret mål mellem x1 og x2, sat i højden y."""
+        tekst = tekst if tekst is not None else _dk(round(abs(x2 - x1), 1))
+        ay, by = self.py(y), self.py(y)
+        if hjaelp_fra is not None:
+            for x in (x1, x2):
+                self.d.append(f'<line x1="{self.px(x):.1f}" '
+                              f'y1="{self.py(hjaelp_fra):.1f}" x2="{self.px(x):.1f}" '
+                              f'y2="{ay + (3 if y < hjaelp_fra else -3):.1f}" '
+                              f'stroke="{LIN}" stroke-width="0.8"/>')
+        self._maalstreg(self.px(x1), ay, self.px(x2), by, tekst,
+                        (self.px(x1) + self.px(x2)) / 2, ay - 5)
+
+    def maal_l(self, y1, y2, x, tekst=None, hjaelp_fra=None):
+        """Lodret mål mellem y1 og y2, sat ved x."""
+        tekst = tekst if tekst is not None else _dk(round(abs(y2 - y1), 1))
+        ax = self.px(x)
+        if hjaelp_fra is not None:
+            for y in (y1, y2):
+                self.d.append(f'<line x1="{self.px(hjaelp_fra):.1f}" '
+                              f'y1="{self.py(y):.1f}" '
+                              f'x2="{ax + (3 if x < hjaelp_fra else -3):.1f}" '
+                              f'y2="{self.py(y):.1f}" stroke="{LIN}" '
+                              f'stroke-width="0.8"/>')
+        self._maalstreg(ax, self.py(y1), ax, self.py(y2), tekst,
+                        ax, (self.py(y1) + self.py(y2)) / 2 - 4, drej=-90)
+
+    def maal_skra(self, x1, y1, x2, y2, tekst=None, forskyd=0):
+        """Mål langs en skrå linje, forskudt vinkelret ud fra den."""
+        tekst = tekst if tekst is not None else _dk(round(math.hypot(x2 - x1, y2 - y1), 1))
+        dx, dy = x2 - x1, y2 - y1
+        n = math.hypot(dx, dy) or 1
+        fx, fy = -dy / n * forskyd, dx / n * forskyd
+        ax, ay = self.px(x1 + fx), self.py(y1 + fy)
+        bx, by = self.px(x2 + fx), self.py(y2 + fy)
+        self._maalstreg(ax, ay, bx, by, tekst, (ax + bx) / 2, (ay + by) / 2 - 6,
+                        drej=round(-math.degrees(math.atan2(dy, dx))))
+
+    def vinkel(self, cx, cy, r, a1, a2, tekst):
+        self.bue(cx, cy, r, a1, a2, farve=BLA, stiplet=False)
+        am = math.radians((a1 + a2) / 2)
+        self.d.append(
+            f'<text x="{self.px(cx + (r + 9) * math.cos(am)):.1f}" '
+            f'y="{self.py(cy + (r + 9) * math.sin(am)) + 4:.1f}" '
+            f'text-anchor="middle" fill="{BLA}" font-size="10.5" '
+            f'font-weight="700">{tekst}</text>')
+
+    # -- tekst ------------------------------------------------------------
+    def tekst(self, x, y, s, farve=INK, storrelse=10.5, anker='middle', fed=False):
+        v = ' font-weight="700"' if fed else ''
+        self.d.append(f'<text x="{self.px(x):.1f}" y="{self.py(y) + 4:.1f}" '
+                      f'text-anchor="{anker}" fill="{farve}" '
+                      f'font-size="{storrelse}"{v}>{s}</text>')
+
+    def note(self, x, y, tx, ty, s, farve=MUT):
+        """Tekst med henvisningslinje fra (x, y) til teksten ved (tx, ty)."""
+        self.linje(x, y, tx, ty, farve=LIN, bredde=1)
+        self.d.append(f'<circle cx="{self.px(x):.1f}" cy="{self.py(y):.1f}" '
+                      f'r="2.2" fill="{LIN}"/>')
+        anker = 'start' if tx >= x else 'end'
+        dx = 5 if tx >= x else -5
+        self.d.append(f'<text x="{self.px(tx) + dx:.1f}" y="{self.py(ty) + 4:.1f}" '
+                      f'text-anchor="{anker}" fill="{farve}" font-size="10.5">'
+                      f'{s}</text>')
+
+    def maerke(self, x, y, bogstav, farve=None):
+        """Lille bogstavmærke på en del — forklares i figurteksten."""
+        farve = farve or INK
+        self.d.append(f'<circle cx="{self.px(x):.1f}" cy="{self.py(y):.1f}" '
+                      f'r="9" fill="#fff" stroke="{farve}" stroke-width="1.4"/>')
+        self.d.append(f'<text x="{self.px(x):.1f}" y="{self.py(y) + 4:.1f}" '
+                      f'text-anchor="middle" fill="{farve}" font-size="11.5" '
+                      f'font-weight="700">{bogstav}</text>')
+
+    # -- færdig SVG -------------------------------------------------------
+    def svg(self):
+        alt = self.alt or self.titel or 'Arbejdstegning'
+        ud = [f'<svg viewBox="0 0 {self.W:.0f} {self.H:.0f}" width="100%" '
+              f'style="max-width:{self.W:.0f}px" xmlns="http://www.w3.org/2000/svg" '
+              f'role="img" aria-label="{alt}" {FONT}>']
+        if self.titel:
+            ud.append(f'<text x="2" y="12" fill="{INK}" font-size="12" '
+                      f'font-weight="700">{self.titel}</text>')
+        ud += self.d
+        ud.append('</svg>')
+        return ''.join(ud)
+
+
+def drejet(cx, cy, punkter, grader):
+    """Drejer (langs, tvaers)-punkter om (cx, cy) — bruges til kastearmen."""
+    a = math.radians(grader)
+    c, s = math.cos(a), math.sin(a)
+    return [(cx + langs * c - tvaers * s, cy + langs * s + tvaers * c)
+            for langs, tvaers in punkter]

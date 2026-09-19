@@ -39,6 +39,27 @@ moduler og lektier ligger i `facit/` som PDF.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
 
+## Rettet 19. september 2026
+
+- **Sløjdopskrift på en katapult: `katapult.html`.** Katapult på fire hjul med
+  kastearm, elastik og en udløser, der hives bagud. Bygget af
+  `claude/byg_katapult.py`, hvor hele mekanikken er ét sæt tal i `M`: styklisten,
+  tegningerne og teksten regnes ud af de samme mål.
+- **Scriptet nægter at skrive filerne, hvis mekanikken ikke hænger sammen.**
+  Der er asserts på, at stoppinden standser armen ved 45° (den skal sidde
+  forskudt fra 45°-linjen, fordi den rammer armens *overside*, ikke dens
+  midterlinje), at elastikken strækkes nok, at den ikke skurer mod stoppinden,
+  at halen ikke lander på udløserstangen, og at hullerne ligger inde i træet.
+  Stoppindens placering blev regnet forkert i første forsøg — armen ville være
+  standset ved 32°, og kuglen var gået opad.
+- **Nyt i figurbiblioteket: `Rids`.** En målsat teknisk tegning i millimeter med
+  `rekt`, `poly`, `hul`, `pind`, `skive`, `bue`, `maal_v`, `maal_l`,
+  `maal_skra`, `vinkel`, `note` og `maerke`. Målene tegnes af de samme tal som
+  delene, så et mål ikke kan komme til at sige noget andet end stregen.
+- **`claude/byg_vejledning_docx.py` er gjort generel.** Den tager nu kilde og
+  udfil som argumenter og gengiver alle figurer i dokumentet, ikke kun den
+  første. Både plastik- og katapultvejledningen bygges af den.
+
 ## Rettet 18. september 2026
 
 - **Feature til Naturfagsuge 2026: `feature-plastik-og-foedevarer.html`.**
