@@ -39,6 +39,28 @@ moduler og lektier ligger i `facit/` som PDF.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
 
+## Rettet 21. september 2026
+
+- **KontikAir: `kontikair.html` med tre papirflyvere.** Pilen (længde),
+  Svæveren (svævetid) og Bumleren (loops, foldet af et ark på tværs). Hver har
+  en A4-skabelon med foldelinjerne trykt på, og en vejledning trin for trin.
+- **`claude/byg_kontikair.py` folder papiret i stedet for at tegne det.**
+  Papiret er en polygon; hver fold klipper polygonen i to, spejler klappen i
+  foldelinjen og gør resten til den nye silhuet. Foldene defineres af tre
+  primitiver — kant på linje (vinklens halveringslinje), punkt på punkt
+  (midtnormalen) og parallel — og scriptet tjekker, at en klap, der skal foldes
+  indad, faktisk lander inde på papiret. Både skabelonernes foldelinjer og
+  trintegningerne kommer af de samme beregninger.
+- **Alle folder går bagud.** Det er ikke kosmetik: derfor bliver ingen
+  foldelinje dækket af en klap undervejs, og derfor kan *hver eneste* fold —
+  også vingefolderne, der laves efter at flyveren er foldet sammen — trykkes
+  på det flade ark. Den trykte side ender udvendigt på den færdige flyver.
+- **`vercel.json` er ny** med én rewrite, så `/kontikair` virker uden `.html`.
+  Interne links bruger stadig `.html`, så `claude/tjek.py` kan følge dem.
+- Skabelonerne gengives som PDF med sidestørrelse sat i millimeter, og
+  målt efter bagefter: 210,2 × 297,3 mm (Bumleren på tværs). Der står på arket,
+  at det skal printes i 100 %.
+
 ## Rettet 19. september 2026
 
 - **Sløjdopskrift på en katapult: `katapult.html`.** Katapult på fire hjul med
