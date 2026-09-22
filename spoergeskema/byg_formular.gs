@@ -17,8 +17,9 @@
  *        - linket med det forudfyldte felt, hvor der står NAVN — det sendes til Claude.
  *
  * Scriptet kan køres igen, når spørgsmålene er rettet: det tømmer skemaet og
- * bygger det forfra. Svar, der allerede er kommet ind, ligger i regnearket og
- * røres ikke.
+ * bygger det forfra, men beholder spørgsmålet Code, så det forudfyldte link
+ * (og QR-koderne) er det samme efter hver kørsel. Svar, der allerede er
+ * kommet ind, ligger i regnearket og røres ikke.
  *
  * HVILKE LINJER KOMMER MED: alle linjer med et spørgsmål, undtagen "Eksempel".
  * Vil I vælge ud, så lav en kolonne med overskriften "Med" og sæt et x i de
@@ -79,7 +80,14 @@ function bygSkema() {
 
   // --- skemaet -----------------------------------------------------------
   const form = FORM_ID ? FormApp.openById(FORM_ID) : FormApp.create(TITEL);
-  form.getItems().forEach(i => form.deleteItem(i));       // tøm, så det kan køres igen
+  // Tøm skemaet, så det kan køres igen — men behold spørgsmålet Code, hvis det
+  // findes. Ellers får Code et nyt nummer, og det forudfyldte link (og dermed
+  // QR-koderne på sitet) skulle rettes efter hver kørsel.
+  let code = null;
+  form.getItems().forEach(i => {
+    if (!code && i.getTitle() === 'Code' && i.getType() === FormApp.ItemType.TEXT) code = i.asTextItem();
+    else form.deleteItem(i);
+  });
   form.setTitle(TITEL).setDescription(BESKRIVELSE).setConfirmationMessage(TAK);
   form.setCollectEmail(false);
   form.setLimitOneResponsePerUser(false);
@@ -88,7 +96,9 @@ function bygSkema() {
   try { form.setRequireLogin(false); } catch (e) {}       // findes kun på skolekonti
 
   // 1) Code — udfyldes af linket, tæller svaret på den rigtige ung
-  const code = form.addTextItem().setTitle('Code').setHelpText('Bitte nicht ändern.').setRequired(true);
+  if (!code) code = form.addTextItem();
+  code.setTitle('Code').setHelpText('Bitte nicht ändern.').setRequired(true);
+  form.moveItem(code.getIndex(), 0);
 
   // 2) klassens spørgsmål
   linjer.forEach(l => tilfoej_(form, l));
