@@ -445,7 +445,7 @@ def skriv_side(unger):
     forslag_liste = liste_html() if FORSLAG_CSV else ''
     status = (f'{len(unger)} unger har fået en kode.' if unger
               else 'Koderne laves, når navnelisten er klar.')
-    krop = f'''<header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><span class="soon">Fysik</span></nav></div></header>
+    krop = f'''<header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header>
 <main>
 <section class="hero"><span class="pill">Tysk · 9. klasse</span>
 <h1>Ung i Tyskland</h1>
