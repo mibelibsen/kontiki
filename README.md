@@ -71,6 +71,7 @@ Detaljer i [`claude/opsaetning.md`](claude/opsaetning.md).
 | `matematik.html` | Fagforside, kort til alle matematiksider |
 | `samfundsfag.html` | Fagside — **placeholder**, afventer årsplan |
 | `tysk.html` | Fagside — kort til projektet, årsplan afventer |
+| `algoritme.html` | *Reklame-algoritmen*: selvstændigt program på `/algoritme`, uden kort på forsiden og uden links til resten. QR-kode i `materiale/qr-algoritme.*` |
 | `tysk-spoergeskema.html` | Projektet *Ung i Tyskland*: spørgeskema med personlige QR-koder. Bygges af `claude/byg_spoergeskema.py` |
 | `aarsplan-matematik.html` | Årsplan 2026/27, uge 33 → uge 6 + repetition |
 | `aarsplan-matematik-2026-27.xlsx` | Årsplanen som download |
@@ -346,6 +347,8 @@ ved siden af. De findes med `list_triggers`.
 | [`claude/lektieplan.md`](claude/lektieplan.md) | Hvilken lektie hører til hvilken uge, og hvordan de udgives |
 | [`claude/tjek.py`](claude/tjek.py) | Tjekket der køres før hvert push |
 | [`claude/figurer.py`](claude/figurer.py) | Figurbiblioteket |
+| [`claude/qr.py`](claude/qr.py) | QR-koder i ren Python |
+| [`claude/byg_qr.py`](claude/byg_qr.py) | QR-kode til en adresse som SVG, PNG og A4-ark |
 | [`claude/opsaetning.md`](claude/opsaetning.md) | Hvordan Vercel og GitHub hænger sammen |
 
 ## Det der mangler

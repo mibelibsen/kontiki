@@ -58,6 +58,14 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 
 ## Rettet 22. september 2026
 
+- **Reklame-algoritmen: `algoritme.html` på `/algoritme`.** Brugerens egen
+  fil, lagt op uændret som selvstændigt program: intet kort på forsiden, ingen
+  links til resten af sitet, rewrite i `vercel.json`. Siden henter skrifttyper
+  fra Google Fonts, hvilket tjekket tillader (forbuddet gælder sitets rod).
+  Undtaget i figurtjekket, fordi pointstakken tegnes med div'er.
+  QR-kode til adressen i `materiale/qr-algoritme.svg/.png/.pdf`, bygget af det
+  nye `claude/byg_qr.py`.
+
 - **Spørgeskema med personlige QR-koder: `tysk-spoergeskema.html`.** Ét
   Google-spørgeskema, ens for alle, med et forudfyldt felt `Code`. Hver ung har
   sin egen adresse `/u/<kode>` på sitet, som `vercel.json` sender videre til

@@ -157,7 +157,10 @@ UDEN_KRAV = {'index.html', 'matematik.html', 'samfundsfag.html', 'tysk.html',
              'aarsplan-matematik.html',
              # oversigt over PDF'er: hvert kort viser tekstens forside som
              # billede, saa der er noget at se paa uden en tegnet figur
-             'samfundsfag-tekster.html'}
+             'samfundsfag-tekster.html',
+             # selvstaendigt program (reklame-algoritmen) uden links til resten
+             # af sitet; pointstakken tegnes med div'er, ikke svg
+             'algoritme.html'}
 
 
 def tjek_figurer():
