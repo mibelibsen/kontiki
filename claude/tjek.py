@@ -75,7 +75,7 @@ def tjek_facit_skjult():
     ignoreret = {l.strip().rstrip('/') for l in open('.vercelignore', encoding='utf-8')
                  if l.strip() and not l.startswith('#')}
     for mappe in ('facit', 'kommende', 'lektieark', 'claude', 'tekster',
-                  'vejledning'):
+                  'vejledning', 'spoergeskema'):
         if os.path.isdir(mappe) and mappe not in ignoreret:
             fejl('facit skjult', f'mappen {mappe}/ er IKKE udelukket i .vercelignore')
     # ingen facit-filer i roden
@@ -83,8 +83,8 @@ def tjek_facit_skjult():
         if os.path.isfile(f):
             fejl('facit skjult', f'{f} ligger i roden og ville blive udgivet')
     if not FEJL:
-        ok('facit skjult', 'facit/, kommende/, lektieark/, tekster/, vejledning/ '
-           'og claude/ er udelukket fra deploy')
+        ok('facit skjult', 'facit/, kommende/, lektieark/, tekster/, vejledning/, '
+           'spoergeskema/ og claude/ er udelukket fra deploy')
 
 
 # ---------------------------------------------------------------------------

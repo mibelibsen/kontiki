@@ -1533,3 +1533,55 @@ def drejet(cx, cy, punkter, grader):
     c, s = math.cos(a), math.sin(a)
     return [(cx + langs * c - tvaers * s, cy + langs * s + tvaers * c)
             for langs, tvaers in punkter]
+
+
+# ------------------------------------------------------------------ soejler
+def soejler(vals, kats, titel='', ynavn='', W=560, H=300, farve=None):
+    """Almindeligt soejlediagram med lineaer y-akse og tallet oven paa hver
+    soejle. Akseskridtet vaelges, saa der er 4-8 vandrette linjer, og alle
+    hoejder regnes som v/aksemaks."""
+    X0, X1, YT, YB = 44, W - 14, 36, H - 40
+    ph, pb = YB - YT, X1 - X0
+    n = len(vals)
+    maks = max(vals)
+    trin = 1
+    for t in (1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000):
+        if 4 <= math.ceil(maks / t) <= 8:
+            trin = t
+            break
+    top = math.ceil(maks / trin) * trin
+    bb = pb / n * 0.62
+    mid = [X0 + pb / n * (i + .5) for i in range(n)]
+
+    def yy(v):
+        return YB - v / top * ph
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Søjlediagram '
+         f'med {n} søjler." {FONT}>',
+         f'<rect x="0" y="0" width="{W}" height="{H}" fill="#fff" stroke="{LIN}"/>']
+    if titel:
+        s.append(f'<text x="{W / 2}" y="20" text-anchor="middle" fill="{INK}" '
+                 f'font-size="13" font-weight="bold">{titel}</text>')
+    t = 0
+    while t <= top:
+        y = yy(t)
+        s.append(f'<line x1="{X0}" y1="{y:.1f}" x2="{X1}" y2="{y:.1f}" '
+                 f'stroke="{LIN}" stroke-dasharray="2 3"/>')
+        s.append(f'<text x="{X0 - 6}" y="{y + 4:.1f}" text-anchor="end" '
+                 f'fill="{MUT}">{t}</text>')
+        t += trin
+    for i, v in enumerate(vals):
+        y = yy(v)
+        s.append(f'<rect x="{mid[i] - bb / 2:.1f}" y="{y:.1f}" width="{bb:.1f}" '
+                 f'height="{YB - y:.1f}" rx="2" fill="{farve or BLA}"/>')
+        s.append(f'<text x="{mid[i]:.1f}" y="{y - 5:.1f}" text-anchor="middle" '
+                 f'fill="{INK}" font-weight="700">{_dk(v)}</text>')
+        s.append(f'<text x="{mid[i]:.1f}" y="{YB + 16}" text-anchor="middle" '
+                 f'fill="{MUT}">{kats[i]}</text>')
+    s.append(f'<line x1="{X0}" y1="{YB}" x2="{X1}" y2="{YB}" stroke="{INK}"/>')
+    s.append(f'<line x1="{X0}" y1="{YT}" x2="{X0}" y2="{YB}" stroke="{INK}"/>')
+    if ynavn:
+        s.append(f'<text x="12" y="{(YT + YB) / 2}" text-anchor="middle" fill="{MUT}" '
+                 f'transform="rotate(-90 12 {(YT + YB) / 2})">{ynavn}</text>')
+    s.append('</svg>')
+    return ''.join(s)

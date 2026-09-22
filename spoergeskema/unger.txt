@@ -1,0 +1,4 @@
+# Ét navn pr. linje. Navnet står på plakaten, og koden i adressen laves af det:
+# "Anna K." bliver til www.mibelibsen.space/u/anna-k
+# To unger med samme fornavn: skriv efternavnets forbogstav på begge.
+# Linjer med # er kommentarer.

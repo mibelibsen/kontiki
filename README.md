@@ -70,7 +70,8 @@ Detaljer i [`claude/opsaetning.md`](claude/opsaetning.md).
 | `index.html` | Forside med fagoversigt |
 | `matematik.html` | Fagforside, kort til alle matematiksider |
 | `samfundsfag.html` | Fagside — **placeholder**, afventer årsplan |
-| `tysk.html` | Fagside — **placeholder**, afventer årsplan |
+| `tysk.html` | Fagside — kort til projektet, årsplan afventer |
+| `tysk-spoergeskema.html` | Projektet *Ung i Tyskland*: spørgeskema med personlige QR-koder. Bygges af `claude/byg_spoergeskema.py` |
 | `aarsplan-matematik.html` | Årsplan 2026/27, uge 33 → uge 6 + repetition |
 | `aarsplan-matematik-2026-27.xlsx` | Årsplanen som download |
 | `statistik.html` | Interaktiv side: 4 moduler, quiz, Opgave A–D |
@@ -89,6 +90,8 @@ Udelukket i `.vercelignore`, så de findes ikke på sitet:
 | `kommende/` | Lektier der endnu ikke er givet |
 | `lektieark/` | Lektiearkene som PDF til uddeling, uden facit |
 | `claude/` | Arbejdslog og dokumentation |
+| `spoergeskema/` | Navneliste, links og QR-plakater til *Ung i Tyskland*. Navnene hører ikke på sitet |
+| `vejledning/` | Vejledninger til den voksne |
 
 `.vercelignore` er den eneste beskyttelse af facit. **Ret den ikke** uden at
 tænke over konsekvensen: en fil i roden er offentlig, også hvis intet linker til
@@ -212,6 +215,8 @@ svg = FG.boksplot(3, 5, 6, 9, 13, 'Talrækken 3, 5, 5, 6, 8, 9, 13')
 | `vaegt(a, b, c)` | Vægtstang i balance for `ax + b = c` |
 | `arealmodel(k, n)` | Rektangel der viser `k(x + n) = kx + kn` |
 | `afskaaret_akse(v1, v2, afskæring)` | To søjlediagrammer med samme tal: et afskåret og et fra nul |
+| `soejler(vals, kats, titel, ynavn)` | Almindeligt søjlediagram med tallet oven på hver søjle |
+| `procesdiagram(trin, farver, legende)` | Lodret proces: nummererede kasser med pil imellem |
 | `mini_cirkel()` · `mini_soejler()` · `mini_histogram()` · `mini_sumkurve()` | Små eksempler til oversigtskort |
 | `tom_talllinje` · `tomt_sumkurvegitter` · `tom_cirkel` | Tegnepladser til opgaveark |
 
@@ -224,6 +229,26 @@ Figuren sættes ind som:
 **Tegn aldrig en figur på øjemål.** Alle koordinater beregnes. To linjediagrammer
 på `manipulation.html` påstod at vise de samme seks tal og afveg 4,8 % i niveau,
 fordi de var tegnet i hånden.
+
+## Spørgeskemaet til Tyskland
+
+Projektet *Ung i Tyskland* er ét Google-spørgeskema, ens for alle unger, med
+et forudfyldt felt `Code`, der fortæller hvis QR-kode svaret kom fra. Hver ung
+har sin egen adresse på sitet, `/u/<kode>`, som `vercel.json` sender videre til
+spørgeskemaet med navnet i linket. Derfor kan plakaterne trykkes, før
+spørgeskemaet er færdigt, og skemaet kan skiftes uden nye plakater.
+
+```bash
+python3 claude/byg_spoergeskema.py
+```
+
+læser `spoergeskema/unger.txt` og `spoergeskema/opsaetning.json` og skriver
+redirects, siden, `unger-links.tsv` og PDF'erne med plakater (A4) og kort (A6).
+QR-koderne laves af `claude/qr.py` — ren Python, krydstjekket bit for bit mod
+biblioteket segno og læst tilbage med zxing-cpp (`python3 claude/qr.py`).
+PDF'er gengives med `node claude/html_til_pdf.mjs <html> <pdf>`.
+
+Trin for trin i Google, med links: [`vejledning/spoergeskema-tyskland.md`](vejledning/spoergeskema-tyskland.md).
 
 ## Sådan tester du
 
@@ -241,7 +266,7 @@ session. Hver kontrol svarer til en fejl, der rent faktisk er sket i projektet:
 | Kontrol | Fanger |
 |---|---|
 | Selvbærende sider | En side der henter CSS eller JS fra roden, eller mangler inline `<style>` |
-| Facit skjult | `facit/`, `kommende/`, `lektieark/` eller `claude/` udeladt af `.vercelignore`, eller en facit-fil i roden |
+| Facit skjult | `facit/`, `kommende/`, `lektieark/`, `spoergeskema/` eller `claude/` udeladt af `.vercelignore`, eller en facit-fil i roden |
 | Lektier uden multiple choice | `.opt`, `.bx` eller `.mk` i et lektieark |
 | Metodetekst | Manglende eller gammel besvarelsesformulering |
 | Links | Brudte interne links. Filer i `kommende/` måles fra roden, hvor de havner |
@@ -325,7 +350,9 @@ ved siden af. De findes med `list_triggers`.
 
 ## Det der mangler
 
-- **Årsplaner til samfundsfag og tysk.** Begge faner er placeholders.
+- **Årsplan til tysk.** Fanen har projektet *Ung i Tyskland*, men ingen årsplan.
+- **Navne og links til spørgeskemaet.** `spoergeskema/unger.txt` og
+  `opsaetning.json` er tomme, til den voksne har lavet formularerne.
 - **Åbne opgaver på `funktioner-og-ligninger.html`.** Siden har kun quiz, hvor
   de to andre har Opgave A–D.
 - **Lektier fra uge 37 og frem.** Der er lavet til og med uge 36. Aftalt at

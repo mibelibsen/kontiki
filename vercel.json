@@ -1,5 +1,15 @@
 {
   "rewrites": [
-    { "source": "/kontikair", "destination": "/kontikair.html" }
+    {
+      "source": "/kontikair",
+      "destination": "/kontikair.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/u/eksempel",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    }
   ]
 }

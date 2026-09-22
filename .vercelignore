@@ -22,3 +22,8 @@ tekster/
 # Vejledninger med forventede resultater. De hører til den voksne,
 # ikke til sitet.
 vejledning/
+
+# Spørgeskemaet til Tyskland: navneliste, links og QR-plakater med navne.
+# Plakaterne uddeles på print, og navnene hører ikke på sitet. Selve
+# redirects'ene (/u/<kode>) ligger i vercel.json og udgives.
+spoergeskema/
