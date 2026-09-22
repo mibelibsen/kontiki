@@ -70,6 +70,21 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   QR-kode til adressen i `materiale/qr-algoritme.svg/.png/.pdf`, bygget af det
   nye `claude/byg_qr.py`.
 
+- **Ungernes spørgsmål samles i et fælles ark, ikke en formular.** Arket
+  *Ung i Tyskland – jeres spørgsmål* er delt med alle med linket; kolonner
+  Navn · Deine Frage · Antworttyp · Antwortmöglichkeiten · Kommentar.
+  Projektsiden henter arket som CSV via `/gviz/tq?tqx=out:csv` (Google sender
+  CORS-header til sitets origin, ikke til `null`, så det kan kun testes live)
+  og viser hvert spørgsmål som et kort; eksempellinjen springes over.
+  Brugeren sætter selv rullemenuen på Antworttyp. Drev-adgangen kan ikke
+  uploade xlsx (afvises), så validering kan ikke lægges ind derfra.
+- **`spoergeskema/byg_formular.gs`**: Apps Script, der bygger Google-skemaet
+  af arket (Code først, typer efter Antworttyp, alder og køn sidst), kobler
+  svarene til fanen Svar, udgiver og skriver linkene i fanen Links. Køres af
+  brugeren ved en computer; scriptet er kun syntakstjekket, ikke kørt.
+- **Nye Google Forms skal udgives** (knappen Udgiv), før andre kan åbne dem —
+  ellers "This document is not published". "Indsaml e-mailadresser" står som
+  standard til *Bekræftet* og tvinger login; skal slås fra.
 - **Spørgeskema med personlige QR-koder: `tysk-spoergeskema.html`.** Ét
   Google-spørgeskema, ens for alle, med et forudfyldt felt `Code`. Hver ung har
   sin egen adresse `/u/<kode>` på sitet, som `vercel.json` sender videre til
