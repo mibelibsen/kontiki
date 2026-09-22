@@ -23,19 +23,24 @@ moduler og lektier ligger i `facit/` som PDF.
 **Samfundsfag** har årsplan og en tekstside. **Tysk** har projektet *Ung i
 Tyskland* (`tysk-spoergeskema.html`) men ingen årsplan. **Fysik** findes ikke endnu.
 
-**Spørgeskemaet til Tyskland: 23 unger har fået koder og plakater**
-(`spoergeskema/qr-plakater-a4.pdf`, `qr-kort-a6.pdf`, sendt i Code 22.9.).
-Det mangler linkene til de to Google Forms (forslag + selve skemaet med `NAVN`
-i det forudfyldte felt) — indtil da fører alle koder til siden.
-**Oprettet i brugerens Google Drev via Drev-adgangen** (den kan lave dokumenter,
-regneark og tomme formularer, men ikke skrive spørgsmål i en formular):
+**Spørgeskemaet til Tyskland virker fra ende til anden (22.9.)**: 23 unger
+har koder og kort (`spoergeskema/qr-kort-a6.pdf`, A4-plakaterne findes også).
+`/u/<kode>` sender videre til det fælles Google Form med navnet i feltet
+`Code` (24 redirects i `vercel.json`, tjekket live). Skemaet er udgivet, uden
+e-mail-indsamling, og svarene lander i fanen `Svar` i regnearket. Siden
+`tysk-spoergeskema.html` viser ungernes spørgsmål fra arket live og siger nu,
+at koden kommer som et kort (A6).
+**Google-siden af sagen:**
 - regneark med fanen Unger og optælling:
   https://docs.google.com/spreadsheets/d/1QwwgmHeMVc-lsMEtmXtT4BobkF0HGyjVr9Twi1tCWbY/edit
 - ungernes spørgsmål skrives i et fælles ark (delt med alle med linket), som
   siden læser via gviz-CSV: https://docs.google.com/spreadsheets/d/1tV_rBMFwAtc8jQUXqP32TBOSEg52ZBQ05T-MIrfAK-Y/edit
+  Kolonnerne Antwort 1–5 til svarmuligheder laver brugeren selv.
   Forslagsformularen (1DfEjbE50…) er droppet og kan slettes.
-- Næste: når arket er fyldt, lav et Apps Script, der bygger spørgeskemaet
-  af arket (Code først, typer efter kolonnen Antworttyp, alder og køn sidst).
+- `spoergeskema/byg_formular.gs` bygger skemaet af arket (Apps Script i arket,
+  funktionen bygSkema). Brugeren kører det igen, når klassen har skrevet sine
+  spørgsmål; det beholder feltet Code, så linkene og koderne holder.
+- Test af et rigtigt svar er brugerens: send aldrig prøvesvar til skemaet.
 - spørgeskemaet (tomt): https://docs.google.com/forms/d/1_zEW7e1bvwL46TeywzPD9S3f8NzQ8CwDco62mWMWUgc/edit
 - teksterne til formularerne: https://docs.google.com/document/d/1h96ppA_vi6fnoye0KmNs5RWzKT5Zoh-YOCsrhBMM4TQ/edit
 Brugerens eget, tomme ark *Tysk spørgeskema* (18Ns9i35…) kan slettes.
