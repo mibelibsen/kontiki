@@ -22,7 +22,7 @@ HOLD = 3
 PR_GRUPPE = 4                # fire roller, altsaa fire i en fuld gruppe
 DAGE = [('Onsdag', '23. september'), ('Torsdag', '24. september'),
         ('Fredag', '25. september')]
-INDPAK = ['Husholdningsfilm', 'Frysepose med lynlås', 'Papirspose',
+INDPAK = ['Husholdningsfilm', 'Frysepose', 'Madpapir',
           'Alufolie', 'Ingen indpakning']
 assert len(DAGE) == HOLD
 
@@ -93,12 +93,12 @@ for kode, _, d, svar, _ in DENSITET:
 # ------------------------------------------------------------ indkøbsliste
 # (vare, mængde pr. gruppe, enhed, pakke, note)
 FORBRUG = [
- ('Agurk', 0.4, 'stk', 'Én agurk giver cirka 15 skiver på 1 cm'),
+ ('Franskbrød', 0.4, 'stk', 'Ét franskbrød giver cirka 15 skiver på 1 cm'),
  ('Kartoffelmel', 10, 'g', '1 spsk pr. gruppe'),
  ('Glycerin, 99 %', 5, 'ml', '1 tsk pr. gruppe · købes på apoteket'),
  ('Husholdningseddike', 5, 'ml', '1 tsk pr. gruppe'),
- ('Frysepose med lynlås', 1, 'stk', 'Én pr. gruppe'),
- ('Papirspose eller madpapir', 1, 'stk', 'Én pr. gruppe'),
+ ('Frysepose', 1, 'stk', 'Én pr. gruppe'),
+ ('Madpapir', 1, 'ark', 'Ét ark pr. gruppe — en rulle rækker til alle'),
  ('Gennemsigtige glas eller bægre', 3, 'stk', 'Vand, saltvand og skylning'),
  ('Engangsbæger til bioplast', 2, 'stk', 'Ét til at blande, ét til at støbe'),
 ]
@@ -139,10 +139,10 @@ FAST = [
 
 FORVENTET = [
  ('Ingen indpakning', 'Størst vægttab — ofte flere procent på to timer'),
- ('Papirspose', 'Næststørst. Papir lukker luft igennem'),
+ ('Madpapir', 'Næststørst. Papir lukker luft igennem'),
  ('Alufolie', 'Midt imellem, afhænger meget af, hvor tæt de har pakket'),
  ('Husholdningsfilm', 'Lille vægttab'),
- ('Frysepose med lynlås', 'Mindst vægttab'),
+ ('Frysepose', 'Mindst vægttab'),
 ]
 
 # ---------------------------------------------------------------- figurer
@@ -163,7 +163,7 @@ program_fig_uden_tid = FG.procesdiagram(
     W=660, farver=FARVER,
     legende=[('Fælles', 'faelles'), ('Forsøg i grupper', 'forsog')])
 graf_fig = FG.tomt_soejlegitter(
-    ['Film', 'Lynlås-|pose', 'Papirs-|pose', 'Alu-|folie', 'Ingen|indpakning'],
+    ['Film', 'Fryse-|pose', 'Mad-|papir', 'Alu-|folie', 'Ingen|indpakning'],
     10, 'Vægttab i procent', 'Tegn en søjle for hver indpakning')
 
 # ------------------------------------------------------------------- CSS
@@ -245,14 +245,14 @@ måledata, og et dilemma til sidst, som ingen kan svare på uden tallene.</p>
 
 <h2 class="sec">Dagens spørgsmål</h2>
 <div class="blok"><h3>Hvornår er plast om maden det klogeste valg?</h3>
-<p>Plast i naturen er noget skidt. Plast om en agurk kan være det, der gør, at
-agurken bliver spist i stedet for smidt ud. Begge ting er sande på samme tid, og
+<p>Plast i naturen er noget skidt. Plast om et brød kan være det, der gør, at
+brødet bliver spist i stedet for smidt ud. Begge ting er sande på samme tid, og
 det er derfor spørgsmålet er værd at bruge en dag på. I slutningen af dagen skal
 hver gruppe svare — med deres egne måletal i hånden, ikke med en mavefornemmelse.</p></div>
 
 <h2 class="sec">De tre forsøg</h2>
 <div class="blok gron"><h3>1 · Emballagetesten</h3>
-<p>Fem ens stykker agurk vejes, pakkes ind på fem forskellige måder og vejes igen
+<p>Fem ens skiver brød vejes, pakkes ind på fem forskellige måder og vejes igen
 senere på dagen. Det, der er forsvundet, er vand. Vægttabet regnes om til
 procent, så stykker med forskellig startvægt kan sammenlignes, og tegnes som
 søjlediagram.</p></div>
@@ -278,7 +278,7 @@ tidsholder og materialemester.</p>
 <div class="blok advar"><h3>Sikkerhed</h3>
 <p>Stivelsesmassen bliver over 90 grader varm og klistrer til huden — brug
 handsker, og rør kun i den med spatel. Sprit må aldrig stå på eller ved
-kogepladen. Og <b>ingenting fra forsøgene må spises</b>, heller ikke agurken.</p></div>'''
+kogepladen. Og <b>ingenting fra forsøgene må spises</b>, heller ikke brødet.</p></div>'''
 
 open('feature-plastik-og-foedevarer.html', 'w').write(
     side('Plastik og fødevarer · Naturfagsuge 2026', 'Feature', KROP_SITE))
@@ -310,7 +310,7 @@ et tal, man husker forkert, er værdiløst.</p>
 
 <h2 class="sec">Forsøg 1 · Emballagetesten</h2>
 <div class="blok"><h3>Sådan gør I</h3>
-<p>1. Skær fem stykker agurk, der er så ens som muligt. 2. Vej hvert stykke, og
+<p>1. Skær fem skiver brød, der er så ens som muligt. 2. Vej hvert stykke, og
 skriv vægten i skemaet <b>før</b> I pakker det ind. 3. Pak hvert stykke ind på
 sin måde. 4. Mærk prøverne med gruppe og indpakning. 5. Stil dem sammen på det
 sted, den voksne viser — og rør dem ikke, før I skal veje igen. Den voksne siger til.</p></div>
@@ -363,7 +363,7 @@ og lad den tørre. Mærk begge med gruppe og A eller B.</p></div>
 <p>Hold A føles: <span class="skriv" style="min-width:300px"></span></p>
 <p>Hold B føles: <span class="skriv" style="min-width:300px"></span></p>
 <p>Hvad gør glycerinen? <span class="skriv" style="min-width:380px"></span></p>
-<p>Kunne jeres bioplast pakke en agurk ind i en uge? Hvorfor, eller hvorfor ikke?
+<p>Kunne jeres bioplast pakke et brød ind i en uge? Hvorfor, eller hvorfor ikke?
 <span class="skriv" style="min-width:420px"></span></p></div>
 
 <h2 class="sec">Dilemmaet — gruppens svar</h2>
@@ -378,7 +378,7 @@ jeres eget forsøg.</p>
 
 <div class="blok advar"><h3>Husk</h3>
 <p>Handsker på ved kogepladen. Ingenting fra forsøgene må spises — heller ikke
-agurken.</p></div>'''
+brødet.</p></div>'''
 
 open(os.path.join(SCRATCH, 'ungeark-plastik.html'), 'w').write(
     side('Ungeark · Plastik og fødevarer', 'Ungeark', KROP_UNGE, fane=False))
@@ -432,8 +432,9 @@ for en aktivitet. Brug tid på det, også selvom det koster minutter.</p></div>
 <div class="blok"><p>Bland mættet saltvand: rør salt i lunkent vand, til der
 ligger salt på bunden, som ikke vil opløses. Cirka 360 g salt pr. liter. Lad det
 stå og køle af — én liter rækker til et hold.</p>
-<p>Skær ikke agurk på forhånd. Den skal skæres på dagen, ellers er vægttabet
-startet, før forsøget er.</p>
+<p>Skær ikke brød på forhånd. Det skal skæres på dagen, ellers er vægttabet
+startet, før forsøget er. Brug frisk franskbrød — tørt brød har ikke meget
+vand at miste, og så er der ingen forskel at se.</p>
 <p>Stil vægtene op på et bord, der ikke vipper, og væk fra vinduet. En vægt i
 solen eller i træk giver ustabile tal.</p>
 <p>Find det sted, prøverne skal stå i to timer. Samme sted alle tre dage, ellers
@@ -483,7 +484,7 @@ procent er det rigtige mål her — det er præcis den type spørgsmål, der kom
 til prøven.</p>
 <p><b>Ekstra til dem, der bliver færdige:</b> vej bioplasten, når den er tør, og
 regn ud hvor meget af massen der var vand. Eller lav en ekstra prøve med et
-stykke agurk i frysepose <i>med</i> et hul i og sammenlign.</p></div>
+skive brød i frysepose <i>med</i> et hul i og sammenlign.</p></div>
 
 <h2 class="sec">Sikkerhed</h2>
 <div class="blok advar"><p>Stivelsesmassen bliver over 90 grader varm, og den
@@ -492,7 +493,7 @@ spatel i gryden.</p>
 <p>Denatureret sprit er brandfarlig. Den skal stå i den anden ende af lokalet
 end kogepladen, og kun bruges, hvis I vælger den svære sortering.</p>
 <p>Intet fra forsøgene må spises. Sig det ved velkomsten, og sig det igen, når
-agurken kommer frem.</p>
+brødet kommer frem.</p>
 <p>Mærk alle prøver med gruppe og dag. Tre hold på tre dage betyder tre sæt
 prøver, der kan forveksles.</p></div>
 
