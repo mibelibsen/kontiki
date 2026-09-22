@@ -62,6 +62,11 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 
 ## Rettet 22. september 2026
 
+- **Plastik-forløbet: brød i stedet for agurk, "Frysepose" og "Madpapir".**
+  Rettet i `claude/byg_feature_plastik.py`; siden, ungearket (PDF) og
+  vejledningen (PDF + Word) er bygget om. Vejledningen minder om at bruge frisk
+  franskbrød, for tørt brød har ikke meget vand at miste.
+
 - **Reklame-algoritmen: `algoritme.html` på `/algoritme`.** Brugerens egen
   fil, lagt op uændret som selvstændigt program: intet kort på forsiden, ingen
   links til resten af sitet, rewrite i `vercel.json`. Siden henter skrifttyper
