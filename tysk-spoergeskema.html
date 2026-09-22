@@ -51,6 +51,12 @@ iframe.form{width:100%;height:900px;border:1px solid var(--line);border-radius:1
 .plakat .url{margin-top:12px;font-size:.74rem;border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--muted)}
 .plakat .url b{color:var(--ink);font-family:Consolas,monospace}
 .plakat .fod{font-size:.7rem;color:var(--muted);margin-top:8px}
+.liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:12px 0}
+.forslag{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+.forslag .hvem{font-weight:800;margin-bottom:6px}
+.forslag .felt{font-size:.92rem;margin:4px 0}
+.forslag .felt span{color:var(--muted);font-size:.8rem;display:block}
+.tom{color:var(--muted);font-style:italic}
 @media print{header.top,.btnlink,iframe.form{display:none!important}.hero,.blok,.figur,.plakat{box-shadow:none;break-inside:avoid}body{color:#000}@page{size:A4;margin:13mm}}
 </style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><span class="soon">Fysik</span></nav></div></header>
 <main>
@@ -86,7 +92,49 @@ kan se, hvem der har skaffet hvor mange.</p>
 <p>Alder og køn spørger vi altid om til sidst, så vi kan dele svarene op.</p></div>
 </div>
 <div class="figur"><svg viewBox="0 0 500 290" role="img" aria-label="Cirkeldiagram over 20 observationer."><path d="M140.0,140.0 L140.0,32.0 A108.0,108.0 0 0,1 248.0,140.0 Z" fill="#1f6fd6" stroke="#fff" stroke-width="1.5"/><path d="M140.0,140.0 L248.0,140.0 A108.0,108.0 0 0,1 37.3,173.4 Z" fill="#b5710a" stroke="#fff" stroke-width="1.5"/><path d="M140.0,140.0 L37.3,173.4 A108.0,108.0 0 0,1 140.0,32.0 Z" fill="#1a8f5e" stroke="#fff" stroke-width="1.5"/><circle cx="140.0" cy="140.0" r="108.0" fill="none" stroke="#fff" stroke-width="1.5"/><rect x="272" y="95" width="10" height="10" rx="2" fill="#1f6fd6"/><rect x="272" y="117" width="10" height="10" rx="2" fill="#b5710a"/><rect x="272" y="139" width="10" height="10" rx="2" fill="#1a8f5e"/><text font-family="Consolas, monospace" font-size="11" fill="#1a2233" y="112"><tspan x="290" dy="0">Unter 2 Stunden: 25 % · 90°</tspan><tspan x="290" dy="22">2–4 Stunden: 45 % · 162°</tspan><tspan x="290" dy="22">Mehr als 4 Stunden: 30 % · 108°</tspan></text></svg><div class="figtekst">Sådan bliver et lukket spørgsmål til et diagram: "Wie viele Stunden am Tag bist du am Handy?" med 20 tænkte svar. Frekvenserne giver 100 %, graderne 360°.</div></div>
-<p>Formularen ligger her — den åbner også i et nyt vindue, hvis du vil have den stor:</p><a class="btnlink" href="https://docs.google.com/forms/d/e/1FAIpQLSdRni5Xoe8UdGfL0w-PwQfcYZZPilg7gAmW7Hmrek8JS-VIgg/viewform" target="_blank" rel="noopener">Foreslå et spørgsmål</a><iframe class="form" src="https://docs.google.com/forms/d/e/1FAIpQLSdRni5Xoe8UdGfL0w-PwQfcYZZPilg7gAmW7Hmrek8JS-VIgg/viewform" title="Foreslå et spørgsmål" loading="lazy"></iframe>
+<p>Formularen ligger her — den åbner også i et nyt vindue, hvis du vil have den stor:</p><a class="btnlink" href="https://docs.google.com/forms/d/e/1FAIpQLSdRni5Xoe8UdGfL0w-PwQfcYZZPilg7gAmW7Hmrek8JS-VIgg/viewform" target="_blank" rel="noopener">Foreslå et spørgsmål</a><iframe class="form" src="https://docs.google.com/forms/d/e/1FAIpQLSdRni5Xoe8UdGfL0w-PwQfcYZZPilg7gAmW7Hmrek8JS-VIgg/viewform?embedded=true" title="Foreslå et spørgsmål" loading="lazy"></iframe>
+<div class="blok gron" id="jeres"><h3>Jeres spørgsmål indtil nu <span id="antal"></span></h3>
+<p>Listen hentes fra regnearket, hver gang siden åbnes. Nye forslag står her et øjeblik efter, at de er sendt.</p>
+<div class="liste" id="liste"><p class="tom">Henter forslagene …</p></div>
+<a class="btnlink ghost" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTjYSIZsCxBUrMEzo4P35lSIqedZOMV7w16xKgSiVGsciQNiCpxSlaXjzPHcfTxb3qeMiLJxPNEoz6W/pubhtml?gid=1520216210&amp;single=true" target="_blank" rel="noopener">Åbn listen i Google</a></div>
+<script>
+(function(){
+  var URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTjYSIZsCxBUrMEzo4P35lSIqedZOMV7w16xKgSiVGsciQNiCpxSlaXjzPHcfTxb3qeMiLJxPNEoz6W/pub?gid=1520216210&single=true&output=csv";
+  var SKJUL = /^(timestamp|tidsstempel|email address|e-mailadresse|mailadresse)$/i;
+  function csv(t){           // felter i anførselstegn kan have komma og linjeskift
+    var rows=[], row=[], f='', q=false;
+    for(var i=0;i<t.length;i++){
+      var c=t[i];
+      if(q){ if(c=='"'){ if(t[i+1]=='"'){f+='"';i++;} else q=false; } else f+=c; }
+      else if(c=='"') q=true;
+      else if(c==','){row.push(f);f='';}
+      else if(c=='\n'||c=='\r'){ if(c=='\r'&&t[i+1]=='\n') i++; row.push(f); rows.push(row); row=[]; f=''; }
+      else f+=c;
+    }
+    if(f!==''||row.length){row.push(f);rows.push(row);}
+    return rows.filter(function(r){return r.some(function(x){return x.trim();});});
+  }
+  function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  var el=document.getElementById('liste'), antal=document.getElementById('antal');
+  fetch(URL+'&t='+Date.now(),{cache:'no-store'}).then(function(r){
+    if(!r.ok) throw new Error(r.status); return r.text();
+  }).then(function(t){
+    var rows=csv(t); if(!rows.length) throw new Error('tom');
+    var hoved=rows[0], data=rows.slice(1).reverse();
+    var vis=[]; hoved.forEach(function(h,i){ if(!SKJUL.test(h.trim())) vis.push(i); });
+    antal.textContent='('+data.length+')';
+    if(!data.length){ el.innerHTML='<p class="tom">Ingen forslag endnu. Bliv den første!</p>'; return; }
+    el.innerHTML=data.map(function(r){
+      var hvem=r[vis[0]]||'', felter=vis.slice(1).map(function(i){
+        return r[i]&&r[i].trim()?'<div class="felt"><span>'+esc(hoved[i])+'</span>'+esc(r[i])+'</div>':'';
+      }).join('');
+      return '<div class="forslag"><div class="hvem">'+esc(hvem)+'</div>'+felter+'</div>';
+    }).join('');
+  }).catch(function(){
+    el.innerHTML='<p class="tom">Listen kunne ikke hentes lige nu. Prøv knappen herunder.</p>';
+  });
+})();
+</script>
 
 <h2 class="sec"><span class="num">3</span>Din QR-kode</h2>
 <div class="two">

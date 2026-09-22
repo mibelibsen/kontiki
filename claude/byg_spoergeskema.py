@@ -46,6 +46,8 @@ OPS = json.load(open(f'{MAPPE}/opsaetning.json', encoding='utf-8'))
 SITE = OPS['site'].rstrip('/')
 FORMULAR = OPS.get('formular', '').strip()
 FORSLAG = OPS.get('forslag', '').strip()
+FORSLAG_CSV = OPS.get('forslag_csv', '').strip()      # fanen Forslag, udgivet som CSV
+FORSLAG_LISTE = OPS.get('forslag_liste', '').strip()  # samme fane som webside
 EKSEMPEL = ('Freja Eksempel', 'eksempel')
 if FORMULAR:
     assert 'NAVN' in FORMULAR, ('linket til spørgeskemaet skal have NAVN dér, hvor '
@@ -314,6 +316,12 @@ iframe.form{width:100%;height:900px;border:1px solid var(--line);border-radius:1
 .plakat .url{margin-top:12px;font-size:.74rem;border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--muted)}
 .plakat .url b{color:var(--ink);font-family:Consolas,monospace}
 .plakat .fod{font-size:.7rem;color:var(--muted);margin-top:8px}
+.liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:12px 0}
+.forslag{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+.forslag .hvem{font-weight:800;margin-bottom:6px}
+.forslag .felt{font-size:.92rem;margin:4px 0}
+.forslag .felt span{color:var(--muted);font-size:.8rem;display:block}
+.tom{color:var(--muted);font-style:italic}
 @media print{header.top,.btnlink,iframe.form{display:none!important}.hero,.blok,.figur,.plakat{box-shadow:none;break-inside:avoid}body{color:#000}@page{size:A4;margin:13mm}}
 '''
 
@@ -355,17 +363,69 @@ def figur_optaelling():
                       ynavn='Antal svar')
 
 
+def liste_html():
+    """Sektionen 'Jeres spørgsmål': siden henter fanen Forslag som CSV, hver gang
+    den åbnes, og viser hvert forslag som et kort. Tidsstempel og e-mail vises
+    ikke. Kolonnerne følger formularens spørgsmål, så nye felter kommer med af
+    sig selv. Kan CSV'en ikke hentes, vises et link til listen i Google."""
+    aabn = (f'<a class="btnlink ghost" href="{html.escape(FORSLAG_LISTE)}" target="_blank" '
+            f'rel="noopener">Åbn listen i Google</a>' if FORSLAG_LISTE else '')
+    return f"""<div class="blok gron" id="jeres"><h3>Jeres spørgsmål indtil nu <span id="antal"></span></h3>
+<p>Listen hentes fra regnearket, hver gang siden åbnes. Nye forslag står her et øjeblik efter, at de er sendt.</p>
+<div class="liste" id="liste"><p class="tom">Henter forslagene …</p></div>
+{aabn}</div>
+<script>
+(function(){{
+  var URL = {json.dumps(FORSLAG_CSV)};
+  var SKJUL = /^(timestamp|tidsstempel|email address|e-mailadresse|mailadresse)$/i;
+  function csv(t){{           // felter i anførselstegn kan have komma og linjeskift
+    var rows=[], row=[], f='', q=false;
+    for(var i=0;i<t.length;i++){{
+      var c=t[i];
+      if(q){{ if(c=='"'){{ if(t[i+1]=='"'){{f+='"';i++;}} else q=false; }} else f+=c; }}
+      else if(c=='"') q=true;
+      else if(c==','){{row.push(f);f='';}}
+      else if(c=='\\n'||c=='\\r'){{ if(c=='\\r'&&t[i+1]=='\\n') i++; row.push(f); rows.push(row); row=[]; f=''; }}
+      else f+=c;
+    }}
+    if(f!==''||row.length){{row.push(f);rows.push(row);}}
+    return rows.filter(function(r){{return r.some(function(x){{return x.trim();}});}});
+  }}
+  function esc(s){{return s.replace(/[&<>"]/g,function(c){{return {{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[c];}});}}
+  var el=document.getElementById('liste'), antal=document.getElementById('antal');
+  fetch(URL+'&t='+Date.now(),{{cache:'no-store'}}).then(function(r){{
+    if(!r.ok) throw new Error(r.status); return r.text();
+  }}).then(function(t){{
+    var rows=csv(t); if(!rows.length) throw new Error('tom');
+    var hoved=rows[0], data=rows.slice(1).reverse();
+    var vis=[]; hoved.forEach(function(h,i){{ if(!SKJUL.test(h.trim())) vis.push(i); }});
+    antal.textContent='('+data.length+')';
+    if(!data.length){{ el.innerHTML='<p class="tom">Ingen forslag endnu. Bliv den første!</p>'; return; }}
+    el.innerHTML=data.map(function(r){{
+      var hvem=r[vis[0]]||'', felter=vis.slice(1).map(function(i){{
+        return r[i]&&r[i].trim()?'<div class="felt"><span>'+esc(hoved[i])+'</span>'+esc(r[i])+'</div>':'';
+      }}).join('');
+      return '<div class="forslag"><div class="hvem">'+esc(hvem)+'</div>'+felter+'</div>';
+    }}).join('');
+  }}).catch(function(){{
+    el.innerHTML='<p class="tom">Listen kunne ikke hentes lige nu. Prøv knappen herunder.</p>';
+  }});
+}})();
+</script>"""
+
+
 def skriv_side(unger):
     if FORSLAG:
         forslag_knap = f'<a class="btnlink" href="{html.escape(FORSLAG)}" target="_blank" rel="noopener">Foreslå et spørgsmål</a>'
         forslag_blok = (f'<p>Formularen ligger her — den åbner også i et nyt vindue, hvis du vil have den stor:</p>'
                         f'{forslag_knap}'
-                        f'<iframe class="form" src="{html.escape(FORSLAG)}" title="Foreslå et spørgsmål" loading="lazy"></iframe>')
+                        f'<iframe class="form" src="{html.escape(FORSLAG)}?embedded=true" title="Foreslå et spørgsmål" loading="lazy"></iframe>')
     else:
         forslag_knap = ''
         forslag_blok = ('<div class="note gul"><b>Formularen er på vej.</b> Linket til '
                         'forslagsformularen bliver sat ind her, så snart den er lavet. '
                         'Indtil da: skriv dine forslag ned, så de er klar.</div>')
+    forslag_liste = liste_html() if FORSLAG_CSV else ''
     status = (f'{len(unger)} unger har fået en kode.' if unger
               else 'Koderne laves, når navnelisten er klar.')
     krop = f'''<header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><span class="soon">Fysik</span></nav></div></header>
@@ -403,6 +463,7 @@ kan se, hvem der har skaffet hvor mange.</p>
 </div>
 <div class="figur">{figur_cirkel()}<div class="figtekst">Sådan bliver et lukket spørgsmål til et diagram: "Wie viele Stunden am Tag bist du am Handy?" med 20 tænkte svar. Frekvenserne giver 100 %, graderne 360°.</div></div>
 {forslag_blok}
+{forslag_liste}
 
 <h2 class="sec"><span class="num">3</span>Din QR-kode</h2>
 <div class="two">
