@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reklame-algoritmen — skoleprojekt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bund:#16102E;        /* baggrund */
+    --panel:#211944;       /* kort og felter */
+    --kant:#332764;
+    --tekst:#EDE9FF;
+    --dæmpet:#9A90C4;
+    /* Farver der betyder noget: én farve pr. pointtype */
+    --alder:#7C6BF5;
+    --interesse:#FFD23F;
+    --klik:#5BE9B9;
+    --koeb:#FF8A5B;
+    --tid:#4CC9F0;
+    --op:#5BE9B9;
+    --ned:#FF6B6B;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:32px 20px 64px;
+    background:var(--bund); color:var(--tekst);
+    font-family:'Inter',system-ui,sans-serif; font-size:15px; line-height:1.55;
+  }
+  .side{max-width:920px; margin:0 auto}
+
+  h1{
+    font-family:'Space Grotesk',system-ui,sans-serif; font-weight:700;
+    font-size:clamp(28px,5vw,44px); letter-spacing:-.03em; margin:0 0 6px;
+  }
+  .under{color:var(--dæmpet); margin:0 0 28px; max-width:56ch}
+  h2{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:600;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--dæmpet);
+    margin:34px 0 12px;
+  }
+
+  /* --- Brugervælger --- */
+  .brugere{display:flex; flex-wrap:wrap; gap:8px}
+  .brugerknap{
+    background:var(--panel); color:var(--tekst); border:1px solid var(--kant);
+    border-radius:999px; padding:8px 14px; cursor:pointer; font:inherit; font-size:14px;
+  }
+  .brugerknap:hover{border-color:var(--alder)}
+  .brugerknap[aria-pressed="true"]{background:var(--alder); border-color:var(--alder); color:#0E0824; font-weight:500}
+  .brugerknap span{font-family:'IBM Plex Mono',monospace; opacity:.7; margin-left:6px}
+
+  /* --- Profilkort --- */
+  .profil{
+    background:var(--panel); border:1px solid var(--kant); border-radius:14px;
+    padding:18px 20px; margin-top:18px;
+  }
+  .profil h3{font-family:'Space Grotesk',sans-serif; font-size:24px; margin:0 0 2px; letter-spacing:-.02em}
+  .fakta{display:flex; flex-wrap:wrap; gap:18px; margin-top:10px}
+  .fakta div{font-size:13px}
+  .fakta b{display:block; font-family:'IBM Plex Mono',monospace; font-size:10px;
+           letter-spacing:.14em; text-transform:uppercase; color:var(--dæmpet); font-weight:600}
+
+  /* --- Reklamekort --- */
+  .kort{
+    background:var(--panel); border:1px solid var(--kant); border-radius:14px;
+    padding:18px 20px; margin-bottom:12px;
+  }
+  .kort.udforskning{border-style:dashed; border-color:var(--interesse)}
+  .top{display:flex; align-items:baseline; gap:14px}
+  .plads{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--dæmpet)}
+  .navn{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:21px; letter-spacing:-.02em}
+  .kat{color:var(--dæmpet); font-size:13px}
+  .score{margin-left:auto; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:30px}
+  .score small{font-size:13px; color:var(--dæmpet); font-weight:400}
+
+  /* SIGNATUR: pointstakken — man kan se hvor de 100 point kommer fra */
+  .stak{display:flex; height:14px; border-radius:7px; overflow:hidden; background:#150F31; margin:14px 0 8px}
+  .stak i{display:block; transition:width .35s ease}
+  .tegn{display:flex; flex-wrap:wrap; gap:12px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--dæmpet)}
+  .tegn em{font-style:normal; display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:5px}
+  .tegn s{text-decoration:none; opacity:.35}
+
+  .maerke{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    background:var(--interesse); color:#2A1E00; border-radius:5px; padding:2px 7px; margin-left:8px;
+  }
+
+  /* --- Handlingsknapper --- */
+  .handlinger{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px}
+  .handlinger button{
+    background:transparent; color:var(--tekst); border:1px solid var(--kant);
+    border-radius:8px; padding:7px 12px; cursor:pointer; font:inherit; font-size:13px;
+  }
+  .handlinger button:hover{border-color:var(--tekst)}
+  .handlinger button b{font-family:'IBM Plex Mono',monospace; font-weight:600; margin-left:4px}
+  .plus b{color:var(--op)} .minus b{color:var(--ned)}
+
+  .styring{display:flex; flex-wrap:wrap; gap:10px; margin:6px 0 0}
+  .styring button{
+    background:var(--interesse); color:#2A1E00; border:0; border-radius:8px;
+    padding:10px 16px; font:inherit; font-weight:500; cursor:pointer;
+  }
+  .styring .sekundaer{background:transparent; color:var(--tekst); border:1px solid var(--kant)}
+
+  /* --- Log --- */
+  #log{font-family:'IBM Plex Mono',monospace; font-size:13px; margin:0; padding:0; list-style:none}
+  #log li{border-left:2px solid var(--kant); padding:7px 0 7px 12px; margin-bottom:4px}
+  #log .op{color:var(--op)} #log .ned{color:var(--ned)}
+  .tom{color:var(--dæmpet); font-size:13px}
+
+  button:focus-visible{outline:2px solid var(--interesse); outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="side">
+
+  <h1>Reklame-algoritmen</h1>
+  <p class="under">Vælg en bruger. Algoritmen giver alle 10 reklamer point fra 0–100 og viser de 3 bedste. Når brugeren gør noget, lærer algoritmen af det.</p>
+
+  <h2>1 — Vælg bruger</h2>
+  <div class="brugere" id="brugere"></div>
+
+  <div class="profil" id="profil"></div>
+
+  <h2>2 — De 3 anbefalede reklamer</h2>
+  <div class="styring">
+    <button id="genberegn">Beregn anbefalinger igen</button>
+    <button class="sekundaer" id="auto">Lad computeren vælge en handling</button>
+    <button class="sekundaer" id="nulstil">Nulstil alt, hvad algoritmen har lært</button>
+  </div>
+  <div id="anbefalinger" style="margin-top:14px"></div>
+
+  <h2>3 — Hvad der er sket</h2>
+  <ul id="log"></ul>
+
+</div>
+
+<script>
+/* =======================================================================
+   DEL 1: DATA — de 10 produkter og de 10 brugere
+   ======================================================================= */
+
+// Hvert produkt har en kategori, nogle interesse-ord (tags)
+// og en aldersgruppe som produktet passer bedst til.
+const produkter = [
+  { id:1,  navn:"Nike Air Max",      kategori:"sko",           tags:["sport","mode"],                    alder:[14,40] },
+  { id:2,  navn:"Coca-Cola Zero",    kategori:"drikkevarer",   tags:["mad","gaming"],                    alder:[12,50] },
+  { id:3,  navn:"Samsung Galaxy S26",kategori:"elektronik",    tags:["teknologi","gaming"],              alder:[16,55] },
+  { id:4,  navn:"LEGO Technic",      kategori:"legetøj",       tags:["kreativitet","teknologi","familie"],alder:[8,45] },
+  { id:5,  navn:"Spotify Premium",   kategori:"underholdning", tags:["musik","gaming"],                  alder:[13,45] },
+  { id:6,  navn:"IKEA kontorstol",   kategori:"møbler",        tags:["hjem","arbejde"],                  alder:[25,65] },
+  { id:7,  navn:"Netflix",           kategori:"streaming",     tags:["film","familie"],                  alder:[15,70] },
+  { id:8,  navn:"Matas hudpleje",    kategori:"skønhed",       tags:["skønhed","sundhed"],               alder:[16,60] },
+  { id:9,  navn:"Elcykel",           kategori:"transport",     tags:["sundhed","natur","transport"],     alder:[30,75] },
+  { id:10, navn:"McDonald's",        kategori:"mad",           tags:["mad","familie"],                   alder:[10,40] },
+];
+
+// Hver bruger har interesser + en historik:
+//   klik  = kategorier brugeren før har klikket på
+//   koeb  = kategorier brugeren før har købt i
+//   setLaenge = kategorier brugeren har set reklamer for i lang tid
+const brugere = [
+  { navn:"Emma Nielsen",     alder:16, koen:"kvinde", interesser:["mode","musik","skønhed"],       klik:["skønhed","underholdning"], koeb:["skønhed"],     setLaenge:["mode"] },
+  { navn:"Noah Jensen",      alder:18, koen:"mand",   interesser:["gaming","sport","teknologi"],   klik:["elektronik","sko"],        koeb:["mad"],         setLaenge:["elektronik"] },
+  { navn:"Sofia Larsen",     alder:22, koen:"kvinde", interesser:["mode","musik","film"],          klik:["underholdning","streaming"],koeb:["underholdning"],setLaenge:["streaming"] },
+  { navn:"William Hansen",   alder:25, koen:"mand",   interesser:["sport","teknologi","mad"],      klik:["sko","mad"],               koeb:["sko"],         setLaenge:["elektronik"] },
+  { navn:"Freja Pedersen",   alder:31, koen:"kvinde", interesser:["sundhed","hjem","skønhed"],     klik:["skønhed","møbler"],        koeb:["skønhed"],     setLaenge:["transport"] },
+  { navn:"Lucas Andersen",   alder:35, koen:"mand",   interesser:["teknologi","familie","arbejde"],klik:["elektronik","møbler"],     koeb:["elektronik"],  setLaenge:["legetøj"] },
+  { navn:"Clara Møller",     alder:42, koen:"kvinde", interesser:["familie","hjem","film"],        klik:["streaming","møbler"],      koeb:["møbler"],      setLaenge:["streaming"] },
+  { navn:"Oliver Thomsen",   alder:48, koen:"mand",   interesser:["arbejde","sundhed","film"],     klik:["møbler","streaming"],      koeb:["møbler"],      setLaenge:["transport"] },
+  { navn:"Anna Sørensen",    alder:57, koen:"kvinde", interesser:["natur","sundhed","hjem"],       klik:["transport","skønhed"],     koeb:["skønhed"],     setLaenge:["transport"] },
+  { navn:"Erik Christensen", alder:67, koen:"mand",   interesser:["natur","transport","film"],     klik:["transport","streaming"],   koeb:["transport"],   setLaenge:["streaming"] },
+];
+
+// Her gemmer vi det, algoritmen LÆRER.
+// laering["Emma Nielsen-3"] = -6  betyder: Emma har trukket 6 point fra Samsung-reklamen.
+let laering = {};
+const noegle = (bruger, produkt) => bruger.navn + "-" + produkt.id;
+
+
+/* =======================================================================
+   DEL 2: SCOREN — her regnes de 0-100 point ud
+   ======================================================================= */
+
+function beregnScore(bruger, produkt){
+  // Vi samler pointene i "dele", så vi bagefter kan vise hvor de kom fra.
+  const dele = { alder:0, interesse:0, klik:0, koeb:0, tid:0 };
+
+  // 1) ALDERSMATCH: 20 point hvis alderen rammer plet, 10 hvis den er tæt på.
+  const [fra, til] = produkt.alder;
+  if (bruger.alder >= fra && bruger.alder <= til)              dele.alder = 20;
+  else if (bruger.alder >= fra - 6 && bruger.alder <= til + 6) dele.alder = 10;
+
+  // 2) INTERESSE: 30 point hvis mindst ét af produktets tags er en af brugerens interesser.
+  const rammerInteresse = produkt.tags.some(tag => bruger.interesser.includes(tag));
+  if (rammerInteresse) dele.interesse = 30;
+
+  // 3) TIDLIGERE KLIK: 20 point hvis brugeren har klikket på noget i samme kategori.
+  if (bruger.klik.includes(produkt.kategori)) dele.klik = 20;
+
+  // 4) TIDLIGERE KØB: 20 point hvis brugeren har købt noget i samme kategori.
+  if (bruger.koeb.includes(produkt.kategori)) dele.koeb = 20;
+
+  // 5) VISNINGSTID: 10 point hvis brugeren har set reklamen længe.
+  if (bruger.setLaenge.includes(produkt.kategori)) dele.tid = 10;
+
+  // Læg det hele sammen, og læg til sidst det til, som algoritmen har LÆRT.
+  const grundscore = dele.alder + dele.interesse + dele.klik + dele.koeb + dele.tid;
+  const laert = laering[noegle(bruger, produkt)] || 0;
+
+  // Scoren må aldrig gå under 0 eller over 100.
+  const total = Math.max(0, Math.min(100, grundscore + laert));
+  return { total, dele, laert };
+}
+
+
+/* =======================================================================
+   DEL 3: UDVÆLGELSEN — de 3 bedste + 20% tilfældighed
+   ======================================================================= */
+
+function findTop3(bruger){
+  // Giv ALLE 10 reklamer point og sortér dem, så den højeste ligger først.
+  const alle = produkter
+    .map(p => ({ produkt:p, ...beregnScore(bruger, p) }))
+    .sort((a, b) => b.total - a.total);
+
+  const valgte = [alle[0], alle[1]];              // nr. 1 og 2 er altid de bedste
+
+  // 20% TILFÆLDIGHED (kaldes "udforskning"):
+  // I 1 ud af 5 tilfælde giver vi den 3. plads til en tilfældig af de svagere reklamer.
+  // På den måde kan algoritmen opdage interesser, den ikke kendte til endnu.
+  if (Math.random() < 0.20){
+    const resten = alle.slice(3);                  // alle dem der IKKE er top 3
+    const tilfaeldig = resten[Math.floor(Math.random() * resten.length)];
+    tilfaeldig.udforskning = true;                 // markeres med 🎲 i visningen
+    valgte.push(tilfaeldig);
+  } else {
+    valgte.push(alle[2]);                          // normalt: den 3.-bedste
+  }
+  return valgte;
+}
+
+
+/* =======================================================================
+   DEL 4: LÆRINGEN — hvad sker der, når brugeren gør noget
+   ======================================================================= */
+
+const handlinger = {
+  klik:     { tekst:"Klikker på reklamen", point:+10 },
+  koeb:     { tekst:"Køber produktet",     point:+20 },
+  like:     { tekst:"Synes godt om (👍)",  point:+10 },
+  ignorer:  { tekst:"Ignorerer reklamen",  point: -3 },
+  dislike:  { tekst:"Synes ikke om (👎)",  point:-10 },
+};
+
+function udfoerHandling(bruger, punkt, type){
+  const foer = punkt.total;                        // scoren FØR handlingen
+  const k = noegle(bruger, punkt.produkt);
+
+  // Vi lægger handlingens point oveni det, algoritmen allerede havde lært.
+  laering[k] = (laering[k] || 0) + handlinger[type].point;
+
+  const efter = beregnScore(bruger, punkt.produkt).total;   // scoren EFTER
+  skrivLog(bruger, punkt.produkt, type, foer, efter);
+  tegnAnbefalinger();                               // tegn listen igen med nye tal
+}
+
+
+/* =======================================================================
+   DEL 5: VISNINGEN PÅ SKÆRMEN
+   ======================================================================= */
+
+const pointtyper = [
+  { key:"alder",     navn:"Alder",      max:20, farve:"var(--alder)" },
+  { key:"interesse", navn:"Interesse",  max:30, farve:"var(--interesse)" },
+  { key:"klik",      navn:"Klik før",   max:20, farve:"var(--klik)" },
+  { key:"koeb",      navn:"Køb før",    max:20, farve:"var(--koeb)" },
+  { key:"tid",       navn:"Set længe",  max:10, farve:"var(--tid)" },
+];
+
+let valgtBruger = brugere[0];
+let visning = [];
+
+function tegnBrugerknapper(){
+  document.getElementById("brugere").innerHTML = brugere.map((b, i) =>
+    `<button class="brugerknap" data-i="${i}" aria-pressed="${b === valgtBruger}">
+       ${b.navn}<span>${b.alder}</span>
+     </button>`).join("");
+}
+
+function tegnProfil(){
+  const b = valgtBruger;
+  document.getElementById("profil").innerHTML = `
+    <h3>${b.navn}</h3>
+    <div class="fakta">
+      <div><b>Alder</b>${b.alder} år</div>
+      <div><b>Køn</b>${b.koen}</div>
+      <div><b>Interesser</b>${b.interesser.join(", ")}</div>
+      <div><b>Har klikket på</b>${b.klik.join(", ")}</div>
+      <div><b>Har købt</b>${b.koeb.join(", ")}</div>
+      <div><b>Har set længe</b>${b.setLaenge.join(", ")}</div>
+    </div>`;
+}
+
+function tegnAnbefalinger(){
+  // Opdatér tallene på de reklamer, der allerede vises
+  visning = visning.map(v => ({ ...v, ...beregnScore(valgtBruger, v.produkt) }));
+
+  document.getElementById("anbefalinger").innerHTML = visning.map((v, i) => `
+    <div class="kort ${v.udforskning ? "udforskning" : ""}">
+      <div class="top">
+        <span class="plads">${i + 1}</span>
+        <div>
+          <div class="navn">${v.produkt.navn}${v.udforskning ? '<span class="maerke">🎲 udforskning</span>' : ""}</div>
+          <div class="kat">${v.produkt.kategori}</div>
+        </div>
+        <div class="score">${v.total}<small>/100</small></div>
+      </div>
+
+      <div class="stak">
+        ${pointtyper.map(t => `<i style="width:${v.dele[t.key]}%; background:${t.farve}"></i>`).join("")}
+      </div>
+      <div class="tegn">
+        ${pointtyper.map(t => `<span class="${v.dele[t.key] ? "" : "s"}">
+            <em style="background:${t.farve}"></em>${t.navn} +${v.dele[t.key]}</span>`).join("")}
+        ${v.laert ? `<span style="color:${v.laert > 0 ? "var(--op)" : "var(--ned)"}">
+            ★ Lært ${v.laert > 0 ? "+" : ""}${v.laert}</span>` : ""}
+      </div>
+
+      <div class="handlinger">
+        <button class="plus"  data-i="${i}" data-h="klik">Klik<b>+10</b></button>
+        <button class="plus"  data-i="${i}" data-h="koeb">Køb<b>+20</b></button>
+        <button class="plus"  data-i="${i}" data-h="like">👍 Like<b>+10</b></button>
+        <button class="minus" data-i="${i}" data-h="ignorer">Ignorér<b>−3</b></button>
+        <button class="minus" data-i="${i}" data-h="dislike">👎 Dislike<b>−10</b></button>
+      </div>
+    </div>`).join("");
+}
+
+function skrivLog(bruger, produkt, type, foer, efter){
+  const forskel = efter - foer;
+  const retning = forskel >= 0 ? "op" : "ned";
+  const li = document.createElement("li");
+  li.innerHTML = `${bruger.navn} (${bruger.alder} år) · ${produkt.navn}<br>
+    ${handlinger[type].tekst} → score <b>${foer}</b> ⟶
+    <b class="${retning}">${efter}</b> (${forskel >= 0 ? "+" : ""}${forskel})`;
+  const log = document.getElementById("log");
+  log.prepend(li);
+  document.querySelector(".tom")?.remove();
+}
+
+function nyRunde(){
+  visning = findTop3(valgtBruger);
+  tegnAnbefalinger();
+}
+
+
+/* =======================================================================
+   DEL 6: KNAPPERNE
+   ======================================================================= */
+
+document.getElementById("brugere").addEventListener("click", e => {
+  const knap = e.target.closest(".brugerknap"); if (!knap) return;
+  valgtBruger = brugere[knap.dataset.i];
+  tegnBrugerknapper(); tegnProfil(); nyRunde();
+});
+
+document.getElementById("anbefalinger").addEventListener("click", e => {
+  const knap = e.target.closest("button[data-h]"); if (!knap) return;
+  udfoerHandling(valgtBruger, visning[knap.dataset.i], knap.dataset.h);
+});
+
+document.getElementById("genberegn").addEventListener("click", nyRunde);
+
+// "Lad computeren vælge": jo højere score, jo mere sandsynligt er det,
+// at brugeren klikker eller køber i stedet for at ignorere.
+document.getElementById("auto").addEventListener("click", () => {
+  visning.forEach(v => {
+    const chance = Math.random() * 100;
+    let type = "ignorer";
+    if (chance < v.total * 0.25)      type = "koeb";
+    else if (chance < v.total * 0.80) type = "klik";
+    udfoerHandling(valgtBruger, v, type);
+  });
+});
+
+document.getElementById("nulstil").addEventListener("click", () => {
+  laering = {};
+  document.getElementById("log").innerHTML = '<li class="tom">Ingen handlinger endnu.</li>';
+  nyRunde();
+});
+
+// Start programmet
+document.getElementById("log").innerHTML = '<li class="tom">Ingen handlinger endnu.</li>';
+tegnBrugerknapper(); tegnProfil(); nyRunde();
+</script>
+</body>
+</html>

@@ -3,6 +3,10 @@
     {
       "source": "/kontikair",
       "destination": "/kontikair.html"
+    },
+    {
+      "source": "/algoritme",
+      "destination": "/algoritme.html"
     }
   ],
   "redirects": [
