@@ -35,7 +35,8 @@ at koden kommer som et kort (A6).
   https://docs.google.com/spreadsheets/d/1QwwgmHeMVc-lsMEtmXtT4BobkF0HGyjVr9Twi1tCWbY/edit
 - ungernes spørgsmål skrives i et fælles ark (delt med alle med linket), som
   siden læser via gviz-CSV: https://docs.google.com/spreadsheets/d/1tV_rBMFwAtc8jQUXqP32TBOSEg52ZBQ05T-MIrfAK-Y/edit
-  Kolonnerne Antwort 1–5 til svarmuligheder laver brugeren selv.
+  Kolonnerne til svarmuligheder er lavet (22.9. stod der Antwort 1, 2, 4, 5 —
+  Antwort 3 manglede, og de to Auswahl-linjer havde ingen muligheder endnu).
   Forslagsformularen (1DfEjbE50…) er droppet og kan slettes.
 - `spoergeskema/byg_formular.gs` bygger skemaet af arket (Apps Script i arket,
   funktionen bygSkema). Brugeren kører det igen, når klassen har skrevet sine
