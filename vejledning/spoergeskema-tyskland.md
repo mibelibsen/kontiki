@@ -45,12 +45,15 @@ slettes.
 
 1. Åbn https://docs.google.com/forms/d/1DfEjbE50smAekXFi__JvAyzlV2vXOo4-yECYETSimJM/edit
 2. Kopiér titel, beskrivelse og de fire spørgsmål ind fra dokumentet med
-   teksterne: **Dit navn** (kort svar), **Dit spørgsmål på dansk** (afsnit),
+   teksterne: **Dit navn** (kort svar), **Dit spørgsmål på tysk** (afsnit),
    **Svarmuligheder** (kort svar), og et frivilligt *hvorfor*.
 3. Fanen **Svar** øverst → ikonet *Link til Sheets* → **Vælg eksisterende
    regneark** → *Tysk spørgeskema – Unger og optælling*. Omdøb den nye fane i
    regnearket til `Forslag`.
-4. Knappen **Send** → kæde-ikonet → **Kopiér**. Det er link nummer ét.
+4. Ungerne skriver ind på
+   https://docs.google.com/forms/d/1DfEjbE50smAekXFi__JvAyzlV2vXOo4-yECYETSimJM/viewform
+   — det link er allerede sat på siden. Knappen **Send** → kæde-ikonet giver
+   det samme skema med Googles offentlige adresse.
 
 ## 3. Selve spørgeskemaet (på tysk)
 

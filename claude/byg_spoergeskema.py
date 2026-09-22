@@ -321,9 +321,9 @@ iframe.form{width:100%;height:900px;border:1px solid var(--line);border-radius:1
 def figur_proces():
     trin = [
         ('I foreslår spørgsmål',
-         'Skriv dit spørgsmål på dansk i formularen. Alle forslag lander i ét regneark.', 'jer'),
-        ('Vi vælger og oversætter',
-         'Klassen vælger de bedste spørgsmål, og vi oversætter dem til tysk sammen.', 'os'),
+         'Skriv dit spørgsmål på tysk i formularen. Alle forslag lander i ét regneark.', 'jer'),
+        ('Vi vælger og retter sproget',
+         'Klassen vælger de bedste spørgsmål, og vi retter tysken sammen.', 'os'),
         ('Spørgeskemaet bygges',
          'Ét spørgeskema, ens for alle. Det kan besvares på en telefon på et par minutter.', 'os'),
         ('Du får din egen QR-kode',
@@ -389,7 +389,7 @@ kan se, hvem der har skaffet hvor mange.</p>
 <li><b>Ét spørgsmål ad gangen.</b> Ikke "sover du nok, og er du træt i skolen?"</li>
 <li><b>Skal kunne stilles i Danmark også.</b> Vi stiller de samme spørgsmål til os selv, så vi kan sammenligne.</li>
 <li><b>Ikke for privat.</b> Den, der svarer, er en fremmed ung på gaden i Tyskland. Spørg om hverdag, skole, fritid, penge, telefon, venner, fremtid — ikke om ting man ikke vil svare på.</li>
-<li><b>Kort og på dansk.</b> Vi oversætter til tysk sammen bagefter.</li>
+<li><b>Kort og på tysk.</b> Skriv gerne den danske udgave ved siden af, så vi kan stille det samme spørgsmål i Danmark. Vi retter tysken sammen bagefter.</li>
 </ul></div>
 <div class="blok gron"><h3>Eksempler</h3>
 <table class="t"><tr><th>På dansk</th><th>På tysk</th><th>Svar</th></tr>
