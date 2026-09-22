@@ -31,7 +31,11 @@ i det forudfyldte felt) — indtil da fører alle koder til siden.
 regneark og tomme formularer, men ikke skrive spørgsmål i en formular):
 - regneark med fanen Unger og optælling:
   https://docs.google.com/spreadsheets/d/1QwwgmHeMVc-lsMEtmXtT4BobkF0HGyjVr9Twi1tCWbY/edit
-- forslagsformular (tom): https://docs.google.com/forms/d/1DfEjbE50smAekXFi__JvAyzlV2vXOo4-yECYETSimJM/edit
+- ungernes spørgsmål skrives i et fælles ark (delt med alle med linket), som
+  siden læser via gviz-CSV: https://docs.google.com/spreadsheets/d/1tV_rBMFwAtc8jQUXqP32TBOSEg52ZBQ05T-MIrfAK-Y/edit
+  Forslagsformularen (1DfEjbE50…) er droppet og kan slettes.
+- Næste: når arket er fyldt, lav et Apps Script, der bygger spørgeskemaet
+  af arket (Code først, typer efter kolonnen Antworttyp, alder og køn sidst).
 - spørgeskemaet (tomt): https://docs.google.com/forms/d/1_zEW7e1bvwL46TeywzPD9S3f8NzQ8CwDco62mWMWUgc/edit
 - teksterne til formularerne: https://docs.google.com/document/d/1h96ppA_vi6fnoye0KmNs5RWzKT5Zoh-YOCsrhBMM4TQ/edit
 Brugerens eget, tomme ark *Tysk spørgeskema* (18Ns9i35…) kan slettes.
