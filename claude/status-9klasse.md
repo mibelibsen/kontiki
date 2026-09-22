@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-09-18
+Sidst opdateret: 2026-09-22
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -20,7 +20,24 @@ til `main`. Deploy-kæden virker; Claudes Vercel-adgang bruges ikke.
 uge 35 og 36 klar i `kommende/` med planlagte Routines. Facitlister til alle
 moduler og lektier ligger i `facit/` som PDF.
 
-**Samfundsfag** har årsplan og en tekstside. **Tysk** er en tom fane. **Fysik** findes ikke endnu.
+**Samfundsfag** har årsplan og en tekstside. **Tysk** har projektet *Ung i
+Tyskland* (`tysk-spoergeskema.html`) men ingen årsplan. **Fysik** findes ikke endnu.
+
+**Spørgeskemaet til Tyskland: 23 unger har fået koder og plakater**
+(`spoergeskema/qr-plakater-a4.pdf`, `qr-kort-a6.pdf`, sendt i Code 22.9.).
+Det mangler linkene til de to Google Forms (forslag + selve skemaet med `NAVN`
+i det forudfyldte felt) — indtil da fører alle koder til siden.
+**Oprettet i brugerens Google Drev via Drev-adgangen** (den kan lave dokumenter,
+regneark og tomme formularer, men ikke skrive spørgsmål i en formular):
+- regneark med fanen Unger og optælling:
+  https://docs.google.com/spreadsheets/d/1QwwgmHeMVc-lsMEtmXtT4BobkF0HGyjVr9Twi1tCWbY/edit
+- forslagsformular (tom): https://docs.google.com/forms/d/1DfEjbE50smAekXFi__JvAyzlV2vXOo4-yECYETSimJM/edit
+- spørgeskemaet (tomt): https://docs.google.com/forms/d/1_zEW7e1bvwL46TeywzPD9S3f8NzQ8CwDco62mWMWUgc/edit
+- teksterne til formularerne: https://docs.google.com/document/d/1h96ppA_vi6fnoye0KmNs5RWzKT5Zoh-YOCsrhBMM4TQ/edit
+Brugerens eget, tomme ark *Tysk spørgeskema* (18Ns9i35…) kan slettes.
+Når linkene kommer: sæt dem i `spoergeskema/opsaetning.json`, kør
+`python3 claude/byg_spoergeskema.py`, push. Plakaterne behøver ikke trykkes om.
+Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 
 ## Næste skridt
 
@@ -38,6 +55,34 @@ moduler og lektier ligger i `facit/` som PDF.
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
+
+## Rettet 22. september 2026
+
+- **Spørgeskema med personlige QR-koder: `tysk-spoergeskema.html`.** Ét
+  Google-spørgeskema, ens for alle, med et forudfyldt felt `Code`. Hver ung har
+  sin egen adresse `/u/<kode>` på sitet, som `vercel.json` sender videre til
+  skemaet med navnet i linket — så hvert svar tæller på den rigtige ung, og alle
+  svar ligger i ét ark. Koderne peger på sitet og ikke på Google, så plakater
+  kan trykkes før skemaet er færdigt, og skemaet kan skiftes uden nye plakater.
+  `/u/eksempel` fører tilbage til siden og bruges til at prøve scanningen.
+- **`claude/byg_spoergeskema.py`** bygger siden, redirects, `unger-links.tsv`
+  og PDF'er med plakater (A4, én pr. ung) og kort (A6, fire pr. ark). Under
+  hver kode står navnet, Dannebrog og en tysk tekst om, at klassen samler viden
+  om at være ung i Tyskland for at sammenligne med Danmark. Mappen
+  `spoergeskema/` er udelukket fra deploy og lagt ind i `tjek.py`.
+- **`claude/qr.py` er en QR-koder i ren Python** — ingen pip i en frisk
+  session. Krydstjekket mod segno: 896 koder (version 1–10, alle niveauer og
+  masker) er identiske bit for bit, og zxing-cpp læser dem tilbage. To fejl
+  fanget undervejs af tjekket: GF(256)-multiplikationen reducerede på den
+  forkerte bit, og reservationen til formatinfo overskrev timing-mønstret.
+  segno selv afviger fra standarden med et ekstra nul-kodeord efter
+  terminatoren; selvtesten normaliserer det.
+- **`claude/html_til_pdf.mjs`** gengiver HTML som PDF med Chromium og
+  sidestørrelse fra `@page`. Kan bruges af alle byggescripts.
+- **Nyt i figurbiblioteket: `soejler()`**, et almindeligt søjlediagram med
+  tallet oven på hver søjle.
+- Kort til projektet på `tysk.html` og forsiden. Vejledning til den voksne i
+  `vejledning/spoergeskema-tyskland.md` med links til Forms og Sheets.
 
 ## Rettet 21. september 2026
 

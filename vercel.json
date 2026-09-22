@@ -1,5 +1,130 @@
 {
   "rewrites": [
-    { "source": "/kontikair", "destination": "/kontikair.html" }
+    {
+      "source": "/kontikair",
+      "destination": "/kontikair.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/u/eksempel",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/anna",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/kasper",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/asta",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/luna",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/caroline",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/milius",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/clara",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/nor",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/emilie",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/oskar",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/emily",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/ronja",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/flora",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/savanna",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/frida",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/silke",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/helene",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/simone",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/hjalte",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/viktor",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/johan",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/william",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    },
+    {
+      "source": "/u/jonas",
+      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "permanent": false
+    }
   ]
 }
