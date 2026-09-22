@@ -42,6 +42,9 @@ at koden kommer som et kort (A6).
   funktionen bygSkema). Brugeren kører det igen, når klassen har skrevet sine
   spørgsmål; det beholder feltet Code, så linkene og koderne holder.
 - Test af et rigtigt svar er brugerens: send aldrig prøvesvar til skemaet.
+- **Plan:** klassen lukker for nye spørgsmål fredag 25.9., og skemaet bygges
+  fredag eftermiddag. En engangs-Routine tjekker arket fredag kl. 12 (Auswahl
+  uden muligheder, kolonnenavne, tysken) og melder tilbage i denne session.
 - spørgeskemaet (tomt): https://docs.google.com/forms/d/1_zEW7e1bvwL46TeywzPD9S3f8NzQ8CwDco62mWMWUgc/edit
 - teksterne til formularerne: https://docs.google.com/document/d/1h96ppA_vi6fnoye0KmNs5RWzKT5Zoh-YOCsrhBMM4TQ/edit
 Brugerens eget, tomme ark *Tysk spørgeskema* (18Ns9i35…) kan slettes.
