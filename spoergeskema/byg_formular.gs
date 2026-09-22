@@ -26,8 +26,9 @@
  *
  * SVARTYPER (kolonnen Antworttyp, store/små bogstaver er ligegyldige):
  *   Ja/Nein       → multiple choice: Ja · Nein
- *   Auswahl       → multiple choice med mulighederne fra næste kolonne,
- *                   adskilt af · , ; / eller linjeskift
+ *   Auswahl       → multiple choice med mulighederne fra kolonnen
+ *                   Antwortmöglichkeiten (adskilt af · , ; / eller linjeskift)
+ *                   og/eller kolonnerne "Antwort 1", "Antwort 2", … (én pr. kolonne)
  *   Skala 1–5     → lineær skala (tallene læses fra teksten, fx "Skala 1–10")
  *   Zahl          → kort svar, kun tal
  *   Freier Text   → afsnit (ikke påkrævet)
@@ -135,6 +136,8 @@ function laesSpoergsmaal_(sheet) {
   const kol = navn => hoved.findIndex(h => h.startsWith(navn));
   const iNavn = kol('navn'), iFrage = kol('deine frage'), iTyp = kol('antworttyp'),
         iValg = kol('antwortmög'), iMed = kol('med');
+  // kolonner "Antwort 1", "Antwort 2", … — én svarmulighed pr. kolonne
+  const iAntw = hoved.map((h, i) => (/^antwort\s*\d+$/.test(h) ? i : -1)).filter(i => i >= 0);
   if (iFrage < 0 || iTyp < 0) throw new Error('Arket mangler kolonnerne "Deine Frage" og/eller "Antworttyp".');
   const brugMed = iMed >= 0 && data.slice(1).some(r => String(r[iMed]).trim());
   return data.slice(1)
@@ -142,7 +145,9 @@ function laesSpoergsmaal_(sheet) {
       navn: String(r[iNavn] || '').trim(),
       frage: String(r[iFrage] || '').trim(),
       typ: String(r[iTyp] || '').trim().toLowerCase(),
-      valg: String(iValg >= 0 ? r[iValg] || '' : '').trim(),
+      valg: [String(iValg >= 0 ? r[iValg] || '' : '').trim()]
+        .concat(iAntw.map(i => String(r[i] || '').trim()))
+        .filter(Boolean).join(' · '),
       med: iMed >= 0 ? String(r[iMed] || '').trim() : '',
     }))
     .filter(l => l.frage && l.navn.toLowerCase() !== 'eksempel' && (!brugMed || l.med));
