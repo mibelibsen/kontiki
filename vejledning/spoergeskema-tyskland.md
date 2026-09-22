@@ -51,7 +51,7 @@ slettes.
    regneark** → *Tysk spørgeskema – Unger og optælling*. Omdøb den nye fane i
    regnearket til `Forslag`.
 4. Ungerne skriver ind på
-   https://docs.google.com/forms/d/1DfEjbE50smAekXFi__JvAyzlV2vXOo4-yECYETSimJM/viewform
+   https://docs.google.com/forms/d/e/1FAIpQLSdRni5Xoe8UdGfL0w-PwQfcYZZPilg7gAmW7Hmrek8JS-VIgg/viewform
    — det link er allerede sat på siden. Knappen **Send** → kæde-ikonet giver
    det samme skema med Googles offentlige adresse.
 
