@@ -455,7 +455,7 @@ kan se, hvem der har skaffet hvor mange.</p>
 <li><b>Ét spørgsmål ad gangen.</b> Ikke "sover du nok, og er du træt i skolen?"</li>
 <li><b>Skal kunne stilles i Danmark også.</b> Vi stiller de samme spørgsmål til os selv, så vi kan sammenligne.</li>
 <li><b>Ikke for privat.</b> Den, der svarer, er en fremmed ung på gaden i Tyskland. Spørg om hverdag, skole, fritid, penge, telefon, venner, fremtid — ikke om ting man ikke vil svare på.</li>
-<li><b>Kort og på tysk.</b> Skriv gerne den danske udgave ved siden af, så vi kan stille det samme spørgsmål i Danmark. Vi retter tysken sammen bagefter.</li>
+<li><b>Kort og på tysk.</b> Vi retter tysken sammen bagefter.</li>
 </ul></div>
 <div class="blok gron"><h3>Eksempler</h3>
 <table class="t"><tr><th>På dansk</th><th>På tysk</th><th>Svar</th></tr>
