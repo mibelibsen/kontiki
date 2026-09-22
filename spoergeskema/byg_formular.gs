@@ -7,6 +7,8 @@
  *      https://docs.google.com/spreadsheets/d/1tV_rBMFwAtc8jQUXqP32TBOSEg52ZBQ05T-MIrfAK-Y/edit
  *   2. Menuen Udvidelser → Apps Script. Slet det, der står, og indsæt hele denne fil.
  *   3. Tryk Gem (disketten), vælg funktionen "bygSkema" i rullemenuen, tryk Kør.
+ *      (Funktionen "klargoerArk" sætter kun rullemenuen med svartyper i arket
+ *      og kan køres alene, før spørgsmålene skrives ind.)
  *      Første gang spørger Google om lov — vælg din konto, "Avanceret",
  *      "Gå til … (usikker)", Tillad. Det er dit eget script på din egen konto.
  *   4. Når det er kørt, ligger der en ny fane "Links" i arket med:
@@ -50,7 +52,26 @@ const TIL_SIDST = [
   { tekst: 'Bist du …', valg: ['ein Mädchen', 'ein Junge', 'divers', 'möchte ich nicht sagen'] },
 ];
 
+const SVARTYPER = ['Ja/Nein', 'Auswahl', 'Skala 1–5', 'Zahl', 'Freier Text'];
+
+/** Sætter rullemenuen med svartyper på kolonnen Antworttyp. Kan køres alene. */
+function klargoerArk() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  const hoved = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]
+    .map(h => String(h).trim().toLowerCase());
+  const kol = hoved.findIndex(h => h.startsWith('antworttyp')) + 1;
+  if (!kol) throw new Error('Fandt ingen kolonne "Antworttyp" i første række.');
+  const regel = SpreadsheetApp.newDataValidation()
+    .requireValueInList(SVARTYPER, true)
+    .setAllowInvalid(false)
+    .setHelpText('Vælg svartypen i rullemenuen.')
+    .build();
+  sheet.getRange(2, kol, Math.max(sheet.getMaxRows() - 1, 1000), 1).setDataValidation(regel);
+  Logger.log('Rullemenu sat på kolonne %s.', kol);
+}
+
 function bygSkema() {
+  klargoerArk();
   const ark = SpreadsheetApp.getActiveSpreadsheet();
   const linjer = laesSpoergsmaal_(ark.getSheets()[0]);
   if (!linjer.length) throw new Error('Der er ingen spørgsmål i arket (ud over eksemplet).');
