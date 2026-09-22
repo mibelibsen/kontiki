@@ -111,12 +111,12 @@ def skriv_redirects(unger):
 # ------------------------------------------------------------- plakaterne
 OVERSKRIFT = 'Wie ist es, jung in Deutschland zu sein?'
 UNDERTITEL = 'Umfrage einer 9. Klasse aus Dänemark'
-TEKST = ('Hallo! Ich heiße {fornavn} und gehe in Dänemark in die 9. Klasse. '
-         'Meine Klasse sammelt Wissen darüber, wie es ist, in Deutschland jung '
-         'zu sein. Das vergleichen wir damit, wie es ist, in Dänemark jung zu '
-         'sein. Scanne bitte den QR-Code und beantworte unseren Fragebogen. '
-         'Es dauert nur ein paar Minuten, und alle Antworten sind anonym. '
-         'Vielen Dank!')
+TEKST = ('Hallo! Ich heiße {fornavn} und besuche die 9. Klasse der Kontikiskolen in '
+         'Dänemark. Wir beschäftigen uns gerade mit dem Thema „Jung sein in '
+         'Deutschland“.\n\n'
+         'Wir vergleichen das mit dem Leben als junger Mensch in Dänemark. Bitte '
+         'scanne den QR-Code und beantworte unseren kurzen Fragebogen. Es dauert '
+         'nur wenige Minuten und alle Antworten sind anonym. Vielen Dank!')
 TAK = 'Danke, dass du mitmachst!'
 
 
@@ -141,7 +141,8 @@ def plakat(navn, k, klasse='plakat'):
             f'<div class="qr">{qr.svg(adresse, ec="Q", mm=100)}</div>'
             f'<div class="navn">{html.escape(navn)}</div>'
             f'<div class="sub">{dannebrog()} 9. Klasse · Dänemark</div>'
-            f'<p class="tekst">{html.escape(TEKST.format(fornavn=fornavn))}</p>'
+            + ''.join(f'<p class="tekst">{html.escape(a)}</p>'
+                      for a in TEKST.format(fornavn=fornavn).split('\n\n')) +
             f'<div class="url">Oder im Browser: <b>{html.escape(kort)}</b></div>'
             f'<div class="fod">{html.escape(TAK)}</div>'
             f'</div>')
@@ -157,7 +158,7 @@ body{margin:0;font-family:"Liberation Sans",Arial,Helvetica,sans-serif;color:#1a
 .plakat .qr svg{display:block;width:100mm;height:100mm}
 .plakat .navn{font-size:30pt;font-weight:800;margin-top:8mm;line-height:1.1}
 .plakat .sub{color:#586074;font-size:13pt;margin:2mm 0 7mm}
-.plakat .tekst{font-size:13pt;line-height:1.45;max-width:152mm;margin:0}
+.plakat .tekst{font-size:13pt;line-height:1.45;max-width:152mm;margin:0 0 3mm}
 .plakat .url{margin-top:auto;font-size:12.5pt;border:1px solid #d3dae7;border-radius:3mm;padding:2.5mm 6mm;color:#586074}
 .plakat .url b{color:#1a2233;font-family:"Liberation Mono","DejaVu Sans Mono",monospace}
 .plakat .fod{font-size:10pt;color:#586074;margin-top:4mm}
@@ -182,7 +183,7 @@ CSS_A6 = CSS_PLAKAT + '''
 .plakat .qr svg{width:50mm;height:50mm}
 .plakat .navn{font-size:15pt;margin-top:3mm}
 .plakat .sub{font-size:8pt;margin:1mm 0 2.5mm}
-.plakat .tekst{font-size:7.6pt;line-height:1.38;max-width:86mm}
+.plakat .tekst{font-size:7.6pt;line-height:1.38;max-width:86mm;margin:0 0 1.5mm}
 .plakat .url{font-size:7pt;padding:1.2mm 3mm;border-radius:1.5mm;margin-top:auto}
 .plakat .fod{font-size:6.5pt;margin-top:1.5mm}
 '''
@@ -312,7 +313,7 @@ iframe.form{width:100%;height:900px;border:1px solid var(--line);border-radius:1
 .plakat .qr svg{display:block;width:170px;height:170px}
 .plakat .navn{font-size:1.5rem;font-weight:800;margin-top:12px;line-height:1.1}
 .plakat .sub{color:var(--muted);font-size:.85rem;margin:2px 0 10px}
-.plakat .tekst{font-size:.78rem;line-height:1.45;margin:0;color:var(--ink)}
+.plakat .tekst{font-size:.78rem;line-height:1.45;margin:0 0 6px;color:var(--ink)}
 .plakat .url{margin-top:12px;font-size:.74rem;border:1px solid var(--line);border-radius:8px;padding:5px 10px;color:var(--muted)}
 .plakat .url b{color:var(--ink);font-family:Consolas,monospace}
 .plakat .fod{font-size:.7rem;color:var(--muted);margin-top:8px}
