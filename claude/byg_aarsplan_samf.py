@@ -165,7 +165,7 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>'
        '<nav class="tabs"><a class="" href="matematik.html">Matematik</a>'
        '<a class="active" href="samfundsfag.html">Samfundsfag</a>'
-       '<a class="" href="tysk.html">Tysk</a><span class="soon">Fysik</span>'
+       '<a class="" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a>'
        '</nav></div></header><main>' + KROP + '</main><footer>'
        'Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>')
 open(UD, 'w').write(DOK)
