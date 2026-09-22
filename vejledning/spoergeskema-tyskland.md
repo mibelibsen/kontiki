@@ -2,7 +2,7 @@
 
 Sådan hænger det sammen, og hvad du selv skal gøre i Google. Det tager et
 kvarter. Resten — koder, plakater, redirects og siden — bygger Claude med
-`claude/byg_spoergeskema.py`, når du har sendt navnene og to links.
+`claude/byg_spoergeskema.py`, når du har sendt de to links.
 
 ## Sådan virker det
 
@@ -12,7 +12,7 @@ kvarter. Resten — koder, plakater, redirects og siden — bygger Claude med
   Den sender videre til spørgeskemaet med ungens navn forudfyldt i `Code`.
   Den, der svarer, ser bare spørgeskemaet.
 - **Alle svar lander i ét ark** — Google Forms' eget svar-ark. Kolonnen
-  `Code` fortæller, hvis QR-kode svaret kom fra. En fane `Optælling` tæller
+  `Code` fortæller, hvis QR-kode svaret kom fra. Fanen `Unger` tæller
   pr. ung.
 - **QR-koderne peger på sitet, ikke direkte på Google.** Så kan
   spørgeskemaet skiftes ud eller rettes, uden at plakaterne skal trykkes om.
@@ -21,38 +21,54 @@ kvarter. Resten — koder, plakater, redirects og siden — bygger Claude med
   det samme regneark (fanen `Forslag`). Den er linket fra
   https://www.mibelibsen.space/tysk-spoergeskema.html.
 
+## Det Claude allerede har oprettet i dit Google Drev (22. september)
+
+| Hvad | Link |
+|---|---|
+| Regnearket med fanen *Unger* og optællingen | https://docs.google.com/spreadsheets/d/1QwwgmHeMVc-lsMEtmXtT4BobkF0HGyjVr9Twi1tCWbY/edit |
+| Forslagsformularen, tom | https://docs.google.com/forms/d/1DfEjbE50smAekXFi__JvAyzlV2vXOo4-yECYETSimJM/edit |
+| Selve spørgeskemaet, tomt | https://docs.google.com/forms/d/1_zEW7e1bvwL46TeywzPD9S3f8NzQ8CwDco62mWMWUgc/edit |
+| Teksterne til begge formularer, klar til at kopiere ind | https://docs.google.com/document/d/1h96ppA_vi6fnoye0KmNs5RWzKT5Zoh-YOCsrhBMM4TQ/edit |
+
+Claudes Drev-adgang kan oprette dokumenter, regneark og tomme formularer, men
+ikke skrive spørgsmål ind i en formular. Derfor ligger teksterne i et
+dokument ved siden af.
+
 ## 1. Regnearket
 
-1. Opret et nyt regneark: https://sheets.new — kald det fx *Ung i Tyskland*.
-2. Lav en fane `Unger` (nederst: `+`). Den fyldes senere ved at indsætte
-   indholdet af `spoergeskema/unger-links.tsv` — det falder selv i kolonner.
+Regnearket er lavet. Fanen *Unger* har navn, kode og QR-link for alle 23 og en
+kolonne *Antal svar*, der tæller i fanen `Svar`, så snart den findes. Indtil da
+er kolonnen tom. Det tomme ark *Tysk spørgeskema*, du selv oprettede, kan
+slettes.
 
 ## 2. Forslagsformularen (til ungerne)
 
-1. Opret en ny formular: https://forms.new — titel *Foreslå et spørgsmål*.
-2. Tre spørgsmål: **Dit navn** (kort svar), **Dit spørgsmål på dansk**
-   (afsnit), **Svarmuligheder** (kort svar, fx *Under 2 · 2–4 · Over 4*).
+1. Åbn https://docs.google.com/forms/d/1DfEjbE50smAekXFi__JvAyzlV2vXOo4-yECYETSimJM/edit
+2. Kopiér titel, beskrivelse og de fire spørgsmål ind fra dokumentet med
+   teksterne: **Dit navn** (kort svar), **Dit spørgsmål på dansk** (afsnit),
+   **Svarmuligheder** (kort svar), og et frivilligt *hvorfor*.
 3. Fanen **Svar** øverst → ikonet *Link til Sheets* → **Vælg eksisterende
-   regneark** → vælg *Ung i Tyskland*. Omdøb den nye fane i regnearket til
-   `Forslag`.
+   regneark** → *Tysk spørgeskema – Unger og optælling*. Omdøb den nye fane i
+   regnearket til `Forslag`.
 4. Knappen **Send** → kæde-ikonet → **Kopiér**. Det er link nummer ét.
 
 ## 3. Selve spørgeskemaet (på tysk)
 
-1. Ny formular: https://forms.new — titel fx *Jung sein in Deutschland*.
-   Beskrivelse på tysk: hvem I er, at det er anonymt, at det tager få minutter.
+1. Åbn https://docs.google.com/forms/d/1_zEW7e1bvwL46TeywzPD9S3f8NzQ8CwDco62mWMWUgc/edit
+   og kopiér titel og beskrivelse ind fra dokumentet med teksterne.
 2. **Første spørgsmål: `Code`** — kort svar, *Påkrævet*, beskrivelse
    *Bitte nicht ändern*. Det er dét felt, linket fylder navnet i. Stav det
-   præcis `Code`, for optællingen kigger efter kolonnen.
+   præcis `Code`, for optællingen kigger efter kolonne B.
 3. Herefter klassens spørgsmål — lukkede svar, ét emne ad gangen. Til sidst
-   alder og køn.
+   alder og køn. Eksempler står i dokumentet.
 4. Fanen **Indstillinger** → *Svar*: slå **Begræns til 1 svar** FRA og
    **Indsaml e-mailadresser** FRA. Står der noget om at begrænse til brugere
    i organisationen, så slå det FRA — dem der svarer, er tyske unge uden
    login.
 5. Fanen **Svar** → *Link til Sheets* → **Vælg eksisterende regneark** →
-   *Ung i Tyskland*. Omdøb fanen til `Svar`. Kolonne A er tidspunkt,
-   kolonne B er `Code`.
+   *Tysk spørgeskema – Unger og optælling*. Omdøb fanen til `Svar`.
+   Kolonne A er tidspunkt, kolonne B er `Code`. Fra det øjeblik tæller
+   kolonnen *Antal svar* i fanen *Unger*.
 6. **Linket med det forudfyldte felt:** de tre prikker øverst til højre →
    **Hent link med forudfyldte felter**. Skriv `NAVN` i feltet `Code`, tryk
    **Hent link** nederst og **Kopiér link**. Det er link nummer to. Det ser
@@ -63,17 +79,16 @@ Formularerne ligger altid samlet her: https://docs.google.com/forms/u/0/
 
 ## 4. Send til Claude
 
-Navnene (ét pr. linje) og de to links. Claude sætter dem i
-`spoergeskema/unger.txt` og `spoergeskema/opsaetning.json`, kører scriptet,
-pusher til `main` og sender:
+De to links. Claude sætter dem i `spoergeskema/opsaetning.json`, kører
+scriptet og pusher. Navnene er allerede sat ind, og plakaterne er bygget:
 
 | Fil | Hvad |
 |---|---|
 | `spoergeskema/qr-plakater-a4.pdf` | Én plakat pr. ung: QR, navn, tysk tekst, adressen i klartekst |
 | `spoergeskema/qr-kort-a6.pdf` | Samme som kort, fire pr. A4-ark, klippes langs de stiplede linjer |
-| `spoergeskema/unger-links.tsv` | Navn, kode og links — indsættes i fanen `Unger` |
+| `spoergeskema/unger-links.tsv` | Navn, kode og links — det samme som fanen `Unger` |
 
-Mappen `spoergeskema/` udgives ikke. Kun koderne (`/u/anna-k`) står i
+Mappen `spoergeskema/` udgives ikke. Kun koderne (`/u/anna`) står i
 `vercel.json`, og de er alligevel trykt på plakaterne.
 
 Skal der en ung til eller fra, eller får et spørgeskema nyt link: ret
@@ -82,34 +97,35 @@ stadig, for koderne peger på sitet.
 
 ## 5. Optællingen i regnearket
 
-Lav fanen `Optælling`. Kolonne A: navnene, præcis som de står på
-plakaterne (kopiér fra fanen `Unger`). I `B2`, og træk ned:
+Optællingen ligger i fanen *Unger*, kolonne *Antal svar*:
 
 ```
-=COUNTIF(Svar!$B:$B; A2)
+=IFERROR(COUNTIF(Svar!$B:$B; A2); "")
 ```
 
-(Sheets viser den måske som `TÆL.HVIS`; semikolon mellem argumenterne i
-dansk opsætning.) Nederst: `=SUM(B2:B40)` for det samlede antal.
+Den tæller, hvor mange rækker i `Svar` der har ungens navn i kolonne B, og
+viser ingenting, så længe fanen `Svar` ikke findes. Nederst står `I alt`.
 
 Vil du have **en fane pr. ung med ungens egne svar**, så lav en fane med
 navnet og skriv i `A1`:
 
 ```
-=FILTER(Svar!A:Z; Svar!B:B="Anna K.")
+=FILTER(Svar!A:Z; Svar!B:B="Anna")
 ```
 
 Så har alle den samme udgave af skemaet, og alle svar ligger stadig samlet
 i `Svar`.
 
-Et søjlediagram over optællingen: markér `A1:B40` → **Indsæt** → **Diagram**.
+Et søjlediagram over optællingen: markér `A1:A24`, hold Ctrl nede og markér
+`D1:D24` → **Indsæt** → **Diagram**.
 
 ## 6. Prøv det, før I tager af sted
 
 1. Scan eksemplet på https://www.mibelibsen.space/tysk-spoergeskema.html —
    det fører tilbage til siden. Så virker sitet og redirects.
 2. Scan én af de rigtige plakater og send et prøvesvar. Se, at rækken lander
-   i `Svar` med det rigtige navn i kolonne B, og at `Optælling` tæller 1.
+   i `Svar` med det rigtige navn i kolonne B, og at *Antal svar* i fanen
+   `Unger` viser 1.
 3. Slet prøvesvaret i `Svar`, før det går løs.
 
 ## Hvis I skal bruge Microsoft Forms i stedet

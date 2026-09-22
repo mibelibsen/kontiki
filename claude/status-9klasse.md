@@ -26,9 +26,15 @@ Tyskland* (`tysk-spoergeskema.html`) men ingen årsplan. **Fysik** findes ikke e
 **Spørgeskemaet til Tyskland: 23 unger har fået koder og plakater**
 (`spoergeskema/qr-plakater-a4.pdf`, `qr-kort-a6.pdf`, sendt i Code 22.9.).
 Det mangler linkene til de to Google Forms (forslag + selve skemaet med `NAVN`
-i det forudfyldte felt) — indtil da fører alle koder til siden. Brugerens
-regneark til projektet hedder *Tysk spørgeskema*:
-https://docs.google.com/spreadsheets/d/18Ns9i35tnPWY00QDDFkzAJ7DXv6BE_K5jiOa-Qto9AQ/edit
+i det forudfyldte felt) — indtil da fører alle koder til siden.
+**Oprettet i brugerens Google Drev via Drev-adgangen** (den kan lave dokumenter,
+regneark og tomme formularer, men ikke skrive spørgsmål i en formular):
+- regneark med fanen Unger og optælling:
+  https://docs.google.com/spreadsheets/d/1QwwgmHeMVc-lsMEtmXtT4BobkF0HGyjVr9Twi1tCWbY/edit
+- forslagsformular (tom): https://docs.google.com/forms/d/1DfEjbE50smAekXFi__JvAyzlV2vXOo4-yECYETSimJM/edit
+- spørgeskemaet (tomt): https://docs.google.com/forms/d/1_zEW7e1bvwL46TeywzPD9S3f8NzQ8CwDco62mWMWUgc/edit
+- teksterne til formularerne: https://docs.google.com/document/d/1h96ppA_vi6fnoye0KmNs5RWzKT5Zoh-YOCsrhBMM4TQ/edit
+Brugerens eget, tomme ark *Tysk spørgeskema* (18Ns9i35…) kan slettes.
 Når linkene kommer: sæt dem i `spoergeskema/opsaetning.json`, kør
 `python3 claude/byg_spoergeskema.py`, push. Plakaterne behøver ikke trykkes om.
 Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
