@@ -41,19 +41,26 @@ kolonne *Antal svar*, der tæller i fanen `Svar`, så snart den findes. Indtil d
 er kolonnen tom. Det tomme ark *Tysk spørgeskema*, du selv oprettede, kan
 slettes.
 
-## 2. Forslagsformularen (til ungerne)
+## 2. Ungernes spørgsmål (et fælles ark)
 
-1. Åbn https://docs.google.com/forms/d/1DfEjbE50smAekXFi__JvAyzlV2vXOo4-yECYETSimJM/edit
-2. Kopiér titel, beskrivelse og de fire spørgsmål ind fra dokumentet med
-   teksterne: **Dit navn** (kort svar), **Dit spørgsmål på tysk** (afsnit),
-   **Svarmuligheder** (kort svar), og et frivilligt *hvorfor*.
-3. Fanen **Svar** øverst → ikonet *Link til Sheets* → **Vælg eksisterende
-   regneark** → *Tysk spørgeskema – Unger og optælling*. Omdøb den nye fane i
-   regnearket til `Forslag`.
-4. Ungerne skriver ind på
-   https://docs.google.com/forms/d/e/1FAIpQLSdRni5Xoe8UdGfL0w-PwQfcYZZPilg7gAmW7Hmrek8JS-VIgg/viewform
-   — det link er allerede sat på siden. Knappen **Send** → kæde-ikonet giver
-   det samme skema med Googles offentlige adresse.
+Forslagsformularen er droppet. Ungerne skriver i stedet direkte i arket
+*Ung i Tyskland – jeres spørgsmål*, som er delt med *Alle med linket* som
+redaktør: https://docs.google.com/spreadsheets/d/1tV_rBMFwAtc8jQUXqP32TBOSEg52ZBQ05T-MIrfAK-Y/edit
+
+Kolonner: Navn · Deine Frage auf Deutsch · Antworttyp · Antwortmöglichkeiten
+(nur bei Auswahl) · Kommentar. Svartyperne er *Ja/Nein*, *Auswahl*,
+*Skala 1–5*, *Zahl* og *Freier Text* — de svarer én til én til
+spørgsmålstyper i Google Forms. Linjen *Eksempel* øverst springes over af
+sitet.
+
+Projektsiden og tysk-siden linker til arket, og projektsiden henter arket
+som CSV (`/gviz/tq?tqx=out:csv`), hver gang den åbnes, og viser hvert
+spørgsmål som et kort. Det kræver kun, at arket er delt med alle med linket.
+
+Når klassen har skrevet sine spørgsmål: Claude læser arket, retter tysken og
+laver et Apps Script, der bygger hele spørgeskemaet i Google Forms med de
+rigtige typer — én gang ved en computer: arket → Udvidelser → Apps Script →
+indsæt → Kør.
 
 ## 3. Selve spørgeskemaet (på tysk)
 

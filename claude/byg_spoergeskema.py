@@ -369,9 +369,9 @@ def liste_html():
     ikke. Kolonnerne følger formularens spørgsmål, så nye felter kommer med af
     sig selv. Kan CSV'en ikke hentes, vises et link til listen i Google."""
     aabn = (f'<a class="btnlink ghost" href="{html.escape(FORSLAG_LISTE)}" target="_blank" '
-            f'rel="noopener">Åbn listen i Google</a>' if FORSLAG_LISTE else '')
+            f'rel="noopener">Åbn arket</a>' if FORSLAG_LISTE else '')
     return f"""<div class="blok gron" id="jeres"><h3>Jeres spørgsmål indtil nu <span id="antal"></span></h3>
-<p>Listen hentes fra regnearket, hver gang siden åbnes. Nye forslag står her et øjeblik efter, at de er sendt.</p>
+<p>Listen hentes fra det fælles regneark, hver gang siden åbnes. Nye spørgsmål står her et øjeblik efter, at de er skrevet ind.</p>
 <div class="liste" id="liste"><p class="tom">Henter forslagene …</p></div>
 {aabn}</div>
 <script>
@@ -397,7 +397,7 @@ def liste_html():
     if(!r.ok) throw new Error(r.status); return r.text();
   }}).then(function(t){{
     var rows=csv(t); if(!rows.length) throw new Error('tom');
-    var hoved=rows[0], data=rows.slice(1).reverse();
+    var hoved=rows[0], data=rows.slice(1).filter(function(r){{return (r[0]||'').trim().toLowerCase()!=='eksempel';}}).reverse();
     var vis=[]; hoved.forEach(function(h,i){{ if(!SKJUL.test(h.trim())) vis.push(i); }});
     antal.textContent='('+data.length+')';
     if(!data.length){{ el.innerHTML='<p class="tom">Ingen forslag endnu. Bliv den første!</p>'; return; }}
@@ -416,10 +416,16 @@ def liste_html():
 
 def skriv_side(unger):
     if FORSLAG:
-        forslag_knap = f'<a class="btnlink" href="{html.escape(FORSLAG)}" target="_blank" rel="noopener">Foreslå et spørgsmål</a>'
-        forslag_blok = (f'<p>Formularen ligger her — den åbner også i et nyt vindue, hvis du vil have den stor:</p>'
-                        f'{forslag_knap}'
-                        f'<iframe class="form" src="{html.escape(FORSLAG)}?embedded=true" title="Foreslå et spørgsmål" loading="lazy"></iframe>')
+        forslag_knap = f'<a class="btnlink" href="{html.escape(FORSLAG)}" target="_blank" rel="noopener">Skriv dit spørgsmål i arket</a>'
+        forslag_blok = ('<div class="blok"><h3>Sådan skriver du et spørgsmål</h3>'
+                        '<p>Spørgsmålene samles i ét fælles regneark, som alle i klassen kan skrive i. '
+                        'Åbn arket, find den næste tomme linje, og udfyld: dit navn, spørgsmålet på tysk, '
+                        'svartypen og — hvis svartypen er <i>Auswahl</i> — svarmulighederne.</p>'
+                        '<p><b>Svartyper:</b> <i>Ja/Nein</i> · <i>Auswahl</i> (flere svar at vælge imellem) · '
+                        '<i>Skala 1–5</i> · <i>Zahl</i> (et tal, fx timer eller euro) · <i>Freier Text</i>. '
+                        'Husk: kun de fire første kan tælles og tegnes som diagram.</p>'
+                        '<p>Ret ikke i andres linjer. Øverst står et eksempel, som ikke tæller med.</p>'
+                        f'{forslag_knap}</div>')
     else:
         forslag_knap = ''
         forslag_blok = ('<div class="note gul"><b>Formularen er på vej.</b> Linket til '
