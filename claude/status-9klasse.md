@@ -23,12 +23,15 @@ moduler og lektier ligger i `facit/` som PDF.
 **Samfundsfag** har årsplan og en tekstside. **Tysk** har projektet *Ung i
 Tyskland* (`tysk-spoergeskema.html`) men ingen årsplan. **Fysik** findes ikke endnu.
 
-**Spørgeskemaet til Tyskland venter på to ting fra brugeren:** navnelisten og
-linkene til de to Google Forms (forslag + selve skemaet med `NAVN` i det
-forudfyldte felt). Vejledningen med links står i
-`vejledning/spoergeskema-tyskland.md`. Når de kommer: sæt dem i
-`spoergeskema/unger.txt` og `spoergeskema/opsaetning.json`, kør
-`python3 claude/byg_spoergeskema.py`, push, og send PDF'erne i Code.
+**Spørgeskemaet til Tyskland: 23 unger har fået koder og plakater**
+(`spoergeskema/qr-plakater-a4.pdf`, `qr-kort-a6.pdf`, sendt i Code 22.9.).
+Det mangler linkene til de to Google Forms (forslag + selve skemaet med `NAVN`
+i det forudfyldte felt) — indtil da fører alle koder til siden. Brugerens
+regneark til projektet hedder *Tysk spørgeskema*:
+https://docs.google.com/spreadsheets/d/18Ns9i35tnPWY00QDDFkzAJ7DXv6BE_K5jiOa-Qto9AQ/edit
+Når linkene kommer: sæt dem i `spoergeskema/opsaetning.json`, kør
+`python3 claude/byg_spoergeskema.py`, push. Plakaterne behøver ikke trykkes om.
+Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 
 ## Næste skridt
 

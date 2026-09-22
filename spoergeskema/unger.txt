@@ -2,3 +2,26 @@
 # "Anna K." bliver til www.mibelibsen.space/u/anna-k
 # To unger med samme fornavn: skriv efternavnets forbogstav på begge.
 # Linjer med # er kommentarer.
+Anna
+Kasper
+Asta
+Luna
+Caroline
+Milius
+Clara
+Nor
+Emilie
+Oskar
+Emily
+Ronja
+Flora
+Savanna
+Frida
+Silke
+Helene
+Simone
+Hjalte
+Viktor
+Johan
+William
+Jonas
