@@ -40,11 +40,12 @@ PROGRAM = [
   'grupperne fordeler rollerne mellem sig.', 'faelles'),
  ('0:15', '0:45', 'Forsøg 1 sættes op', 'Madprøverne vejes og pakkes ind på '
   'fem måder. De skal stå urørt i to timer.', 'forsog'),
- ('0:45', '1:30', 'Forsøg 2 · Hvilken plast er det?', 'Flyde-synke-test i vand '
+ ('0:45', '1:45', 'Forsøg 2 · Lav din egen bioplast', 'Kartoffelmel, vand, '
+  'glycerin og eddike varmes to minutter i mikroovnen til en film, der sættes '
+  'til tørring.', 'forsog'),
+ ('1:45', '2:00', 'Pause', '', 'pause'),
+ ('2:00', '2:45', 'Forsøg 3 · Hvilken plast er det?', 'Flyde-synke-test i vand '
   'og saltvand. Gæt først, mål bagefter, tjek koden til sidst.', 'forsog'),
- ('1:30', '1:45', 'Pause', '', 'pause'),
- ('1:45', '2:45', 'Forsøg 3 · Lav din egen bioplast', 'Kartoffelmel, vand, '
-  'glycerin og eddike koges til en film, der sættes til tørring.', 'forsog'),
  ('2:45', '3:10', 'Vejning nummer to', 'Prøverne vejes igen. Vægttabet regnes '
   'om til procent og tegnes som søjlediagram.', 'forsog'),
  ('3:10', '3:25', 'Dilemmaet', 'Hver gruppe tager stilling — med egne tal.',
@@ -100,7 +101,7 @@ FORBRUG = [
  ('Frysepose', 1, 'stk', 'Én pr. gruppe'),
  ('Madpapir', 1, 'ark', 'Ét ark pr. gruppe — en rulle rækker til alle'),
  ('Gennemsigtige glas eller bægre', 3, 'stk', 'Vand, saltvand og skylning'),
- ('Engangsbæger til bioplast', 2, 'stk', 'Ét til at blande, ét til at støbe'),
+ ('Engangsbæger til bioplast', 2, 'stk', 'Ét til at blande og varme (skal tåle mikroovn), ét til at støbe'),
 ]
 # (vare, maengde pr. dag, enhed, note) — det der bruges pr. hold, ikke pr. gruppe
 DAGSFORBRUG = [
@@ -125,16 +126,16 @@ for vare, pr_dag, enhed, note in DAGSFORBRUG:
 FAST = [
  ('Køkkenvægt med to decimaler', '3 stk', 'Grupperne kan dele. To decimaler er '
   'et krav — med hele gram kan vægttabet ikke ses.'),
- ('Kogeplade eller mikroovn', '1-2 stk', 'Bioplasten skal varmes under omrøring.'),
+ ('Mikrobølgeovn', '1-2 stk', 'Bioplasten varmes 2 minutter i alt, med omrøring tre gange undervejs.'),
  ('Husholdningsfilm', '1 rulle', ''),
  ('Alufolie', '1 rulle', ''),
  ('Bagepapir', '1 rulle', 'Bioplasten støbes på bagepapir.'),
  ('Køkkenrulle og karklude', '', ''),
  ('Grydeske eller træspatel', '6 stk', ''),
  ('Tuschpen og maskeringstape', '', 'Alle prøver skal mærkes med gruppe og dag.'),
- ('Engangshandsker', '1 pakke', 'Stivelsesmassen er brandvarm.'),
+ ('Engangshandsker', '1 pakke', 'Bægeret og stivelsesmassen er brandvarme, når de kommer ud af mikroovnen.'),
  ('Denatureret sprit', '500 ml', 'Kun hvis I vil prøve den svære sortering. '
-  'Må ikke være i nærheden af kogepladen.'),
+  'Må ikke stå ved mikroovnen.'),
 ]
 
 FORVENTET = [
@@ -256,15 +257,16 @@ hver gruppe svare — med deres egne måletal i hånden, ikke med en mavefornemm
 senere på dagen. Det, der er forsvundet, er vand. Vægttabet regnes om til
 procent, så stykker med forskellig startvægt kan sammenlignes, og tegnes som
 søjlediagram.</p></div>
-<div class="blok gron"><h3>2 · Hvilken plast er det?</h3>
+<div class="blok gron"><h3>2 · Lav din egen bioplast</h3>
+<p>Kartoffelmel, vand, glycerin og eddike varmes to minutter i mikroovnen til
+en klar, sej masse, der støbes tyndt ud og tørrer til en film resten af dagen.
+To hold med forskellig mængde glycerin viser, at plast ikke er ét materiale,
+men noget man kan skrue på.</p></div>
+<div class="blok gron"><h3>3 · Hvilken plast er det?</h3>
 <p>Stumper af madindpakning lægges i vand og i mættet saltvand. Om de flyder
 eller synker afhænger af massefylden, og det afgør hvilken plasttype det er.
 Først gætter grupperne, så måler de, og til sidst tjekker de mod
 genbrugstrekanten på emballagen — passer det?</p></div>
-<div class="blok gron"><h3>3 · Lav din egen bioplast</h3>
-<p>Kartoffelmel, vand, glycerin og eddike varmes til en klar, sej masse, der
-støbes tyndt ud og tørrer til en film. To hold med forskellig mængde glycerin
-viser, at plast ikke er ét materiale, men noget man kan skrue på.</p></div>
 
 <h2 class="sec">Programmet</h2>
 {PROGRAMTABEL_UDEN_TID}
@@ -277,8 +279,8 @@ tidsholder og materialemester.</p>
 
 <div class="blok advar"><h3>Sikkerhed</h3>
 <p>Stivelsesmassen bliver over 90 grader varm og klistrer til huden — brug
-handsker, og rør kun i den med spatel. Sprit må aldrig stå på eller ved
-kogepladen. Og <b>ingenting fra forsøgene må spises</b>, heller ikke brødet.</p></div>'''
+handsker, og rør kun i den med spatel. Sprit må aldrig stå ved
+mikroovnen. Og <b>ingenting fra forsøgene må spises</b>, heller ikke brødet.</p></div>'''
 
 open('feature-plastik-og-foedevarer.html', 'w').write(
     side('Plastik og fødevarer · Naturfagsuge 2026', 'Feature', KROP_SITE))
@@ -337,7 +339,24 @@ Eksempel: taber et stykke 0,45 g af 12,50 g, er tabet 0,45 ÷ 12,50 · 100 = 3,6
 
 <div class="figur">{graf_fig}</div>
 
-<h2 class="sec">Forsøg 2 · Hvilken plast er det?</h2>
+<h2 class="sec">Forsøg 2 · Lav din egen bioplast</h2>
+<div class="blok"><h3>Opskrift pr. hold — I laver to</h3>
+<p><b>Hold A:</b> 1 spsk kartoffelmel · 4 spsk vand · <b>1 tsk glycerin</b> ·
+1 tsk eddike.<br>
+<b>Hold B:</b> det samme, men <b>kun ¼ tsk glycerin</b>.</p>
+<p>Rør sammen koldt i et bæger, der tåler mikroovn, til der ikke er klumper.
+Varm i mikroovnen <b>2 minutter i alt</b>: 30 sekunder, tag bægeret ud med
+handsker og rør rundt, og sådan fire gange, så der bliver rørt tre gange
+undervejs. Massen skal være klar og sej til sidst. Hæld den tyndt ud på
+bagepapir, og lad den tørre resten af dagen. Mærk begge med gruppe og A eller B.</p></div>
+<div class="blok"><h3>Hvad skete der?</h3>
+<p>Hold A føles: <span class="skriv" style="min-width:300px"></span></p>
+<p>Hold B føles: <span class="skriv" style="min-width:300px"></span></p>
+<p>Hvad gør glycerinen? <span class="skriv" style="min-width:380px"></span></p>
+<p>Kunne jeres bioplast pakke et brød ind i en uge? Hvorfor, eller hvorfor ikke?
+<span class="skriv" style="min-width:420px"></span></p></div>
+
+<h2 class="sec">Forsøg 3 · Hvilken plast er det?</h2>
 <div class="blok"><h3>Sådan gør I</h3>
 <p>Klip fem små stumper af forskellig madindpakning. Skriv jeres <b>gæt</b> først.
 Læg så hver stump i vand, tryk den ned under overfladen med en pind, så luften
@@ -351,21 +370,6 @@ Synker i begge: over 1,2 — PET.</p></div>
 <p>Hvor mange ramte I rigtigt? <span class="skriv"></span> ud af 5.
 Hvad overraskede jer? <span class="skriv" style="min-width:380px"></span></p></div>
 
-<h2 class="sec">Forsøg 3 · Lav din egen bioplast</h2>
-<div class="blok"><h3>Opskrift pr. hold — I laver to</h3>
-<p><b>Hold A:</b> 1 spsk kartoffelmel · 4 spsk vand · <b>1 tsk glycerin</b> ·
-1 tsk eddike.<br>
-<b>Hold B:</b> det samme, men <b>kun ¼ tsk glycerin</b>.</p>
-<p>Rør sammen koldt, til der ikke er klumper. Varm under omrøring, til massen
-bliver klar og sej — det tager et par minutter. Hæld den tyndt ud på bagepapir,
-og lad den tørre. Mærk begge med gruppe og A eller B.</p></div>
-<div class="blok"><h3>Hvad skete der?</h3>
-<p>Hold A føles: <span class="skriv" style="min-width:300px"></span></p>
-<p>Hold B føles: <span class="skriv" style="min-width:300px"></span></p>
-<p>Hvad gør glycerinen? <span class="skriv" style="min-width:380px"></span></p>
-<p>Kunne jeres bioplast pakke et brød ind i en uge? Hvorfor, eller hvorfor ikke?
-<span class="skriv" style="min-width:420px"></span></p></div>
-
 <h2 class="sec">Dilemmaet — gruppens svar</h2>
 <div class="blok"><h3>Hvornår er plast om maden det klogeste valg?</h3>
 <p>Skriv jeres svar i tre sætninger. Mindst én af dem skal indeholde et tal fra
@@ -377,8 +381,8 @@ jeres eget forsøg.</p>
 <span class="skriv" style="min-width:420px"></span></p></div>
 
 <div class="blok advar"><h3>Husk</h3>
-<p>Handsker på ved kogepladen. Ingenting fra forsøgene må spises — heller ikke
-brødet.</p></div>'''
+<p>Handsker på, når bægeret kommer ud af mikroovnen. Ingenting fra forsøgene må
+spises — heller ikke brødet.</p></div>'''
 
 open(os.path.join(SCRATCH, 'ungeark-plastik.html'), 'w').write(
     side('Ungeark · Plastik og fødevarer', 'Ungeark', KROP_UNGE, fane=False))
@@ -452,7 +456,7 @@ lagt 20 % oven i, fordi noget altid spildes.</p>
 <h3>Udstyr, der ikke bruges op</h3>
 {fast_tabel}
 
-<h2 class="sec">Forsøg 2 · facit til massefylde</h2>
+<h2 class="sec">Forsøg 3 · facit til massefylde</h2>
 <p class="mat">Tallene er typiske værdier for ren plast. Mættet saltvand ligger
 omkring {FG._dk(MAETTET_SALT)} g/cm³, og det er derfor det kan skille PS fra
 PET.</p>
@@ -488,10 +492,12 @@ skive brød i frysepose <i>med</i> et hul i og sammenlign.</p></div>
 
 <h2 class="sec">Sikkerhed</h2>
 <div class="blok advar"><p>Stivelsesmassen bliver over 90 grader varm, og den
-klistrer — den er værre end kogende vand at få på huden. Handsker på, og kun
-spatel i gryden.</p>
+klistrer — den er værre end kogende vand at få på huden. Bægeret er lige så
+varmt, når det kommer ud af mikroovnen. Handsker på, og kun spatel i bægeret.</p>
+<p>Mikroovnen: 2 minutter i alt, delt i fire gange 30 sekunder med omrøring
+imellem. Kører den uafbrudt, koger massen over og brænder på i bunden.</p>
 <p>Denatureret sprit er brandfarlig. Den skal stå i den anden ende af lokalet
-end kogepladen, og kun bruges, hvis I vælger den svære sortering.</p>
+end mikroovnen, og kun bruges, hvis I vælger den svære sortering.</p>
 <p>Intet fra forsøgene må spises. Sig det ved velkomsten, og sig det igen, når
 brødet kommer frem.</p>
 <p>Mærk alle prøver med gruppe og dag. Tre hold på tre dage betyder tre sæt
@@ -500,8 +506,9 @@ prøver, der kan forveksles.</p></div>
 <h2 class="sec">Nulstilling mellem dagene</h2>
 <div class="blok"><p>Smid de gamle madprøver ud med det samme — de lugter dagen
 efter. Saltvandet kan genbruges; hæld det tilbage i dunken gennem et kaffefilter.
-Bioplasten skal blive liggende, til den er tør: lad den ligge natten over, og lad
-ungerne hente den næste dag, hvis de har tid.</p>
+Bioplasten laves nu tidligt på dagen, så den tynde film er som regel tør, når
+holdet går hjem. Er den ikke, så lad den ligge natten over, og lad ungerne
+hente den næste dag.</p>
 <p>Skriv dagens klassegennemsnit op på et ark, der hænger fremme. Så kan hold 2
 og 3 sammenligne med dem, der var der før — og fredagens hold har tre datasæt at
 konkludere på. Det er den bedste gratis gevinst ved at køre samme forløb tre
