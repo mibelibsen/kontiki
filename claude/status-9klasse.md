@@ -69,6 +69,14 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
 
+## Rettet 23. september 2026
+
+- **Plastik-forløbet:** bioplast er nu forsøg 2 (0:45–1:45) og
+  plastsorteringen forsøg 3 (2:00–2:45), så filmen tørrer resten af dagen.
+  Bioplasten varmes i mikroovn: 2 minutter i alt, 4 × 30 sekunder med omrøring
+  tre gange undervejs. Kogepladen er ude af udstyrslisten. Side, ungeark-PDF,
+  vejledning-PDF og Word er bygget om.
+
 ## Rettet 22. september 2026
 
 - **Plastik-forløbet: brød i stedet for agurk, "Frysepose" og "Madpapir".**
