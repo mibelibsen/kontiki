@@ -77,6 +77,7 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `materiale/peter-hoffmann-spoerg-paa-tysk.mp4` + plakatbillede. Ligger på
   `tysk.html` og under "Din QR-kode" på projektsiden (`.video`-blok i
   `byg_spoergeskema.py`). Skrumpes med ffmpeg fra `pip install imageio-ffmpeg`.
+  Peter Hoffmann er indforstået med, at videoen ligger offentligt (24.9.).
 - **Vurderingsskema til projektopgaven** i `vejledning/`, som PDF og Word.
   Bygget af `claude/byg_vurderingsskema.py`, hvor kriterierne står ét sted:
   afkrydsningsskemaet, profilen og niveaubeskrivelserne bygges alle af den
