@@ -69,6 +69,15 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
 
+## Rettet 24. september 2026
+
+- **Video på tysk-siden:** Peter Hoffmann (klassens tysklærer) viser, hvordan
+  man spørger på tysk, om en person vil udfylde skemaet. Hentet fra brugerens
+  Drev (19 sekunder, 1080×1440, 75 MB), skrumpet til 720×960, 3,3 MB:
+  `materiale/peter-hoffmann-spoerg-paa-tysk.mp4` + plakatbillede. Ligger på
+  `tysk.html` og under "Din QR-kode" på projektsiden (`.video`-blok i
+  `byg_spoergeskema.py`). Skrumpes med ffmpeg fra `pip install imageio-ffmpeg`.
+
 ## Rettet 23. september 2026
 
 - **Plastik-forløbet:** bioplast er nu forsøg 2 (0:45–1:45) og
