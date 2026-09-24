@@ -296,7 +296,7 @@ footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);fon
 .figur svg{max-width:100%;height:auto}
 .figtekst{color:var(--muted);font-size:.9rem;margin-top:8px}
 .blok{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:18px 22px;margin:14px 0;box-shadow:var(--shadow)}
-.video{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin:16px 0}.video video{width:260px;max-width:100%;aspect-ratio:3/4;border-radius:12px;background:#000;flex:none}.video>div{flex:1;min-width:220px}.video h3{margin:0 0 8px;font-size:1.15rem}.video p{margin:0;color:var(--muted)}
+.video{scroll-margin-top:80px;display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin:16px 0}.video video{width:260px;max-width:100%;aspect-ratio:3/4;border-radius:12px;background:#000;flex:none}.video>div{flex:1;min-width:220px}.video h3{margin:0 0 8px;font-size:1.15rem}.video p{margin:0;color:var(--muted)}
 .blok.gron{border-left-color:var(--good)}
 .blok h3{margin:0 0 8px;font-size:1.15rem}
 .blok p,.blok li{color:var(--muted);font-size:.97rem}
@@ -501,7 +501,7 @@ kan se, hvem der har skaffet hvor mange.</p>
 <p>Under koden står dit navn og en tysk tekst om, hvad vi undersøger — så kan du vise et kort frem, uden at skulle forklare det hele på tysk først.</p>
 <p>Du får koden som et kort (A6) der kan ligge i lommen. Et billede af koden på telefonen virker lige så godt.</p>
 <p><b>Prøv at scanne eksemplet.</b> Det fører tilbage hertil.</p></div>
-<div class="video"><video controls playsinline preload="metadata" poster="materiale/peter-hoffmann-plakat.jpg" src="materiale/peter-hoffmann-spoerg-paa-tysk.mp4">Din browser kan ikke afspille videoen. <a href="materiale/peter-hoffmann-spoerg-paa-tysk.mp4">Hent den her</a>.</video><div><h3>Sådan spørger du på tysk</h3><p>Peter Hoffmann viser, hvordan du spørger unge på tysk, om de vil udfylde spørgeskemaet. Se den et par gange, og sig sætningerne højt, til den sidder. Så er det bare at holde kortet frem, hvis du har brug for at supplere.</p></div></div>
+<div class="video" id="video"><video controls playsinline preload="metadata" poster="materiale/peter-hoffmann-plakat.jpg" src="materiale/peter-hoffmann-spoerg-paa-tysk.mp4">Din browser kan ikke afspille videoen. <a href="materiale/peter-hoffmann-spoerg-paa-tysk.mp4">Hent den her</a>.</video><div><h3>Sådan spørger du på tysk</h3><p>Peter Hoffmann viser, hvordan du spørger unge på tysk, om de vil udfylde spørgeskemaet. Se den et par gange, og sig sætningerne højt, til den sidder. Så er det bare at holde kortet frem, hvis du har brug for at supplere.</p></div></div>
 <div class="note"><b>Status</b>{status}</div>
 </div>
 {plakat(*EKSEMPEL)}
