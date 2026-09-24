@@ -77,6 +77,16 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `materiale/peter-hoffmann-spoerg-paa-tysk.mp4` + plakatbillede. Ligger på
   `tysk.html` og under "Din QR-kode" på projektsiden (`.video`-blok i
   `byg_spoergeskema.py`). Skrumpes med ffmpeg fra `pip install imageio-ffmpeg`.
+- **Vurderingsskema til projektopgaven** i `vejledning/`, som PDF og Word.
+  Bygget af `claude/byg_vurderingsskema.py`, hvor kriterierne står ét sted:
+  afkrydsningsskemaet, profilen og niveaubeskrivelserne bygges alle af den
+  samme liste, så et kriterium ikke kan stå ét sted og mangle et andet. Tre
+  områder — arbejdsprocessen, produktet og fremlæggelsen — 16 kriterier, fire
+  niveauer, og de syv karaktertrin.
+- **`claude/byg_vejledning_docx.py` forstår nu spaltebredder.** Den læser
+  `<col style="width:…%">` og giver Word de samme proportioner som
+  HTML-udgaven. Uden det blev et skema med smalle afkrydsningsfelter til
+  seks lige brede spalter i Word.
 
 ## Rettet 23. september 2026
 

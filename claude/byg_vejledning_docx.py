@@ -43,7 +43,8 @@ class Laeser(HTMLParser):
 
     Resultatet er en liste af (slags, indhold):
       ('h1'|'h2'|'h3', tekststykker) · ('p', tekststykker) · ('figur', None)
-      ('tabel', {'hoved': [...], 'raekker': [[...]], 'tal': [bool]})
+      ('tabel', {'hoved': [...], 'raekker': [[...]], 'tal': [bool],
+                 'bredder': [procent]})
     Tekststykker er (tekst, fed, kursiv), så fremhævninger overlever.
     """
 
@@ -103,7 +104,14 @@ class Laeser(HTMLParser):
             self.aktiv = tag
         elif tag == 'table':
             self._luk_afsnit()
-            self.tabel = {'hoved': [], 'raekker': [], 'tal': []}
+            self.tabel = {'hoved': [], 'raekker': [], 'tal': [],
+                          'bredder': []}
+        elif tag == 'col' and self.tabel is not None:
+            # <col style="width:46%"> styrer også spaltebredden i Word, så et
+            # skema med smalle afkrydsningsfelter ser ens ud begge steder
+            m = re.search(r'width:\s*([\d.]+)%', a.get('style', '')) or \
+                re.match(r'([\d.]+)%?$', a.get('width', ''))
+            self.tabel['bredder'].append(float(m.group(1)) if m else 0.0)
         elif tag == 'tr' and self.tabel is not None:
             if not self.i_hoved:
                 self.tabel['raekker'].append([])
@@ -290,7 +298,11 @@ for slags, indhold in BLOKKE:
         kolonner = len(indhold['hoved'])
         t = doc.add_table(rows=1, cols=kolonner)
         t.autofit = False
-        bredder = [int(BRED / kolonner)] * kolonner
+        pct = indhold.get('bredder') or []
+        if len(pct) == kolonner and 95 <= sum(pct) <= 105:
+            bredder = [int(BRED * p / sum(pct)) for p in pct]
+        else:
+            bredder = [int(BRED / kolonner)] * kolonner
         for i, navn in enumerate(indhold['hoved']):
             c = t.rows[0].cells[i]
             c.width = bredder[i]
