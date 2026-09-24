@@ -285,6 +285,7 @@ main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
 h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
 .num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
 .note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.note ul.plan{list-style:none;margin:8px 0 0;padding:0}.note ul.plan li{display:grid;grid-template-columns:8em 1fr;gap:0 10px;padding:3px 0}
 .note.gul{border-left-color:var(--warn);background:#fff7e9}
 .btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 8px 0 0}
 .btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
@@ -444,8 +445,16 @@ def skriv_side(unger):
                         'forslagsformularen bliver sat ind her, så snart den er lavet. '
                         'Indtil da: skriv dine forslag ned, så de er klar.</div>')
     forslag_liste = liste_html() if FORSLAG_CSV else ''
-    status = (f'{len(unger)} unger har fået en kode.' if unger
-              else 'Koderne laves, når navnelisten er klar.')
+    # Tidsplanen står her, så den kan rettes ét sted. Den vises som status.
+    PLAN = [
+        ('Nu', 'Der indhentes spørgsmål.'),
+        ('Fredag kl. 16', 'Spørgsmål indhentet.'),
+        ('Mandag kl. 10', 'Spørgeskema færdigt.'),
+        ('Mandag kl. 10', 'Skilte udleveres.'),
+    ]
+    status = ('<ul class="plan">' + ''.join(
+        f'<li><b>{html.escape(t)}</b> {html.escape(h)}</li>' for t, h in PLAN)
+        + '</ul>')
     krop = f'''<header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header>
 <main>
 <section class="hero"><span class="pill">Tysk · 9. klasse</span>
@@ -492,7 +501,7 @@ kan se, hvem der har skaffet hvor mange.</p>
 <p>Du får koden som et kort (A6) der kan ligge i lommen. Et billede af koden på telefonen virker lige så godt.</p>
 <p><b>Prøv at scanne eksemplet.</b> Det fører tilbage hertil.</p></div>
 <div class="video"><video controls playsinline preload="metadata" poster="materiale/peter-hoffmann-plakat.jpg" src="materiale/peter-hoffmann-spoerg-paa-tysk.mp4">Din browser kan ikke afspille videoen. <a href="materiale/peter-hoffmann-spoerg-paa-tysk.mp4">Hent den her</a>.</video><div><h3>Sådan spørger du på tysk</h3><p>Klassens tysklærer Peter Hoffmann viser, hvordan du spørger en person, om hen vil udfylde spørgeskemaet. Se den et par gange, og sig sætningerne højt, til de sidder. Så er det bare at holde kortet frem.</p></div></div>
-<div class="note"><b>Status:</b> {status}</div>
+<div class="note"><b>Status</b>{status}</div>
 </div>
 {plakat(*EKSEMPEL)}
 </div>
