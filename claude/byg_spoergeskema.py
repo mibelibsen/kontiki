@@ -118,6 +118,7 @@ TEKST = ('Hallo! Ich heiße {fornavn} und besuche die 9. Klasse der Kontikiskole
          'scanne den QR-Code und beantworte unseren kurzen Fragebogen. Es dauert '
          'nur wenige Minuten und alle Antworten sind anonym. Vielen Dank!')
 TAK = 'Danke, dass du mitmachst!'
+SKOLE = 'kontiki-skolen.dk'      # skolens hjemmeside, står nederst på kortet
 
 
 def dannebrog(h=14):
@@ -144,7 +145,7 @@ def plakat(navn, k, klasse='plakat'):
             + ''.join(f'<p class="tekst">{html.escape(a)}</p>'
                       for a in TEKST.format(fornavn=fornavn).split('\n\n')) +
             f'<div class="url">Oder im Browser: <b>{html.escape(kort)}</b></div>'
-            f'<div class="fod">{html.escape(TAK)}</div>'
+            f'<div class="fod">{html.escape(TAK)} · Kontikiskolen · <b>{SKOLE}</b></div>'
             f'</div>')
 
 
