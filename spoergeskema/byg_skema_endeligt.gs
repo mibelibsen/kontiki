@@ -131,14 +131,18 @@ function bygEndeligtSkema() {
   // Svarene skal i regnearket, fanen "Svar".
   try { form.setDestination(FormApp.DestinationType.SPREADSHEET, SVAR_ARK_ID); } catch (e) {}
   const svarArk = SpreadsheetApp.openById(SVAR_ARK_ID);
-  svarArk.getSheets().forEach(s => {
-    const u = s.getFormUrl();
-    if (u && u.indexOf(form.getId()) >= 0 && s.getName() !== 'Svar') {
-      const gammel = svarArk.getSheetByName('Svar');
-      if (gammel) gammel.setName('Svar (gammel)');
-      s.setName('Svar');
+  // Fanen, skemaet skriver i, skal hedde "Svar". Er den det allerede, røres
+  // intet. Ellers får en gammel "Svar" et ledigt navn, og den nye omdøbes.
+  const linked = svarArk.getSheets().filter(s => (s.getFormUrl() || '').indexOf(form.getId()) >= 0);
+  if (linked.length && !linked.some(s => s.getName() === 'Svar')) {
+    const gammel = svarArk.getSheetByName('Svar');
+    if (gammel) {
+      let navn = 'Svar (gammel)', k = 2;
+      while (svarArk.getSheetByName(navn)) navn = 'Svar (gammel ' + k++ + ')';
+      gammel.setName(navn);
     }
-  });
+    linked[linked.length - 1].setName('Svar');
+  }
 
   // Udgiv, og skriv linkene i fanen "Links".
   try { form.setPublished(true); } catch (e) {}
