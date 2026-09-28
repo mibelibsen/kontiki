@@ -7,6 +7,10 @@
     {
       "source": "/algoritme",
       "destination": "/algoritme.html"
+    },
+    {
+      "source": "/video",
+      "destination": "/video.html"
     }
   ],
   "redirects": [

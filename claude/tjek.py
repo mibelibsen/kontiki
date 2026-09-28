@@ -160,7 +160,9 @@ UDEN_KRAV = {'index.html', 'matematik.html', 'samfundsfag.html', 'tysk.html', 'f
              'samfundsfag-tekster.html',
              # selvstaendigt program (reklame-algoritmen) uden links til resten
              # af sitet; pointstakken tegnes med div'er, ikke svg
-             'algoritme.html'}
+             'algoritme.html',
+             # kun videoen med Peter Hoffmann, paa /video
+             'video.html'}
 
 
 def tjek_figurer():
