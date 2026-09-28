@@ -78,8 +78,7 @@ const SPOERGSMAAL = [
   { af: 'Clara · Caroline', typ: 'tekst', frage: 'Was ist dein deutsches Lieblingsgericht?' },
   { af: 'Luna',   typ: 'valg', frage: 'Wie oft pro Woche kaufst du Süßigkeiten?',
     valg: ['Nie', '1-mal', '2- bis 3-mal', '4-mal oder öfter'] },
-  // Nors spørgsmål om øl til 13–17-årige. Fjern de to skråstreger, hvis det skal med.
-  // { af: 'Nor', typ: 'jn', frage: 'Magst du Bier?' },
+  { af: 'Nor',    typ: 'jn',   frage: 'Magst du Bier?' },
 
   // --- Leben --------------------------------------------------------------
   { af: 'Jonas',  typ: 'tekst', frage: 'Was ist dir im Leben wichtig?' },

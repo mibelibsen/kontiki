@@ -74,8 +74,8 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 - **Det endelige spørgeskema ligger i `spoergeskema/byg_skema_endeligt.gs`.**
   Arket havde 41 linjer fra 19 unger med dubletter, blandet du/Sie og
   Auswahl uden muligheder. Listen er gennemgået og står nu i scriptet selv:
-  30 spørgsmål (8 ja/nej, 9 valg med muligheder, 13 fritekst, ikke påkrævet)
-  plus alder og køn. "Magst du Bier?" er udkommenteret, brugerens valg.
+  31 spørgsmål (9 ja/nej, 9 valg med muligheder, 13 fritekst, ikke påkrævet)
+  plus alder og køn. "Magst du Bier?" er med efter brugerens valg.
   Brugeren kører `bygEndeligtSkema` fra arkets Apps Script; Code-feltet
   beholdes, så det forudfyldte link og QR-kortene holder. Det gamle
   `byg_formular.gs` (bygger af arket) ligger stadig.
