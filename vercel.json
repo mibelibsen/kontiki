@@ -11,6 +11,10 @@
     {
       "source": "/video",
       "destination": "/video.html"
+    },
+    {
+      "source": "/svar",
+      "destination": "/svar.html"
     }
   ],
   "redirects": [
