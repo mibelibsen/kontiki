@@ -47,7 +47,7 @@ STOP = [
     'Se efter, hvor højt op murstenene er skiftet ud eller repareret.'),
    ('Stellt euch auf die Brücke: Wie nah liegt das Wasser an der Straße?',
     'Stå på broen: hvor tæt ligger vandet på gaden?')]),
- (25, 'Sandtorhafen', 'Magellan-Terrassen',
+ (20, 'Sandtorhafen', 'Magellan-Terrassen',
   'Trappen mellem de to niveauer. Nederst promenaden, der må blive våd, '
   'øverst byen, der ikke må. Terrasserne er selve overgangen — og de '
   'forsvinder i vandet, når det står højt.',
@@ -60,7 +60,7 @@ STOP = [
    ('Stellt euch zu dritt auf die unterste Stufe und zu dritt auf die '
     'oberste — ein Foto.',
     'Stå tre på nederste trin og tre på øverste — ét billede.')]),
- (30, 'Dalmannkai und Am Kaiserkai', 'Die Promenade am Sandtorhafen',
+ (25, 'Dalmannkai und Am Kaiserkai', 'Die Promenade am Sandtorhafen',
   'Warften i brug. Promenaden ligger lavt, gaden ligger otte meter oppe, og '
   'imellem dem er der porte, ramper og trapper. Parkeringskældrene kan lukkes '
   'af med fluttore, når varslet kommer.',
@@ -72,15 +72,7 @@ STOP = [
    ('Verfolgt einen Fluchtweg mit den Augen: Wohin würdet ihr gehen, wenn das '
     'Wasser jetzt käme?',
     'Følg en flugtvej med øjnene: hvor ville I gå hen, hvis vandet kom nu?')]),
- (55, 'Mittagessen', 'Überseequartier oder Überseeboulevard',
-  'Spisesteder på begge niveauer og indendørs, hvis det regner. Grupperne '
-  'spiser sammen og sorterer dagens billeder imens.',
-  [('Löscht die Fotos, die ihr nicht braucht — solange ihr noch wisst, warum.',
-    'Slet de billeder, I ikke skal bruge — mens I husker hvorfor.'),
-   ('Schreibt die drei Wörter auf, mit denen eure Gruppe diesen Ort '
-    'beschreibt.',
-    'Skriv de tre ord, jeres gruppe vil bruge om stedet.')]),
- (20, 'Lohsepark und Elbarkaden', 'Magdeburger Hafen',
+ (15, 'Lohsepark und Elbarkaden', 'Magdeburger Hafen',
   'Parken ligger på warftniveau, og arkaderne langs vandet er bygget, så '
   'stueetagen kan tåle at stå i vand. Her er forskellen på de to niveauer '
   'lettest at fotografere på ét billede.',
@@ -90,7 +82,7 @@ STOP = [
    ('Findet etwas, das wegschwimmen würde, wenn das Wasser um zwei Meter '
     'steigt.',
     'Find noget, der ville flyde væk, hvis vandet steg to meter.')]),
- (40, 'Baakenhafen', 'Hafen.City.Horizonte, Baakenallee 33',
+ (35, 'Baakenhafen', 'Hafen.City.Horizonte, Baakenallee 33',
   'Den nyeste del af HafenCity, bygget højere end den ældste. I udstillingen '
   'står byen som model i 1:500, så hele systemet kan ses fra oven. Gratis '
   'adgang, åbent torsdag 10–16.',
@@ -184,6 +176,30 @@ WORTLISTE = [
  ('die Stufe', 'trinnet'), ('hieven', 'at hejse'),
 ]
 
+# ------------------------------------------------------------------- dagen
+AFGANG = '10.00'                # fælles afgang fra hotellet
+OPSAMLING = '14.30'             # fælles opsamling
+MOEDESTED = 'Magellan-Terrassen ved Sandtorhafen'
+MOEDE_HVORFOR = ('trapperne kan ikke forveksles med noget andet, der er plads '
+                 'til alle at sidde ned, og der er fire minutter til U4 ved '
+                 'Überseequartier')
+TRANSPORT = 30                  # cirka fra hotellet ind til Speicherstadt
+FROKOST = 45                    # grupperne spiser selv, men sammen
+
+# Grupperne går hver for sig og bestemmer selv rækkefølgen. For at de ikke
+# står i kø ved det samme motiv fra morgenstunden, starter de fra hver sin
+# ende: tre mod øst, to mod vest. De mødes uundgåeligt på midten, og det er i
+# orden — de fotograferer alligevel forskellige ting.
+RETNING = {
+ 1: ('vest', 'Start i Speicherstadt og arbejd jer mod øst.'),
+ 2: ('vest', 'Start i Speicherstadt og arbejd jer mod øst.'),
+ 3: ('vest', 'Start i Speicherstadt og arbejd jer mod øst.'),
+ 4: ('øst', 'Tag U4 til HafenCity Universität, start i Baakenhafen og arbejd '
+     'jer mod vest.'),
+ 5: ('øst', 'Tag U4 til HafenCity Universität, start i Baakenhafen og arbejd '
+     'jer mod vest.'),
+}
+
 FOTOREGLER = [
  'Der skal være <b>mindst én fra gruppen</b> med på hvert billede. Uden et '
  'menneske kan man ikke se, hvor stort noget er.',
@@ -197,9 +213,11 @@ FOTOREGLER = [
 ]
 
 SIKKERHED = [
- 'Grupperne går selv mellem stoppene, men mødes præcist. Sæt et klokkeslæt, '
- 'ikke «om en halv time».',
- 'Promenaderne har ingen rækværk mod vandet mange steder. Ingen fotografering '
+ f'<b>Vær ved mødestedet {OPSAMLING}</b> — ikke {OPSAMLING} plus ti minutter. '
+ 'Sæt en alarm i telefonen med det samme.',
+ 'Gruppen holder sammen hele dagen. Ingen går alene, heller ikke «lige '
+ 'derhen».',
+  'Promenaderne har ingen rækværk mod vandet mange steder. Ingen fotografering '
  'med ryggen til kajkanten.',
  'Cykelstierne i HafenCity er hurtige og ligger ofte i samme farve asfalt som '
  'fortovet.',
@@ -208,10 +226,14 @@ SIKKERHED = [
 ]
 
 I_ALT = sum(m for m, *_ in STOP)
-GANG = 45                       # cirka gangtid mellem stoppene i alt
-assert 3 * 60 + 30 <= I_ALT + GANG <= 4 * 60 + 15, \
-    f'programmet varer {I_ALT + GANG} minutter, ikke cirka fire timer'
-assert len(GRUPPER) == 5, 'der er fem projektgrupper'
+GANG = 40                       # cirka gangtid mellem stederne i alt
+BRUGT = TRANSPORT + I_ALT + GANG + FROKOST
+RAADIGHED = (14 * 60 + 30) - (10 * 60)          # 10.00 til 14.30
+LUFT = RAADIGHED - BRUGT
+assert LUFT >= 30, (f'der er kun {LUFT} minutters luft i dagen — grupperne '
+                    f'når det ikke uden at løbe')
+assert len(STOP) == len(GRUPPER) == 5, 'fem steder og fem grupper'
+assert set(RETNING) == set(range(1, 6)), 'hver gruppe skal have en retning'
 for _, _, _, _, opg in GRUPPER:
     assert len(opg) == 3, 'hver gruppe skal have tre billeder'
 
@@ -288,6 +310,11 @@ table.ord td{border-top:1px solid var(--line);padding:7px 14px}
 table.ord td:first-child{width:46%}
 ul.regler{padding-left:20px;margin:8px 0}
 ul.regler li{margin:7px 0;font-size:.93rem;color:var(--muted)}
+.dag{background:#eaf7f0;border:1px solid #bfe6d2;border-radius:12px;
+padding:12px 14px;margin:12px 0;font-size:.97rem}
+.dag div+div{margin-top:5px}
+.dag b{display:inline-block;min-width:52px;color:var(--good)}
+p.vink{color:var(--muted);font-size:.93rem;margin:8px 0}
 .figurboks{padding:6px 12px 12px}
 .figurboks svg{max-width:100%;height:auto}
 .figurboks .da{color:var(--muted);font-size:.86rem;margin:6px 0 0}
@@ -320,6 +347,7 @@ GRUPPE_JS = '''
 
 def gruppeside(nr, g):
     navn_de, navn_da, tekst_de, tekst_da, opgaver = g
+    _, retning_da = RETNING[nr]
     fotos = ''.join(
         f'<label class="p"><input type="checkbox" id="f{j}">'
         f'<span>{esc(de)}</span></label>'
@@ -341,6 +369,8 @@ def gruppeside(nr, g):
 <header class="top"><div class="nr">Gruppe {nr} · Sturmflut in der HafenCity</div>
 <h1>{esc(navn_de)}</h1></header>
 <main>
+<div class="dag"><div><b>{AFGANG}</b> fælles afgang fra hotellet</div>
+<div><b>{OPSAMLING}</b> alle mødes ved {MOEDESTED}</div></div>
 <div class="intro">{esc(tekst_de)}</div>
 
 <details class="ord" id="snit"><summary>Querschnitt — die zwei Ebenen</summary>
@@ -352,8 +382,16 @@ def gruppeside(nr, g):
 <h2>Eure drei Fotos</h2>
 {fotos}
 
-<h2>Die Route</h2>
+<h2>Fünf Orte — in eurer eigenen Reihenfolge</h2>
+<p class="vink">{esc(retning_da)} I bestemmer selv rækkefølgen og hvor længe
+I bliver — minuttallene er kun et forslag. Møder I en anden gruppe, er det
+helt i orden: I fotograferer alligevel hver jeres ting.</p>
 {stop}
+
+<h2>Frokost</h2>
+<p class="vink">I sørger selv for frokost, men <b>gruppen spiser sammen</b> —
+regn med cirka {FROKOST} minutter. Der er mad ved Überseequartier og
+Überseeboulevard, både ude og inde.</p>
 
 {wortliste()}
 
@@ -456,11 +494,32 @@ middel. Promenaderne ligger nede på de gamle kajers niveau og bliver lukket
 af, når der varsles. Spørgsmålet, I skal tage stilling til undervejs:
 <i>er det klogt at bygge sådan — eller er det at flytte problemet?</i></p></div>
 
-<h2 class="sec">Programmet</h2>
-<p>Cirka {I_ALT} minutter på stoppene plus omkring {GANG} minutters gang — i
-alt knap fire timer, cirka tre kilometer fra vest mod øst. Alle stop er
-gratis.</p>
-<div class="figur">{fig_rute}</div>
+<h2 class="sec">Dagen</h2>
+<div class="blok"><h3>{AFGANG} fælles afgang · {OPSAMLING} fælles opsamling</h3>
+<p>De fem grupper tager af sted samtidig, men går <b>hver for sig</b>. Hver
+gruppe bestemmer selv rækkefølgen af de fem steder og hvor længe den bliver.
+To grupper kan sagtens ende foran det samme motiv — de fotograferer alligevel
+hver deres emne.</p>
+<p><b>Mødested {OPSAMLING}:</b> {MOEDESTED}. Valgt fordi {MOEDE_HVORFOR}.</p>
+<p><b>Frokost:</b> grupperne sørger selv for den, men <b>spiser sammen</b>, og
+lægger den, hvor det passer i deres egen rute. Regn med cirka {FROKOST}
+minutter.</p>
+<p><b>Så de ikke står i kø ved det samme:</b> gruppe 1–3 starter i
+Speicherstadt og går mod øst, gruppe 4–5 tager U4 til HafenCity Universität og
+går mod vest.</p></div>
+
+<div class="blok"><h3>Regner det sammen?</h3>
+<p>Fra {AFGANG} til {OPSAMLING} er der {RAADIGHED} minutter. Transport ind og
+tilbage cirka {TRANSPORT}, de fem steder cirka {I_ALT}, gang imellem dem cirka
+{GANG}, frokost {FROKOST} — i alt {BRUGT}. Der er altså omkring
+<b>{LUFT} minutters luft</b> til at tage fejl af en vej, stå i kø efter mad og
+bruge længere tid ét sted end planlagt.</p></div>
+
+<h2 class="sec">De fem steder</h2>
+<p>Rækkefølgen herunder går fra vest mod øst. Alle steder er gratis.</p>
+<div class="figur">{fig_rute}
+<div class="figtekst">Forslag til rækkefølge — ikke et skema. Minuttallene er
+et gæt på, hvor længe man skal bruge, ikke en pligt.</div></div>
 
 {stop_html}
 
@@ -527,9 +586,21 @@ dok = ['<h1>Sturmflut i HafenCity · dansk udgave</h1>',
        '<p class="und">Opgaverne, ungerne får, står på tysk. Her står de med '
        'dansk oversættelse ved siden af. Siderne: '
        'mibelibsen.space/sturmflut og /sturmflut/1 til /sturmflut/5.</p>',
-       f'<p class="und">{I_ALT} minutter på stoppene + ca. {GANG} minutters '
-       'gang = knap fire timer. Alle stop er gratis.</p>',
-       '<h2>Ruten</h2>']
+       f'<p class="und"><b>{AFGANG}</b> fælles afgang fra hotellet · '
+       f'<b>{OPSAMLING}</b> alle mødes ved {MOEDESTED}. De fem grupper går '
+       'hver for sig og bestemmer selv rækkefølgen. Frokosten sørger de selv '
+       'for, men gruppen spiser sammen. Alle steder er gratis.</p>',
+       f'<p class="und">Regnestykket: {RAADIGHED} minutter til rådighed. '
+       f'Transport ca. {TRANSPORT} + de fem steder ca. {I_ALT} + gang ca. '
+       f'{GANG} + frokost {FROKOST} = {BRUGT}. Altså cirka {LUFT} minutters '
+       'luft.</p>',
+       '<h2>Hvem starter hvor</h2>',
+       '<table><thead><tr><th>Gruppe</th><th>Emne</th><th>Start</th></tr>'
+       '</thead><tbody>' + ''.join(
+           f'<tr><td>{i}</td><td>{esc(GRUPPER[i - 1][1])}</td>'
+           f'<td>{esc(RETNING[i][1])}</td></tr>' for i in range(1, 6)) +
+       '</tbody></table>',
+       '<h2>De fem steder</h2>']
 for i, (m, navn, hvor, hvad, opg) in enumerate(STOP, 1):
     dok.append(f'<h3>{i}. {esc(navn)} · {m} min</h3>')
     dok.append(f'<p class="und">{esc(hvor)} — {esc(hvad)}</p>')

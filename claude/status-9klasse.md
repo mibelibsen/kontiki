@@ -92,6 +92,13 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `vejledning/sturmflut-dansk.pdf` og udgives ikke.
 - **Alle stop er gratis.** Ruten er tjekket igennem for entré; sidste stop,
   Hafen.City.Horizonte, har gratis adgang (bekræftet hos hafencity.com).
+- **Dagen er fem selvstændige fotosafarier**, ikke én fælles rute. Fælles
+  afgang 10.00, fælles opsamling 14.30 ved Magellan-Terrassen. Grupperne
+  bestemmer selv rækkefølgen af de fem steder; gruppe 1–3 starter i vest,
+  gruppe 4–5 tager U4 mod øst, så de ikke står i kø ved det samme motiv.
+  Frokosten sørger de selv for, men gruppen spiser sammen.
+  Scriptet regner dagen igennem og nægter at skrive filerne, hvis der er
+  mindre end en halv times luft: 270 minutter til rådighed, 230 brugt.
 - **Billederne lægges i Teams løbende**, efter hvert stop — ikke om aftenen. De voksne skal kunne følge med undervejs.
 - Kort på tysksiden.
 - **`claude/tjek.py` kender nu `vercel.json`.** Links som `/sturmflut/3` er
