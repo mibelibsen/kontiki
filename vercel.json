@@ -15,6 +15,10 @@
     {
       "source": "/svar",
       "destination": "/svar.html"
+    },
+    {
+      "source": "/socialisering",
+      "destination": "/socialisering.html"
     }
   ],
   "redirects": [

@@ -80,6 +80,24 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   beholdes, så det forudfyldte link og QR-kortene holder. Det gamle
   `byg_formular.gs` (bygger af arket) ligger stadig.
 
+## Rettet 30. september 2026
+
+- **ART-forløb om vredeshåndtering: `socialisering.html` på `/socialisering`.**
+  Kropslige tegn og dæmpere, 45 minutter, til grupper på 4–8 deltagere.
+  Brugerens eget materiale er kernen — lektionsplan, fire rollespilskort,
+  vredeslog og observatørskema — sat op som side og som rigtige filer.
+- **`claude/byg_socialisering.py`** bygger siden, materialesættet (PDF og
+  Word), udklipsarket med kortene og arbejdsarket. Materialet står ét sted i
+  scriptet, så et rollespilskort ikke kan stå på siden og mangle i udklipsarket.
+- **Kortene kræver ikke dobbeltsidet print.** Bagsiden trykkes vendt 180
+  grader under forsiden; kortet klippes ud i ét stykke og foldes på midten.
+  Så kan for- og bagside ikke komme til at sidde skævt i forhold til hinanden.
+- **Nyt i figurbiblioteket:** `vredeskurve()` (logistisk kurve med det vindue,
+  hvor dæmperne virker), `kropstegn()` (advarselstegn placeret på en figur) og
+  `aandedraet()` (faser tegnet med bredde efter varighed).
+- `vercel.json` har fået en rewrite mere, så `/socialisering` virker uden
+  `.html`. Siden har ikke noget kort på forsiden — den står for sig selv.
+
 ## Rettet 24. september 2026
 
 - **Video på tysk-siden:** Peter Hoffmann (klassens tysklærer) viser, hvordan

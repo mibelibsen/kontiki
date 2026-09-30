@@ -1585,3 +1585,148 @@ def soejler(vals, kats, titel='', ynavn='', W=560, H=300, farve=None):
                  f'transform="rotate(-90 12 {(YT + YB) / 2})">{ynavn}</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+# ============================================================================
+#  ART: vredeskontrol
+# ============================================================================
+
+def vredeskurve(W=660, H=300):
+    """Vredens forloeb over tid, med det vindue hvor daemperne virker.
+
+    Kurven er en logistisk funktion, saa den stiger langsomt, knaekker og
+    flader ud — ikke en streg tegnet paa oejemaal. Vinduet markeres dér, hvor
+    haeldningen endnu er lille: det er pointen i lektionen.
+    """
+    V, HJ, TOP, BUND = 54, 24, 24, 52
+    bx0, bx1 = V, W - HJ
+    by0, by1 = TOP, H - BUND
+
+    def kurve(t):                       # t fra 0 til 1
+        return 1 / (1 + math.exp(-12 * (t - 0.55)))
+
+    pkt = [(bx0 + (bx1 - bx0) * (i / 120),
+            by1 - (by1 - by0) * kurve(i / 120) * 0.92) for i in range(121)]
+    d = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vredens '
+         f'forloeb: udloeser, kropslige tegn, og vinduet hvor daemperne '
+         f'virker." {FONT}>']
+    # vinduet, hvor der stadig er noget at goere
+    vx0 = bx0 + (bx1 - bx0) * 0.18
+    vx1 = bx0 + (bx1 - bx0) * 0.52
+    d.append(f'<rect x="{vx0:.1f}" y="{by0}" width="{vx1 - vx0:.1f}" '
+             f'height="{by1 - by0}" fill="{GRO}" fill-opacity="0.10"/>')
+    d.append(f'<text x="{(vx0 + vx1) / 2:.1f}" y="{by0 + 16}" '
+             f'text-anchor="middle" fill="{GRO}" font-weight="700" '
+             f'font-size="11.5">Her virker dæmperne</text>')
+    # akser
+    d.append(f'<line x1="{bx0}" y1="{by1}" x2="{bx1}" y2="{by1}" '
+             f'stroke="{LIN}" stroke-width="1.4"/>')
+    d.append(f'<line x1="{bx0}" y1="{by0}" x2="{bx0}" y2="{by1}" '
+             f'stroke="{LIN}" stroke-width="1.4"/>')
+    d.append(f'<text x="{bx0 - 8}" y="{by0 + 10}" text-anchor="end" '
+             f'fill="{MUT}" font-size="10">høj</text>')
+    d.append(f'<text x="{bx0 - 8}" y="{by1}" text-anchor="end" fill="{MUT}" '
+             f'font-size="10">ro</text>')
+    d.append(f'<text x="{bx0 - 8}" y="{(by0 + by1) / 2}" text-anchor="end" '
+             f'fill="{MUT}" font-size="10">arousal</text>')
+    d.append(f'<text x="{bx1}" y="{by1 + 18}" text-anchor="end" fill="{MUT}" '
+             f'font-size="10">tid</text>')
+    # selve kurven
+    sti = ' '.join(f'{x:.1f},{y:.1f}' for x, y in pkt)
+    d.append(f'<polyline points="{sti}" fill="none" stroke="{ROD}" '
+             f'stroke-width="2.6" stroke-linecap="round"/>')
+    # nedslag paa kurven
+    for andel, navn, farve in ((0.10, 'Udløser', ORA), (0.34, 'Kropslige tegn', GRO),
+                               (0.78, 'For sent', ROD)):
+        i = int(andel * 120)
+        x, y = pkt[i]
+        d.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="5" fill="#fff" '
+                 f'stroke="{farve}" stroke-width="2.4"/>')
+        d.append(f'<line x1="{x:.1f}" y1="{y - 9:.1f}" x2="{x:.1f}" '
+                 f'y2="{y - 26:.1f}" stroke="{farve}" stroke-width="1"/>')
+        d.append(f'<text x="{x:.1f}" y="{y - 31:.1f}" text-anchor="middle" '
+                 f'fill="{farve}" font-size="11" font-weight="700">{navn}</text>')
+    # forklaringen saettes under figuren i HTML, ikke inde i SVG'en, hvor den
+    # ville loebe ud over viewBox'ens bredde
+    d.append('</svg>')
+    return ''.join(d)
+
+
+def kropstegn(tegn, W=540, H=420):
+    """Kropslige advarselstegn placeret paa en figur.
+
+    tegn er [(navn, hoejde 0-1 paa kroppen, side)] hvor side er -1 (venstre)
+    eller 1 (hoejre). Etiketterne saettes i to spalter, saa henvisningslinjerne
+    ikke krydser hinanden.
+    """
+    cx, top, bund = W / 2, 34, H - 26
+    kh = bund - top
+    d = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kropslige '
+         f'advarselstegn paa vrede." {FONT}>']
+    hoved_r = kh * 0.085
+    d.append(f'<circle cx="{cx}" cy="{top + hoved_r}" r="{hoved_r:.1f}" '
+             f'fill="{LIN}" fill-opacity="0.45" stroke="{MUT}" '
+             f'stroke-width="1.2"/>')
+    krop_top = top + 2 * hoved_r + 6
+    krop_h = kh * 0.40
+    d.append(f'<rect x="{cx - kh * 0.10:.1f}" y="{krop_top:.1f}" '
+             f'width="{kh * 0.20:.1f}" height="{krop_h:.1f}" rx="{kh * 0.05:.1f}" '
+             f'fill="{LIN}" fill-opacity="0.45" stroke="{MUT}" stroke-width="1.2"/>')
+    for s in (-1, 1):                                        # arme
+        d.append(f'<rect x="{cx + s * kh * 0.155 - kh * 0.028:.1f}" '
+                 f'y="{krop_top + 4:.1f}" width="{kh * 0.056:.1f}" '
+                 f'height="{krop_h * 0.92:.1f}" rx="{kh * 0.028:.1f}" '
+                 f'fill="{LIN}" fill-opacity="0.45" stroke="{MUT}" '
+                 f'stroke-width="1.2"/>')
+    for s in (-1, 1):                                        # ben
+        d.append(f'<rect x="{cx + s * kh * 0.052 - kh * 0.036:.1f}" '
+                 f'y="{krop_top + krop_h - 2:.1f}" width="{kh * 0.072:.1f}" '
+                 f'height="{kh * 0.40:.1f}" rx="{kh * 0.034:.1f}" '
+                 f'fill="{LIN}" fill-opacity="0.45" stroke="{MUT}" '
+                 f'stroke-width="1.2"/>')
+    for navn, andel, s in tegn:
+        py = top + kh * andel
+        px = cx + s * kh * 0.075
+        lx = cx + s * (W / 2 - 14)
+        d.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="4.5" fill="{ROD}"/>')
+        d.append(f'<line x1="{px + s * 5:.1f}" y1="{py:.1f}" '
+                 f'x2="{lx - s * 4:.1f}" y2="{py:.1f}" stroke="{ROD}" '
+                 f'stroke-width="1" stroke-opacity="0.5"/>')
+        d.append(f'<text x="{lx:.1f}" y="{py + 4:.1f}" '
+                 f'text-anchor="{"end" if s > 0 else "start"}" fill="{INK}" '
+                 f'font-size="11">{navn}</text>')
+    d.append('</svg>')
+    return ''.join(d)
+
+
+def aandedraet(faser, W=600, H=150):
+    """4-4-4: faserne tegnes med bredde efter deres varighed i sekunder."""
+    V, HJ = 16, 16
+    b = W - V - HJ
+    i_alt = sum(s for _, s, _ in faser)
+    d = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vejrtraekning '
+         f'i {len(faser)} faser." {FONT}>']
+    x = V
+    for navn, sek, farve in faser:
+        bredde = b * sek / i_alt
+        d.append(f'<rect x="{x:.1f}" y="44" width="{bredde - 6:.1f}" height="46" '
+                 f'rx="10" fill="{farve}"/>')
+        d.append(f'<text x="{x + (bredde - 6) / 2:.1f}" y="67" '
+                 f'text-anchor="middle" fill="#fff" font-weight="700" '
+                 f'font-size="13">{navn}</text>')
+        d.append(f'<text x="{x + (bredde - 6) / 2:.1f}" y="83" '
+                 f'text-anchor="middle" fill="#fff" fill-opacity="0.85" '
+                 f'font-size="11">{sek} sekunder</text>')
+        x += bredde
+    d.append(f'<line x1="{V}" y1="104" x2="{W - HJ:.1f}" y2="104" '
+             f'stroke="{LIN}" stroke-width="1.2"/>')
+    d.append(f'<text x="{V}" y="30" fill="{INK}" font-size="12" '
+             f'font-weight="700">Én omgang tager {i_alt} sekunder</text>')
+    d.append(f'<text x="{V}" y="124" fill="{MUT}" font-size="10.5">'
+             f'Tag tre omgange. Tæl i hovedet, ikke højt — så kan den bruges '
+             f'midt i en situation, uden at nogen opdager det.</text>')
+    d.append('</svg>')
+    return ''.join(d)

@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Socialisering · ART</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;--warn:#b5710a;--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a,nav.tabs span{font-size:.86rem;padding:6px 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+nav.tabs span.soon{color:#9aa6ba;cursor:default}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:2rem}
+.hero p{margin:0;color:var(--muted);max-width:70ch}
+.pill{display:inline-block;font-size:.74rem;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;background:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.card.soon{opacity:.6}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:12px}
+.tag.klar{background:#eaf7f0;color:var(--good);border:1px solid #bfe6d2}
+.tag.kommer{background:#f4f6fb;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
+.num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 0}
+.btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btnlink.ghost:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+.plan{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+.plan th,.plan td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+.plan th{background:var(--panel2);font-weight:700;position:sticky;top:60px}
+.plan tr.block td{background:var(--accent);color:#fff;font-weight:800;font-size:1rem}
+.plan tr.break td{background:#fff7e9;color:var(--warn);font-weight:600;font-style:italic}
+.plan td.uge{white-space:nowrap;font-weight:700;color:var(--accent);width:52px}
+.plan td.per{white-space:nowrap;color:var(--muted);width:110px}
+.plan ul{margin:0;padding-left:18px}.plan li{margin:2px 0}
+.mat{color:var(--muted);font-size:.9rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;text-align:left}.mini th{background:var(--panel2)}
+@media print{header.top,nav.tabs,.btnlink{display:none!important}.hero,.card,.note{box-shadow:none}.plan th{position:static}.plan tr.block td{background:#fff!important;color:#000;border:1px solid #000}body{color:#000}}
+
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:16px;margin:16px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.figtekst{color:var(--muted);font-size:.9rem;margin-top:8px}
+.blok{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:18px 22px;
+margin:14px 0;box-shadow:var(--shadow)}
+.blok.gron{border-left-color:var(--good)}
+.blok h3{margin:0 0 8px;font-size:1.12rem}
+.blok p,.blok li{color:var(--muted);font-size:.97rem}
+.blok p{margin:6px 0;max-width:74ch}
+.blok ul,.blok ol{margin:6px 0 0;padding-left:20px}
+.blok li{margin:4px 0}
+table.t{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+table.t th,table.t td{border:1px solid var(--line);padding:9px 11px;
+text-align:left;vertical-align:top}
+table.t th{background:var(--panel2);font-size:.82rem;color:var(--muted);
+text-transform:uppercase;letter-spacing:.03em}
+table.t td.linje{height:34px}
+table.t td.kryds{width:34px}
+.kortgitter{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:14px;margin:14px 0}
+.kort{border:1px solid var(--line);border-radius:14px;padding:16px 18px;
+background:var(--panel);box-shadow:var(--shadow)}
+.kort h3{margin:0 0 6px;font-size:1.08rem;display:flex;align-items:center;
+gap:9px}
+.kort .nr{background:var(--accent);color:#fff;border-radius:999px;
+width:24px;height:24px;display:inline-flex;align-items:center;
+justify-content:center;font-size:.85rem;flex:0 0 auto}
+.kort p{margin:5px 0;font-size:.93rem;color:var(--muted)}
+.kort p.kontekst{font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;
+color:var(--muted);margin:0 0 8px}
+.kort p.mod{background:var(--panel2);border-radius:9px;padding:8px 11px}
+.kort .fokus{margin-top:10px;border-top:1px solid var(--line);padding-top:9px}
+.kort .fokus b{font-size:.85rem}
+.kort .fokus ol{margin:6px 0 0;padding-left:20px}
+.kort .fokus li{font-size:.9rem;color:var(--muted);margin:3px 0}
+.daemper{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+gap:12px;margin:12px 0}
+.printbtn{background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;color:var(--ink);
+font-family:inherit;margin:6px 8px 0 0}
+.printbtn:hover{border-color:var(--accent);color:var(--accent)}
+@media print{header.top,.printbtn,.btnlink{display:none!important}
+.blok,.figur,.kort{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+body{font-size:10pt}main{padding:0}@page{size:A4;margin:12mm}
+h2.sec{page-break-after:avoid}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a></div></header><main><section class="hero"><span class="pill">ART · vredeshåndtering</span>
+<h1>Kropslige tegn og dæmpere</h1>
+<p>Et forløb på 45 minutter i Aggression Replacement Training. Deltagerne
+lærer at opdage de tidlige fysiske advarselstegn på vrede — og at bruge en
+dæmper, mens der stadig er noget at gøre. Til grupper på 4–8 deltagere.</p>
+<a class="btnlink" href="materiale/art-materialesaet.pdf">Hent hele materialet (PDF)</a>
+<a class="btnlink ghost" href="materiale/art-rollespilskort.pdf">Rollespilskort til udklip</a>
+<a class="btnlink ghost" href="materiale/art-arbejdsark.pdf">Vredeslog og observatørskema</a>
+<a class="btnlink ghost" href="materiale/art-materialesaet.docx">Materialet som Word</a>
+<button class="printbtn" onclick="window.print()">Print siden</button></section>
+
+<div class="figur"><svg viewBox="0 0 660 300" width="100%" style="max-width:660px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vredens forloeb: udloeser, kropslige tegn, og vinduet hvor daemperne virker." font-family="Consolas, monospace" font-size="11"><rect x="158.8" y="24" width="197.9" height="224" fill="#1a8f5e" fill-opacity="0.10"/><text x="257.7" y="40" text-anchor="middle" fill="#1a8f5e" font-weight="700" font-size="11.5">Her virker dæmperne</text><line x1="54" y1="248" x2="636" y2="248" stroke="#c9d2e0" stroke-width="1.4"/><line x1="54" y1="24" x2="54" y2="248" stroke="#c9d2e0" stroke-width="1.4"/><text x="46" y="34" text-anchor="end" fill="#586074" font-size="10">høj</text><text x="46" y="248" text-anchor="end" fill="#586074" font-size="10">ro</text><text x="46" y="136.0" text-anchor="end" fill="#586074" font-size="10">arousal</text><text x="636" y="266" text-anchor="end" fill="#586074" font-size="10">tid</text><polyline points="54.0,247.7 58.9,247.7 63.7,247.7 68.5,247.6 73.4,247.6 78.2,247.5 83.1,247.5 88.0,247.4 92.8,247.4 97.7,247.3 102.5,247.2 107.3,247.2 112.2,247.1 117.1,247.0 121.9,246.9 126.8,246.8 131.6,246.6 136.4,246.5 141.3,246.3 146.1,246.1 151.0,245.9 155.8,245.7 160.7,245.5 165.6,245.2 170.4,245.0 175.2,244.6 180.1,244.3 185.0,243.9 189.8,243.5 194.7,243.0 199.5,242.5 204.4,242.0 209.2,241.3 214.1,240.7 218.9,239.9 223.8,239.1 228.6,238.2 233.5,237.3 238.3,236.2 243.2,235.0 248.0,233.8 252.8,232.4 257.7,230.9 262.6,229.2 267.4,227.4 272.2,225.5 277.1,223.4 281.9,221.2 286.8,218.8 291.6,216.2 296.5,213.4 301.4,210.4 306.2,207.2 311.1,203.9 315.9,200.3 320.8,196.5 325.6,192.6 330.4,188.4 335.3,184.1 340.1,179.6 345.0,175.0 349.8,170.2 354.7,165.3 359.6,160.3 364.4,155.2 369.2,150.1 374.1,145.0 378.9,139.8 383.8,134.7 388.6,129.6 393.5,124.6 398.4,119.7 403.2,114.9 408.0,110.3 412.9,105.8 417.8,101.5 422.6,97.3 427.5,93.4 432.3,89.6 437.1,86.1 442.0,82.7 446.9,79.5 451.7,76.5 456.6,73.8 461.4,71.2 466.2,68.7 471.1,66.5 475.9,64.4 480.8,62.5 485.7,60.7 490.5,59.1 495.3,57.6 500.2,56.2 505.1,54.9 509.9,53.7 514.8,52.7 519.6,51.7 524.5,50.8 529.3,50.0 534.1,49.3 539.0,48.6 543.9,48.0 548.7,47.4 553.5,46.9 558.4,46.4 563.2,46.0 568.1,45.6 573.0,45.3 577.8,45.0 582.6,44.7 587.5,44.4 592.4,44.2 597.2,44.0 602.0,43.8 606.9,43.6 611.8,43.4 616.6,43.3 621.4,43.2 626.3,43.1 631.1,42.9 636.0,42.8" fill="none" stroke="#c23b4b" stroke-width="2.6" stroke-linecap="round"/><circle cx="112.2" cy="247.1" r="5" fill="#fff" stroke="#b5710a" stroke-width="2.4"/><line x1="112.2" y1="238.1" x2="112.2" y2="221.1" stroke="#b5710a" stroke-width="1"/><text x="112.2" y="216.1" text-anchor="middle" fill="#b5710a" font-size="11" font-weight="700">Udløser</text><circle cx="248.0" cy="233.8" r="5" fill="#fff" stroke="#1a8f5e" stroke-width="2.4"/><line x1="248.0" y1="224.8" x2="248.0" y2="207.8" stroke="#1a8f5e" stroke-width="1"/><text x="248.0" y="202.8" text-anchor="middle" fill="#1a8f5e" font-size="11" font-weight="700">Kropslige tegn</text><circle cx="505.1" cy="54.9" r="5" fill="#fff" stroke="#c23b4b" stroke-width="2.4"/><line x1="505.1" y1="45.9" x2="505.1" y2="28.9" stroke="#c23b4b" stroke-width="1"/><text x="505.1" y="23.9" text-anchor="middle" fill="#c23b4b" font-size="11" font-weight="700">For sent</text></svg>
+<div class="figtekst">Vreden stiger ikke pludseligt — den stiger ad en kurve.
+Kroppen melder fra længe før toppen, og det er dét tidsrum, hele lektionen
+handler om.</div></div>
+
+<h2 class="sec">Hvor i kæden er vi?</h2>
+<p>Vredeskontrol i ART er en kæde af led. I dag træner vi de to, der kommer
+først — resten bygger ovenpå senere. Kæden er ikke teori, deltagerne skal lære
+udenad; den er rækkefølgen, de øver i.</p>
+<div class="figur"><svg viewBox="0 0 660 560" width="100%" style="max-width:660px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Processen i 7 trin." font-family="Consolas, monospace" font-size="11"><rect x="10" y="2" width="640" height="50" rx="9" fill="#586074"/><circle cx="32" cy="27.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="31.0" text-anchor="middle" fill="#fff" font-weight="700">1</text><text x="56" y="22.0" fill="#fff" font-weight="700" font-size="12.5">Udløseren</text><text x="56" y="39.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Det, der sker udefra eller indeni — en bemærkning, en uretfærdighed, en tanke.</text><line x1="36" y1="55" x2="36" y2="76" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 73 L 36 79 L 40 73 Z" fill="#c9d2e0"/><rect x="10" y="82" width="640" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="107.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="111.0" text-anchor="middle" fill="#fff" font-weight="700">2</text><text x="56" y="102.0" fill="#fff" font-weight="700" font-size="12.5">Kropslige tegn</text><text x="56" y="119.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Det kroppen gør, før du når at tænke: puls, varme, spændt kæbe, knyttede næver.</text><line x1="36" y1="135" x2="36" y2="156" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 153 L 36 159 L 40 153 Z" fill="#c9d2e0"/><rect x="10" y="162" width="640" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="187.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="191.0" text-anchor="middle" fill="#fff" font-weight="700">3</text><text x="56" y="182.0" fill="#fff" font-weight="700" font-size="12.5">Dæmpere</text><text x="56" y="199.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Det, der sænker arousal med det samme: vejrtrækning, tælle baglæns, et indre billede.</text><line x1="36" y1="215" x2="36" y2="236" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 233 L 36 239 L 40 233 Z" fill="#c9d2e0"/><rect x="10" y="242" width="640" height="50" rx="9" fill="#aeb6c4"/><circle cx="32" cy="267.0" r="12" fill="#586074" fill-opacity="0.22"/><text x="32" y="271.0" text-anchor="middle" fill="#1a2233" font-weight="700">4</text><text x="56" y="262.0" fill="#1a2233" font-weight="700" font-size="12.5">Påmindelser</text><text x="56" y="279.0" fill="#1a2233" fill-opacity="0.9" font-size="10.5">Sætninger til dig selv, der holder dig på sporet: «Bevar roen», «Det er ikke værd at slås om».</text><line x1="36" y1="295" x2="36" y2="316" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 313 L 36 319 L 40 313 Z" fill="#c9d2e0"/><rect x="10" y="322" width="640" height="50" rx="9" fill="#aeb6c4"/><circle cx="32" cy="347.0" r="12" fill="#586074" fill-opacity="0.22"/><text x="32" y="351.0" text-anchor="middle" fill="#1a2233" font-weight="700">5</text><text x="56" y="342.0" fill="#1a2233" font-weight="700" font-size="12.5">Tænk fremad</text><text x="56" y="359.0" fill="#1a2233" fill-opacity="0.9" font-size="10.5">Hvad sker der bagefter, hvis jeg gør det her? Og hvis jeg lader være?</text><line x1="36" y1="375" x2="36" y2="396" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 393 L 36 399 L 40 393 Z" fill="#c9d2e0"/><rect x="10" y="402" width="640" height="50" rx="9" fill="#aeb6c4"/><circle cx="32" cy="427.0" r="12" fill="#586074" fill-opacity="0.22"/><text x="32" y="431.0" text-anchor="middle" fill="#1a2233" font-weight="700">6</text><text x="56" y="422.0" fill="#1a2233" font-weight="700" font-size="12.5">Brug en færdighed</text><text x="56" y="439.0" fill="#1a2233" fill-opacity="0.9" font-size="10.5">Sig det i stedet: klag ordentligt, forhandl, gå væk med besked.</text><line x1="36" y1="455" x2="36" y2="476" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 473 L 36 479 L 40 473 Z" fill="#c9d2e0"/><rect x="10" y="482" width="640" height="50" rx="9" fill="#aeb6c4"/><circle cx="32" cy="507.0" r="12" fill="#586074" fill-opacity="0.22"/><text x="32" y="511.0" text-anchor="middle" fill="#1a2233" font-weight="700">7</text><text x="56" y="502.0" fill="#1a2233" font-weight="700" font-size="12.5">Vurder dig selv</text><text x="56" y="519.0" fill="#1a2233" fill-opacity="0.9" font-size="10.5">Hvad gik godt? Hvad gør jeg anderledes næste gang?</text><rect x="10" y="543" width="11" height="11" rx="3" fill="#1a8f5e"/><text x="27" y="552" fill="#586074" font-size="10">Dagens to led</text><rect x="118" y="543" width="11" height="11" rx="3" fill="#aeb6c4"/><text x="135" y="552" fill="#586074" font-size="10">Resten af kæden</text></svg></div>
+
+<h2 class="sec">Lektionsplan · 45 minutter</h2>
+<table class="t"><colgroup><col style="width:12%"><col style="width:24%"><col style="width:64%"></colgroup><thead><tr><th>Tid</th><th>Fase</th><th>Indhold</th></tr></thead><tbody><tr><td class="">00–05 min</td><td class=""><b>Velkomst og opstart</b></td><td class="">• Dagsorden på tavlen.<br>• Kort opfølgning på sidste uges udløsere.</td></tr><tr><td class="">05–15 min</td><td class=""><b>Kropslige tegn</b></td><td class="">• Oplæg: krop og hjerne reagerer, før tanken gør.<br>• Brainstorm på tavlen om fysiske advarselssignaler: puls, varme, kæbe, næver, mave.</td></tr><tr><td class="">15–25 min</td><td class=""><b>Dæmpere</b></td><td class="">• Introduktion til de tre dæmpere.<br>• Fælles afprøvning af vejrtrækningen — alle prøver, også trænerne.</td></tr><tr><td class="">25–40 min</td><td class=""><b>Rollespil og træning</b></td><td class="">• Trænerne modellerer et kort scenarium med højttænkning.<br>• Parvis træning ud fra rollespilskortene.<br>• Feedback fra gruppen og fra observatøren.</td></tr><tr><td class="">40–45 min</td><td class=""><b>Evaluering og opgave</b></td><td class="">• Vredesloggen udleveres.<br>• Hjemmeopgave: registrér én episode med kropsligt tegn og dæmper.</td></tr></tbody></table>
+
+<h2 class="sec">1 · Kropslige tegn</h2>
+<div class="blok"><p>Kroppen reagerer, før tanken gør. Adrenalinen er sendt af
+sted, inden nogen har nået at beslutte noget — og det er derfor, «tæl til ti»
+alene sjældent rækker. Tegnene er forskellige fra person til person, så
+brainstormen på tavlen er ikke pynt: hver deltager skal finde <b>sine egne</b>
+to-tre tegn og kunne nævne dem.</p>
+<p>Spørg: <i>hvor i kroppen mærker du det først?</i> Ikke: <i>hvad gør du, når
+du bliver vred?</i> Det første kan besvares, det andet fører til forklaringer.</p></div>
+<div class="figur"><svg viewBox="0 0 540 420" width="100%" style="max-width:540px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kropslige advarselstegn paa vrede." font-family="Consolas, monospace" font-size="11"><circle cx="270.0" cy="64.6" r="30.6" fill="#c9d2e0" fill-opacity="0.45" stroke="#586074" stroke-width="1.2"/><rect x="234.0" y="101.2" width="72.0" height="144.0" rx="18.0" fill="#c9d2e0" fill-opacity="0.45" stroke="#586074" stroke-width="1.2"/><rect x="204.1" y="105.2" width="20.2" height="132.5" rx="10.1" fill="#c9d2e0" fill-opacity="0.45" stroke="#586074" stroke-width="1.2"/><rect x="315.7" y="105.2" width="20.2" height="132.5" rx="10.1" fill="#c9d2e0" fill-opacity="0.45" stroke="#586074" stroke-width="1.2"/><rect x="238.3" y="243.2" width="25.9" height="144.0" rx="12.2" fill="#c9d2e0" fill-opacity="0.45" stroke="#586074" stroke-width="1.2"/><rect x="275.8" y="243.2" width="25.9" height="144.0" rx="12.2" fill="#c9d2e0" fill-opacity="0.45" stroke="#586074" stroke-width="1.2"/><circle cx="243.0" cy="73.6" r="4.5" fill="#c23b4b"/><line x1="238.0" y1="73.6" x2="18.0" y2="73.6" stroke="#c23b4b" stroke-width="1" stroke-opacity="0.5"/><text x="14.0" y="77.6" text-anchor="start" fill="#1a2233" font-size="11">Kæben spænder, tænderne bides sammen</text><circle cx="297.0" cy="88.0" r="4.5" fill="#c23b4b"/><line x1="302.0" y1="88.0" x2="522.0" y2="88.0" stroke="#c23b4b" stroke-width="1" stroke-opacity="0.5"/><text x="526.0" y="92.0" text-anchor="end" fill="#1a2233" font-size="11">Varme i ansigtet, rødme</text><circle cx="243.0" cy="142.0" r="4.5" fill="#c23b4b"/><line x1="238.0" y1="142.0" x2="18.0" y2="142.0" stroke="#c23b4b" stroke-width="1" stroke-opacity="0.5"/><text x="14.0" y="146.0" text-anchor="start" fill="#1a2233" font-size="11">Hjertet banker hurtigere</text><circle cx="297.0" cy="163.6" r="4.5" fill="#c23b4b"/><line x1="302.0" y1="163.6" x2="522.0" y2="163.6" stroke="#c23b4b" stroke-width="1" stroke-opacity="0.5"/><text x="526.0" y="167.6" text-anchor="end" fill="#1a2233" font-size="11">Vejrtrækningen bliver kort og høj</text><circle cx="243.0" cy="206.8" r="4.5" fill="#c23b4b"/><line x1="238.0" y1="206.8" x2="18.0" y2="206.8" stroke="#c23b4b" stroke-width="1" stroke-opacity="0.5"/><text x="14.0" y="210.8" text-anchor="start" fill="#1a2233" font-size="11">Knude i maven</text><circle cx="297.0" cy="257.2" r="4.5" fill="#c23b4b"/><line x1="302.0" y1="257.2" x2="522.0" y2="257.2" stroke="#c23b4b" stroke-width="1" stroke-opacity="0.5"/><text x="526.0" y="261.2" text-anchor="end" fill="#1a2233" font-size="11">Næverne knytter sig</text><circle cx="297.0" cy="127.6" r="4.5" fill="#c23b4b"/><line x1="302.0" y1="127.6" x2="522.0" y2="127.6" stroke="#c23b4b" stroke-width="1" stroke-opacity="0.5"/><text x="526.0" y="131.6" text-anchor="end" fill="#1a2233" font-size="11">Skuldrene trækkes op</text><circle cx="243.0" cy="314.8" r="4.5" fill="#c23b4b"/><line x1="238.0" y1="314.8" x2="18.0" y2="314.8" stroke="#c23b4b" stroke-width="1" stroke-opacity="0.5"/><text x="14.0" y="318.8" text-anchor="start" fill="#1a2233" font-size="11">Uro i benene, trang til at gå</text></svg>
+<div class="figtekst">De almindeligste tegn. Lad deltagerne sætte kryds ved
+deres egne — og skrive dem på, der mangler.</div></div>
+
+<h2 class="sec">2 · Dæmpere</h2>
+<p>En dæmper sænker arousal med det samme. Den løser ikke konflikten — den
+køber de sekunder, det tager at komme til at tænke igen.</p>
+<div class="blok gron"><h3>1. 4-4-4-vejrtrækning</h3><p>Ind gennem næsen i fire sekunder, hold i fire, ud gennem munden i fire. Tre omgange. Den lange udånding er dét, der virker — den sænker pulsen.</p></div><div class="blok gron"><h3>2. Tælle baglæns</h3><p>Tæl langsomt fra 10 eller 20 ned mod 0 inde i hovedet. Baglæns kræver opmærksomhed, og opmærksomheden kan ikke være to steder på én gang.</p></div><div class="blok gron"><h3>3. Indre billede og selvinstruktion</h3><p>Se et billede for dig, der betyder stop — et rødt skilt, en bremse — og sig én sætning til dig selv: «Bevar roen».</p></div>
+<div class="figur"><svg viewBox="0 0 600 150" width="100%" style="max-width:600px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vejrtraekning i 3 faser." font-family="Consolas, monospace" font-size="11"><rect x="16.0" y="44" width="183.3" height="46" rx="10" fill="#1f6fd6"/><text x="107.7" y="67" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">Ind</text><text x="107.7" y="83" text-anchor="middle" fill="#fff" fill-opacity="0.85" font-size="11">4 sekunder</text><rect x="205.3" y="44" width="183.3" height="46" rx="10" fill="#586074"/><text x="297.0" y="67" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">Hold</text><text x="297.0" y="83" text-anchor="middle" fill="#fff" fill-opacity="0.85" font-size="11">4 sekunder</text><rect x="394.7" y="44" width="183.3" height="46" rx="10" fill="#1a8f5e"/><text x="486.3" y="67" text-anchor="middle" fill="#fff" font-weight="700" font-size="13">Ud</text><text x="486.3" y="83" text-anchor="middle" fill="#fff" fill-opacity="0.85" font-size="11">4 sekunder</text><line x1="16" y1="104" x2="584.0" y2="104" stroke="#c9d2e0" stroke-width="1.2"/><text x="16" y="30" fill="#1a2233" font-size="12" font-weight="700">Én omgang tager 12 sekunder</text><text x="16" y="124" fill="#586074" font-size="10.5">Tag tre omgange. Tæl i hovedet, ikke højt — så kan den bruges midt i en situation, uden at nogen opdager det.</text></svg></div>
+
+<h2 class="sec">3 · Rollespilskort</h2>
+<p>Fire situationer. Hovedpersonen træner de tre trin på bagsiden, modspilleren
+holder sig til sin instruks. <a href="materiale/art-rollespilskort.pdf">Hent
+kortene som PDF</a> — de klippes ud i ét stykke og foldes på midten, så
+bagsiden ender bag forsiden.</p>
+<div class="kortgitter">
+<article class="kort">
+<h3><span class="nr">1</span>Den uretfærdige anklage</h3>
+<p class="kontekst">Skole, institution eller arbejdsplads</p>
+<p><b>Situation:</b> En opgave eller ting mangler, og lederen eller underviseren antyder, at det er din skyld.</p>
+<p class="mod"><b>Til modspilleren:</b> Sig med en bestemt tone: «Det er altid dig, der glemmer at aflevere tingene eller rydde op! Hvorfor har du lagt det forkert igen?»</p>
+<div class="fokus"><b>Træningsfokus for hovedpersonen</b><ol><li>Registrér varmen i ansigtet eller de knyttede næver.</li><li>Tag 1–2 dybe vejrtrækninger med 4-4-4.</li><li>Svar med rolig stemme uden at gå i forsvar.</li></ol></div>
+</article><article class="kort">
+<h3><span class="nr">2</span>Sprunget over i køen</h3>
+<p class="kontekst">Kantinen, supermarkedet eller busstoppestedet</p>
+<p><b>Situation:</b> Du har ventet i kø i flere minutter. En person går direkte ind foran dig uden at spørge.</p>
+<p class="mod"><b>Til modspilleren:</b> Stil dig foran med ryggen til, kig på din telefon, og lad som om der overhovedet ikke står nogen bag dig.</p>
+<div class="fokus"><b>Træningsfokus for hovedpersonen</b><ol><li>Registrér spændingen i kæben eller knuden i maven.</li><li>Tæl langsomt baglæns fra 10 til 1 inde i hovedet.</li><li>Henvend dig høfligt: «Undskyld, jeg stod i kø her.»</li></ol></div>
+</article><article class="kort">
+<h3><span class="nr">3</span>Afbrudt i en forklaring</h3>
+<p class="kontekst">Gruppearbejde, møde eller en samtale i pausen</p>
+<p><b>Situation:</b> Du er ved at forklare noget vigtigt, men bliver afbrudt midt i en sætning.</p>
+<p class="mod"><b>Til modspilleren:</b> Tal højlydt hen over hovedpersonen midt i en sætning: «Ej, prøv lige at høre her i stedet, det her er meget vigtigere…»</p>
+<div class="fokus"><b>Træningsfokus for hovedpersonen</b><ol><li>Mærk impulsen til at afbryde igen eller råbe.</li><li>Dyb udånding, og forestil dig et rødt STOP-skilt.</li><li>Vent på en pause og sig: «Jeg var lige ved at tale færdig, bagefter vil jeg gerne høre din idé.»</li></ol></div>
+</article><article class="kort">
+<h3><span class="nr">4</span>Spydig bemærkning</h3>
+<p class="kontekst">Omklædningsrum, frikvarter eller pauserum</p>
+<p><b>Situation:</b> Du træder ind i rummet, og nogen kommenterer dit tøj eller noget, du lige har gjort.</p>
+<p class="mod"><b>Til modspilleren:</b> Grin kort og sig spydigt: «Hvad er det lige, du har taget på i dag? Prøver du at starte en ny mode, eller hvad?»</p>
+<div class="fokus"><b>Træningsfokus for hovedpersonen</b><ol><li>Registrér hjertebanken eller et stik af ubehag.</li><li>Brug selvinstruktionen «Det er ikke værd at slås om» sammen med en dyb vejrtrækning.</li><li>Træk på skuldrene, eller giv et kort, afvæbnende svar.</li></ol></div>
+</article>
+</div>
+
+<h2 class="sec">4 · Vredeslog</h2>
+<p>Ugens hjemmeopgave: registrér mindst én episode. Loggen er det, næste
+lektion starter med — uden den bliver opfølgningen til løs snak.</p>
+<table class="t"><colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup><thead><tr><th>1. Hvad var udløseren?</th><th>2. Hvad mærkede du i kroppen?</th><th>3. Hvilken dæmper brugte du?</th><th>4. Hvordan klarede du det?</th></tr></thead><tbody><tr><td class="linje"><i>Blev afbrudt af en kammerat.</i></td><td class="linje"><i>Spændt kæbe, varm i ansigtet.</i></td><td class="linje"><i>Talte baglæns fra 10 og tog en dyb vejrtrækning.</i></td><td class="linje"><i>Godt. Fik roligt sagt, at jeg ville tale færdig.</i></td></tr><tr><td class="linje"></td><td class="linje"></td><td class="linje"></td><td class="linje"></td></tr><tr><td class="linje"></td><td class="linje"></td><td class="linje"></td><td class="linje"></td></tr><tr><td class="linje"></td><td class="linje"></td><td class="linje"></td><td class="linje"></td></tr><tr><td class="linje"></td><td class="linje"></td><td class="linje"></td><td class="linje"></td></tr><tr><td class="linje"></td><td class="linje"></td><td class="linje"></td><td class="linje"></td></tr></tbody></table>
+
+<h2 class="sec">5 · Observatørskema</h2>
+<p>Hver træning har en observatør. Det gør feedbacken konkret, og det giver
+observatøren noget at lave, mens de to andre spiller.</p>
+<table class="t"><colgroup><col style="width:10%"><col style="width:55%"><col style="width:35%"></colgroup><thead><tr><th>Sæt kryds</th><th>Hvad jeg kigger efter</th><th>Noter</th></tr></thead><tbody><tr><td class="kryds"></td><td class=""><b>Opdagede et kropsligt tegn</b><br>Stoppede personen op, eller viste tegn på at mærke sin krop?</td><td class="linje"></td></tr><tr><td class="kryds"></td><td class=""><b>Brugte en dæmper</b><br>Tog personen en dyb vejrtrækning, en pause, eller talte baglæns?</td><td class="linje"></td></tr><tr><td class="kryds"></td><td class=""><b>Reagerede roligt</b><br>Blev svaret givet med rolig og kontrolleret stemmeføring?</td><td class="linje"></td></tr></tbody></table>
+
+<h2 class="sec">Til træneren</h2>
+<div class="blok"><ul><li><b>Modellér før du beder om det</b> Trænerne spiller scenariet først og tænker højt undervejs: «nu bliver jeg varm i ansigtet — jeg trækker vejret». Deltagerne skal se, hvordan det ser ud, før de selv prøver.</li><li><b>Ros det konkrete</b> Ikke «det var godt», men «du stoppede op, før du svarede». Feedback, der ikke peger på en handling, kan ikke bruges til noget.</li><li><b>Rollespillet må gerne være kort</b> Halvandet minut er nok. Det, der tager tid, er feedbacken — og det er dér, læringen ligger.</li><li><b>Modspilleren skal ikke overdrive</b> En modspiller, der går amok, gør øvelsen umulig. Sig det på kortet, og stop rollespillet, hvis det skrider.</li><li><b>Slut altid roligt</b> Ingen går fra en øvelse i høj arousal. Tag en fælles 4-4-4, før I går videre.</li></ul></div>
+</main><footer>ART · vredeshåndtering · Mibelibsen.</footer></body></html>
