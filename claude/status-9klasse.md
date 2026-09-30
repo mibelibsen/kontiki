@@ -92,6 +92,19 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `vejledning/sturmflut-dansk.pdf` og udgives ikke.
 - **Alle stop er gratis.** Ruten er tjekket igennem for entré; sidste stop,
   Hafen.City.Horizonte, har gratis adgang (bekræftet hos hafencity.com).
+- **Grupperne sendes på tværs.** Hver gruppe har sit eget startsted og sin
+  egen rækkefølge af de fem steder — fem forskellige ruter, så to grupper med
+  samme emne kommer hjem med forskellige billeder.
+- **Alt går til fods, ingen ubahn.** Det kræver, at hver rute *slutter* ved
+  mødestedet i stedet for at skulle nå tilbage. Afstandene regnes af en simpel
+  model: HafenCity som én akse fra Speicherstadt (0 m) til Baakenhafen
+  (2050 m), med Dalmannkai som en stikvej 350 m ude fra Sandtorhafen. Ruterne
+  er 3,1–4,8 km.
+- **Regnskabet føres pr. gruppe**, ikke for turen under ét — ruterne er
+  forskellige, så luften er det også. Scriptet nægter at skrive filerne, hvis
+  den strammeste gruppe har under 25 minutters luft. Det fangede to udgaver i
+  træk: først 24 minutter, så 20. Stederne og frokosten er strammet, til alle
+  fem ruter kunne nås; nu er luften 35–56 minutter.
 - **Dagen er fem selvstændige fotosafarier**, ikke én fælles rute. Fælles
   afgang 10.00, fælles opsamling 14.30 ved Magellan-Terrassen. Grupperne
   bestemmer selv rækkefølgen af de fem steder; gruppe 1–3 starter i vest,

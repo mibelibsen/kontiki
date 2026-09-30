@@ -60,7 +60,7 @@ STOP = [
    ('Stellt euch zu dritt auf die unterste Stufe und zu dritt auf die '
     'oberste — ein Foto.',
     'Stå tre på nederste trin og tre på øverste — ét billede.')]),
- (25, 'Dalmannkai und Am Kaiserkai', 'Die Promenade am Sandtorhafen',
+ (20, 'Dalmannkai und Am Kaiserkai', 'Die Promenade am Sandtorhafen',
   'Warften i brug. Promenaden ligger lavt, gaden ligger otte meter oppe, og '
   'imellem dem er der porte, ramper og trapper. Parkeringskældrene kan lukkes '
   'af med fluttore, når varslet kommer.',
@@ -82,7 +82,7 @@ STOP = [
    ('Findet etwas, das wegschwimmen würde, wenn das Wasser um zwei Meter '
     'steigt.',
     'Find noget, der ville flyde væk, hvis vandet steg to meter.')]),
- (35, 'Baakenhafen', 'Hafen.City.Horizonte, Baakenallee 33',
+ (30, 'Baakenhafen', 'Hafen.City.Horizonte, Baakenallee 33',
   'Den nyeste del af HafenCity, bygget højere end den ældste. I udstillingen '
   'står byen som model i 1:500, så hele systemet kan ses fra oven. Gratis '
   'adgang, åbent torsdag 10–16.',
@@ -184,21 +184,56 @@ MOEDE_HVORFOR = ('trapperne kan ikke forveksles med noget andet, der er plads '
                  'til alle at sidde ned, og der er fire minutter til U4 ved '
                  'Überseequartier')
 TRANSPORT = 30                  # cirka fra hotellet ind til Speicherstadt
-FROKOST = 45                    # grupperne spiser selv, men sammen
+FROKOST = 40                    # grupperne spiser selv, men sammen
 
-# Grupperne går hver for sig og bestemmer selv rækkefølgen. For at de ikke
-# står i kø ved det samme motiv fra morgenstunden, starter de fra hver sin
-# ende: tre mod øst, to mod vest. De mødes uundgåeligt på midten, og det er i
-# orden — de fotograferer alligevel forskellige ting.
-RETNING = {
- 1: ('vest', 'Start i Speicherstadt og arbejd jer mod øst.'),
- 2: ('vest', 'Start i Speicherstadt og arbejd jer mod øst.'),
- 3: ('vest', 'Start i Speicherstadt og arbejd jer mod øst.'),
- 4: ('øst', 'Tag U4 til HafenCity Universität, start i Baakenhafen og arbejd '
-     'jer mod vest.'),
- 5: ('øst', 'Tag U4 til HafenCity Universität, start i Baakenhafen og arbejd '
-     'jer mod vest.'),
+# Grupperne sendes på tværs: hver gruppe har sit eget startsted og sin egen
+# rækkefølge. Så står de ikke i kø ved det samme motiv, og de kommer til
+# stederne i forskellig belysning og forskellig rækkefølge — to grupper med
+# samme emne ender med forskellige billeder.
+# Hver rute SLUTTER ved mødestedet (sted 2, Magellan-Terrassen). Så skal
+# ingen gruppe nå tilbage fra en fjern ende klokken 14.30, og hele dagen kan
+# gås til fods — ingen ubahn.
+RAEKKEFOELGE = {
+ 1: [1, 3, 4, 5, 2],
+ 2: [5, 4, 3, 1, 2],
+ 3: [3, 1, 4, 5, 2],
+ 4: [4, 5, 3, 1, 2],
+ 5: [2, 5, 4, 3, 1],
 }
+assert all(sorted(r) == [1, 2, 3, 4, 5] for r in RAEKKEFOELGE.values()), \
+    'hver gruppe skal nå alle fem steder'
+assert len({r[0] for r in RAEKKEFOELGE.values()}) == 5, \
+    'de fem grupper skal starte fem forskellige steder'
+assert len({tuple(r) for r in RAEKKEFOELGE.values()}) == 5, \
+    'de fem rækkefølger skal være forskellige'
+
+# Afstande i meter, overslag. HafenCity ligger langs én akse fra Speicherstadt
+# i vest til Baakenhafen i øst. Dalmannkai (3) er en halvø, man går ud på og
+# tilbage fra, og regnes derfor som en stikvej ud fra Sandtorhafen (2).
+AKSE = {1: 0, 2: 400, 4: 1250, 5: 2050}
+STIKVEJ = {3: (2, 350)}
+
+
+def afstand(a, b):
+    if a == b:
+        return 0
+    ekstra = sum(STIKVEJ[x][1] for x in (a, b) if x in STIKVEJ)
+    def sted(x):
+        return AKSE[STIKVEJ[x][0]] if x in STIKVEJ else AKSE[x]
+    return abs(sted(a) - sted(b)) + ekstra
+
+
+TEMPO = 80                      # meter i minuttet med en flok niendeklasser
+MOEDE_STED_NR = 2               # Magellan-Terrassen er også sted nr. 2
+
+
+def rutens_tal(nr):
+    """Gangmeter, gangminutter og vejen tilbage til mødestedet."""
+    r = RAEKKEFOELGE[nr]
+    meter = sum(afstand(r[i], r[i + 1]) for i in range(len(r) - 1))
+    hjem = afstand(r[-1], MOEDE_STED_NR)
+    return meter, round(meter / TEMPO), hjem, round(hjem / TEMPO)
+
 
 FOTOREGLER = [
  'Der skal være <b>mindst én fra gruppen</b> med på hvert billede. Uden et '
@@ -226,14 +261,20 @@ SIKKERHED = [
 ]
 
 I_ALT = sum(m for m, *_ in STOP)
-GANG = 40                       # cirka gangtid mellem stederne i alt
-BRUGT = TRANSPORT + I_ALT + GANG + FROKOST
 RAADIGHED = (14 * 60 + 30) - (10 * 60)          # 10.00 til 14.30
-LUFT = RAADIGHED - BRUGT
-assert LUFT >= 30, (f'der er kun {LUFT} minutters luft i dagen — grupperne '
-                    f'når det ikke uden at løbe')
+
+# Hver gruppes dag regnes for sig — ruterne er forskellige, så luften er det
+# også. Den strammeste af de fem bestemmer, om dagen kan lade sig gøre.
+DAGSREGNSKAB = {}
+for _nr in RAEKKEFOELGE:
+    _m, _gang, _hm, _hjem = rutens_tal(_nr)
+    _brugt = TRANSPORT + I_ALT + _gang + FROKOST + _hjem
+    DAGSREGNSKAB[_nr] = dict(meter=_m, gang=_gang, hjem_m=_hm, hjem=_hjem,
+                             brugt=_brugt, luft=RAADIGHED - _brugt)
+LUFT = min(d['luft'] for d in DAGSREGNSKAB.values())
+assert LUFT >= 25, (f'den strammeste gruppe har kun {LUFT} minutters luft — '
+                    f'ruterne kan ikke nås inden {OPSAMLING}')
 assert len(STOP) == len(GRUPPER) == 5, 'fem steder og fem grupper'
-assert set(RETNING) == set(range(1, 6)), 'hver gruppe skal have en retning'
 for _, _, _, _, opg in GRUPPER:
     assert len(opg) == 3, 'hver gruppe skal have tre billeder'
 
@@ -315,6 +356,7 @@ padding:12px 14px;margin:12px 0;font-size:.97rem}
 .dag div+div{margin-top:5px}
 .dag b{display:inline-block;min-width:52px;color:var(--good)}
 p.vink{color:var(--muted);font-size:.93rem;margin:8px 0}
+p.gang{color:var(--muted);font-size:.86rem;margin:6px 0 10px;padding-left:4px}
 .figurboks{padding:6px 12px 12px}
 .figurboks svg{max-width:100%;height:auto}
 .figurboks .da{color:var(--muted);font-size:.86rem;margin:6px 0 0}
@@ -347,21 +389,37 @@ GRUPPE_JS = '''
 
 def gruppeside(nr, g):
     navn_de, navn_da, tekst_de, tekst_da, opgaver = g
-    _, retning_da = RETNING[nr]
+    d = DAGSREGNSKAB[nr]
+    orden = RAEKKEFOELGE[nr]
+    start_navn = STOP[orden[0] - 1][1]
+    slut_navn = STOP[orden[-1] - 1][1]
     fotos = ''.join(
         f'<label class="p"><input type="checkbox" id="f{j}">'
         f'<span>{esc(de)}</span></label>'
         for j, (de, _) in enumerate(opgaver, 1))
     stop = ''
-    for i, (m, snavn, hvor, _, opg) in enumerate(STOP, 1):
+    for plads, sted_nr in enumerate(orden, 1):
+        m, snavn, hvor, _, opg = STOP[sted_nr - 1]
         punkter = ''.join(
-            f'<label class="p"><input type="checkbox" id="s{i}o{j}">'
+            f'<label class="p"><input type="checkbox" id="s{sted_nr}o{j}">'
             f'<span>{esc(de)}</span></label>'
             for j, (de, _) in enumerate(opg, 1))
-        stop += (f'<details class="stop"><summary><span>{i}. {esc(snavn)}</span>'
-                 f'<span class="tid">{m} min</span></summary>'
+        stop += (f'<details class="stop"><summary>'
+                 f'<span>{plads}. {esc(snavn)}</span>'
+                 f'<span class="tid">ca. {m} min</span></summary>'
                  f'<div class="krop"><p class="hvor">{esc(hvor)}</p>'
                  f'{punkter}</div></details>')
+        if plads < len(orden):
+            naeste = STOP[orden[plads] - 1][1]
+            meter = afstand(sted_nr, orden[plads])
+            stop += (f'<p class="gang">↓ ca. {meter} m til {esc(naeste)} — '
+                     f'{round(meter / TEMPO)} min at gå</p>')
+    if d['hjem_m']:
+        stop += (f'<p class="gang">↓ ca. {d["hjem_m"]} m tilbage til '
+                 f'mødestedet — {d["hjem"]} min at gå</p>')
+    else:
+        stop += '<p class="gang">↓ I slutter præcis dér, hvor vi mødes.</p>'
+
     return f'''<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Gruppe {nr} · {esc(navn_de)}</title><style>{GRUPPE_CSS}</style></head>
@@ -370,7 +428,8 @@ def gruppeside(nr, g):
 <h1>{esc(navn_de)}</h1></header>
 <main>
 <div class="dag"><div><b>{AFGANG}</b> fælles afgang fra hotellet</div>
-<div><b>{OPSAMLING}</b> alle mødes ved {MOEDESTED}</div></div>
+<div><b>{OPSAMLING}</b> alle mødes ved {MOEDESTED}</div>
+<div><b>Start</b> {esc(start_navn)} — jeres eget sted</div></div>
 <div class="intro">{esc(tekst_de)}</div>
 
 <details class="ord" id="snit"><summary>Querschnitt — die zwei Ebenen</summary>
@@ -382,10 +441,12 @@ def gruppeside(nr, g):
 <h2>Eure drei Fotos</h2>
 {fotos}
 
-<h2>Fünf Orte — in eurer eigenen Reihenfolge</h2>
-<p class="vink">{esc(retning_da)} I bestemmer selv rækkefølgen og hvor længe
-I bliver — minuttallene er kun et forslag. Møder I en anden gruppe, er det
-helt i orden: I fotograferer alligevel hver jeres ting.</p>
+<h2>Eure Route — fünf Orte</h2>
+<p class="vink">Jeres rute er jeres egen: I starter i <b>{esc(start_navn)}</b>,
+og ingen anden gruppe starter samme sted. I alt cirka
+<b>{(d['meter'] + d['hjem_m']) / 1000:.1f} km at gå</b> — det hele til fods,
+ingen ubahn. Minuttallene er et gæt, ikke en pligt. Møder I en anden gruppe,
+er det helt i orden: I fotograferer alligevel hver jeres ting.</p>
 {stop}
 
 <h2>Frokost</h2>
@@ -457,6 +518,15 @@ table.ord td:first-child{width:44%}
 body{font-size:10pt}main{padding:0}@page{size:A4;margin:12mm}}
 '''
 
+MEST_LUFT = max(d['luft'] for d in DAGSREGNSKAB.values())
+rutetabel = ''.join(
+    f'<tr><td><b>{i}</b></td><td>{esc(GRUPPER[i - 1][1])}</td>'
+    f'<td>{esc(STOP[RAEKKEFOELGE[i][0] - 1][1])}</td>'
+    f'<td>{" → ".join(STOP[n - 1][1].split()[0] for n in RAEKKEFOELGE[i])}</td>'
+    f'<td>{(DAGSREGNSKAB[i]["meter"] + DAGSREGNSKAB[i]["hjem_m"]) / 1000:.1f} km'
+    f'</td></tr>'
+    for i in range(1, 6))
+
 hold_html = ''.join(
     f'<a href="/sturmflut/{i}"><span class="nr">Gruppe {i}</span>'
     f'<b>{esc(de)}</b><span class="da">{esc(da)}</span>'
@@ -504,16 +574,25 @@ hver deres emne.</p>
 <p><b>Frokost:</b> grupperne sørger selv for den, men <b>spiser sammen</b>, og
 lægger den, hvor det passer i deres egen rute. Regn med cirka {FROKOST}
 minutter.</p>
-<p><b>Så de ikke står i kø ved det samme:</b> gruppe 1–3 starter i
-Speicherstadt og går mod øst, gruppe 4–5 tager U4 til HafenCity Universität og
-går mod vest.</p></div>
+<p><b>Sendt på tværs:</b> de fem grupper starter fem forskellige
+steder og går ruten i hver sin rækkefølge. De står derfor ikke i kø ved det
+samme motiv, de ser stederne i forskelligt lys og forskellig rækkefølge — og
+to grupper med samme emne kommer hjem med forskellige billeder.</p>
+<p><b>Alt går til fods.</b> Hver rute slutter ved mødestedet eller lige ved
+siden af, så ingen skal nå tværs gennem HafenCity klokken {OPSAMLING}.</p>
+</div>
+
+<table class="t"><thead><tr><th>Gruppe</th><th>Emne</th><th>Starter i</th>
+<th>Rækkefølge</th><th>Til fods</th></tr></thead><tbody>
+{rutetabel}</tbody></table>
 
 <div class="blok"><h3>Regner det sammen?</h3>
-<p>Fra {AFGANG} til {OPSAMLING} er der {RAADIGHED} minutter. Transport ind og
-tilbage cirka {TRANSPORT}, de fem steder cirka {I_ALT}, gang imellem dem cirka
-{GANG}, frokost {FROKOST} — i alt {BRUGT}. Der er altså omkring
-<b>{LUFT} minutters luft</b> til at tage fejl af en vej, stå i kø efter mad og
-bruge længere tid ét sted end planlagt.</p></div>
+<p>Fra {AFGANG} til {OPSAMLING} er der {RAADIGHED} minutter. Transport ud til
+Speicherstadt cirka {TRANSPORT}, de fem steder cirka {I_ALT}, frokost
+{FROKOST}, og gang imellem stederne 39–60 minutter alt efter hvilken rute.</p>
+<p>Den strammeste af de fem ruter har <b>{LUFT} minutters luft</b>, den
+rummeligste har {MEST_LUFT}. Der er altså plads til at gå forkert, stå i kø
+efter mad og blive hængende ét sted.</p></div>
 
 <h2 class="sec">De fem steder</h2>
 <p>Rækkefølgen herunder går fra vest mod øst. Alle steder er gratis.</p>
@@ -591,14 +670,19 @@ dok = ['<h1>Sturmflut i HafenCity · dansk udgave</h1>',
        'hver for sig og bestemmer selv rækkefølgen. Frokosten sørger de selv '
        'for, men gruppen spiser sammen. Alle steder er gratis.</p>',
        f'<p class="und">Regnestykket: {RAADIGHED} minutter til rådighed. '
-       f'Transport ca. {TRANSPORT} + de fem steder ca. {I_ALT} + gang ca. '
-       f'{GANG} + frokost {FROKOST} = {BRUGT}. Altså cirka {LUFT} minutters '
-       'luft.</p>',
+       f'Transport ca. {TRANSPORT} + de fem steder ca. {I_ALT} + frokost '
+       f'{FROKOST} + gang 39–60 minutter alt efter ruten. Den strammeste '
+       f'gruppe har {LUFT} minutters luft, den rummeligste {MEST_LUFT}. '
+       'Alt går til fods — ingen ubahn.</p>',
        '<h2>Hvem starter hvor</h2>',
-       '<table><thead><tr><th>Gruppe</th><th>Emne</th><th>Start</th></tr>'
+       '<table><thead><tr><th>Gruppe</th><th>Emne</th><th>Starter i</th>'
+       '<th>Rækkefølge</th><th>Gang i alt</th></tr>'
        '</thead><tbody>' + ''.join(
            f'<tr><td>{i}</td><td>{esc(GRUPPER[i - 1][1])}</td>'
-           f'<td>{esc(RETNING[i][1])}</td></tr>' for i in range(1, 6)) +
+           f'<td>{esc(STOP[RAEKKEFOELGE[i][0] - 1][1])}</td>'
+           f'<td>{" → ".join(str(x) for x in RAEKKEFOELGE[i])}</td>'
+           f'<td>{DAGSREGNSKAB[i]["meter"] + DAGSREGNSKAB[i]["hjem_m"]} m</td>'
+           f'</tr>' for i in range(1, 6)) +
        '</tbody></table>',
        '<h2>De fem steder</h2>']
 for i, (m, navn, hvor, hvad, opg) in enumerate(STOP, 1):
@@ -631,5 +715,10 @@ print('skrevet:  sturmflut.html')
 for nr in range(1, len(GRUPPER) + 1):
     print(f'skrevet:  sturmflut-gruppe{nr}.html   → /sturmflut/{nr}')
 print(f'skrevet:  {SCRATCH}/sturmflut-dansk.html')
-print(f'turen:    {len(STOP)} stop · {I_ALT} + {GANG} min = {I_ALT + GANG} min '
-      f'· {len(GRUPPER)} grupper · {len(WORTLISTE)} ord i ordlisten')
+print(f'turen:    {len(STOP)} steder · {I_ALT} min på stederne · '
+      f'{len(GRUPPER)} grupper · {len(WORTLISTE)} ord i ordlisten')
+for _nr, _d in DAGSREGNSKAB.items():
+    _rute = ' → '.join(STOP[n - 1][1].split()[0] for n in RAEKKEFOELGE[_nr])
+    print(f'  gruppe {_nr}: {_rute}  '
+          f'{(_d["meter"] + _d["hjem_m"]) / 1000:.1f} km · '
+          f'{_d["luft"]} min luft')
