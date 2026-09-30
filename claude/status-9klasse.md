@@ -92,6 +92,17 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `vejledning/sturmflut-dansk.pdf` og udgives ikke.
 - **Alle stop er gratis.** Ruten er tjekket igennem for entré; sidste stop,
   Hafen.City.Horizonte, har gratis adgang (bekræftet hos hafencity.com).
+- **Hotellet er slået op og lagt ind i modellen** (a&o Hauptbahnhof,
+  Amsinckstraße). Det ligger i den østlige ende, tæt på Lohsepark — mit flade
+  overslag på 30 minutters gang til Speicherstadt var både forkert og
+  misvisende: der er 11 minutter til Lohsepark og 25 til Dalmannkai. Gangen
+  fra hotellet regnes nu pr. gruppe.
+- **Ruterne er optimeret, ikke valgt.** For hvert startsted regnes alle 120
+  rækkefølger igennem; den korteste vælges, og ved lige lange foretrækkes den,
+  der slutter tættest på mødestedet. Fire af de fem ruter slutter præcis ved
+  Magellan-Terrassen, den femte 200 m derfra — der er en assert på det, for en
+  gruppe, der slutter to kilometer væk klokken 14.30, er en dårlig idé,
+  uanset hvad regnestykket siger.
 - **Kort til hver gruppe.** `figurer.py` har fået `rutekort()`: et skematisk
   kort tegnet af rigtige koordinater, med gruppens egen rute, pile, grøn ring
   ved start, rød ved slut, målestok og nordpil. Vandet er ikke tegnet — kortet

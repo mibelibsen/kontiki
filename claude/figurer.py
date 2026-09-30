@@ -1853,14 +1853,22 @@ def rutekort(punkter, rute=(), W=620, H=430, maalestok=500):
         navn = punkt[0]
         hvor = punkt[3] if len(punkt) > 3 else 'o'
         x, y = p(nr)
-        plads = (rute.index(nr) + 1) if rute and nr in rute else nr
-        farve = GRO if rute and nr == rute[0] else (
-            ROD if rute and nr == rute[-1] else BLA)
-        d.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="13" fill="#fff" '
-                 f'stroke="{farve}" stroke-width="2.6"/>')
-        d.append(f'<text x="{x:.1f}" y="{y + 4.5:.1f}" text-anchor="middle" '
-                 f'fill="{farve}" font-size="12.5" font-weight="700">'
-                 f'{plads}</text>')
+        if nr == 0:                       # udgangspunktet, fx hotellet
+            d.append(f'<rect x="{x - 11:.1f}" y="{y - 11:.1f}" width="22" '
+                     f'height="22" rx="5" fill="{MUT}"/>')
+            d.append(f'<path d="M {x - 6:.1f} {y + 4:.1f} v -5 l 6 -5 l 6 5 '
+                     f'v 5 z" fill="#fff"/>')
+        else:
+            plads = (rute.index(nr) if rute and nr in rute else nr)
+            if rute and 0 not in rute:
+                plads += 1
+            farve = ROD if rute and nr == rute[-1] else (
+                GRO if rute and len(rute) > 1 and nr == rute[1] else BLA)
+            d.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="13" fill="#fff" '
+                     f'stroke="{farve}" stroke-width="2.6"/>')
+            d.append(f'<text x="{x:.1f}" y="{y + 4.5:.1f}" '
+                     f'text-anchor="middle" fill="{farve}" font-size="12.5" '
+                     f'font-weight="700">{plads}</text>')
         dx, dy, anker = RETNING[hvor]
         d.append(f'<text x="{x + dx:.1f}" y="{y + dy:.1f}" '
                  f'text-anchor="{anker}" fill="{INK}" font-size="11.5" '
@@ -1876,7 +1884,7 @@ def rutekort(punkter, rute=(), W=620, H=430, maalestok=500):
     d.append(f'<text x="{sx + maalestok * skala / 2:.1f}" y="{sy - 10}" '
              f'text-anchor="middle" fill="{INK}" font-size="11">'
              f'{maalestok} m</text>')
-    nx, ny = W - 26, H - 20
+    nx, ny = W - 26, 40          # oeverst, hvor der sjaeldent er punkter
     d.append(f'<path d="M {nx} {ny - 26} L {nx - 7} {ny} L {nx} {ny - 7} '
              f'L {nx + 7} {ny} Z" fill="{MUT}"/>')
     d.append(f'<text x="{nx}" y="{ny + 13}" text-anchor="middle" fill="{MUT}" '
