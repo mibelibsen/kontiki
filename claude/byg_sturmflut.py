@@ -191,8 +191,9 @@ FOTOREGLER = [
  'bagefter.',
  'Hold telefonen <b>vandret</b>. Billederne skal bruges i et oplæg.',
  'Døb filerne <b>gruppe_stop_kort-tekst</b> — fx <i>3_dalmannkai_flodport</i>.',
- 'Læg billederne i <b>billedmappen i Teams samme aften</b>, i jeres egen '
- 'undermappe. Ikke dagen efter.',
+ 'Læg billederne i <b>billedmappen i Teams løbende</b> — efter hvert stop, '
+ 'i jeres egen undermappe. Vi følger med undervejs, så vent ikke til I er '
+ 'hjemme.',
 ]
 
 SIKKERHED = [

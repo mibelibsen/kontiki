@@ -92,6 +92,7 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `vejledning/sturmflut-dansk.pdf` og udgives ikke.
 - **Alle stop er gratis.** Ruten er tjekket igennem for entré; sidste stop,
   Hafen.City.Horizonte, har gratis adgang (bekræftet hos hafencity.com).
+- **Billederne lægges i Teams løbende**, efter hvert stop — ikke om aftenen. De voksne skal kunne følge med undervejs.
 - Kort på tysksiden.
 - **`claude/tjek.py` kender nu `vercel.json`.** Links som `/sturmflut/3` er
   gyldige, selv om der ikke findes en fil af det navn — til gengæld tjekkes
