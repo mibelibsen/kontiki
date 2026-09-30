@@ -92,6 +92,15 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `vejledning/sturmflut-dansk.pdf` og udgives ikke.
 - **Alle stop er gratis.** Ruten er tjekket igennem for entré; sidste stop,
   Hafen.City.Horizonte, har gratis adgang (bekræftet hos hafencity.com).
+- **Kort til hver gruppe.** `figurer.py` har fået `rutekort()`: et skematisk
+  kort tegnet af rigtige koordinater, med gruppens egen rute, pile, grøn ring
+  ved start, rød ved slut, målestok og nordpil. Vandet er ikke tegnet — kortet
+  viser afstande og retninger, ikke gader, og det står på kortet.
+- **Koordinaterne er slået op i OpenStreetMap** (Nominatim) og har afløst mit
+  eget overslag over afstandene. Gangafstand = fugleflugt × 1,3, rundet til
+  nærmeste 50 m. Det flyttede ruterne fra 4,4–4,8 km til 4,5–5,0 km, og
+  luften fra 30–40 til 32–38 minutter — hele tidsplanen hvilede på tal, jeg
+  havde gættet.
 - **Grupperne sendes på tværs.** Hver gruppe har sit eget startsted og sin
   egen rækkefølge af de fem steder — fem forskellige ruter, så to grupper med
   samme emne kommer hjem med forskellige billeder.

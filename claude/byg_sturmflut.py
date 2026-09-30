@@ -18,6 +18,7 @@ Tal, der er slået efter (kilder står på siden):
   · Hafen.City.Horizonte, Baakenallee 33: ti-fr 10–16, gratis
 """
 import html
+import math
 import os
 import sys
 
@@ -210,20 +211,31 @@ assert len({r[0] for r in RAEKKEFOELGE.values()}) == 5, \
 assert len({tuple(r) for r in RAEKKEFOELGE.values()}) == 5, \
     'de fem rækkefølger skal være forskellige'
 
-# Afstande i meter, overslag. HafenCity ligger langs én akse fra Speicherstadt
-# i vest til Baakenhafen i øst. Dalmannkai (3) er en halvø, man går ud på og
-# tilbage fra, og regnes derfor som en stikvej ud fra Sandtorhafen (2).
-AKSE = {1: 0, 2: 400, 4: 1250, 5: 2050}
-STIKVEJ = {3: (2, 350)}
+# Koordinater slået op i OpenStreetMap (Nominatim), så afstandene ikke
+# hviler på et gæt. Gangafstanden regnes som fugleflugt gange 1,3 — den
+# sædvanlige tommelfingerregel i by — og rundes til nærmeste 50 meter, fordi
+# den er et overslag og ikke skal se mere præcis ud, end den er.
+KOORDINAT = {
+ 1: (53.5433082, 9.9905648),    # Am Sandtorkai 30, midt i Speicherstadt
+ 2: (53.5424027, 9.9925640),    # Magellan-Terrassen
+ 3: (53.5414927, 9.9893205),    # Am Kaiserkai
+ 4: (53.5424854, 10.0052118),   # Lohsepark
+ 5: (53.5377862, 10.0135270),   # Baakenallee 33
+}
+OMVEJ = 1.3
+
+
+def fugleflugt(a, b):
+    R = 6371000
+    la1, lo1 = map(math.radians, KOORDINAT[a])
+    la2, lo2 = map(math.radians, KOORDINAT[b])
+    h = (math.sin((la2 - la1) / 2) ** 2 + math.cos(la1) * math.cos(la2)
+         * math.sin((lo2 - lo1) / 2) ** 2)
+    return 2 * R * math.asin(math.sqrt(h))
 
 
 def afstand(a, b):
-    if a == b:
-        return 0
-    ekstra = sum(STIKVEJ[x][1] for x in (a, b) if x in STIKVEJ)
-    def sted(x):
-        return AKSE[STIKVEJ[x][0]] if x in STIKVEJ else AKSE[x]
-    return abs(sted(a) - sted(b)) + ekstra
+    return 0 if a == b else round(fugleflugt(a, b) * OMVEJ / 50) * 50
 
 
 TEMPO = 80                      # meter i minuttet med en flok niendeklasser
@@ -287,6 +299,13 @@ for _, _, _, _, opg in GRUPPER:
     assert len(opg) == 3, 'hver gruppe skal have tre billeder'
 
 # ===================================================== 2 · figurer
+KORTNAVN = {nr: STOP[nr - 1][1].split(' und ')[0] for nr in KOORDINAT}
+# hvor navnet skal stå i forhold til prikken — de tre vestlige steder
+# ligger så tæt, at de ellers skriver oven i hinanden
+ETIKET = {1: 'o', 2: 'h', 3: 'u', 4: 'o', 5: 'u'}
+PUNKTER = {nr: (KORTNAVN[nr], *KOORDINAT[nr], ETIKET[nr]) for nr in KOORDINAT}
+fig_kort = FG.rutekort(PUNKTER)
+
 fig_snit = FG.vandstandssnit(
     promenade=(4.5, 5.5), warft=(7.5, 8.3),
     maerker=[('Stormflod 1962', 5.70), ('Stormflod 1976', 6.45)])
@@ -365,6 +384,10 @@ padding:12px 14px;margin:12px 0;font-size:.97rem}
 .dag b{display:inline-block;min-width:52px;color:var(--good)}
 p.vink{color:var(--muted);font-size:.93rem;margin:8px 0}
 p.gang{color:var(--muted);font-size:.86rem;margin:6px 0 10px;padding-left:4px}
+.kort{border:1px solid var(--line);border-radius:12px;padding:8px;
+margin:10px 0;background:#f7f9fc}
+.kort svg{max-width:100%;height:auto;display:block}
+.kort .da{color:var(--muted);font-size:.85rem;margin:8px 4px 2px}
 .figurboks{padding:6px 12px 12px}
 .figurboks svg{max-width:100%;height:auto}
 .figurboks .da{color:var(--muted);font-size:.86rem;margin:6px 0 0}
@@ -450,6 +473,10 @@ def gruppeside(nr, g):
 {fotos}
 
 <h2>Eure Route — fünf Orte</h2>
+<div class="kort">{FG.rutekort(PUNKTER, orden, W=560, H=390)}
+<p class="da">Grøn ring: her starter I. Rød ring: her slutter I. Kortet er
+skematisk — det viser afstande og retninger, ikke gader. Vandet er ikke
+tegnet.</p></div>
 <p class="vink">Jeres rute er jeres egen: I starter i <b>{esc(start_navn)}</b>,
 og ingen anden gruppe starter samme sted. Regn med cirka
 <b>{(d['ud_m'] + d['meter'] + d['hjem_m']) / 1000:.1f} km at gå</b> i løbet af
@@ -602,14 +629,22 @@ siden af, så ingen skal nå tværs gennem HafenCity klokken {OPSAMLING}.</p>
 {AFGANG} til {OPSAMLING} er der {RAADIGHED} minutter: cirka
 {TIL_HAFENCITY} minutters gang fra hotellet ud til Speicherstadt, de fem
 steder cirka {I_ALT} minutter, frokost {FROKOST}, og resten gang.</p>
-<p>Fire af grupperne går <b>5,2 km</b> i alt, gruppe 1 går 4,4 km. At de er
-lige lange er ikke tilfældigt: alle går reelt fra Speicherstadt, rundt om det
-hele og tilbage til mødestedet — så koster det det samme, uanset hvor man
-starter.</p>
+<p>Grupperne går mellem <b>4,5 og 5,0 km</b> i løbet af dagen. At de
+ligger så tæt er ikke tilfældigt: alle går reelt fra Speicherstadt, rundt om
+det hele og tilbage til mødestedet — så koster det omtrent det samme, uanset
+hvor man starter. Afstandene er regnet af koordinater fra OpenStreetMap som
+fugleflugt gange 1,3 og rundet til nærmeste 50 meter.</p>
 <p>Den strammeste rute har <b>{LUFT} minutters luft</b>, den rummeligste
 {MEST_LUFT}. Det ene tal, jeg ikke har kunnet regne mig frem til, er de
 {TIL_HAFENCITY} minutter fra hotellet — ligger det længere væk, skal resten
 skubbes tilsvarende.</p></div>
+
+<h2 class="sec">Kortet</h2>
+<div class="figur">{fig_kort}
+<div class="figtekst">De fem steder i korrekt indbyrdes afstand — tegnet af
+koordinater fra OpenStreetMap. Kortet viser afstande og retninger, ikke
+gader; vandet er ikke tegnet. Hver gruppe har det samme kort med sin egen
+rute på sin egen side.</div></div>
 
 <h2 class="sec">De fem steder</h2>
 <p>Rækkefølgen herunder går fra vest mod øst. Alle steder er gratis.</p>
@@ -690,7 +725,7 @@ dok = ['<h1>Sturmflut i HafenCity · dansk udgave</h1>',
        f'Gang fra hotellet til Speicherstadt sat til {TIL_HAFENCITY} min '
        '(det eneste tal, der er gættet — ret det, hvis hotellet ligger '
        f'anderledes). De fem steder ca. {I_ALT} min, frokost {FROKOST} min, '
-       'resten gang. Fire grupper går 5,2 km i alt, gruppe 1 går 4,4 km. '
+       'resten gang. Grupperne går 4,5–5,0 km i løbet af dagen. '
        f'Strammeste luft {LUFT} min, rummeligste {MEST_LUFT} min. '
        'Alt til fods — ingen ubahn og ingen bus.</p>',
        '<h2>Hvem starter hvor</h2>',

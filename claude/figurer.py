@@ -1800,3 +1800,86 @@ def vandstandssnit(promenade, warft, maerker, W=680, H=340, vand=0.0):
                  f'fill="{ROD}" font-size="10">{_dk(m)} m</text>')
     d.append('</svg>')
     return ''.join(d)
+
+
+def rutekort(punkter, rute=(), W=620, H=430, maalestok=500):
+    """Skematisk kort i korrekt maalestok ud fra rigtige koordinater.
+
+    punkter er {nr: (navn, lat, lon)}. rute er raekkefoelgen af numre, der
+    tegnes som en streg med pile. Vandet tegnes ikke — kortet viser afstande
+    og retninger, ikke gader. Maalestokken er beregnet af projektionen, saa
+    stregen altid svarer til det antal meter, der staar under den.
+    """
+    lat0 = sum(p[1] for p in punkter.values()) / len(punkter)
+    lon0 = sum(p[2] for p in punkter.values()) / len(punkter)
+
+    def projektion(lat, lon):                   # meter fra midtpunktet
+        return ((lon - lon0) * math.cos(math.radians(lat0)) * 111320,
+                (lat - lat0) * 110540)
+
+    m = {nr: projektion(p[1], p[2]) for nr, p in punkter.items()}
+    xs = [v[0] for v in m.values()]
+    ys = [v[1] for v in m.values()]
+    kant, bund = 58, 46
+    skala = min((W - 2 * kant) / max(max(xs) - min(xs), 1),
+                (H - kant - bund) / max(max(ys) - min(ys), 1))
+    mx, my = (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+
+    def p(nr):
+        x, y = m[nr]
+        return (W / 2 + (x - mx) * skala, (H - bund + kant) / 2 - (y - my) * skala)
+
+    d = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kort over '
+         f'de fem steder i HafenCity." {FONT}>',
+         f'<rect x="0" y="0" width="{W}" height="{H}" fill="#f7f9fc"/>']
+    if rute:
+        s = ' '.join(f'{p(nr)[0]:.1f},{p(nr)[1]:.1f}' for nr in rute)
+        d.append(f'<polyline points="{s}" fill="none" stroke="{BLA}" '
+                 f'stroke-width="3" stroke-linejoin="round" '
+                 f'stroke-opacity="0.45"/>')
+        for i in range(len(rute) - 1):          # pil midt paa hvert stykke
+            (x1, y1), (x2, y2) = p(rute[i]), p(rute[i + 1])
+            mxp, myp = (x1 + x2) / 2, (y1 + y2) / 2
+            vk = math.degrees(math.atan2(y2 - y1, x2 - x1))
+            d.append(f'<path d="M -6 -4.5 L 5 0 L -6 4.5 Z" fill="{BLA}" '
+                     f'transform="translate({mxp:.1f} {myp:.1f}) '
+                     f'rotate({vk:.1f})"/>')
+    # etiketten placeres pr. punkt: o(ver), u(nder), v(enstre), h(øjre).
+    # Uden det stoeder navnene sammen dér, hvor stederne ligger taet.
+    RETNING = {'o': (0, -20, 'middle'), 'u': (0, 31, 'middle'),
+               'v': (-18, 4, 'end'), 'h': (18, 4, 'start')}
+    for nr, punkt in punkter.items():
+        navn = punkt[0]
+        hvor = punkt[3] if len(punkt) > 3 else 'o'
+        x, y = p(nr)
+        plads = (rute.index(nr) + 1) if rute and nr in rute else nr
+        farve = GRO if rute and nr == rute[0] else (
+            ROD if rute and nr == rute[-1] else BLA)
+        d.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="13" fill="#fff" '
+                 f'stroke="{farve}" stroke-width="2.6"/>')
+        d.append(f'<text x="{x:.1f}" y="{y + 4.5:.1f}" text-anchor="middle" '
+                 f'fill="{farve}" font-size="12.5" font-weight="700">'
+                 f'{plads}</text>')
+        dx, dy, anker = RETNING[hvor]
+        d.append(f'<text x="{x + dx:.1f}" y="{y + dy:.1f}" '
+                 f'text-anchor="{anker}" fill="{INK}" font-size="11.5" '
+                 f'font-weight="700" stroke="#f7f9fc" stroke-width="3.5" '
+                 f'paint-order="stroke">{navn}</text>')
+    # maalestok og nord
+    sx, sy = 16, H - 16
+    d.append(f'<line x1="{sx}" y1="{sy}" x2="{sx + maalestok * skala:.1f}" '
+             f'y2="{sy}" stroke="{INK}" stroke-width="2.4"/>')
+    for e in (sx, sx + maalestok * skala):
+        d.append(f'<line x1="{e:.1f}" y1="{sy - 5}" x2="{e:.1f}" '
+                 f'y2="{sy + 5}" stroke="{INK}" stroke-width="2.4"/>')
+    d.append(f'<text x="{sx + maalestok * skala / 2:.1f}" y="{sy - 10}" '
+             f'text-anchor="middle" fill="{INK}" font-size="11">'
+             f'{maalestok} m</text>')
+    nx, ny = W - 26, H - 20
+    d.append(f'<path d="M {nx} {ny - 26} L {nx - 7} {ny} L {nx} {ny - 7} '
+             f'L {nx + 7} {ny} Z" fill="{MUT}"/>')
+    d.append(f'<text x="{nx}" y="{ny + 13}" text-anchor="middle" fill="{MUT}" '
+             f'font-size="10.5">N</text>')
+    d.append('</svg>')
+    return ''.join(d)
