@@ -1730,3 +1730,73 @@ def aandedraet(faser, W=600, H=150):
              f'midt i en situation, uden at nogen opdager det.</text>')
     d.append('</svg>')
     return ''.join(d)
+
+
+def vandstandssnit(promenade, warft, maerker, W=680, H=340, vand=0.0):
+    """Tvaersnit gennem en kaj: vandet, promenaden, warften og vandstande.
+
+    promenade og warft er (lav, hoej) i meter over havets middel. maerker er
+    [(navn, meter)] — historiske vandstande, der tegnes som vandrette linjer.
+    Alt skaleres af de samme tal, saa en linje ikke kan komme til at ligge
+    forkert i forhold til en kant.
+    """
+    V, HJ, TOP, BUND = 132, 104, 26, 30
+    x0, x1 = V, W - HJ
+    y0, y1 = TOP, H - BUND
+    maks = max(warft[1], max(m for _, m in maerker)) + 1.2
+
+    def y(m):                                   # meter -> svg
+        return y1 - (y1 - y0) * (m - vand) / (maks - vand)
+
+    p_lav, p_hoej = promenade
+    w_lav, w_hoej = warft
+    kaj_x = x0 + (x1 - x0) * 0.30               # kajkant
+    warft_x = x0 + (x1 - x0) * 0.62             # hvor warften begynder
+
+    d = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tvaersnit '
+         f'gennem kajen med promenade, warft og historiske vandstande." {FONT}>']
+    # vandet
+    d.append(f'<rect x="{x0 - 26}" y="{y(vand):.1f}" width="{kaj_x - x0 + 26:.1f}" '
+             f'height="{y1 - y(vand):.1f}" fill="{BLA}" fill-opacity="0.16"/>')
+    d.append(f'<line x1="{x0 - 26}" y1="{y(vand):.1f}" x2="{kaj_x:.1f}" '
+             f'y2="{y(vand):.1f}" stroke="{BLA}" stroke-width="2"/>')
+    d.append(f'<text x="{x0 - 22}" y="{y(vand) + 15:.1f}" fill="{BLA}" '
+             f'font-size="10.5">Elben</text>')
+    # kajen og promenaden
+    d.append(f'<path d="M {kaj_x:.1f} {y1:.1f} L {kaj_x:.1f} {y(p_hoej):.1f} '
+             f'L {warft_x:.1f} {y(p_hoej):.1f} L {warft_x:.1f} {y(w_hoej):.1f} '
+             f'L {x1:.1f} {y(w_hoej):.1f} L {x1:.1f} {y1:.1f} Z" '
+             f'fill="{LIN}" fill-opacity="0.55" stroke="{MUT}" stroke-width="1.3"/>')
+    # huset paa warften
+    hb, hh = (x1 - warft_x) * 0.52, (y(w_hoej) - y0) * 0.72
+    d.append(f'<rect x="{warft_x + 22:.1f}" y="{y(w_hoej) - hh:.1f}" '
+             f'width="{hb:.1f}" height="{hh:.1f}" fill="#fff" stroke="{MUT}" '
+             f'stroke-width="1.3"/>')
+    for r in range(3):
+        yy = y(w_hoej) - hh + 12 + r * (hh - 18) / 3
+        d.append(f'<line x1="{warft_x + 30:.1f}" y1="{yy:.1f}" '
+                 f'x2="{warft_x + 14 + hb:.1f}" y2="{yy:.1f}" stroke="{LIN}" '
+                 f'stroke-width="1.6"/>')
+    # niveauerne
+    for lav, hoej, navn, farve, lx, hx in (
+            (p_lav, p_hoej, 'Promenade', GRO, kaj_x, warft_x),
+            (w_lav, w_hoej, 'Warft', ORA, warft_x, x1)):
+        d.append(f'<rect x="{lx:.1f}" y="{y(hoej):.1f}" width="{hx - lx:.1f}" '
+                 f'height="{max(y(lav) - y(hoej), 2):.1f}" fill="{farve}" '
+                 f'fill-opacity="0.22"/>')
+        d.append(f'<text x="{x1 + 6}" y="{y(hoej) - 4:.1f}" fill="{farve}" '
+                 f'font-size="11" font-weight="700">{navn}</text>')
+        d.append(f'<text x="{x1 + 6}" y="{y(hoej) + 9:.1f}" fill="{MUT}" '
+                 f'font-size="10">{_dk(lav)}–{_dk(hoej)} m</text>')
+    # historiske vandstande
+    for navn, m in maerker:
+        d.append(f'<line x1="{x0 - 26}" y1="{y(m):.1f}" x2="{x1:.1f}" '
+                 f'y2="{y(m):.1f}" stroke="{ROD}" stroke-width="1.6" '
+                 f'stroke-dasharray="7 4"/>')
+        d.append(f'<text x="{x0 - 30}" y="{y(m) - 4:.1f}" text-anchor="end" '
+                 f'fill="{ROD}" font-size="10.5" font-weight="700">{navn}</text>')
+        d.append(f'<text x="{x0 - 30}" y="{y(m) + 9:.1f}" text-anchor="end" '
+                 f'fill="{ROD}" font-size="10">{_dk(m)} m</text>')
+    d.append('</svg>')
+    return ''.join(d)

@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HafenCity · stormflod</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;--warn:#b5710a;--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a,nav.tabs span{font-size:.86rem;padding:6px 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+nav.tabs span.soon{color:#9aa6ba;cursor:default}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:2rem}
+.hero p{margin:0;color:var(--muted);max-width:70ch}
+.pill{display:inline-block;font-size:.74rem;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;background:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.card.soon{opacity:.6}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:12px}
+.tag.klar{background:#eaf7f0;color:var(--good);border:1px solid #bfe6d2}
+.tag.kommer{background:#f4f6fb;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
+.num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 0}
+.btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btnlink.ghost:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+.plan{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+.plan th,.plan td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+.plan th{background:var(--panel2);font-weight:700;position:sticky;top:60px}
+.plan tr.block td{background:var(--accent);color:#fff;font-weight:800;font-size:1rem}
+.plan tr.break td{background:#fff7e9;color:var(--warn);font-weight:600;font-style:italic}
+.plan td.uge{white-space:nowrap;font-weight:700;color:var(--accent);width:52px}
+.plan td.per{white-space:nowrap;color:var(--muted);width:110px}
+.plan ul{margin:0;padding-left:18px}.plan li{margin:2px 0}
+.mat{color:var(--muted);font-size:.9rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;text-align:left}.mini th{background:var(--panel2)}
+@media print{header.top,nav.tabs,.btnlink{display:none!important}.hero,.card,.note{box-shadow:none}.plan th{position:static}.plan tr.block td{background:#fff!important;color:#000;border:1px solid #000}body{color:#000}}
+
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:14px;margin:14px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.figtekst{color:var(--muted);font-size:.9rem;margin-top:8px}
+.blok{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:16px 20px;
+margin:12px 0;box-shadow:var(--shadow)}
+.blok.advar{border-left-color:var(--bad);background:var(--bad-soft)}
+.blok h3{margin:0 0 8px;font-size:1.1rem}
+.blok p,.blok li{color:var(--muted);font-size:.97rem}
+.blok ul,.blok ol{margin:6px 0 0;padding-left:20px}.blok li{margin:5px 0}
+.stop{border:1px solid var(--line);border-radius:14px;padding:16px 20px;
+margin:12px 0;background:var(--panel);box-shadow:var(--shadow)}
+.stop h3{margin:0 0 2px;font-size:1.15rem;display:flex;align-items:center;
+gap:10px;flex-wrap:wrap}
+.stop .tid{background:var(--accent);color:#fff;border-radius:999px;
+padding:2px 11px;font-size:.82rem;font-weight:700;flex:0 0 auto}
+.stop .hvor{color:var(--muted);font-size:.88rem;text-transform:uppercase;
+letter-spacing:.04em;margin:0 0 9px}
+.stop p{color:var(--muted);font-size:.97rem;margin:6px 0;max-width:74ch}
+.stop ol{margin:8px 0 0;padding-left:20px}
+.stop li{color:var(--ink);font-size:.95rem;margin:5px 0}
+.gruppe{border:1px solid var(--line);border-radius:14px;padding:15px 18px;
+background:var(--panel2)}
+.gruppe h3{margin:0 0 4px;font-size:1.05rem}
+.gruppe .nr{background:var(--good);color:#fff;border-radius:999px;
+width:24px;height:24px;display:inline-flex;align-items:center;
+justify-content:center;font-size:.82rem;margin-right:8px}
+.gruppe p{color:var(--muted);font-size:.93rem;margin:4px 0}
+.gruppe ul{margin:8px 0 0;padding-left:18px}
+.gruppe li{font-size:.92rem;color:var(--ink);margin:4px 0}
+.gitter{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:12px;margin:12px 0}
+.printbtn{background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;color:var(--ink);
+font-family:inherit;margin:6px 8px 0 0}
+.kilder{color:var(--muted);font-size:.85rem;margin-top:18px}
+.kilder a{color:var(--muted)}
+@media print{header.top,.printbtn,.btnlink{display:none!important}
+.blok,.figur,.stop,.gruppe{box-shadow:none;break-inside:avoid}
+body{font-size:10pt}main{padding:0}@page{size:A4;margin:12mm}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a></div></header><main><section class="hero"><span class="pill">Studietur Hamborg</span>
+<h1>HafenCity: at bygge og bo, når stormfloden kommer</h1>
+<p>Fire timer med frokost. Fem grupper, hver med sit fotoemne. HafenCity
+ligger <b>uden for diget</b> — byen er i stedet løftet op på kunstige bakker,
+warfter, mens promenaderne er blevet liggende nede ved vandet og må blive
+våde. Det kan ses med det blotte øje, og det er dét, I skal fotografere.</p>
+<button class="printbtn" onclick="window.print()">Print siden</button></section>
+
+<div class="figur"><svg viewBox="0 0 680 340" width="100%" style="max-width:680px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tvaersnit gennem kajen med promenade, warft og historiske vandstande." font-family="Consolas, monospace" font-size="11"><rect x="106" y="310.0" width="159.2" height="0.0" fill="#1f6fd6" fill-opacity="0.16"/><line x1="106" y1="310.0" x2="265.2" y2="310.0" stroke="#1f6fd6" stroke-width="2"/><text x="110" y="325.0" fill="#1f6fd6" font-size="10.5">Elben</text><path d="M 265.2 310.0 L 265.2 145.6 L 407.3 145.6 L 407.3 61.9 L 576.0 61.9 L 576.0 310.0 Z" fill="#c9d2e0" fill-opacity="0.55" stroke="#586074" stroke-width="1.3"/><rect x="429.3" y="36.0" width="87.7" height="25.8" fill="#fff" stroke="#586074" stroke-width="1.3"/><line x1="437.3" y1="48.0" x2="509.0" y2="48.0" stroke="#c9d2e0" stroke-width="1.6"/><line x1="437.3" y1="50.7" x2="509.0" y2="50.7" stroke="#c9d2e0" stroke-width="1.6"/><line x1="437.3" y1="53.3" x2="509.0" y2="53.3" stroke="#c9d2e0" stroke-width="1.6"/><rect x="265.2" y="145.6" width="142.1" height="29.9" fill="#1a8f5e" fill-opacity="0.22"/><text x="582" y="141.6" fill="#1a8f5e" font-size="11" font-weight="700">Promenade</text><text x="582" y="154.6" fill="#586074" font-size="10">4,5–5,5 m</text><rect x="407.3" y="61.9" width="168.7" height="23.9" fill="#b5710a" fill-opacity="0.22"/><text x="582" y="57.9" fill="#b5710a" font-size="11" font-weight="700">Warft</text><text x="582" y="70.9" fill="#586074" font-size="10">7,5–8,3 m</text><line x1="106" y1="139.6" x2="576.0" y2="139.6" stroke="#c23b4b" stroke-width="1.6" stroke-dasharray="7 4"/><text x="102" y="135.6" text-anchor="end" fill="#c23b4b" font-size="10.5" font-weight="700">Stormflod 1962</text><text x="102" y="148.6" text-anchor="end" fill="#c23b4b" font-size="10">5,7 m</text><line x1="106" y1="117.2" x2="576.0" y2="117.2" stroke="#c23b4b" stroke-width="1.6" stroke-dasharray="7 4"/><text x="102" y="113.2" text-anchor="end" fill="#c23b4b" font-size="10.5" font-weight="700">Stormflod 1976</text><text x="102" y="126.2" text-anchor="end" fill="#c23b4b" font-size="10">6,45 m</text></svg>
+<div class="figtekst">De to niveauer, og to rigtige stormfloder tegnet ind.
+1976 stod <b>højere</b> end 1962 — men da holdt digerne.
+Begge ville have oversvømmet promenaden. Ingen af dem ville have nået op på
+warften.</div></div>
+
+<div class="blok"><h3>Det, turen handler om</h3>
+<p>I 1962 nåede vandet 5,70 m ved Pegel St. Pauli. Digerne brød sammen 60
+steder, og over 300 mennesker døde i Hamborg. I 1976 stod vandet 6,45 m —
+højere end i 1962 — men da holdt digerne.</p>
+<p>HafenCity er bygget efter den erfaring, men på en anden måde: ikke bag et
+dige, men <b>oven på</b> byen. Gader og huse ligger 7,5–8,5 meter over
+havets middel. Promenaderne ligger nede på de gamle kajers niveau og bliver
+lukket af, når der varsles. Spørgsmålet, I skal tage stilling til undervejs:
+<i>er det klogt at bygge sådan — eller er det at flytte problemet?</i></p></div>
+
+<h2 class="sec">Programmet</h2>
+<p>Cirka 190 minutter på stoppene plus omkring 45 minutter gang — i alt
+knap fire timer. Ruten går fra vest mod øst, cirka tre kilometer i alt.</p>
+<div class="figur"><svg viewBox="0 0 660 456" width="100%" style="max-width:660px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Processen i 6 trin." font-family="Consolas, monospace" font-size="11"><rect x="10" y="2" width="640" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="27.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="31.0" text-anchor="middle" fill="#fff" font-weight="700">1</text><text x="56" y="22.0" fill="#fff" font-weight="700" font-size="12.5">Speicherstadt · 20 min</text><text x="56" y="39.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Kibbelstegbrücke og kanalen bagved</text><line x1="36" y1="55" x2="36" y2="76" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 73 L 36 79 L 40 73 Z" fill="#c9d2e0"/><rect x="10" y="82" width="640" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="107.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="111.0" text-anchor="middle" fill="#fff" font-weight="700">2</text><text x="56" y="102.0" fill="#fff" font-weight="700" font-size="12.5">Sandtorhafen · 25 min</text><text x="56" y="119.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Magellan-Terrassen</text><line x1="36" y1="135" x2="36" y2="156" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 153 L 36 159 L 40 153 Z" fill="#c9d2e0"/><rect x="10" y="162" width="640" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="187.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="191.0" text-anchor="middle" fill="#fff" font-weight="700">3</text><text x="56" y="182.0" fill="#fff" font-weight="700" font-size="12.5">Dalmannkai og Am Kaiserkai · 30 min</text><text x="56" y="199.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Promenaden langs Sandtorhafen</text><line x1="36" y1="215" x2="36" y2="236" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 233 L 36 239 L 40 233 Z" fill="#c9d2e0"/><rect x="10" y="242" width="640" height="50" rx="9" fill="#e9edf4"/><circle cx="32" cy="267.0" r="12" fill="#586074" fill-opacity="0.22"/><text x="32" y="271.0" text-anchor="middle" fill="#1a2233" font-weight="700">4</text><text x="56" y="262.0" fill="#1a2233" font-weight="700" font-size="12.5">Frokost · 55 min</text><text x="56" y="279.0" fill="#1a2233" fill-opacity="0.9" font-size="10.5">Überseequartier eller Überseeboulevard</text><line x1="36" y1="295" x2="36" y2="316" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 313 L 36 319 L 40 313 Z" fill="#c9d2e0"/><rect x="10" y="322" width="640" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="347.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="351.0" text-anchor="middle" fill="#fff" font-weight="700">5</text><text x="56" y="342.0" fill="#fff" font-weight="700" font-size="12.5">Lohsepark og Elbarkaden · 20 min</text><text x="56" y="359.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Magdeburger Hafen</text><line x1="36" y1="375" x2="36" y2="396" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 393 L 36 399 L 40 393 Z" fill="#c9d2e0"/><rect x="10" y="402" width="640" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="427.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="431.0" text-anchor="middle" fill="#fff" font-weight="700">6</text><text x="56" y="422.0" fill="#fff" font-weight="700" font-size="12.5">Baakenhafen · 40 min</text><text x="56" y="439.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Hafen.City.Horizonte, Baakenallee 33</text></svg></div>
+
+<article class="stop"><h3><span class="tid">20 min</span>
+1. Speicherstadt</h3><p class="hvor">Kibbelstegbrücke og kanalen bagved</p><p>Den gamle måde at gøre det på: pakhusene står uden for diget og bliver oversvømmet flere gange hver vinter. Derfor er der mursten forneden, varer blev hejst op på de øverste etager, og portene har riller i siderne, som skot skydes ned i.</p>
+<ol><li>Find en port med riller til skot i karmen — de sidder lige i øjenhøjde.</li><li>Kig efter, hvor højt murstenene er skiftet ud eller repareret.</li><li>Stå på broen og se, hvor tæt vandet er på gadeniveauet.</li></ol></article><article class="stop"><h3><span class="tid">25 min</span>
+2. Sandtorhafen</h3><p class="hvor">Magellan-Terrassen</p><p>Trappen mellem de to niveauer. Nederst promenaden, der må blive våd, øverst byen, der ikke må. Terrasserne er selve overgangen — og de forsvinder i vandet, når det står højt.</p>
+<ol><li>Tæl trinnene fra vandet op til øverste terrasse, og mål et trin. Hvor stor er højdeforskellen?</li><li>Sammenlign med tallene på tværsnittet: passer det?</li><li>Stå tre på nederste trin og tre på øverste — samme billede.</li></ol></article><article class="stop"><h3><span class="tid">30 min</span>
+3. Dalmannkai og Am Kaiserkai</h3><p class="hvor">Promenaden langs Sandtorhafen</p><p>Warften i brug. Promenaden ligger lavt, gaden ligger otte meter oppe, og imellem dem er der porte, ramper og trapper. Parkeringskældrene kan lukkes af med fluttore, når varslet kommer.</p>
+<ol><li>Find en flodport eller en nedkørsel, der kan lukkes. Hvor høj er den?</li><li>Find en indgang, hvor døren sidder højere end fortovet.</li><li>Følg en flugtvej med øjnene: hvor ville du gå hen, hvis vandet kom nu?</li></ol></article><article class="stop"><h3><span class="tid">55 min</span>
+4. Frokost</h3><p class="hvor">Überseequartier eller Überseeboulevard</p><p>Spisesteder på begge niveauer og indendørs, hvis det regner. Grupperne spiser sammen og sorterer dagens billeder imens.</p>
+<ol><li>Slet de billeder, der ikke skal bruges — mens I husker hvorfor.</li><li>Skriv de tre ord, jeres gruppe vil bruge om stedet.</li></ol></article><article class="stop"><h3><span class="tid">20 min</span>
+5. Lohsepark og Elbarkaden</h3><p class="hvor">Magdeburger Hafen</p><p>Parken ligger på warftniveau, og arkaderne langs vandet er bygget, så stueetagen kan tåle at stå i vand. Her er forskellen på de to niveauer lettest at fotografere på ét billede.</p>
+<ol><li>Tag ét billede, hvor begge niveauer er med — en person på hvert.</li><li>Find noget, der ville flyde væk, hvis vandet steg to meter.</li></ol></article><article class="stop"><h3><span class="tid">40 min</span>
+6. Baakenhafen</h3><p class="hvor">Hafen.City.Horizonte, Baakenallee 33</p><p>Den nyeste del af HafenCity, bygget højere end den ældste. I udstillingen står byen som model i 1:500, så hele systemet kan ses fra oven. Gratis, åbent torsdag 10–16.</p>
+<ol><li>Find jeres egne stop på modellen, og fotografér dem oppefra.</li><li>Spørg personalet om én ting, I ikke kunne se ude på gaden.</li><li>Tag gruppens sidste billede foran modellen.</li></ol></article>
+
+<h2 class="sec">Grupperne og deres fotoemne</h2>
+<p>Alle fem grupper går den samme rute og ser de samme steder — men de
+fotograferer forskellige ting. Så kan billederne lægges sammen bagefter til
+én samlet fortælling i stedet for fem ens.</p>
+<div class="gitter"><div class="gruppe"><h3><span class="nr">1</span>De to niveauer</h3>
+<p>Warften: byen er hævet op på en kunstig bakke, mens promenaden er blevet liggende nede ved vandet.</p><ul><li>Et billede fra promenaden med gaden bag jer, oppe i højden.</li><li>Et billede fra gadeniveau, hvor promenaden ses nedenfor.</li><li>Et billede, hvor en af jer står præcis dér, hvor det ene niveau bliver til det andet.</li></ul></div><div class="gruppe"><h3><span class="nr">2</span>Porte, skot og døre</h3>
+<p>Alt det, der lukker vandet ude, når varslet kommer: fluttore, riller til skot, hævede dørtrin, ramper.</p><ul><li>Et nærbillede af en rille eller en port — med en hånd ved siden af, så man kan se størrelsen.</li><li>Et billede af en nedkørsel til en parkeringskælder.</li><li>Et billede af en dør, der sidder højere end fortovet.</li></ul></div><div class="gruppe"><h3><span class="nr">3</span>Flugtvejene</h3>
+<p>Man flygter ikke ud af HafenCity — man går opad og hen over broerne. Find vejen, en beboer ville tage.</p><ul><li>Et billede af en bro mellem to warfter.</li><li>Et billede af en trappe eller rampe fra promenaden op til gaden.</li><li>Et billede taget fra det sted, I ville samles, hvis vandet kom.</li></ul></div><div class="gruppe"><h3><span class="nr">4</span>Den gamle måde</h3>
+<p>Speicherstadt: i stedet for at holde vandet ude byggede man, så det måtte komme ind. Hvad kostede det, og hvad virkede?</p><ul><li>Et billede af mursten og port i stueetagen.</li><li>Et billede, der viser, hvor varerne blev hejst op.</li><li>Et billede, hvor I sammenligner et gammelt og et nyt hus.</li></ul></div><div class="gruppe"><h3><span class="nr">5</span>Det, der må blive vådt</h3>
+<p>Promenader, terrasser, pontonbroer og trapper, der er bygget til at stå under vand nogle dage om året.</p><ul><li>Et billede af en flydebro eller ponton, der følger vandstanden.</li><li>Et billede af et sted, hvor I kan se, at vandet har været der.</li><li>Et billede af en bænk, lampe eller skraldespand, der er skruet fast — eller som ikke er.</li></ul></div></div>
+
+<h2 class="sec">Fotoregler</h2>
+<div class="blok"><ul><li>Der skal være <b>mindst én fra gruppen</b> med på hvert billede. Uden et menneske kan man ikke se, hvor stort noget er.</li><li>Tag <b>højst fem billeder pr. stop</b>. I skal vælge undervejs, ikke bagefter.</li><li>Hold telefonen <b>vandret</b>. Billederne skal bruges i et oplæg.</li><li>Døb filerne <b>gruppe_stop_kort-tekst</b> — fx <i>3_dalmannkai_flodport</i>.</li><li>Læg billederne i <b>billedmappen i Teams samme aften</b>, i jeres egen undermappe. Ikke dagen efter.</li></ul></div>
+
+<h2 class="sec">Praktisk</h2>
+<div class="blok advar"><ul><li>Grupperne går selv mellem stoppene, men mødes præcist. Sæt et klokkeslæt, ikke «om en halv time».</li><li>Promenaderne har ingen rækværk mod vandet mange steder. Ingen fotografering med ryggen til kajkanten.</li><li>Cykelstierne i HafenCity er hurtige og ligger ofte i samme farve asfalt som fortovet.</li><li>Der er toiletter ved Überseequartier og i Hafen.City.Horizonte.</li>
+</ul></div>
+
+<div class="kilder">Tal og åbningstider er slået efter 30. september 2026:
+warfternes højde og promenadernes niveau hos
+<a href="https://www.db-bauzeitung.de/schwerpunkt/auf-sand-gebaut/">db
+Bauzeitung</a> og
+<a href="https://de.wikipedia.org/wiki/Hamburg-HafenCity">Wikipedia</a>,
+vandstandene i 1962 og 1976 hos
+<a href="https://de.wikipedia.org/wiki/Sturmflut_1962">Wikipedia</a>, og
+åbningstiderne hos
+<a href="https://www.hafencity.com/forum">HafenCity Hamburg</a>.
+Tjek åbningstiden samme morgen — den er det eneste her, der kan nå at ændre
+sig.</div>
+</main><footer>Studietur Hamborg · 9. klasse · Mibelibsen.</footer></body></html>

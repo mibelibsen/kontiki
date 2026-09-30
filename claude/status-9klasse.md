@@ -80,6 +80,26 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   beholdes, så det forudfyldte link og QR-kortene holder. Det gamle
   `byg_formular.gs` (bygger af arket) ligger stadig.
 
+## Rettet 30. september 2026 · Hamborg
+
+- **Tur i HafenCity: `hafencity.html` på `/hafencity`.** Fire timer med
+  frokost, seks stop fra Speicherstadt til Baakenhafen, om at bygge og bo uden
+  for diget. Fem grupper med hvert sit fotoemne, så billederne kan lægges
+  sammen til én fortælling i stedet for fem ens. Gruppeark til print: ét A4
+  pr. gruppe med emne, rute til afkrydsning og fotoregler.
+- **Tallene er slået efter, ikke husket.** Warften ligger 7,5–8,5 m over NHN,
+  promenaderne på de gamle kajers niveau. Stormfloden 1962 stod 5,70 m ved
+  Pegel St. Pauli, 1976 stod 6,45 m — højere, men digerne holdt. Tværsnittet
+  tegnes af de samme tal, så de to stormfloder havner præcis dér, hvor de
+  hører hjemme: over promenaden, under warften. Det er hele pointen i turen.
+- **Fangede en ændring undervejs:** HafenCitys InfoCenter i Kesselhaus lukkede
+  19. marts 2026 og er flyttet til Baakenallee 33 under navnet
+  Hafen.City.Horizonte — åbent torsdag 10–16, gratis. Det gamle sted stod
+  stadig i de fleste søgeresultater. Turen slutter det nye sted, ved modellen
+  i 1:500.
+- **Nyt i figurbiblioteket:** `vandstandssnit()` — tværsnit med promenade,
+  warft og historiske vandstande, hvor alt skaleres af de samme meter.
+
 ## Rettet 30. september 2026
 
 - **ART-forløb om vredeshåndtering: `socialisering.html` på `/socialisering`.**
