@@ -612,16 +612,16 @@ af, når der varsles. Spørgsmålet, I skal tage stilling til undervejs:
 gruppe bestemmer selv rækkefølgen af de fem steder og hvor længe den bliver.
 To grupper kan sagtens ende foran det samme motiv — de fotograferer alligevel
 hver deres emne.</p>
-<p><b>Mødested {OPSAMLING}:</b> {MOEDESTED}. Valgt fordi {MOEDE_HVORFOR}.</p>
+<p><b>Mødested {OPSAMLING}:</b> {MOEDESTED}.</p>
 <p><b>Frokost:</b> grupperne sørger selv for den, men <b>spiser sammen</b>, og
 lægger den, hvor det passer i deres egen rute. Regn med cirka {FROKOST}
 minutter.</p>
-<p><b>Sendt på tværs:</b> de fem grupper starter fem forskellige
-steder og går ruten i hver sin rækkefølge. De står derfor ikke i kø ved det
-samme motiv, de ser stederne i forskelligt lys og forskellig rækkefølge — og
-to grupper med samme emne kommer hjem med forskellige billeder.</p>
-<p><b>Alt går til fods.</b> Hver rute slutter ved mødestedet eller lige ved
-siden af, så ingen skal nå tværs gennem HafenCity klokken {OPSAMLING}.</p>
+<p><b>Fem forskellige ruter:</b> grupperne starter fem forskellige
+steder og går rækkefølgen hver for sig.</p>
+<p><b>Alt går til fods</b> — ingen ubahn, ingen bus. Der er 11–25 minutters
+gang fra hotellet ud til gruppens startsted, og hver rute slutter ved
+mødestedet eller lige ved siden af. Grupperne går 4,2–6,5 km i løbet af
+dagen.</p>
 </div>
 
 <table class="t"><thead><tr><th>Gruppe</th><th>Emne</th><th>Starter i</th>
@@ -629,27 +629,11 @@ siden af, så ingen skal nå tværs gennem HafenCity klokken {OPSAMLING}.</p>
 <tbody>
 {rutetabel}</tbody></table>
 
-<div class="blok"><h3>Regner det sammen?</h3>
-<p><b>Hele dagen foregår til fods</b> — ingen ubahn, ingen bus. Fra
-{AFGANG} til {OPSAMLING} er der {RAADIGHED} minutter: gang fra hotellet ud
-til gruppens eget startsted (11–25 minutter), de fem steder cirka {I_ALT}
-minutter, frokost {FROKOST}, og resten gang mellem stederne.</p>
-<p>Grupperne går mellem <b>4,2 og 6,5 km</b> i løbet af dagen. De to,
-der starter østligst, slipper billigst, fordi hotellet ligger i den ende.
-Hver gruppes rækkefølge er den korteste vej, der når alle fem steder og
-slutter ved mødestedet — fundet ved at regne alle 120 muligheder igennem.
-Afstandene er fugleflugt mellem koordinater fra OpenStreetMap gange 1,3,
-rundet til nærmeste 50 meter.</p>
-<p>Den strammeste rute har <b>{LUFT} minutters luft</b>, den rummeligste
-{MEST_LUFT}. Alle afstande er regnet fra koordinater — også fra
-{HOTEL}.</p></div>
-
 <h2 class="sec">Kortet</h2>
 <div class="figur">{fig_kort}
-<div class="figtekst">De fem steder i korrekt indbyrdes afstand — tegnet af
-koordinater fra OpenStreetMap. Kortet viser afstande og retninger, ikke
-gader; vandet er ikke tegnet. Hver gruppe har det samme kort med sin egen
-rute på sin egen side.</div></div>
+<div class="figtekst">Kortet viser afstande og retninger, ikke gader.
+Vandet er ikke tegnet. Hver gruppe har det samme kort med sin egen rute på
+sin egen side.</div></div>
 
 <h2 class="sec">De fem steder</h2>
 <p>Alle steder er gratis. Hver gruppe har sin egen rækkefølge — den står på
@@ -664,10 +648,10 @@ gruppens egen side.</p>
 <div class="blok"><ul>{''.join(f'<li>{r}</li>' for r in FOTOREGLER)}</ul></div>
 
 <h2 class="sec">Praktisk</h2>
-<div class="blok advar"><ul>{''.join(f'<li>{esc(s)}</li>' for s in SIKKERHED)}
+<div class="blok advar"><ul>{''.join(f'<li>{s}</li>' for s in SIKKERHED)}
 </ul></div>
 
-<div class="kilder">Tal og åbningstider er slået efter 30. september 2026:
+<div class="kilder">Kilder til tal og åbningstider:
 warfternes højde og promenadernes niveau hos
 <a href="https://www.db-bauzeitung.de/schwerpunkt/auf-sand-gebaut/">db
 Bauzeitung</a> og
@@ -760,7 +744,7 @@ dok.append('<h2>Ordliste, ungerne får forærende</h2>')
 dok.append('<table><tbody>' + WORT_HTML + '</tbody></table>')
 dok.append('<h2>Fotoregler og praktisk</h2>')
 dok.append('<ul>' + ''.join(f'<li>{r}</li>' for r in FOTOREGLER) +
-           ''.join(f'<li>{esc(x)}</li>' for x in SIKKERHED) + '</ul>')
+           ''.join(f'<li>{x}</li>' for x in SIKKERHED) + '</ul>')
 
 open(os.path.join(SCRATCH, 'sturmflut-dansk.html'), 'w').write(
     '<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
