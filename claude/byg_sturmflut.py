@@ -183,7 +183,10 @@ MOEDESTED = 'Magellan-Terrassen ved Sandtorhafen'
 MOEDE_HVORFOR = ('trapperne kan ikke forveksles med noget andet, der er plads '
                  'til alle at sidde ned, og der er fire minutter til U4 ved '
                  'Überseequartier')
-TRANSPORT = 30                  # cirka fra hotellet ind til Speicherstadt
+# Gangtid fra hotellet til HafenCitys vestlige hjørne (Speicherstadt). Det
+# er dagens eneste tal, jeg ikke kan regne mig frem til — ret det her, hvis
+# hotellet ligger længere væk, så regner resten sig om af sig selv.
+TIL_HAFENCITY = 30
 FROKOST = 40                    # grupperne spiser selv, men sammen
 
 # Grupperne sendes på tværs: hver gruppe har sit eget startsted og sin egen
@@ -268,9 +271,14 @@ RAADIGHED = (14 * 60 + 30) - (10 * 60)          # 10.00 til 14.30
 DAGSREGNSKAB = {}
 for _nr in RAEKKEFOELGE:
     _m, _gang, _hm, _hjem = rutens_tal(_nr)
-    _brugt = TRANSPORT + I_ALT + _gang + FROKOST + _hjem
+    # grupperne starter fem forskellige steder, så de har ikke lige langt ud
+    # til deres eget startsted — det skal med i regnskabet
+    _ud_m = afstand(1, RAEKKEFOELGE[_nr][0])
+    _ud = round(_ud_m / TEMPO)
+    _brugt = TIL_HAFENCITY + _ud + I_ALT + _gang + FROKOST + _hjem
     DAGSREGNSKAB[_nr] = dict(meter=_m, gang=_gang, hjem_m=_hm, hjem=_hjem,
-                             brugt=_brugt, luft=RAADIGHED - _brugt)
+                             ud_m=_ud_m, ud=_ud, brugt=_brugt,
+                             luft=RAADIGHED - _brugt)
 LUFT = min(d['luft'] for d in DAGSREGNSKAB.values())
 assert LUFT >= 25, (f'den strammeste gruppe har kun {LUFT} minutters luft — '
                     f'ruterne kan ikke nås inden {OPSAMLING}')
@@ -443,10 +451,11 @@ def gruppeside(nr, g):
 
 <h2>Eure Route — fünf Orte</h2>
 <p class="vink">Jeres rute er jeres egen: I starter i <b>{esc(start_navn)}</b>,
-og ingen anden gruppe starter samme sted. I alt cirka
-<b>{(d['meter'] + d['hjem_m']) / 1000:.1f} km at gå</b> — det hele til fods,
-ingen ubahn. Minuttallene er et gæt, ikke en pligt. Møder I en anden gruppe,
-er det helt i orden: I fotograferer alligevel hver jeres ting.</p>
+og ingen anden gruppe starter samme sted. Regn med cirka
+<b>{(d['ud_m'] + d['meter'] + d['hjem_m']) / 1000:.1f} km at gå</b> i løbet af
+dagen — det hele på gåben, ingen ubahn. Minuttallene er et gæt, ikke en pligt.
+Møder I en anden gruppe, er det helt i orden: I fotograferer alligevel hver
+jeres ting.</p>
 {stop}
 
 <h2>Frokost</h2>
@@ -523,7 +532,8 @@ rutetabel = ''.join(
     f'<tr><td><b>{i}</b></td><td>{esc(GRUPPER[i - 1][1])}</td>'
     f'<td>{esc(STOP[RAEKKEFOELGE[i][0] - 1][1])}</td>'
     f'<td>{" → ".join(STOP[n - 1][1].split()[0] for n in RAEKKEFOELGE[i])}</td>'
-    f'<td>{(DAGSREGNSKAB[i]["meter"] + DAGSREGNSKAB[i]["hjem_m"]) / 1000:.1f} km'
+    f'<td>{DAGSREGNSKAB[i]["ud_m"]} m</td>'
+    f'<td>{(DAGSREGNSKAB[i]["ud_m"] + DAGSREGNSKAB[i]["meter"] + DAGSREGNSKAB[i]["hjem_m"]) / 1000:.1f} km'
     f'</td></tr>'
     for i in range(1, 6))
 
@@ -583,16 +593,23 @@ siden af, så ingen skal nå tværs gennem HafenCity klokken {OPSAMLING}.</p>
 </div>
 
 <table class="t"><thead><tr><th>Gruppe</th><th>Emne</th><th>Starter i</th>
-<th>Rækkefølge</th><th>Til fods</th></tr></thead><tbody>
+<th>Rækkefølge</th><th>Ud dertil</th><th>Til fods i alt</th></tr></thead>
+<tbody>
 {rutetabel}</tbody></table>
 
 <div class="blok"><h3>Regner det sammen?</h3>
-<p>Fra {AFGANG} til {OPSAMLING} er der {RAADIGHED} minutter. Transport ud til
-Speicherstadt cirka {TRANSPORT}, de fem steder cirka {I_ALT}, frokost
-{FROKOST}, og gang imellem stederne 39–60 minutter alt efter hvilken rute.</p>
-<p>Den strammeste af de fem ruter har <b>{LUFT} minutters luft</b>, den
-rummeligste har {MEST_LUFT}. Der er altså plads til at gå forkert, stå i kø
-efter mad og blive hængende ét sted.</p></div>
+<p><b>Hele dagen foregår til fods</b> — ingen ubahn, ingen bus. Fra
+{AFGANG} til {OPSAMLING} er der {RAADIGHED} minutter: cirka
+{TIL_HAFENCITY} minutters gang fra hotellet ud til Speicherstadt, de fem
+steder cirka {I_ALT} minutter, frokost {FROKOST}, og resten gang.</p>
+<p>Fire af grupperne går <b>5,2 km</b> i alt, gruppe 1 går 4,4 km. At de er
+lige lange er ikke tilfældigt: alle går reelt fra Speicherstadt, rundt om det
+hele og tilbage til mødestedet — så koster det det samme, uanset hvor man
+starter.</p>
+<p>Den strammeste rute har <b>{LUFT} minutters luft</b>, den rummeligste
+{MEST_LUFT}. Det ene tal, jeg ikke har kunnet regne mig frem til, er de
+{TIL_HAFENCITY} minutter fra hotellet — ligger det længere væk, skal resten
+skubbes tilsvarende.</p></div>
 
 <h2 class="sec">De fem steder</h2>
 <p>Rækkefølgen herunder går fra vest mod øst. Alle steder er gratis.</p>
@@ -670,10 +687,12 @@ dok = ['<h1>Sturmflut i HafenCity · dansk udgave</h1>',
        'hver for sig og bestemmer selv rækkefølgen. Frokosten sørger de selv '
        'for, men gruppen spiser sammen. Alle steder er gratis.</p>',
        f'<p class="und">Regnestykket: {RAADIGHED} minutter til rådighed. '
-       f'Transport ca. {TRANSPORT} + de fem steder ca. {I_ALT} + frokost '
-       f'{FROKOST} + gang 39–60 minutter alt efter ruten. Den strammeste '
-       f'gruppe har {LUFT} minutters luft, den rummeligste {MEST_LUFT}. '
-       'Alt går til fods — ingen ubahn.</p>',
+       f'Gang fra hotellet til Speicherstadt sat til {TIL_HAFENCITY} min '
+       '(det eneste tal, der er gættet — ret det, hvis hotellet ligger '
+       f'anderledes). De fem steder ca. {I_ALT} min, frokost {FROKOST} min, '
+       'resten gang. Fire grupper går 5,2 km i alt, gruppe 1 går 4,4 km. '
+       f'Strammeste luft {LUFT} min, rummeligste {MEST_LUFT} min. '
+       'Alt til fods — ingen ubahn og ingen bus.</p>',
        '<h2>Hvem starter hvor</h2>',
        '<table><thead><tr><th>Gruppe</th><th>Emne</th><th>Starter i</th>'
        '<th>Rækkefølge</th><th>Gang i alt</th></tr>'
@@ -720,5 +739,5 @@ print(f'turen:    {len(STOP)} steder · {I_ALT} min på stederne · '
 for _nr, _d in DAGSREGNSKAB.items():
     _rute = ' → '.join(STOP[n - 1][1].split()[0] for n in RAEKKEFOELGE[_nr])
     print(f'  gruppe {_nr}: {_rute}  '
-          f'{(_d["meter"] + _d["hjem_m"]) / 1000:.1f} km · '
+          f'{(_d["ud_m"] + _d["meter"] + _d["hjem_m"]) / 1000:.1f} km · '
           f'{_d["luft"]} min luft')

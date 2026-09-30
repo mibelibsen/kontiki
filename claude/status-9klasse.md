@@ -95,7 +95,14 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 - **Grupperne sendes på tværs.** Hver gruppe har sit eget startsted og sin
   egen rækkefølge af de fem steder — fem forskellige ruter, så to grupper med
   samme emne kommer hjem med forskellige billeder.
-- **Alt går til fods, ingen ubahn.** Det kræver, at hver rute *slutter* ved
+- **Alt går til fods — også ud til startstedet.** Vejen fra hotellet ud til
+  gruppens eget startsted er nu med i regnskabet; den var overset, og
+  grupperne starter op til 2 km fra hinanden. Resultatet: fire grupper går
+  5,2 km og gruppe 1 går 4,4 km. At de er lige lange er geometri, ikke held —
+  alle går reelt fra Speicherstadt, rundt om det hele og tilbage til
+  mødestedet. Luften er 30–40 minutter. Det eneste tal, der er gættet, er de
+  30 minutters gang fra hotellet; det står som én konstant i scriptet.
+- **Ingen ubahn.** Det kræver, at hver rute *slutter* ved
   mødestedet i stedet for at skulle nå tilbage. Afstandene regnes af en simpel
   model: HafenCity som én akse fra Speicherstadt (0 m) til Baakenhafen
   (2050 m), med Dalmannkai som en stikvej 350 m ude fra Sandtorhafen. Ruterne
