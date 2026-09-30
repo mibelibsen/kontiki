@@ -108,6 +108,12 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `beforeprint` og sættes tilbage af `afterprint`, for browseren skjuler ellers
   indholdet i en lukket `<details>`, uanset hvad CSS siger. Siderne er også
   gengivet som PDF i `materiale/sturmflut-gruppe1–5.pdf`, fire sider hver.
+- **Siderne har fået et delebillede.** Uden `og:image` vælger Teams selv det
+  første billede på siden — og det blev skærmbilledet af mapperne. Nu gengives
+  tværsnittet som PNG i 1200×630 (`materiale/sturmflut-delebillede.png`), og
+  både forsiden og de fem gruppesider har og:title, og:description, og:url og
+  og:image. Bemærk at Teams cacher link-visninger: et link, der allerede er
+  slået op, beholder det gamle billede.
 - **Skærmbilledet af Teams-mapperne** ligger ved fotoreglerne på alle fem
   gruppesider og på forsiden, så der ikke er tvivl om, hvor billederne skal
   hen. Hver gruppeside nævner gruppens egen mappe ved navn.

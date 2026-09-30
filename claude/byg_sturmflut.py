@@ -20,6 +20,7 @@ Tal, der er slået efter (kilder står på siden):
 import html
 import math
 import os
+import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -324,6 +325,53 @@ def esc(t):
     return html.escape(t, quote=False)
 
 
+# --------------------------------------------------- delebilledet (og:image)
+# Uden et og:image vælger Teams selv det første billede på siden — og det blev
+# skærmbilledet af mapperne. Tværsnittet gengives derfor som PNG i 1200x630,
+# det format, link-visningen forventer.
+DELEBILLEDE = 'materiale/sturmflut-delebillede.png'
+_ogh = os.path.join(SCRATCH, '_og.html')
+open(_ogh, 'w', encoding='utf-8').write(
+    '<!doctype html><meta charset="utf-8"><style>'
+    'html,body{margin:0;width:1200px;height:630px;background:#fff;'
+    'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,'
+    'Helvetica,Arial,sans-serif;display:flex;flex-direction:column;'
+    'justify-content:center;align-items:center;gap:6px}'
+    'h1{margin:0;font-size:38px;color:#1a2233}'
+    'p{margin:0 0 4px;font-size:20px;color:#586074}'
+    'svg{width:1020px;height:auto}</style>'
+    '<h1>Sturmflut i HafenCity</h1>'
+    '<p>At bygge og bo uden for diget</p>' + fig_snit)
+subprocess.run(['node', '-e', f"""
+import('/opt/node22/lib/node_modules/playwright/index.mjs').then(async (m) => {{
+  const b = await m.chromium.launch();
+  const p = await (await b.newContext({{deviceScaleFactor: 1}})).newPage();
+  await p.setViewportSize({{width: 1200, height: 630}});
+  await p.goto('file://{os.path.abspath(_ogh)}');
+  await p.waitForTimeout(200);
+  await p.screenshot({{path: '{os.path.join(ROD, DELEBILLEDE)}'}});
+  await b.close();
+}});"""], check=True)
+assert os.path.getsize(DELEBILLEDE) > 10000, 'delebilledet blev ikke gengivet'
+
+BASE = 'https://www.mibelibsen.space'
+
+
+def delekort(titel, beskrivelse, sti):
+    """Meta-felterne, link-visninger i Teams og andre steder læser."""
+    return (f'<meta property="og:type" content="website">'
+            f'<meta property="og:title" content="{html.escape(titel, quote=True)}">'
+            f'<meta property="og:description" '
+            f'content="{html.escape(beskrivelse, quote=True)}">'
+            f'<meta property="og:url" content="{BASE}{sti}">'
+            f'<meta property="og:image" content="{BASE}/{DELEBILLEDE}">'
+            f'<meta property="og:image:width" content="1200">'
+            f'<meta property="og:image:height" content="630">'
+            f'<meta name="twitter:card" content="summary_large_image">'
+            f'<meta name="description" '
+            f'content="{html.escape(beskrivelse, quote=True)}">')
+
+
 # ===================================================== 3 · fælles stumper
 PALET = '''
 :root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;
@@ -524,7 +572,11 @@ def gruppeside(nr, g):
 
     return f'''<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gruppe {nr} · {esc(navn_de)}</title><style>{GRUPPE_CSS}</style></head>
+<title>Gruppe {nr} · {esc(navn_de)}</title>
+{delekort(f'Gruppe {nr} · {navn_de}',
+          f'Sturmflut i HafenCity. Rute, opgaver og kort til gruppe {nr}.',
+          f'/sturmflut/{nr}')}
+<style>{GRUPPE_CSS}</style></head>
 <body data-gruppe="{nr}">
 <header class="top"><div class="nr">Gruppe {nr} · Sturmflut in der HafenCity</div>
 <h1>{esc(navn_de)}</h1>
@@ -740,7 +792,12 @@ vandstandene i 1962 og 1976 hos
 def side(titel, krop):
     return ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<title>{titel}</title><style>' + GRUND + EKSTRA +
+            f'<title>{titel}</title>' +
+            delekort('Sturmflut · HafenCity',
+                     'At bygge og bo uden for diget. Fotosafari i HafenCity '
+                     'for fem grupper — rute, opgaver og kort.',
+                     '/sturmflut') +
+            '<style>' + GRUND + EKSTRA +
             '</style></head><body><header class="top"><div class="top-inner">'
             '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>'
             '<nav class="tabs"><a class="" href="tysk.html">Tysk</a></nav>'
