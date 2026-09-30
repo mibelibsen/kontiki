@@ -318,10 +318,6 @@ fig_kort = FG.rutekort(PUNKTER)   # oversigt uden rute
 fig_snit = FG.vandstandssnit(
     promenade=(4.5, 5.5), warft=(7.5, 8.3),
     maerker=[('Stormflod 1962', 5.70), ('Stormflod 1976', 6.45)])
-fig_rute = FG.procesdiagram(
-    [(f'{navn} · {m} min', hvor, 'frokost' if 'Mittagessen' in navn else 'stop')
-     for m, navn, hvor, _, _ in STOP],
-    W=660, farver={'stop': FG.BLA, 'frokost': '#e9edf4'})
 
 
 def esc(t):
@@ -656,10 +652,8 @@ gader; vandet er ikke tegnet. Hver gruppe har det samme kort med sin egen
 rute på sin egen side.</div></div>
 
 <h2 class="sec">De fem steder</h2>
-<p>Rækkefølgen herunder går fra vest mod øst. Alle steder er gratis.</p>
-<div class="figur">{fig_rute}
-<div class="figtekst">Forslag til rækkefølge — ikke et skema. Minuttallene er
-et gæt på, hvor længe man skal bruge, ikke en pligt.</div></div>
+<p>Alle steder er gratis. Hver gruppe har sin egen rækkefølge — den står på
+gruppens egen side.</p>
 
 {stop_html}
 
