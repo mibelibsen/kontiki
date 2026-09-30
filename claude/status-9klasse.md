@@ -103,6 +103,14 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   Magellan-Terrassen, den femte 200 m derfra — der er en assert på det, for en
   gruppe, der slutter to kilometer væk klokken 14.30, er en dårlig idé,
   uanset hvad regnestykket siger.
+- **Gruppesiderne kan printes.** Print-CSS folder alle emner og opgaver ud,
+  skalerer de to figurer ned og skjuler knapper og links. Folderne åbnes af
+  `beforeprint` og sættes tilbage af `afterprint`, for browseren skjuler ellers
+  indholdet i en lukket `<details>`, uanset hvad CSS siger. Siderne er også
+  gengivet som PDF i `materiale/sturmflut-gruppe1–5.pdf`, fire sider hver.
+- **Skærmbilledet af Teams-mapperne** ligger ved fotoreglerne på alle fem
+  gruppesider og på forsiden, så der ikke er tvivl om, hvor billederne skal
+  hen. Hver gruppeside nævner gruppens egen mappe ved navn.
 - **Kort til hver gruppe.** `figurer.py` har fået `rutekort()`: et skematisk
   kort tegnet af rigtige koordinater, med gruppens egen rute, pile, grøn ring
   ved start, rød ved slut, målestok og nordpil. Vandet er ikke tegnet — kortet

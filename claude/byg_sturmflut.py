@@ -264,8 +264,8 @@ FOTOREGLER = [
  'bagefter.',
  'Hold telefonen <b>vandret</b>. Billederne skal bruges i et oplæg.',
  'Døb filerne <b>gruppe_stop_kort-tekst</b> — fx <i>3_dalmannkai_flodport</i>.',
- 'Læg billederne i <b>billedmappen i Teams løbende</b> — efter hvert stop, '
- 'i jeres egen undermappe. Vi følger med undervejs, så vent ikke til I er '
+ 'Læg billederne i Teams <b>løbende</b> — efter hvert stop, i jeres egen '
+ 'mappe under <b>Filer</b>. Vi følger med undervejs, så vent ikke til I er '
  'hjemme.',
 ]
 
@@ -396,7 +396,48 @@ margin:10px 0;background:#f7f9fc}
 .figurboks{padding:6px 12px 12px}
 .figurboks svg{max-width:100%;height:auto}
 .figurboks .da{color:var(--muted);font-size:.86rem;margin:6px 0 0}
+figure.teams{margin:12px 0 0;border:1px solid var(--line);
+border-radius:12px;padding:10px;background:var(--panel2)}
+figure.teams img{display:block;width:100%;max-width:330px;height:auto;
+margin:0 auto;border:1px solid var(--line);border-radius:8px}
+figure.teams figcaption{color:var(--muted);font-size:.88rem;margin-top:8px;
+text-align:center}
 .retur{display:block;text-align:center;margin:26px 0 0;font-size:.92rem}
+.print{margin-top:10px;background:rgba(255,255,255,.16);color:#fff;
+border:1px solid rgba(255,255,255,.55);border-radius:8px;padding:7px 14px;
+font:inherit;font-size:.86rem;font-weight:700;cursor:pointer}
+@media print{
+  @page{size:A4;margin:12mm}
+  body{font-size:10pt;color:#1a2233}
+  .top{position:static;background:none;color:#1a2233;padding:0 0 8px;
+       border-bottom:2px solid #1f6fd6}
+  .top .nr{color:#586074}
+  .print,.nulstil,.retur{display:none!important}
+  main{padding:0;max-width:none}
+  h2{margin:14px 0 6px;font-size:10.5pt;color:#586074}
+  /* alt foldet ud: summary bliver en overskrift, indholdet vises */
+  details{border:1px solid #c9d2e0;border-radius:0;background:none;
+          break-inside:avoid;page-break-inside:avoid;margin:7px 0}
+  details>summary{list-style:none;padding:7px 10px;background:#f4f6fb}
+  details>summary::-webkit-details-marker{display:none}
+  details>*:not(summary){display:block!important}
+  label.p{box-shadow:none;padding:6px 9px;margin:5px 0;break-inside:avoid}
+  label.p input{width:15px;height:15px}
+  label.p span{font-size:9.6pt}
+  .intro,.dag{break-inside:avoid}
+  p.gang{margin:3px 0 7px;font-size:8.8pt}
+  table.ord td{padding:4px 10px;font-size:9pt}
+  .kort{break-inside:avoid}
+  /* figurerne fylder en halv side hver paa skaermen — paa papir er de
+     stadig laesbare i det halve */
+  .figurboks svg{max-width:390px;margin:0 auto}
+  .kort svg{max-width:410px;margin:0 auto}
+  .figurboks .da,.kort .da{font-size:8.6pt}
+  ul.regler li{font-size:9.2pt;margin:4px 0}
+  figure.teams{break-inside:avoid;padding:6px}
+  figure.teams img{max-width:210px}
+  figure.teams figcaption{font-size:8.6pt}
+}
 .nulstil{background:none;border:0;color:var(--muted);font-size:.85rem;
 text-decoration:underline;padding:8px;font-family:inherit;cursor:pointer}
 '''
@@ -414,6 +455,20 @@ GRUPPE_JS = '''
       try { localStorage.setItem(k, JSON.stringify(gemt)); } catch (e) {}
     });
   });
+  // print skal vise alt: folderne åbnes før, og sættes tilbage efter
+  var foer = [];
+  window.addEventListener('beforeprint', function(){
+    foer = [];
+    document.querySelectorAll('details').forEach(function(f){
+      foer.push(f.open); f.open = true;
+    });
+  });
+  window.addEventListener('afterprint', function(){
+    document.querySelectorAll('details').forEach(function(f, i){
+      if (i < foer.length) f.open = foer[i];
+    });
+  });
+
   var knap = document.getElementById('nulstil');
   if (knap) knap.addEventListener('click', function(){
     bokse.forEach(function(b){ b.checked = false; });
@@ -421,6 +476,17 @@ GRUPPE_JS = '''
   });
 })();
 '''
+
+
+def teamsboks(nr=None):
+    """Skærmbilledet af mapperne i Teams, så der ikke er tvivl om, hvor
+    billederne skal hen."""
+    hvilken = (f'Jeres mappe hedder <b>Sturmflut Gruppe {nr}</b>.'
+               if nr else 'Hver gruppe har sin egen mappe.')
+    return (f'<figure class="teams"><img src="materiale/teams-billedmapper.jpg" '
+            f'alt="Fanen Filer i Teams med fem mapper, Sturmflut Gruppe 1 til 5." '
+            f'width="760" height="997" loading="lazy">'
+            f'<figcaption>Teams → <b>Filer</b>. {hvilken}</figcaption></figure>')
 
 
 def gruppeside(nr, g):
@@ -461,7 +527,8 @@ def gruppeside(nr, g):
 <title>Gruppe {nr} · {esc(navn_de)}</title><style>{GRUPPE_CSS}</style></head>
 <body data-gruppe="{nr}">
 <header class="top"><div class="nr">Gruppe {nr} · Sturmflut in der HafenCity</div>
-<h1>{esc(navn_de)}</h1></header>
+<h1>{esc(navn_de)}</h1>
+<button class="print" onclick="window.print()">Print siden</button></header>
 <main>
 <div class="dag"><div><b>{AFGANG}</b> fælles afgang fra hotellet</div>
 <div><b>{OPSAMLING}</b> alle mødes ved {MOEDESTED}</div>
@@ -499,6 +566,7 @@ regn med cirka {FROKOST} minutter. Der er mad ved Überseequartier og
 
 <h2>Fotoregler</h2>
 <ul class="regler">{''.join(f'<li>{r}</li>' for r in FOTOREGLER)}</ul>
+{teamsboks(nr)}
 
 <button class="nulstil" id="nulstil">Nulstil alle flueben</button>
 <a class="retur" href="/sturmflut">Hele turen og tværsnittet →</a>
@@ -552,6 +620,11 @@ details.ord>summary{padding:13px 16px;font-weight:700;cursor:pointer}
 table.ord{width:100%;border-collapse:collapse;font-size:.93rem}
 table.ord td{border-top:1px solid var(--line);padding:7px 16px}
 table.ord td:first-child{width:44%}
+figure.teams{margin:12px 0;border:1px solid var(--line);border-radius:14px;
+padding:14px;background:var(--panel2);text-align:center}
+figure.teams img{display:block;width:100%;max-width:320px;height:auto;
+margin:0 auto;border:1px solid var(--line);border-radius:10px}
+figure.teams figcaption{color:var(--muted);font-size:.9rem;margin-top:10px}
 .kilder{color:var(--muted);font-size:.85rem;margin-top:18px}
 .kilder a{color:var(--muted)}
 @media print{header.top,.printbtn{display:none!important}
@@ -646,6 +719,7 @@ gruppens egen side.</p>
 
 <h2 class="sec">Fotoregler</h2>
 <div class="blok"><ul>{''.join(f'<li>{r}</li>' for r in FOTOREGLER)}</ul></div>
+{teamsboks()}
 
 <h2 class="sec">Praktisk</h2>
 <div class="blok advar"><ul>{''.join(f'<li>{s}</li>' for s in SIKKERHED)}
