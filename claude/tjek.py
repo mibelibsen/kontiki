@@ -12,6 +12,7 @@ frisk session uden installation.
 
 Afslutter med kode 0 hvis alt er i orden, ellers 1.
 """
+import json
 import os, re, sys, glob, zipfile, html
 from collections import Counter
 
@@ -130,8 +131,31 @@ def tjek_metodetekst():
 # ---------------------------------------------------------------------------
 # 5. Ingen brudte links
 # ---------------------------------------------------------------------------
+def _omskrivninger():
+    """Adresserne i vercel.json: /sturmflut/3 er en gyldig adresse, selv om
+    der ikke findes en fil af det navn. Destinationen skal til gengaeld
+    findes — en omskrivning, der peger paa en fil, der ikke er der, giver 404
+    paa sitet uden at nogen opdager det."""
+    if not os.path.exists('vercel.json'):
+        return set()
+    v = json.load(open('vercel.json', encoding='utf-8'))
+    gyldige = set()
+    for r in v.get('rewrites', []) + v.get('redirects', []):
+        maal = r.get('destination', '')
+        if maal.startswith('http'):
+            gyldige.add(r['source'])
+            continue
+        if os.path.exists(maal.lstrip('/')):
+            gyldige.add(r['source'])
+        else:
+            fejl('links', f'vercel.json: {r["source"]} peger på {maal}, '
+                          f'som ikke findes')
+    return gyldige
+
+
 def tjek_links():
     brudte = 0
+    adresser = _omskrivninger()
     for f in alle_html():
         # filer i kommende/ flyttes op i roden, naar de udgives — deres
         # relative links skal derfor maales fra roden, ikke fra mappen
@@ -141,6 +165,8 @@ def tjek_links():
                 continue
             maal = href.split('#')[0]
             if not maal:
+                continue
+            if maal in adresser:                  # adresse fra vercel.json
                 continue
             sti = maal.lstrip('/') if maal.startswith('/') else os.path.join(mappe, maal)
             if not os.path.exists(sti):

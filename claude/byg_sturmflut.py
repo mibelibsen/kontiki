@@ -1,0 +1,563 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Bygger turen i HafenCity: at bygge og bo med risiko for stormflod.
+
+    python3 claude/byg_hafencity.py <scratch-mappe>
+
+Skriver hafencity.html og et gruppeark til print (ét A4 pr. gruppe).
+
+Turen står ét sted nedenfor — STOP og GRUPPER — og både siden og gruppearkene
+bygges af de samme lister. Tiderne lægges sammen og tjekkes mod den samlede
+længde, så programmet ikke kan komme til at love fire timer og vare fem.
+
+Tal, der er slået efter (kilder står på siden):
+  · warften i HafenCity ligger 7,8–8,5 m over NHN, i øst hævet til 8,3
+  · promenaderne ligger på de gamle kajers niveau og må gerne oversvømmes
+  · stormfloden 1962: 5,70 m ved Pegel St. Pauli, over 300 døde i Hamborg
+  · stormfloden 1976: 6,45 m — højere, men digerne holdt
+  · Hafen.City.Horizonte, Baakenallee 33: ti-fr 10–16, gratis
+"""
+import html
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import figurer as FG                                         # noqa: E402
+
+SCRATCH = sys.argv[1] if len(sys.argv) > 1 else '.'
+ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(ROD)
+
+# ===================================================== 1 · turen
+# Opgaverne står på tysk — ungerne skal oversætte dem for at kunne løse dem.
+# Den danske udgave er til den voksne og lægges i vejledning/, som ikke
+# udgives. Hver post er (minutter, navn, hvor, hvad man ser, [(tysk, dansk)]).
+STOP = [
+ (20, 'Speicherstadt', 'Kibbelstegbrücke und der Fleet dahinter',
+  'Den gamle måde at gøre det på: pakhusene står uden for diget og bliver '
+  'oversvømmet flere gange hver vinter. Derfor er der mursten forneden, varer '
+  'blev hejst op på de øverste etager, og portene har riller i siderne, som '
+  'skot skydes ned i.',
+  [('Findet ein Tor, in dessen Rahmen Rillen für Dammbalken sind. Sie liegen '
+    'ungefähr auf Augenhöhe.',
+    'Find en port med riller til skot i karmen — de sidder omtrent i '
+    'øjenhøjde.'),
+   ('Schaut nach, bis zu welcher Höhe die Ziegel ausgetauscht oder '
+    'ausgebessert worden sind.',
+    'Se efter, hvor højt op murstenene er skiftet ud eller repareret.'),
+   ('Stellt euch auf die Brücke: Wie nah liegt das Wasser an der Straße?',
+    'Stå på broen: hvor tæt ligger vandet på gaden?')]),
+ (25, 'Sandtorhafen', 'Magellan-Terrassen',
+  'Trappen mellem de to niveauer. Nederst promenaden, der må blive våd, '
+  'øverst byen, der ikke må. Terrasserne er selve overgangen — og de '
+  'forsvinder i vandet, når det står højt.',
+  [('Zählt die Stufen vom Wasser bis zur obersten Terrasse und messt eine '
+    'Stufe. Wie groß ist der Höhenunterschied?',
+    'Tæl trinnene fra vandet op til øverste terrasse, og mål et trin. Hvor '
+    'stor er højdeforskellen?'),
+   ('Vergleicht euer Ergebnis mit den Zahlen im Querschnitt. Stimmt es?',
+    'Sammenlign resultatet med tallene på tværsnittet. Passer det?'),
+   ('Stellt euch zu dritt auf die unterste Stufe und zu dritt auf die '
+    'oberste — ein Foto.',
+    'Stå tre på nederste trin og tre på øverste — ét billede.')]),
+ (30, 'Dalmannkai und Am Kaiserkai', 'Die Promenade am Sandtorhafen',
+  'Warften i brug. Promenaden ligger lavt, gaden ligger otte meter oppe, og '
+  'imellem dem er der porte, ramper og trapper. Parkeringskældrene kan lukkes '
+  'af med fluttore, når varslet kommer.',
+  [('Findet ein Fluttor oder eine Einfahrt, die geschlossen werden kann. Wie '
+    'hoch ist sie?',
+    'Find en flodport eller en nedkørsel, der kan lukkes. Hvor høj er den?'),
+   ('Findet einen Eingang, dessen Tür höher liegt als der Gehweg.',
+    'Find en indgang, hvor døren sidder højere end fortovet.'),
+   ('Verfolgt einen Fluchtweg mit den Augen: Wohin würdet ihr gehen, wenn das '
+    'Wasser jetzt käme?',
+    'Følg en flugtvej med øjnene: hvor ville I gå hen, hvis vandet kom nu?')]),
+ (55, 'Mittagessen', 'Überseequartier oder Überseeboulevard',
+  'Spisesteder på begge niveauer og indendørs, hvis det regner. Grupperne '
+  'spiser sammen og sorterer dagens billeder imens.',
+  [('Löscht die Fotos, die ihr nicht braucht — solange ihr noch wisst, warum.',
+    'Slet de billeder, I ikke skal bruge — mens I husker hvorfor.'),
+   ('Schreibt die drei Wörter auf, mit denen eure Gruppe diesen Ort '
+    'beschreibt.',
+    'Skriv de tre ord, jeres gruppe vil bruge om stedet.')]),
+ (20, 'Lohsepark und Elbarkaden', 'Magdeburger Hafen',
+  'Parken ligger på warftniveau, og arkaderne langs vandet er bygget, så '
+  'stueetagen kan tåle at stå i vand. Her er forskellen på de to niveauer '
+  'lettest at fotografere på ét billede.',
+  [('Macht ein Foto, auf dem beide Ebenen zu sehen sind — auf jeder steht '
+    'eine Person.',
+    'Tag ét billede, hvor begge niveauer er med — en person på hvert.'),
+   ('Findet etwas, das wegschwimmen würde, wenn das Wasser um zwei Meter '
+    'steigt.',
+    'Find noget, der ville flyde væk, hvis vandet steg to meter.')]),
+ (40, 'Baakenhafen', 'Hafen.City.Horizonte, Baakenallee 33',
+  'Den nyeste del af HafenCity, bygget højere end den ældste. I udstillingen '
+  'står byen som model i 1:500, så hele systemet kan ses fra oven. Gratis '
+  'adgang, åbent torsdag 10–16.',
+  [('Findet eure eigenen Stationen auf dem Modell und fotografiert sie von '
+    'oben.',
+    'Find jeres egne stop på modellen, og fotografér dem oppefra.'),
+   ('Fragt die Mitarbeiter nach einer Sache, die ihr draußen auf der Straße '
+    'nicht sehen konntet.',
+    'Spørg personalet om én ting, I ikke kunne se ude på gaden.'),
+   ('Macht das letzte Gruppenfoto vor dem Modell.',
+    'Tag gruppens sidste billede foran modellen.')]),
+]
+
+# (tysk navn, dansk navn, tysk beskrivelse, dansk beskrivelse, [(tysk, dansk)])
+GRUPPER = [
+ ('Die zwei Ebenen', 'De to niveauer',
+  'Die Warft: Die Stadt liegt auf einem künstlichen Hügel, die Promenade ist '
+  'unten am Wasser geblieben.',
+  'Warften: byen ligger på en kunstig bakke, mens promenaden er blevet '
+  'liggende nede ved vandet.',
+  [('Ein Foto von der Promenade, mit der Straße hinter euch, oben in der '
+    'Höhe.', 'Et billede fra promenaden med gaden bag jer, oppe i højden.'),
+   ('Ein Foto von der Straße aus, auf dem die Promenade unten zu sehen ist.',
+    'Et billede fra gadeniveau, hvor promenaden ses nedenfor.'),
+   ('Ein Foto, auf dem eine Person von euch genau dort steht, wo die eine '
+    'Ebene in die andere übergeht.',
+    'Et billede, hvor en af jer står præcis dér, hvor det ene niveau bliver '
+    'til det andet.')]),
+ ('Tore, Dammbalken und Türen', 'Porte, skot og døre',
+  'Alles, was das Wasser draußen hält, wenn die Warnung kommt: Fluttore, '
+  'Rillen für Dammbalken, erhöhte Türschwellen, Rampen.',
+  'Alt det, der lukker vandet ude, når varslet kommer: fluttore, riller til '
+  'skot, hævede dørtrin, ramper.',
+  [('Eine Nahaufnahme einer Rille oder eines Tores — mit einer Hand daneben, '
+    'damit man die Größe sieht.',
+    'Et nærbillede af en rille eller en port — med en hånd ved siden af, så '
+    'man kan se størrelsen.'),
+   ('Ein Foto einer Einfahrt zu einer Tiefgarage.',
+    'Et billede af en nedkørsel til en parkeringskælder.'),
+   ('Ein Foto einer Tür, die höher liegt als der Gehweg.',
+    'Et billede af en dør, der sidder højere end fortovet.')]),
+ ('Die Fluchtwege', 'Flugtvejene',
+  'Man flieht nicht aus der HafenCity heraus — man geht nach oben und über '
+  'die Brücken. Findet den Weg, den ein Bewohner nehmen würde.',
+  'Man flygter ikke ud af HafenCity — man går opad og hen over broerne. Find '
+  'vejen, en beboer ville tage.',
+  [('Ein Foto einer Brücke zwischen zwei Warften.',
+    'Et billede af en bro mellem to warfter.'),
+   ('Ein Foto einer Treppe oder Rampe von der Promenade zur Straße.',
+    'Et billede af en trappe eller rampe fra promenaden op til gaden.'),
+   ('Ein Foto von dem Ort, an dem ihr euch sammeln würdet, wenn das Wasser '
+    'käme.', 'Et billede taget fra det sted, I ville samles, hvis vandet kom.')]),
+ ('Die alte Art zu bauen', 'Den gamle måde',
+  'Speicherstadt: Statt das Wasser draußen zu halten, hat man so gebaut, dass '
+  'es hereinkommen darf. Was hat das gekostet, und was hat funktioniert?',
+  'Speicherstadt: i stedet for at holde vandet ude byggede man, så det måtte '
+  'komme ind. Hvad kostede det, og hvad virkede?',
+  [('Ein Foto von Ziegeln und einem Tor im Erdgeschoss.',
+    'Et billede af mursten og port i stueetagen.'),
+   ('Ein Foto, das zeigt, wie die Waren nach oben gehievt wurden.',
+    'Et billede, der viser, hvor varerne blev hejst op.'),
+   ('Ein Foto, auf dem ihr ein altes und ein neues Gebäude vergleicht.',
+    'Et billede, hvor I sammenligner et gammelt og et nyt hus.')]),
+ ('Was nass werden darf', 'Det, der må blive vådt',
+  'Promenaden, Terrassen, Pontons und Treppen, die einige Tage im Jahr unter '
+  'Wasser stehen.',
+  'Promenader, terrasser, pontoner og trapper, der er bygget til at stå under '
+  'vand nogle dage om året.',
+  [('Ein Foto eines Pontons oder Schwimmstegs, der mit dem Wasserstand steigt '
+    'und fällt.',
+    'Et billede af en flydebro eller ponton, der følger vandstanden.'),
+   ('Ein Foto von einer Stelle, an der man sehen kann, dass das Wasser da '
+    'war.', 'Et billede af et sted, hvor I kan se, at vandet har været der.'),
+   ('Ein Foto einer Bank, einer Lampe oder eines Mülleimers, der '
+    'festgeschraubt ist — oder eben nicht.',
+    'Et billede af en bænk, lampe eller skraldespand, der er skruet fast — '
+    'eller som ikke er.')]),
+]
+
+# De ord, opgaverne ikke kan løses uden. Resten må de selv slå op.
+WORTLISTE = [
+ ('die Sturmflut', 'stormfloden'), ('der Deich', 'diget'),
+ ('die Warft', 'warften, den kunstige bakke'),
+ ('das Fluttor', 'flodporten'), ('der Dammbalken', 'skottet, bjælken'),
+ ('die Rille', 'rillen, sporet'), ('der Gehweg', 'fortovet'),
+ ('die Tiefgarage', 'parkeringskælderen'), ('der Fluchtweg', 'flugtvejen'),
+ ('der Ziegel', 'murstenen'), ('der Schwimmsteg', 'flydebroen'),
+ ('der Wasserstand', 'vandstanden'),
+ ('der Höhenunterschied', 'højdeforskellen'), ('die Ebene', 'niveauet'),
+ ('überschwemmen', 'at oversvømme'), ('das Erdgeschoss', 'stueetagen'),
+ ('die Stufe', 'trinnet'), ('hieven', 'at hejse'),
+]
+
+FOTOREGLER = [
+ 'Der skal være <b>mindst én fra gruppen</b> med på hvert billede. Uden et '
+ 'menneske kan man ikke se, hvor stort noget er.',
+ 'Tag <b>højst fem billeder pr. stop</b>. I skal vælge undervejs, ikke '
+ 'bagefter.',
+ 'Hold telefonen <b>vandret</b>. Billederne skal bruges i et oplæg.',
+ 'Døb filerne <b>gruppe_stop_kort-tekst</b> — fx <i>3_dalmannkai_flodport</i>.',
+ 'Læg billederne i <b>billedmappen i Teams samme aften</b>, i jeres egen '
+ 'undermappe. Ikke dagen efter.',
+]
+
+SIKKERHED = [
+ 'Grupperne går selv mellem stoppene, men mødes præcist. Sæt et klokkeslæt, '
+ 'ikke «om en halv time».',
+ 'Promenaderne har ingen rækværk mod vandet mange steder. Ingen fotografering '
+ 'med ryggen til kajkanten.',
+ 'Cykelstierne i HafenCity er hurtige og ligger ofte i samme farve asfalt som '
+ 'fortovet.',
+ 'Alle stop er gratis. Der er ingen museer med entré på ruten.',
+ 'Der er toiletter ved Überseequartier og i Hafen.City.Horizonte.',
+]
+
+I_ALT = sum(m for m, *_ in STOP)
+GANG = 45                       # cirka gangtid mellem stoppene i alt
+assert 3 * 60 + 30 <= I_ALT + GANG <= 4 * 60 + 15, \
+    f'programmet varer {I_ALT + GANG} minutter, ikke cirka fire timer'
+assert len(GRUPPER) == 5, 'der er fem projektgrupper'
+for _, _, _, _, opg in GRUPPER:
+    assert len(opg) == 3, 'hver gruppe skal have tre billeder'
+
+# ===================================================== 2 · figurer
+fig_snit = FG.vandstandssnit(
+    promenade=(4.5, 5.5), warft=(7.5, 8.3),
+    maerker=[('Stormflod 1962', 5.70), ('Stormflod 1976', 6.45)])
+fig_rute = FG.procesdiagram(
+    [(f'{navn} · {m} min', hvor, 'frokost' if 'Mittagessen' in navn else 'stop')
+     for m, navn, hvor, _, _ in STOP],
+    W=660, farver={'stop': FG.BLA, 'frokost': '#e9edf4'})
+
+
+def esc(t):
+    return html.escape(t, quote=False)
+
+
+# ===================================================== 3 · fælles stumper
+PALET = '''
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;
+--line:#d3dae7;--accent:#1f6fd6;--good:#1a8f5e;--warn:#b5710a;
+--shadow:0 1px 2px rgba(20,30,50,.06)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-size:16px;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,
+Arial,sans-serif;line-height:1.5;-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+'''
+
+WORT_HTML = ''.join(f'<tr><td><b>{esc(d_)}</b></td><td>{esc(da)}</td></tr>'
+                    for d_, da in WORTLISTE)
+
+
+def wortliste(aaben=False):
+    return (f'<details class="ord"{" open" if aaben else ""}>'
+            f'<summary>Wortliste — {len(WORTLISTE)} ord, I får forærende</summary>'
+            f'<table class="ord">{WORT_HTML}</table></details>')
+
+
+# ===================================================== 4 · gruppesiderne
+GRUPPE_CSS = PALET + '''
+.top{position:sticky;top:0;z-index:5;background:var(--accent);color:#fff;
+padding:12px 16px}
+.top .nr{font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;
+opacity:.85}
+.top h1{margin:2px 0 0;font-size:1.25rem;line-height:1.25}
+main{padding:14px 16px 40px;max-width:640px;margin:0 auto}
+h2{font-size:1.02rem;margin:22px 0 8px;color:var(--muted);
+text-transform:uppercase;letter-spacing:.05em}
+.intro{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+padding:12px 14px;margin:12px 0;font-size:.97rem}
+.intro .da{color:var(--muted);font-size:.88rem;margin-top:6px;display:block}
+label.p{display:flex;gap:12px;align-items:flex-start;padding:12px 13px;
+border:1px solid var(--line);border-radius:12px;margin:8px 0;
+background:var(--panel);box-shadow:var(--shadow);cursor:pointer}
+label.p input{width:24px;height:24px;margin:1px 0 0;flex:0 0 auto;
+accent-color:var(--good)}
+label.p span{font-size:.97rem}
+label.p input:checked+span{color:var(--muted);text-decoration:line-through}
+.stop{border:1px solid var(--line);border-radius:12px;margin:10px 0;
+overflow:hidden;background:var(--panel)}
+.stop>summary{padding:12px 14px;font-weight:700;cursor:pointer;
+display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.stop>summary::-webkit-details-marker{display:none}
+.stop .tid{font-size:.8rem;color:var(--muted);font-weight:400;white-space:nowrap}
+.stop .krop{padding:0 14px 12px}
+.stop .hvor{color:var(--muted);font-size:.85rem;margin:0 0 8px}
+details.ord{border:1px solid var(--line);border-radius:12px;margin:14px 0;
+background:var(--panel2)}
+details.ord>summary{padding:12px 14px;font-weight:700;cursor:pointer;
+font-size:.95rem}
+table.ord{width:100%;border-collapse:collapse;font-size:.92rem}
+table.ord td{border-top:1px solid var(--line);padding:7px 14px}
+table.ord td:first-child{width:46%}
+ul.regler{padding-left:20px;margin:8px 0}
+ul.regler li{margin:7px 0;font-size:.93rem;color:var(--muted)}
+.figurboks{padding:6px 12px 12px}
+.figurboks svg{max-width:100%;height:auto}
+.figurboks .da{color:var(--muted);font-size:.86rem;margin:6px 0 0}
+.retur{display:block;text-align:center;margin:26px 0 0;font-size:.92rem}
+.nulstil{background:none;border:0;color:var(--muted);font-size:.85rem;
+text-decoration:underline;padding:8px;font-family:inherit;cursor:pointer}
+'''
+
+GRUPPE_JS = '''
+(function(){
+  var n = document.body.dataset.gruppe, k = 'sturmflut-g' + n;
+  var gemt = {};
+  try { gemt = JSON.parse(localStorage.getItem(k) || '{}'); } catch (e) {}
+  var bokse = document.querySelectorAll('input[type=checkbox]');
+  bokse.forEach(function(b){
+    if (gemt[b.id]) b.checked = true;
+    b.addEventListener('change', function(){
+      gemt[b.id] = b.checked;
+      try { localStorage.setItem(k, JSON.stringify(gemt)); } catch (e) {}
+    });
+  });
+  var knap = document.getElementById('nulstil');
+  if (knap) knap.addEventListener('click', function(){
+    bokse.forEach(function(b){ b.checked = false; });
+    try { localStorage.removeItem(k); } catch (e) {}
+  });
+})();
+'''
+
+
+def gruppeside(nr, g):
+    navn_de, navn_da, tekst_de, tekst_da, opgaver = g
+    fotos = ''.join(
+        f'<label class="p"><input type="checkbox" id="f{j}">'
+        f'<span>{esc(de)}</span></label>'
+        for j, (de, _) in enumerate(opgaver, 1))
+    stop = ''
+    for i, (m, snavn, hvor, _, opg) in enumerate(STOP, 1):
+        punkter = ''.join(
+            f'<label class="p"><input type="checkbox" id="s{i}o{j}">'
+            f'<span>{esc(de)}</span></label>'
+            for j, (de, _) in enumerate(opg, 1))
+        stop += (f'<details class="stop"><summary><span>{i}. {esc(snavn)}</span>'
+                 f'<span class="tid">{m} min</span></summary>'
+                 f'<div class="krop"><p class="hvor">{esc(hvor)}</p>'
+                 f'{punkter}</div></details>')
+    return f'''<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gruppe {nr} · {esc(navn_de)}</title><style>{GRUPPE_CSS}</style></head>
+<body data-gruppe="{nr}">
+<header class="top"><div class="nr">Gruppe {nr} · Sturmflut in der HafenCity</div>
+<h1>{esc(navn_de)}</h1></header>
+<main>
+<div class="intro">{esc(tekst_de)}</div>
+
+<details class="ord" id="snit"><summary>Querschnitt — die zwei Ebenen</summary>
+<div class="figurboks">{fig_snit}
+<p class="da">Promenaden ligger 4,5–5,5 m over havets middel, warften
+7,5–8,3 m. De stiplede linjer er stormfloderne i 1962 (5,70 m) og 1976
+(6,45 m).</p></div></details>
+
+<h2>Eure drei Fotos</h2>
+{fotos}
+
+<h2>Die Route</h2>
+{stop}
+
+{wortliste()}
+
+<h2>Fotoregler</h2>
+<ul class="regler">{''.join(f'<li>{r}</li>' for r in FOTOREGLER)}</ul>
+
+<button class="nulstil" id="nulstil">Nulstil alle flueben</button>
+<a class="retur" href="/sturmflut">Hele turen og tværsnittet →</a>
+</main><script>{GRUPPE_JS}</script></body></html>'''
+
+
+for nr, g in enumerate(GRUPPER, 1):
+    open(f'sturmflut-gruppe{nr}.html', 'w').write(gruppeside(nr, g))
+
+
+# ===================================================== 5 · forsiden for turen
+BASIS = open('matematik.html').read()
+GRUND = BASIS[BASIS.find('<style>') + 7:BASIS.find('</style>')]
+EKSTRA = '''
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:14px;margin:14px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.figtekst{color:var(--muted);font-size:.9rem;margin-top:8px}
+.blok{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:16px 20px;
+margin:12px 0;box-shadow:var(--shadow)}
+.blok.advar{border-left-color:var(--bad);background:var(--bad-soft)}
+.blok h3{margin:0 0 8px;font-size:1.1rem}
+.blok p,.blok li{color:var(--muted);font-size:.97rem}
+.blok ul{margin:6px 0 0;padding-left:20px}.blok li{margin:5px 0}
+.hold{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+gap:10px;margin:14px 0}
+.hold a{display:block;border:1px solid var(--line);border-radius:14px;
+padding:14px 16px;background:var(--panel);text-decoration:none;
+box-shadow:var(--shadow)}
+.hold a:hover{border-color:var(--accent)}
+.hold .nr{background:var(--good);color:#fff;border-radius:999px;padding:2px 10px;
+font-size:.78rem;font-weight:700}
+.hold b{display:block;margin:8px 0 2px;color:var(--ink);font-size:1.02rem}
+.hold span.da{color:var(--muted);font-size:.86rem}
+.hold code{display:block;margin-top:8px;color:var(--accent);font-size:.85rem}
+.stop{border:1px solid var(--line);border-radius:14px;padding:15px 18px;
+margin:10px 0;background:var(--panel);box-shadow:var(--shadow)}
+.stop h3{margin:0 0 2px;font-size:1.1rem;display:flex;align-items:center;
+gap:10px;flex-wrap:wrap}
+.stop .tid{background:var(--accent);color:#fff;border-radius:999px;
+padding:2px 11px;font-size:.8rem;font-weight:700}
+.stop .hvor{color:var(--muted);font-size:.86rem;text-transform:uppercase;
+letter-spacing:.04em;margin:0 0 8px}
+.stop p{color:var(--muted);font-size:.96rem;margin:6px 0;max-width:74ch}
+.stop ol{margin:8px 0 0;padding-left:20px}
+.stop li{font-size:.95rem;margin:5px 0}
+details.ord{border:1px solid var(--line);border-radius:14px;margin:14px 0;
+background:var(--panel2)}
+details.ord>summary{padding:13px 16px;font-weight:700;cursor:pointer}
+table.ord{width:100%;border-collapse:collapse;font-size:.93rem}
+table.ord td{border-top:1px solid var(--line);padding:7px 16px}
+table.ord td:first-child{width:44%}
+.kilder{color:var(--muted);font-size:.85rem;margin-top:18px}
+.kilder a{color:var(--muted)}
+@media print{header.top,.printbtn{display:none!important}
+.blok,.figur,.stop{box-shadow:none;break-inside:avoid}
+body{font-size:10pt}main{padding:0}@page{size:A4;margin:12mm}}
+'''
+
+hold_html = ''.join(
+    f'<a href="/sturmflut/{i}"><span class="nr">Gruppe {i}</span>'
+    f'<b>{esc(de)}</b><span class="da">{esc(da)}</span>'
+    f'<code>mibelibsen.space/sturmflut/{i}</code></a>'
+    for i, (de, da, *_ ) in enumerate(GRUPPER, 1))
+
+stop_html = ''.join(
+    f'''<article class="stop"><h3><span class="tid">{m} min</span>
+{i}. {esc(navn)}</h3><p class="hvor">{esc(hvor)}</p><p>{esc(hvad)}</p>
+<ol>{''.join(f'<li>{esc(de)}</li>' for de, _ in opg)}</ol></article>'''
+    for i, (m, navn, hvor, hvad, opg) in enumerate(STOP, 1))
+
+KROP = f'''<section class="hero"><span class="pill">Studietur Hamborg</span>
+<h1>Sturmflut: at bygge og bo uden for diget</h1>
+<p>Fire timer i HafenCity med frokost. <b>Opgaverne står på tysk</b> — I skal
+oversætte dem for at kunne løse dem. Ordlisten nederst giver jer de ord, man
+ikke kan gætte sig til; resten må I selv slå op.</p>
+<p>Hver gruppe har sin egen side med sine opgaver og flueben, der bliver
+gemt i telefonen:</p>
+<div class="hold">{hold_html}</div>
+<button class="printbtn" onclick="window.print()">Print siden</button></section>
+
+<div class="figur">{fig_snit}
+<div class="figtekst">De to niveauer, og to rigtige stormfloder tegnet ind.
+1976 stod <b>højere</b> end 1962 — men da holdt digerne. Begge ville have
+oversvømmet promenaden. Ingen af dem ville have nået op på warften.</div></div>
+
+<div class="blok"><h3>Det, turen handler om</h3>
+<p>I 1962 nåede vandet 5,70 m ved Pegel St. Pauli. Digerne brød sammen 60
+steder, og over 300 mennesker døde i Hamborg. I 1976 stod vandet 6,45 m —
+højere end i 1962 — men da holdt digerne.</p>
+<p>HafenCity er bygget efter den erfaring, men på en anden måde: ikke bag et
+dige, men <b>oven på</b> byen. Gader og huse ligger 7,5–8,5 meter over havets
+middel. Promenaderne ligger nede på de gamle kajers niveau og bliver lukket
+af, når der varsles. Spørgsmålet, I skal tage stilling til undervejs:
+<i>er det klogt at bygge sådan — eller er det at flytte problemet?</i></p></div>
+
+<h2 class="sec">Programmet</h2>
+<p>Cirka {I_ALT} minutter på stoppene plus omkring {GANG} minutters gang — i
+alt knap fire timer, cirka tre kilometer fra vest mod øst. Alle stop er
+gratis.</p>
+<div class="figur">{fig_rute}</div>
+
+{stop_html}
+
+<h2 class="sec">Ordliste</h2>
+{wortliste(aaben=True)}
+
+<h2 class="sec">Fotoregler</h2>
+<div class="blok"><ul>{''.join(f'<li>{r}</li>' for r in FOTOREGLER)}</ul></div>
+
+<h2 class="sec">Praktisk</h2>
+<div class="blok advar"><ul>{''.join(f'<li>{esc(s)}</li>' for s in SIKKERHED)}
+</ul></div>
+
+<div class="kilder">Tal og åbningstider er slået efter 30. september 2026:
+warfternes højde og promenadernes niveau hos
+<a href="https://www.db-bauzeitung.de/schwerpunkt/auf-sand-gebaut/">db
+Bauzeitung</a> og
+<a href="https://de.wikipedia.org/wiki/Hamburg-HafenCity">Wikipedia</a>,
+vandstandene i 1962 og 1976 hos
+<a href="https://de.wikipedia.org/wiki/Sturmflut_1962">Wikipedia</a>, og
+åbningstider og gratis adgang hos
+<a href="https://www.hafencity.com/forum">HafenCity Hamburg</a>.</div>
+'''
+
+
+def side(titel, krop):
+    return ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
+            '<meta name="viewport" content="width=device-width,initial-scale=1">'
+            f'<title>{titel}</title><style>' + GRUND + EKSTRA +
+            '</style></head><body><header class="top"><div class="top-inner">'
+            '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>'
+            '<nav class="tabs"><a class="" href="tysk.html">Tysk</a></nav>'
+            '</div></header><main>' + krop + '</main><footer>'
+            'Studietur Hamborg · 9. klasse · Mibelibsen.'
+            '</footer></body></html>')
+
+
+open('sturmflut.html', 'w').write(side('Sturmflut · HafenCity', KROP))
+
+# ===================================================== 6 · dansk udgave
+DOK_CSS = '''
+:root{--ink:#1a2233;--muted:#586074;--line:#c9d2e0;--panel:#f4f6fb;
+--accent:#1f6fd6}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,
+Arial,sans-serif;color:var(--ink);margin:0;font-size:10.2pt;line-height:1.45}
+h1{font-size:18pt;margin:0 0 4px}
+h2{font-size:12.5pt;margin:16px 0 5px;padding-bottom:3px;
+border-bottom:2px solid var(--accent)}
+h3{font-size:11pt;margin:12px 0 3px}
+p{margin:5px 0;max-width:80ch}p.und{color:var(--muted)}
+table{width:100%;border-collapse:collapse;margin:6px 0 10px;font-size:9.4pt;
+table-layout:fixed}
+th,td{border:1px solid var(--line);padding:5px 7px;text-align:left;
+vertical-align:top;word-wrap:break-word}
+th{background:var(--panel);font-size:8.6pt;color:var(--muted);
+text-transform:uppercase;letter-spacing:.03em}
+td.de{background:#fbfcfe}
+@page{size:A4;margin:13mm}
+@media print{table,h2,h3{page-break-inside:avoid}h2,h3{page-break-after:avoid}}
+'''
+
+dok = ['<h1>Sturmflut i HafenCity · dansk udgave</h1>',
+       '<p class="und">Opgaverne, ungerne får, står på tysk. Her står de med '
+       'dansk oversættelse ved siden af. Siderne: '
+       'mibelibsen.space/sturmflut og /sturmflut/1 til /sturmflut/5.</p>',
+       f'<p class="und">{I_ALT} minutter på stoppene + ca. {GANG} minutters '
+       'gang = knap fire timer. Alle stop er gratis.</p>',
+       '<h2>Ruten</h2>']
+for i, (m, navn, hvor, hvad, opg) in enumerate(STOP, 1):
+    dok.append(f'<h3>{i}. {esc(navn)} · {m} min</h3>')
+    dok.append(f'<p class="und">{esc(hvor)} — {esc(hvad)}</p>')
+    dok.append('<table><thead><tr><th>Opgaven på tysk</th>'
+               '<th>På dansk</th></tr></thead><tbody>' +
+               ''.join(f'<tr><td class="de">{esc(de)}</td><td>{esc(da)}</td></tr>'
+                       for de, da in opg) + '</tbody></table>')
+dok.append('<h2>Grupperne</h2>')
+for i, (de, da, t_de, t_da, opg) in enumerate(GRUPPER, 1):
+    dok.append(f'<h3>Gruppe {i} · {esc(de)} — {esc(da)}</h3>')
+    dok.append(f'<p class="und">{esc(t_da)}</p>')
+    dok.append('<table><thead><tr><th>Billedet på tysk</th>'
+               '<th>På dansk</th></tr></thead><tbody>' +
+               ''.join(f'<tr><td class="de">{esc(b_de)}</td><td>{esc(b_da)}</td></tr>'
+                       for b_de, b_da in opg) + '</tbody></table>')
+dok.append('<h2>Ordliste, ungerne får forærende</h2>')
+dok.append('<table><tbody>' + WORT_HTML + '</tbody></table>')
+dok.append('<h2>Fotoregler og praktisk</h2>')
+dok.append('<ul>' + ''.join(f'<li>{r}</li>' for r in FOTOREGLER) +
+           ''.join(f'<li>{esc(x)}</li>' for x in SIKKERHED) + '</ul>')
+
+open(os.path.join(SCRATCH, 'sturmflut-dansk.html'), 'w').write(
+    '<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
+    '<title>Sturmflut · dansk udgave</title>'
+    f'<style>{DOK_CSS}</style></head><body>' + '\n'.join(dok) + '</body></html>')
+
+print('skrevet:  sturmflut.html')
+for nr in range(1, len(GRUPPER) + 1):
+    print(f'skrevet:  sturmflut-gruppe{nr}.html   → /sturmflut/{nr}')
+print(f'skrevet:  {SCRATCH}/sturmflut-dansk.html')
+print(f'turen:    {len(STOP)} stop · {I_ALT} + {GANG} min = {I_ALT + GANG} min '
+      f'· {len(GRUPPER)} grupper · {len(WORTLISTE)} ord i ordlisten')

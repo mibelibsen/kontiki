@@ -22,7 +22,31 @@
     },
     {
       "source": "/hafencity",
-      "destination": "/hafencity.html"
+      "destination": "/sturmflut.html"
+    },
+    {
+      "source": "/sturmflut",
+      "destination": "/sturmflut.html"
+    },
+    {
+      "source": "/sturmflut/1",
+      "destination": "/sturmflut-gruppe1.html"
+    },
+    {
+      "source": "/sturmflut/2",
+      "destination": "/sturmflut-gruppe2.html"
+    },
+    {
+      "source": "/sturmflut/3",
+      "destination": "/sturmflut-gruppe3.html"
+    },
+    {
+      "source": "/sturmflut/4",
+      "destination": "/sturmflut-gruppe4.html"
+    },
+    {
+      "source": "/sturmflut/5",
+      "destination": "/sturmflut-gruppe5.html"
     }
   ],
   "redirects": [

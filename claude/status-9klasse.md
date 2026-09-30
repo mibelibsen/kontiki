@@ -82,6 +82,24 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 
 ## Rettet 30. september 2026 · Hamborg
 
+- **Turen hedder nu `/sturmflut`** og har fem gruppesider: `/sturmflut/1` til
+  `/sturmflut/5`. Ingen printer på turen, så arkene er blevet til mobilsider
+  med store afkrydsningsfelter, der huskes i telefonen (localStorage pr.
+  gruppe). Læreren deler ét link i Teams; hver gruppe trykker på sit nummer.
+- **Opgaverne står på tysk**, så ungerne skal oversætte dem for at kunne løse
+  dem. En ordliste på 18 ord giver dem det, man ikke kan gætte — Dammbalken,
+  Fluttor, Warft. Den danske udgave med begge sprog side om side ligger i
+  `vejledning/sturmflut-dansk.pdf` og udgives ikke.
+- **Alle stop er gratis.** Ruten er tjekket igennem for entré; sidste stop,
+  Hafen.City.Horizonte, har gratis adgang (bekræftet hos hafencity.com).
+- Kort på tysksiden.
+- **`claude/tjek.py` kender nu `vercel.json`.** Links som `/sturmflut/3` er
+  gyldige, selv om der ikke findes en fil af det navn — til gengæld tjekkes
+  det, at hver omskrivning peger på en fil, der findes. Den fandt en fejl med
+  det samme: `/hafencity` pegede stadig på en fil, jeg lige havde slettet.
+
+## Rettet 30. september 2026 · Hamborg (første udgave)
+
 - **Tur i HafenCity: `hafencity.html` på `/hafencity`.** Fire timer med
   frokost, seks stop fra Speicherstadt til Baakenhafen, om at bygge og bo uden
   for diget. Fem grupper med hvert sit fotoemne, så billederne kan lægges
