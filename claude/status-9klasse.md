@@ -80,6 +80,18 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   beholdes, så det forudfyldte link og QR-kortene holder. Det gamle
   `byg_formular.gs` (bygger af arket) ligger stadig.
 
+## Rettet 2. oktober 2026
+
+- **Turen er taget ned.** Dagen efter studieturen er `sturmflut.html`, de fem
+  gruppesider, de fem gruppe-PDF'er, delebilledet og skærmbilledet af
+  Teams-mapperne slettet fra sitet, og adresserne `/sturmflut`,
+  `/sturmflut/1–5` og `/hafencity` er fjernet fra `vercel.json`. Kortet på
+  tysksiden er væk. Opgaverne er altså ikke længere offentligt tilgængelige.
+- **Beholdt:** `claude/byg_sturmflut.py` med en note om nedtagningen, og
+  `vejledning/sturmflut-dansk.pdf` med alle opgaver på begge sprog. Begge
+  mapper er udelukket fra deploy, så turen kan bygges igen næste år uden at
+  ligge offentligt i mellemtiden.
+
 ## Rettet 30. september 2026 · Hamborg
 
 - **Turen hedder nu `/sturmflut`** og har fem gruppesider: `/sturmflut/1` til

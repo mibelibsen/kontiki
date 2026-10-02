@@ -2,6 +2,13 @@
 # -*- coding: utf-8 -*-
 """Bygger turen i HafenCity: at bygge og bo med risiko for stormflod.
 
+TAGET NED 2. oktober 2026, dagen efter turen. Siderne og PDF'erne er slettet
+fra sitet, og adresserne er fjernet fra vercel.json. Scriptet er beholdt, så
+turen kan bygges igen — men den, der kører det, skal huske, at det lægger
+siderne offentligt op igen og skal følges af nye rewrites.
+Den danske udgave med alle opgaver ligger i vejledning/sturmflut-dansk.pdf,
+som ikke udgives.
+
     python3 claude/byg_hafencity.py <scratch-mappe>
 
 Skriver hafencity.html og et gruppeark til print (ét A4 pr. gruppe).
