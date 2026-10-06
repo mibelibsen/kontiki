@@ -19,6 +19,10 @@
     {
       "source": "/socialisering",
       "destination": "/socialisering.html"
+    },
+    {
+      "source": "/digital-socialisering",
+      "destination": "/digital-socialisering.html"
     }
   ],
   "redirects": [

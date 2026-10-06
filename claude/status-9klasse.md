@@ -69,6 +69,27 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
 
+## Lavet 6. oktober 2026 · samfundsfag
+
+- **`digital-socialisering.html` er bygget** — dataark til forløbet i uge 40 og
+  41, som årsplanen kalder *Digital socialisering blandt unge*. Resumé i fem
+  punkter, otte dataafsnit med figur og tabel, et tomt søjlegitter til klassens
+  egne tal fra Hamborg, en kildekritisk boks og to film. Bygges af
+  `claude/byg_digital_socialisering.py`.
+- **Hver kilde er åbnet og læst**, ikke refereret fra et referat, og **alle 15
+  links er tjekket og svarer 200**. Dato og stikprøve står ved hvert tal.
+- **Intet bag betalingsmur.** Kristeligt Dagblad og Information blev valgt fra;
+  PISA-tallet står i stedet i ministeriets egen frie nyhed, som også har de to
+  bedste tal: 3,8 timer mod OECD's 2, og 72 % mod 16 %.
+- **En kilde måtte byttes.** Den australske myndighed eSafety kan ikke nås fra
+  containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
+  og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
+  10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
+- **Lære: tjek linket, før det kommer på sitet.** Et link, der ser rigtigt ud i
+  et søgeresultat, er ikke et link, der virker.
+
+---
+
 ## Rettet 6. oktober 2026 · hverdagseksempler
 
 - **Hver illustration på funktionssiden har fået et hverdagseksempel efter sig.**
