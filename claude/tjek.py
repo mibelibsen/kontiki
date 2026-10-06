@@ -335,10 +335,153 @@ def xlsx_tekster(sti):
     return ud
 
 
+# ---------------------------------------------------------------------------
+# 6b. Koordinatsystemer skal have ens skala paa begge akser
+# ---------------------------------------------------------------------------
+# Grafen for y = 2x + 1 saa knap tre gange for stejl, fordi en x-enhed fyldte
+# 68 px og en y-enhed kun 25 px. Haeldningen er figurens hele pointe, saa den
+# maales her: pixelafstanden mellem to taltikker paa hver akse skal passe.
+# Akser med hver sin enhed - kroner mod kWh i et hverdagseksempel - kan ikke
+# have samme skala. De kendes paa, at akserne har rigtige navne i stedet for
+# x og y, og de springes over. En graf uden enheder paa akserne er abstrakt og
+# skal vaere kvadratisk.
+TIK_X = re.compile(
+    r'<line x1="([\d.]+)" y1="[\d.]+" x2="[\d.]+" y2="[\d.]+" stroke="#(?:c9d2e0|1a2233)"'
+    r' stroke-width="[\d.]+"/><text x="[\d.]+" y="[\d.]+" text-anchor="middle"'
+    r' fill="#586074" font-size="10">(-?\d+)<')
+TIK_Y = re.compile(
+    r'<line x1="[\d.]+" y1="([\d.]+)" x2="[\d.]+" y2="[\d.]+" stroke="#(?:c9d2e0|1a2233)"'
+    r' stroke-width="[\d.]+"/><text x="[\d.]+" y="[\d.]+" text-anchor="end"'
+    r' fill="#586074" font-size="10">(-?\d+)<')
+
+
+AKSENAVNE = re.compile(r'font-style="italic">([^<]+)</text>')
+
+
+def tjek_aksernes_skala():
+    antal, med_enhed = 0, 0
+    for f in alle_html():
+        for svg in re.findall(r'<svg viewBox="0 0 470 \d+".*?</svg>', tekst(f), re.S):
+            xs = [(float(a), int(b)) for a, b in TIK_X.findall(svg)]
+            ys = [(float(a), int(b)) for a, b in TIK_Y.findall(svg)]
+            if len(xs) < 2 or len(ys) < 2:
+                continue
+            if sorted(AKSENAVNE.findall(svg)) != ['x', 'y']:
+                med_enhed += 1       # kroner mod kWh kan ikke have samme skala
+                continue
+            antal += 1
+            px = abs((xs[-1][0] - xs[0][0]) / (xs[-1][1] - xs[0][1]))
+            py = abs((ys[-1][0] - ys[0][0]) / (ys[-1][1] - ys[0][1]))
+            if abs(px - py) > 0.05:
+                fejl('aksernes skala',
+                     f'{f}: en graf har {px:.1f} px pr. x-enhed og {py:.1f} px '
+                     f'pr. y-enhed — forhold {px/py:.2f}. Hældningen ses forkert. '
+                     f'Byg den med figurer.koordinatsystem()')
+    if antal and not [1 for k, _ in FEJL if k == 'aksernes skala']:
+        ok('aksernes skala',
+           f'{antal} koordinatsystemer har kvadratiske tern'
+           + (f' · {med_enhed} har enheder på akserne og er undtaget'
+              if med_enhed else ''))
+
+
+# ---------------------------------------------------------------------------
+# 6c. Alt der kan printes, skal vaere A4
+# ---------------------------------------------------------------------------
+# Uden size i @page vaelger Chromium Letter, og et lektieark kom ud i 216x279 mm
+# i stedet for 210x297. Det ses ikke paa skaermen - kun paa papiret.
+def tjek_sidestoerrelse():
+    n = 0
+    for f in alle_html():
+        t = tekst(f)
+        if '@page' not in t:
+            continue
+        n += 1
+        for regel in re.findall(r'@page\s*\{[^}]*\}', t):
+            if 'size:' not in regel.replace(' ', ''):
+                fejl('sidestørrelse',
+                     f'{f}: {regel} mangler size:A4 — Chromium printer den som Letter')
+    if n and not [1 for k, _ in FEJL if k == 'sidestørrelse']:
+        ok('sidestørrelse', f'{n} printbare sider er sat til A4')
+
+
+# ---------------------------------------------------------------------------
+# 7. Quiz-motorens kontrakt skal vaere opfyldt paa de interaktive sider
+# ---------------------------------------------------------------------------
+IDER = ['startOverlay', 'nameInput', 'ovTitle', 'ovText', 'startBtn', 'skipBtn',
+        'resetBtn', 'switchBtn', 'welcomeBar', 'welcomeHi', 'welcomeLive',
+        'progressFill', 'progressLabel', 'resultsBody', 'gradeMsg', 'finalMsg']
+
+
+def tjek_quizmotor():
+    interaktive = [f for f in sider() if 'class="quiz"' in tekst(f)]
+    for f in interaktive:
+        h = tekst(f)
+        savn = [i for i in IDER if f'id="{i}"' not in h]
+        if savn:
+            fejl('quiz-motor', f'{f} mangler id: {", ".join(savn)}')
+        markup = re.sub(r'(?s)<script.*?</script>', '', h)
+        quizzer = len(re.findall(r'class="quiz"', markup))
+        badges = markup.count('data-score')
+        if quizzer != badges:
+            fejl('quiz-motor', f'{f} har {quizzer} quizzer men {badges} score-badges')
+        moduler = re.search(r'data-modules="([^"]*)"', markup)
+        if moduler and len(moduler.group(1).split('|')) != quizzer:
+            fejl('quiz-motor',
+                 f'{f}: data-modules har {len(moduler.group(1).split("|"))} navne '
+                 f'men siden har {quizzer} quizzer')
+    if not any(k == 'quiz-motor' for k, _ in FEJL):
+        ok('quiz-motor', f'{len(interaktive)} interaktive sider opfylder kontrakten')
+
+
+# ---------------------------------------------------------------------------
+# 8. Aarsplanen findes to steder — de skal sige det samme
+#    (tre gange i dag blev kun det ene sted rettet)
+# ---------------------------------------------------------------------------
+def xlsx_tekster(sti):
+    """Alle strenge i et regneark, uden afhaengigheder."""
+    ud = []
+    with zipfile.ZipFile(sti) as z:
+        delte = []
+        if 'xl/sharedStrings.xml' in z.namelist():
+            s = z.read('xl/sharedStrings.xml').decode('utf-8')
+            delte = [html.unescape(re.sub(r'<[^>]+>', '', m))
+                     for m in re.findall(r'<si>(.*?)</si>', s, re.S)]
+        for navn in z.namelist():
+            if not re.match(r'xl/worksheets/sheet\d+\.xml', navn):
+                continue
+            s = z.read(navn).decode('utf-8')
+            for c in re.finditer(r'<c[^>]*?(?: t="(\w+)")?[^>]*>(.*?)</c>', s, re.S):
+                typ, krop = c.group(1), c.group(2)
+                v = re.search(r'<v>(.*?)</v>', krop, re.S)
+                if not v:
+                    isx = re.search(r'<is>(.*?)</is>', krop, re.S)
+                    if isx:
+                        ud.append(html.unescape(re.sub(r'<[^>]+>', '', isx.group(1))))
+                    continue
+                raa = v.group(1)
+                if typ == 's':
+                    i = int(raa)
+                    if i < len(delte):
+                        ud.append(delte[i])
+                else:
+                    ud.append(html.unescape(raa))
+    return ud
+
+
+AARSPLANER = [
+    ('matematik', 'aarsplan-matematik.html', 'aarsplan-matematik-2026-27.xlsx'),
+    ('samfundsfag', 'aarsplan-samfundsfag.html', 'aarsplan-samfundsfag-2026-27.xlsx'),
+]
+
+
 def tjek_aarsplan():
-    side, ark = 'aarsplan-matematik.html', 'aarsplan-matematik-2026-27.xlsx'
+    for fag, side, ark in AARSPLANER:
+        _en_aarsplan(fag, side, ark)
+
+
+def _en_aarsplan(fag, side, ark):
     if not (os.path.exists(side) and os.path.exists(ark)):
-        advar('årsplan', 'siden eller regnearket findes ikke — springer over')
+        advar('årsplan', f'{fag}: siden eller regnearket findes ikke — springer over')
         return
     h = tekst(side)
     uger_side = [t.strip() for t in re.findall(r'<td class="uge">([^<]+)</td>', h)]
@@ -346,23 +489,28 @@ def tjek_aarsplan():
         r'<td class="uge">[^<]+</td><td class="per">[^<]*</td><td>([^<]+)</td>', h)]
 
     celler = xlsx_tekster(ark)
-    # ugenumre i regnearket: rene tal der ogsaa staar paa siden
-    uger_ark = [c for c in celler if c.strip().isdigit() and c.strip() in uger_side]
+    # Ugefeltet staar som "33" i matematikplanen og som "32 - 39" i
+    # samfundsfagsplanen. Vi leder derfor efter netop de maerkater, siden selv
+    # bruger, i den raekkefoelge regnearket naevner dem.
+    kendte = set(uger_side)
+    uger_ark = [c.strip() for c in celler if c.strip() in kendte]
 
     if uger_side != uger_ark:
         fejl('årsplan side↔regneark',
-             f'ugerækkefølgen afviger\n      side: {" ".join(uger_side)}'
+             f'{fag}: ugerækkefølgen afviger\n      side: {" ".join(uger_side)}'
              f'\n      ark : {" ".join(uger_ark)}')
     else:
-        ok('årsplan side↔regneark', f'{len(uger_side)} uger i samme rækkefølge begge steder')
+        ok('årsplan side↔regneark',
+           f'{fag}: {len(uger_side)} uger i samme rækkefølge begge steder')
 
     mangler = [f for f in forloeb_side if f.strip() and f.strip() not in
                {c.strip() for c in celler}]
     if mangler:
         fejl('årsplan side↔regneark',
-             'forløb på siden findes ikke i regnearket: ' + ', '.join(mangler))
+             f'{fag}: forløb på siden findes ikke i regnearket: ' + ', '.join(mangler))
     else:
-        ok('årsplan side↔regneark', f'alle {len(forloeb_side)} forløb findes begge steder')
+        ok('årsplan side↔regneark',
+           f'{fag}: alle {len(forloeb_side)} forløb findes begge steder')
 
     # ferier og afbrydelser skal naevnes ens
     for m in re.finditer(r'<tr class="break"><td colspan="5">([^<]+)</td></tr>', h):
@@ -373,7 +521,7 @@ def tjek_aarsplan():
         nr = uge.group(1).strip()
         if not any(nr in c or nr.replace(' - ', '-') in c for c in celler):
             advar('årsplan side↔regneark',
-                  f'"{nr}" står på siden, men ikke tydeligt i regnearket')
+                  f'{fag}: "{nr}" står på siden, men ikke tydeligt i regnearket')
 
 
 # ---------------------------------------------------------------------------

@@ -85,15 +85,22 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
   og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
   10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
+- **Årsplanen for samfundsfag er rettet.** Uge 43 er skilt ud som sit eget
+  forløb, *Digital socialisering: kvalitativ analyse*, og kriminalitet og
+  overvågning rykker til uge 44–47. Antallet af uger pr. tema er uændret.
+- **Samfundsfag har nu sit eget regneark.** Der fandtes kun ét til matematik.
+  `aarsplan-samfundsfag-2026-27.xlsx` bygges nu af samme script som siden, med
+  samme opbygning som matematikkens, og siden har fået en hent-knap.
+- **`tjek.py` sammenligner nu begge årsplaner med deres regneark.** Ugefeltet
+  står som "33" i matematikplanen og som "32 - 39" i samfundsfagsplanen, så
+  kontrollen leder efter de mærkater, siden selv bruger, i stedet for kun rene
+  tal.
 - **`kvalitativ-analyse.html` er bygget — oplæg til uge 43.** Metoden i fem
   trin med procesdiagram, et gennemført eksempel hvor fem opdigtede svar kodes
   og kategoriseres, gruppeopgaven, fire fælder og en ordliste. Bygges af
   `claude/byg_kvalitativ.py`.
   **Eksempelsvarene er opdigtede og mærket som det** — ungernes egne svar må
   ikke ligge på sitet.
-  **Bemærk:** årsplanen siger stadig *Kriminalitet og overvågning* for uge 43 til
-  47. Siden er mærket uge 43, men årsplanen er ikke rørt, fordi `tjek.py`
-  sammenligner den med regnearket. Skal de to passe sammen, skal begge rettes.
 - **Afsnittet "Jeres egne tal" er slået fra igen (6.10.).** Ungerne nåede ikke
   at oversætte spørgeskemaerne færdigt, og svarene viste sig ikke at være
   sammenlignelige på tværs af de to sprog — besvarelserne bruges kvalitativt i

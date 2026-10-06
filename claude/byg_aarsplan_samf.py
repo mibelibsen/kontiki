@@ -8,10 +8,13 @@ saa de to planer siger det samme.
 """
 import sys, os, html
 from datetime import date, timedelta
+import openpyxl
+from openpyxl.styles import Alignment, Font, PatternFill
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import figurer as FG
 
 UD = 'aarsplan-samfundsfag.html'
+UD_XLSX = 'aarsplan-samfundsfag-2026-27.xlsx'
 
 
 def periode(aar, fra, til=None):
@@ -29,7 +32,11 @@ TEMA1 = [
  (2026, 40, 41, 'Digital socialisering blandt unge',
   ['Studietur til Hamborg. Uddeling af spørgeskemaer til andre unge om digitale '
    'vaner og fritid', 'Dataindsamling og analyse']),
- (2026, 43, 47, 'Kriminalitet og overvågning',
+ (2026, 43, 43, 'Digital socialisering: kvalitativ analyse',
+  ['Kvalitativ analyse af spørgeskemaerne fra Hamborg: kodning, kategorier og '
+   'citater', 'Oversættelsen som fejlkilde — hvorfor svarene ikke kan tælles',
+   'Afrunding af studieturen']),
+ (2026, 44, 47, 'Kriminalitet og overvågning',
   ['Kan man bekæmpe kriminalitet med overvågning?',
    'Fokus: Hvordan reagerer samfundet på lovbrud?']),
  (2026, 48, 51, 'Teknologi og velfærdsstaten',
@@ -106,7 +113,8 @@ linje = FG.aarslinje([
      [(32, 39, ('Teknologi og global økonomi', 'Teknologi'), 'forloeb'),
       (40, 41, ('Digital socialisering', 'Digital soc.'), 'forloeb'),
       (42, 42, ('Efterårsferie', 'Ferie'), 'ferie'),
-      (43, 47, ('Kriminalitet og overvågning', 'Kriminalitet'), 'forloeb'),
+      (43, 43, ('Kvalitativ analyse', 'Kvalitativ'), 'forloeb'),
+      (44, 47, ('Kriminalitet og overvågning', 'Kriminalitet'), 'forloeb'),
       (48, 51, ('Teknologi og velfærdsstaten', 'Velfærdsstaten'), 'forloeb'),
       (52, 53, ('Juleferie', 'Jul'), 'ferie')]),
     ('Forår 2027 · tema 2 · magt', FORAAR,
@@ -131,6 +139,7 @@ KROP = f'''<section class="hero"><span class="pill">Samfundsfag · Årsplan 2026
 <p>Året har to overordnede temaer. <b>Teknologi</b> fylder efteråret fra uge 32
 til uge 51, {U1} uger. <b>Magt</b> fylder foråret fra uge 1 til uge 20, {U2} uger
 lagt uden om OPO og ferierne. To samfundsfagsrapporter afleveres undervejs.</p>
+<a class="btnlink" href="{UD_XLSX}" download>Hent årsplanen som Excel</a>
 <a class="btnlink ghost" href="samfundsfag.html">Tilbage til samfundsfag</a>
 <a class="btnlink ghost" href="index.html">Fagoversigt</a></section>
 <div class="tidslinje">{linje}</div>
@@ -169,4 +178,93 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '</nav></div></header><main>' + KROP + '</main><footer>'
        'Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>')
 open(UD, 'w').write(DOK)
+
+# ---------------------------------------------------------------------------
+# Regnearket. Samme opbygning som matematikaarsplanens, saa de to ser ens ud
+# og kan rettes paa samme maade. tjek.py sammenligner det med siden.
+# ---------------------------------------------------------------------------
+INK, BLAA, PANEL = '1A2233', '1F6FD6', 'F4F6FB'
+H1 = Font(name='Calibri', size=14, bold=True, color=INK)
+HOVED = Font(name='Calibri', size=11, bold=True, color='FFFFFF')
+BLOK = Font(name='Calibri', size=11, bold=True, color=INK)
+ALM = Font(name='Calibri', size=11, color=INK)
+MUT = Font(name='Calibri', size=10, color='586074')
+FYLD_H = PatternFill('solid', fgColor=BLAA)
+FYLD_B = PatternFill('solid', fgColor=PANEL)
+TOP = Alignment(vertical='top', wrap_text=True)
+
+bog = openpyxl.Workbook()
+ark = bog.active
+ark.title = 'Årsplan'
+ark['A1'] = 'Årsplan · samfundsfag · 9. klasse · 2026/27'
+ark['A1'].font = H1
+ark['A2'] = ('Året har to temaer: Teknologi i efteråret og Magt i foråret. '
+             'Ferier og OPO er trukket fra.')
+ark['A2'].font = MUT
+for i, k in enumerate(['Uge', 'Periode', 'Tema', 'Forløb', 'Indhold',
+                       'Materiale', 'Noter / status'], 1):
+    c = ark.cell(row=4, column=i, value=k)
+    c.font, c.fill, c.alignment = HOVED, FYLD_H, TOP
+
+r = 5
+
+
+def skriv_blok(titel, blok, tema):
+    global r
+    c = ark.cell(row=r, column=1, value=titel)
+    c.font = BLOK
+    for i in range(1, 8):
+        ark.cell(row=r, column=i).fill = FYLD_B
+    r += 1
+    for aar, fra, til, forloeb, punkter in blok:
+        nr = f'{fra}' if fra == til else f'{fra} - {til}'
+        vals = [nr, periode(aar, fra, til), tema, forloeb,
+                ' · '.join(_rens(p) for p in punkter), '', '']
+        for i, v in enumerate(vals, 1):
+            c = ark.cell(row=r, column=i, value=v)
+            c.font, c.alignment = ALM, TOP
+        r += 1
+        if (aar, til) in BRUD:
+            c = ark.cell(row=r, column=1, value=BRUD[(aar, til)])
+            c.font = MUT
+            r += 1
+
+
+def _rens(t):
+    """Fjerner de faa html-maerker, planen bruger i punkterne."""
+    return (t.replace('<b>', '').replace('</b>', '')
+             .replace('<i>', '').replace('</i>', ''))
+
+
+skriv_blok(f'Tema 1 · Teknologi — uge 32 til 51 · {U1} uger', TEMA1, 'Teknologi')
+skriv_blok(f'Tema 2 · Magt — uge 1 til 20 · {U2} uger', TEMA2, 'Magt')
+
+for kol, bred in zip('ABCDEFG', (7, 14, 13, 34, 64, 30, 22)):
+    ark.column_dimensions[kol].width = bred
+ark.freeze_panes = 'A5'
+
+# fane 2: faste afbrydelser og afleveringer
+ark2 = bog.create_sheet('Afbrydelser og afleveringer')
+ark2['A1'] = 'Faste afbrydelser'
+ark2['A1'].font = H1
+for i, k in enumerate(['Uge', 'Afbrydelse'], 1):
+    c = ark2.cell(row=2, column=i, value=k)
+    c.font, c.fill = HOVED, FYLD_H
+for j, (u, t) in enumerate(FERIER, 3):
+    ark2.cell(row=j, column=1, value=u).font = ALM
+    ark2.cell(row=j, column=2, value=t).font = ALM
+n = len(FERIER) + 4
+ark2.cell(row=n, column=1, value='Afleveringer').font = H1
+for i, k in enumerate(['Uge', 'Opgave'], 1):
+    c = ark2.cell(row=n + 1, column=i, value=k)
+    c.font, c.fill = HOVED, FYLD_H
+for j, (u, t) in enumerate(AFLEVERINGER, n + 2):
+    ark2.cell(row=j, column=1, value=u).font = ALM
+    c = ark2.cell(row=j, column=2, value=t)
+    c.font, c.alignment = ALM, TOP
+for kol, bred in zip('AB', (14, 78)):
+    ark2.column_dimensions[kol].width = bred
+
+bog.save(UD_XLSX)
 print(f'skrevet:  {UD}  ·  {U1} uger teknologi, {U2} uger magt')
+print(f'skrevet:  {UD_XLSX}  ·  {r - 5} rækker i årsplanen')
