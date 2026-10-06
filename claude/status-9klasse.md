@@ -85,6 +85,12 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
   og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
   10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
+- **Afsnittet "Jeres egne tal" er slået fra igen (6.10.).** Ungerne nåede ikke
+  at oversætte spørgeskemaerne færdigt, og svarene viste sig ikke at være
+  sammenlignelige på tværs af de to sprog — besvarelserne bruges kvalitativt i
+  stedet. Koden er bevaret bag flaget `VIS_EGNE_TAL` i
+  `claude/byg_digital_socialisering.py`, så afsnittet kan komme tilbage uden at
+  skulle skrives igen.
 - **Figuren lagde op til en misforståelse, og brugeren fangede den.** Søjlen
   "Alle over 15 år" på 16 % stod ved siden af 27 % og 28 % for de unge og lignede
   en tredje aldersgruppe — så så det ud, som om helheden var mindre end delene.

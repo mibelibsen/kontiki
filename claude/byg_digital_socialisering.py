@@ -20,6 +20,12 @@ import figurer as FG
 
 UD = 'digital-socialisering.html'
 
+# Afsnittet "Jeres egne tal" er slaaet fra 6. oktober 2026: ungerne var ikke
+# faerdige med at oversaette spoergeskemaerne, og svarene viste sig ikke at vaere
+# sammenlignelige paa tvaers af de to sprog. Besvarelserne bruges kvalitativt i
+# stedet. Saet den til True, hvis der senere kommer tal, der kan taelles.
+VIS_EGNE_TAL = False
+
 # ---------------------------------------------------------------------------
 # Tallene. (vaerdi, forklaring) — hver gruppe hoerer til én kilde.
 # ---------------------------------------------------------------------------
@@ -302,6 +308,24 @@ kilder_html = ''.join(
     f'<td class="dato">{d}</td><td>{html.escape(s)}</td></tr>'
     for _, t, u, d, s in KILDER)
 
+egne_tal = f'''<h2 class="sec">Jeres egne tal</h2>
+<div class="boks eget">
+<h3>Sæt jeres spørgeskema ved siden af</h3>
+<p>I har selv samlet svar ind fra tyske unge på turen til Hamborg. Det er den
+samme slags data som ovenfor — bare jeres egen. Tegn jeres tal ind i gitteret
+herunder, og hold dem op mod tallene fra Danmark og fra de 44 lande.</p>
+<ol class="trin">
+<li>Vælg <b>ét</b> spørgsmål fra jeres skema, hvor svaret kan laves om til en procent.</li>
+<li>Regn procenten ud for de danske svar og for de tyske svar hver for sig.</li>
+<li>Tegn de to søjler. Skriv <b>hvor mange</b> der har svaret over hver søjle.</li>
+<li>Find et tal i dataarket ovenfor, der måler noget af det samme. Ligner jeres
+resultat det — og hvis ikke, hvad kan forklare forskellen?</li>
+<li>Slå jeres eget land op i <a href="{NOEGLE['hbsc'][1]}" target="_blank"
+rel="noopener">HBSC Data Browser</a> og vælg to lande mere at sammenligne med.</li>
+</ol>
+</div>
+<div class="figur">{fig_eget}</div>''' if VIS_EGNE_TAL else ''
+
 KROP = f'''<section class="hero"><span class="pill">Samfundsfag · Digital socialisering</span>
 <h1>Unges brug af mobil og digitale medier</h1>
 <p>Dataark til forløbet i uge 40 og 41. Alle tal herunder er hentet i kilden selv,
@@ -335,29 +359,12 @@ ikke kan se, ligger lavt nok. Spørg derfor altid: er det her et tal for
 <i>én gruppe</i>, eller for <i>alle</i>?</p>
 </div>
 
-<h2 class="sec">Jeres egne tal</h2>
-<div class="boks eget">
-<h3>Sæt jeres spørgeskema ved siden af</h3>
-<p>I har selv samlet svar ind fra tyske unge på turen til Hamborg. Det er den
-samme slags data som ovenfor — bare jeres egen. Tegn jeres tal ind i gitteret
-herunder, og hold dem op mod tallene fra Danmark og fra de 44 lande.</p>
-<ol class="trin">
-<li>Vælg <b>ét</b> spørgsmål fra jeres skema, hvor svaret kan laves om til en procent.</li>
-<li>Regn procenten ud for de danske svar og for de tyske svar hver for sig.</li>
-<li>Tegn de to søjler. Skriv <b>hvor mange</b> der har svaret over hver søjle.</li>
-<li>Find et tal i dataarket ovenfor, der måler noget af det samme. Ligner jeres
-resultat det — og hvis ikke, hvad kan forklare forskellen?</li>
-<li>Slå jeres eget land op i <a href="{NOEGLE['hbsc'][1]}" target="_blank"
-rel="noopener">HBSC Data Browser</a> og vælg to lande mere at sammenligne med.</li>
-</ol>
-</div>
-<div class="figur">{fig_eget}</div>
-
-<div class="boks pas">
+{egne_tal}<div class="boks pas">
 <h3>Pas på med tallene</h3>
-<p><b>Hvor mange har svaret?</b> Jeres eget skema har måske 25 svar. HBSC har
-280.000. Et udsving på ét svar flytter jeres procent meget — og deres næsten
-ingenting. Skriv altid antallet ved siden af procenten.</p>
+<p><b>Hvor mange har svaret?</b> Et skema med 25 svar og en undersøgelse med
+280.000 svar er ikke det samme slags tal. Et enkelt svar flytter den lille
+undersøgelse meget — og den store næsten ingenting. Spørg altid om antallet,
+før I ser på procenten.</p>
 <p><b>Det samme land kan fortælle to historier.</b> Danske unge har et højt
 skærmforbrug sammenlignet med lande, vi ligner. Men de er <i>ikke</i> blandt dem,
 der bruger mest tid på internet og sociale medier — til gengæld ligger de i bunden,
