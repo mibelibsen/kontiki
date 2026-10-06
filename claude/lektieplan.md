@@ -44,7 +44,7 @@ dokumenteres bedre først.
 | 37 | 07.09 – 11.09 | Sandsynligheder i verden | — | ikke lavet, afventer |
 | 38 | 14.09 – 18.09 | Ligninger | `lektier-uge38-ligninger.html` | ✅ udgivet 16.09 |
 | 39 | 21.09 – 25.09 | Ligninger (fortsat) | `kommende/lektier-uge39-ligninger-fortsat.html` | klar, udgives når klassen er der |
-| 41 | 05.10 – 09.10 | Lineære funktioner og grafer | `kommende/lektier-uge41-funktioner-grafer.html` | klar, udgives når klassen er der |
+| 41 | 05.10 – 09.10 | Lineære funktioner og grafer | `lektier-uge41-funktioner-grafer.html` | ✅ udgivet 06.10 |
 
 Uge 33 og 34 er udgivet samtidig, fordi uge 33 allerede var passeret, da lektierne
 blev lavet.

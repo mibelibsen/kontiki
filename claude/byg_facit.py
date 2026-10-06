@@ -365,20 +365,22 @@ dok('facit-lektier-2026-10-05-funktioner-og-grafer', 'lektier', '2026-10-05',
         ('d) Nulpunkt', 'x = 2,5', '−2x + 5 = 0'),
         ('e) Går nedad', 'y = −2x + 5', 'Hældningen er negativ'),
     ]),
-    ('h2', 'Opgave B · Aflæs og regn efter'),
+    ('h2', 'Opgave B · Aflæs på grafen'),
     ('figur', (graf([(1, 1, FG.BLA, 'y = x + 1'), (-2, 7, FG.GRO, 'y = −2x + 7')],
                     [(2, 3, FG.ROD, '(2, 3)')],
                     xmin=-2, xmax=8, ymin=-2, ymax=8,
                     titel='Figuren med svarene på'),
                'Det røde punkt er skæringen mellem linjerne. Figuren er den samme som '
-               'på lektiearket, med svarene sat på.')),
+               'på lektiearket, med svarene sat på. Arket beder ikke om at løse '
+               'ligningen — uge 41 handler om lineære funktioner, ikke om '
+               'ligningsløsning.')),
     ('tabel', [
         ('a) b', '1 og 7', 'Aflæses på y-aksen'),
         ('b) a', '1 og −2', 'Blå: 1 til højre, 1 op. Grøn: 1 til højre, 2 ned'),
         ('c) Forskrifter', 'y = x + 1 og y = −2x + 7', ''),
         ('d) Skæringspunkt', '(2, 3)', 'Aflæses'),
-        ('e) Ved regning', 'x = 2, y = 3', 'x + 1 = −2x + 7 → 3x = 6'),
-        ('f) Nulpunkter', 'x = −1 og x = 3,5', 'x + 1 = 0 og −2x + 7 = 0'),
+        ('e) Nulpunkter', 'x = −1 og x = 3,5',
+         'Aflæses hvor hver linje skærer x-aksen'),
     ]),
     ('h2', 'Opgave C · Tegn selv'),
     ('p', 'a) Tabel for <code>y = −x + 4</code>, hvor x går fra −1 til 5:'),
@@ -390,7 +392,8 @@ dok('facit-lektier-2026-10-05-funktioner-og-grafer', 'lektier', '2026-10-05',
                'er kvadratiske, ligger linjen præcis på 45° nedad — det er hældningen '
                'a = −1, man kan se.')),
     ('tabel', [
-        ('c) Nulpunkt', 'x = 4', '−x + 4 = 0 → x = 4'),
+        ('c) Nulpunkt', 'x = 4',
+         'Aflæses hvor grafen skærer x-aksen. Tabellen har y = 0 ved x = 4'),
         ('d) Skæring med y-aksen', '(0, 4)', 'Passer med b = 4 i forskriften'),
     ]),
     ('note', ['Bemærk: hældningen er −1, så linjen går nedad. Går man 1 til højre, går '

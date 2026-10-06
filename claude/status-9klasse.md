@@ -79,6 +79,12 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 - **Hverdagstal hører kun til sitet**, aftalt 6. oktober. Lektiearkene bliver
   ved med at være rene tal, så ungerne træner regnereglen uden at skulle tyde en
   situation først.
+- **Uge 41-lektien er udgivet 6. oktober** og ligger nu i roden med et kort på
+  `matematik.html`. Arket handler kun om lineære funktioner: ligningsløsningen
+  er taget ud (opgave B's "vis ved regning, at skæringspunktet er rigtigt"), og
+  de to steder, hvor nulpunktet skulle tjekkes ved regning, aflæses nu på
+  grafen. **Nulpunkterne står ved magt** — de hører til lineære funktioner.
+  Facit er bygget om med.
 - **Opgave C og D på sitet er lavet om til hverdagsopgaver.** Opgave C er nu
   en kajakudlejning (to kvitteringer), et telefonbatteri (nulpunktet er det
   klokkeslæt, telefonen dør) og en sammenligning af to telefoner, der ændrer sig
