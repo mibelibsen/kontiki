@@ -537,13 +537,43 @@ def tom_cirkel(titel='Tegn dit cirkeldiagram her'):
 # KOORDINATSYSTEM - til lineaere funktioner og grafaflaesning
 # ============================================================================
 
-def _koord_ramme(xmin, xmax, ymin, ymax, W=470, H=360, top=30):
-    """Returnerer plotgeometri og X/Y-omregnere."""
-    X0, X1 = 44, W - 16
-    YT, YB = top, H - 34
+def _koord_ramme(xmin, xmax, ymin, ymax, W=470, H=360, top=30, ens=True,
+                 maks_h=500):
+    """Returnerer plotgeometri og X/Y-omregnere.
+
+    ens=True giver SAMME antal pixels pr. enhed paa begge akser. Uden det
+    lyver figuren om haeldningen: grafen for y = 2x + 1 saa knap tre gange for
+    stejl, fordi en x-enhed fyldte 68 px og en y-enhed kun 25 px. Et
+    trappetrin paa 1 til hoejre og 2 op skal kunne MAALES i figuren.
+
+    Akser med hver sin enhed - kroner mod antal services - skal have
+    ens=False. Dér betyder 1:1 ingenting, og rammen fylder hele feltet.
+    """
+    X0, X1 = 44.0, float(W - 16)
+    YT, bund = float(top), 34.0
+    xspaend, yspaend = float(xmax - xmin), float(ymax - ymin)
+    if ens:
+        forhold = yspaend / xspaend
+        assert 1 / 3 <= forhold <= 3, (
+            f'akserne spaender {xspaend:g} mod {yspaend:g} enheder, forhold '
+            f'{forhold:.2f}. Vaelg omraader der ligner hinanden, ellers bliver '
+            f'figuren en strimmel - eller saet ens=False, hvis akserne har '
+            f'hver sin enhed')
+        skala = (X1 - X0) / xspaend
+        if YT + yspaend * skala + bund > maks_h:
+            skala = (maks_h - YT - bund) / yspaend
+            bredde = xspaend * skala
+            X0 = 44.0 + ((X1 - 44.0) - bredde) / 2
+            X1 = X0 + bredde
+        YB = YT + yspaend * skala
+        H = YB + bund
+        assert abs((X1 - X0) / xspaend - (YB - YT) / yspaend) < 1e-9, \
+            'akserne fik ikke samme skala'
+    else:
+        YB, H = float(H - bund), float(H)
     def X(v): return float(X0 + (F(v) - xmin) / (xmax - xmin) * (X1 - X0))
     def Y(v): return float(YB - (F(v) - ymin) / (ymax - ymin) * (YB - YT))
-    return X0, X1, YT, YB, X, Y
+    return X0, X1, YT, YB, X, Y, H
 
 
 def _skridt(spaend, maks_linjer=22):
@@ -586,21 +616,25 @@ def _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, tal=True):
 
 
 def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
-                    titel='', vis_tal=True, trappe=None):
+                    titel='', vis_tal=True, trappe=None, ens=True):
     """linjer: [(a, b, farve, navn)] for y = ax + b.
        punkter: [(x, y, farve, navn)].
        trappe: (a, b, x0) tegner trappetrinnet 1 til hoejre og a op paa linjen
                y = ax + b med start i (x0, a*x0 + b). Det er den definition af
-               haeldningen, teksten bruger - den skal VISES, ikke kun staa."""
+               haeldningen, teksten bruger - den skal VISES, ikke kun staa.
+       ens: samme antal pixels pr. enhed paa begge akser. Slaa den kun fra,
+            naar akserne har hver sin enhed - fx kroner mod antal."""
     xmin, xmax, ymin, ymax = F(xmin), F(xmax), F(ymin), F(ymax)
-    X0, X1, YT, YB, X, Y = _koord_ramme(xmin, xmax, ymin, ymax)
+    X0, X1, YT, YB, X, Y, H = _koord_ramme(xmin, xmax, ymin, ymax, ens=ens)
     # en broek i signaturen har en naevner under linjen og skal have plads
-    H = 368 if any(isinstance(l[3], (tuple, list)) for l in linjer) else 360
-    s = [f'<svg viewBox="0 0 470 {H}" role="img" aria-label="Koordinatsystem'
+    if any(isinstance(l[3], (tuple, list)) for l in linjer):
+        H += 8
+    s = [f'<svg viewBox="0 0 470 {H:.0f}" role="img" aria-label="Koordinatsystem'
          + (f' med {len(linjer)} rette linjer' if linjer else '') + '.">', f'<g {FONT}>']
     if titel:
         s.append(f'<text x="235" y="16" text-anchor="middle" fill="{MUT}">{titel}</text>')
-    s.append(f'<rect x="{X0}" y="{YT}" width="{X1-X0}" height="{YB-YT}" fill="#fff"/>')
+    s.append(f'<rect x="{X0:.1f}" y="{YT:.1f}" width="{X1-X0:.1f}" '
+             f'height="{YB-YT:.1f}" fill="#fff"/>')
     s += _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, vis_tal)
     signatur = []
     for a, b, farve, navn in linjer:
@@ -633,8 +667,8 @@ def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
                  f'L {X(p1[0]):.1f} {Y(p1[1]):.1f} '
                  f'L {X(p2[0]):.1f} {Y(p2[1]):.1f}" fill="none" stroke="{ORA}" '
                  f'stroke-width="2.2" stroke-dasharray="6 4"/>')
-        s.append(f'<text x="{(X(p0[0])+X(p1[0]))/2:.1f}" y="{Y(p0[1])+15:.1f}" '
-                 f'text-anchor="middle" fill="{ORA}" font-weight="700" '
+        s.append(f'<text x="{X(p0[0])+5:.1f}" y="{Y(p0[1])+16:.1f}" '
+                 f'fill="{ORA}" font-weight="700" '
                  f'stroke="#fff" stroke-width="3.5" paint-order="stroke" '
                  f'stroke-linejoin="round">1 til højre</text>')
         s.append(f'<text x="{X(p1[0])+7:.1f}" y="{(Y(p1[1])+Y(p2[1]))/2+4:.1f}" '

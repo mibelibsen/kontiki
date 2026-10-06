@@ -82,6 +82,22 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   "1 til højre og a op". Hældningen er den definition, teksten bruger, og den
   skal vises, ikke kun stå. Funktionen fejler, hvis trinnet falder uden for
   koordinatsystemet.
+- **Akserne havde ikke ens skala — i nogen af graferne.** Det var den
+  egentlige fejl: en x-enhed fyldte op til 68 px og en y-enhed kun 25 px, så
+  en linje med a = 2 så knap tre gange for stejl. Alle seks koordinatsystemer
+  på `funktioner-og-ligninger.html` og i uge 41-lektien er bygget om med
+  kvadratiske tern. Linjer og punkter er uændrede, så alle svar er de samme —
+  kun aksernes områder er valgt, så x-spændet og y-spændet er lige store.
+- **`koordinatsystem()` har fået `ens=True` som standard.** Figuren beregner nu
+  sin egen højde ud fra skalaen og fejler, hvis de to områder er mere end tre
+  gange forskellige. Akser med hver sin enhed — kroner mod antal — skal sætte
+  `ens=False`; der betyder 1:1 ingenting.
+- **`tjek.py` måler nu skalaen** på hver graf på sitet og giver FEJL, hvis de to
+  akser ikke har samme antal pixels pr. enhed. Den fangede med det samme to
+  grafer mere i uge 41-lektien, som jeg ellers havde overset. Lektiearkets PDF
+  i `lektieark/` er bygget om.
+- **Facitlisterne har stadig den skæve skala.** De er gamle PDF'er uden kilde i
+  repoet, så de skal skrives om for at kunne bygges igen.
 - **Resten af sitets grafer er gennemgået.** De øvrige figurer på siden kommer
   fra `figurer.py` og er korrekte; aflæsningsfiguren (`y = x`) er håndtegnet,
   men efterregnet rigtig og har tal på akserne.

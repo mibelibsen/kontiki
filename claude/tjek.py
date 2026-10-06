@@ -203,6 +203,44 @@ def tjek_figurer():
 
 
 # ---------------------------------------------------------------------------
+# 6b. Koordinatsystemer skal have ens skala paa begge akser
+# ---------------------------------------------------------------------------
+# Grafen for y = 2x + 1 saa knap tre gange for stejl, fordi en x-enhed fyldte
+# 68 px og en y-enhed kun 25 px. Haeldningen er figurens hele pointe, saa den
+# maales her: pixelafstanden mellem to taltikker paa hver akse skal passe.
+# Akser med hver sin enhed - kroner mod antal - findes ikke paa sitet endnu;
+# dukker de op, skal de bygges med ens=False og undtages her.
+TIK_X = re.compile(
+    r'<line x1="([\d.]+)" y1="[\d.]+" x2="[\d.]+" y2="[\d.]+" stroke="#(?:c9d2e0|1a2233)"'
+    r' stroke-width="[\d.]+"/><text x="[\d.]+" y="[\d.]+" text-anchor="middle"'
+    r' fill="#586074" font-size="10">(-?\d+)<')
+TIK_Y = re.compile(
+    r'<line x1="[\d.]+" y1="([\d.]+)" x2="[\d.]+" y2="[\d.]+" stroke="#(?:c9d2e0|1a2233)"'
+    r' stroke-width="[\d.]+"/><text x="[\d.]+" y="[\d.]+" text-anchor="end"'
+    r' fill="#586074" font-size="10">(-?\d+)<')
+
+
+def tjek_aksernes_skala():
+    antal = 0
+    for f in alle_html():
+        for svg in re.findall(r'<svg viewBox="0 0 470 \d+".*?</svg>', tekst(f), re.S):
+            xs = [(float(a), int(b)) for a, b in TIK_X.findall(svg)]
+            ys = [(float(a), int(b)) for a, b in TIK_Y.findall(svg)]
+            if len(xs) < 2 or len(ys) < 2:
+                continue
+            antal += 1
+            px = abs((xs[-1][0] - xs[0][0]) / (xs[-1][1] - xs[0][1]))
+            py = abs((ys[-1][0] - ys[0][0]) / (ys[-1][1] - ys[0][1]))
+            if abs(px - py) > 0.05:
+                fejl('aksernes skala',
+                     f'{f}: en graf har {px:.1f} px pr. x-enhed og {py:.1f} px '
+                     f'pr. y-enhed — forhold {px/py:.2f}. Hældningen ses forkert. '
+                     f'Byg den med figurer.koordinatsystem()')
+    if antal and not [1 for k, _ in FEJL if k == 'aksernes skala']:
+        ok('aksernes skala', f'{antal} koordinatsystemer har kvadratiske tern')
+
+
+# ---------------------------------------------------------------------------
 # 7. Quiz-motorens kontrakt skal vaere opfyldt paa de interaktive sider
 # ---------------------------------------------------------------------------
 IDER = ['startOverlay', 'nameInput', 'ovTitle', 'ovText', 'startBtn', 'skipBtn',
@@ -329,7 +367,8 @@ def tjek_filnavne():
 # ---------------------------------------------------------------------------
 def main():
     for f in (tjek_selvbaerende, tjek_facit_skjult, tjek_lektier_uden_mc,
-              tjek_metodetekst, tjek_links, tjek_figurer, tjek_quizmotor,
+              tjek_metodetekst, tjek_links, tjek_figurer,
+              tjek_aksernes_skala, tjek_quizmotor,
               tjek_aarsplan, tjek_filnavne):
         try:
             f()
