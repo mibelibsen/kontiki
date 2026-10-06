@@ -85,6 +85,13 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
   og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
   10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
+- **Figuren lagde op til en misforståelse, og brugeren fangede den.** Søjlen
+  "Alle over 15 år" på 16 % stod ved siden af 27 % og 28 % for de unge og lignede
+  en tredje aldersgruppe — så så det ud, som om helheden var mindre end delene.
+  Den er nu grå, hedder "Hele befolkningen", og siden har fået en boks, der
+  svarer på spørgsmålet: **et gennemsnit er ikke en sum, og det kan ligge under
+  hver eneste gruppe, man kan se i figuren.** `figurer.soejler()` kan nu farve
+  hver søjle for sig, netop så en referencesøjle kan skilles ud.
 - **Lære: tjek linket, før det kommer på sitet.** Et link, der ser rigtigt ud i
   et søgeresultat, er ikke et link, der virker.
 

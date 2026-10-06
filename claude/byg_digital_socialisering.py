@@ -23,7 +23,7 @@ UD = 'digital-socialisering.html'
 # ---------------------------------------------------------------------------
 # Tallene. (vaerdi, forklaring) — hver gruppe hoerer til én kilde.
 # ---------------------------------------------------------------------------
-SKAERM = [('15–19 år', 27), ('20–29 år', 28), ('Alle over 15 år', 16)]
+SKAERM = [('15–19 år', 27), ('20–29 år', 28), ('Hele befolkningen', 16)]
 FOR_MEGET = [('8–12 år', 25), ('13–17 år', 35), ('18–25 år', 40)]
 HBSC_AAR = [('2018', 7), ('2022', 11)]
 HBSC_KOEN = [('Piger · sociale medier', 13), ('Drenge · sociale medier', 9),
@@ -97,7 +97,8 @@ def kilde(noegle, tekst=None):
 # Figurer — alle højder beregnes af figurer.py
 # ---------------------------------------------------------------------------
 fig_skaerm = FG.soejler([v for _, v in SKAERM], [k for k, _ in SKAERM],
-                        'Over 6 timers skærm om dagen · Danmark 2026', '%')
+                        'Over 6 timers skærm om dagen · Danmark 2026', '%',
+                        farve=[FG.BLA, FG.BLA, FG.MUT])
 fig_formeget = FG.soejler([v for _, v in FOR_MEGET], [k for k, _ in FOR_MEGET],
                           'Synes selv, de bruger for meget tid · Danmark 2025', '%')
 fig_aar = FG.soejler([v for _, v in HBSC_AAR], [k for k, _ in HBSC_AAR],
@@ -159,8 +160,13 @@ RESUME = [
 AFSNIT = [
  ('Hvor længe er danske unge på skærmen?',
   'Tallet dækker <b>al</b> skærmtid: mobil, computer, tv og spil, i fritiden og '
-  'i skolen.', fig_skaerm,
-  [('Over 6 timer om dagen', f'{v} %', k) for k, v in SKAERM], 'dst'),
+  'i skolen. <b>Den grå søjle er ikke en tredje aldersgruppe.</b> Den er alle '
+  'danskere fra 15 til 89 år lagt sammen til ét tal — derfor har den sin egen '
+  'farve. Læs forklaringen under figuren, før I bruger tallene.', fig_skaerm,
+  [('Over 6 timer om dagen', f'{v} %', k) for k, v in SKAERM]
+  + [('Under 1 time om dagen', '3 %', 'Hele befolkningen'),
+     ('Under 1 time om dagen', '4 %', '60–74 år'),
+     ('Under 1 time om dagen', '8 %', '75–89 år')], 'dst'),
 
  ('Hvad bruger de tiden på — og hvad synes de selv?',
   'TikTok-brugere er på knap <b>2 timer</b> om dagen, Snapchat-brugere knap '
@@ -310,6 +316,24 @@ hvert tal — det er det første, I skal kunne svare på.</p>
 
 <h2 class="sec">Dataarket</h2>
 {afsnit_html}
+
+<div class="boks pas">
+<h3>Hvorfor er "hele befolkningen" lavest?</h3>
+<p>Det ser forkert ud: 27 % af de 15–19-årige og 28 % af de 20–29-årige er på
+skærmen over 6 timer om dagen — men for hele befolkningen er det kun 16 %.
+Burde den søjle ikke være størst, når den indeholder alle de andre?</p>
+<p><b>Nej, for den er ikke en sum. Den er et gennemsnit.</b> De 16 % betyder:
+tager man alle danskere fra 15 til 89 år under ét, så er 16 ud af 100 på
+skærmen over 6 timer. Og den gruppe rummer alle de voksne og ældre, der bruger
+skærmen langt mindre end de unge. De trækker gennemsnittet <b>ned</b>, ikke op.</p>
+<p>Samme kilde viser det direkte: kun <b>3 %</b> af hele befolkningen bruger
+under 1 time om dagen — men <b>4 %</b> af de 60–74-årige og <b>8 %</b> af de
+75–89-årige. Jo ældre, jo flere med lavt forbrug.</p>
+<p><b>Regel at huske:</b> et gennemsnit for en hel befolkning kan godt ligge
+<i>under</i> hver eneste gruppe, man kan se i figuren — hvis de grupper, man
+ikke kan se, ligger lavt nok. Spørg derfor altid: er det her et tal for
+<i>én gruppe</i>, eller for <i>alle</i>?</p>
+</div>
 
 <h2 class="sec">Jeres egne tal</h2>
 <div class="boks eget">

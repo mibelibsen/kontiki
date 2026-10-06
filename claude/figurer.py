@@ -1608,10 +1608,17 @@ def drejet(cx, cy, punkter, grader):
 def soejler(vals, kats, titel='', ynavn='', W=560, H=300, farve=None):
     """Almindeligt soejlediagram med lineaer y-akse og tallet oven paa hver
     soejle. Akseskridtet vaelges, saa der er 4-8 vandrette linjer, og alle
-    hoejder regnes som v/aksemaks."""
+    hoejder regnes som v/aksemaks.
+
+    farve kan vaere én farve til alle soejler eller en liste med én farve pr.
+    soejle. Det sidste bruges til at skille en soejle ud, der ikke er en gruppe
+    paa linje med de andre - fx et gennemsnit for hele befolkningen, som ellers
+    laeses som "den tredje aldersgruppe"."""
     X0, X1, YT, YB = 44, W - 14, 36, H - 40
     ph, pb = YB - YT, X1 - X0
     n = len(vals)
+    assert not isinstance(farve, (list, tuple)) or len(farve) == n, \
+        'der skal vaere én farve pr. soejle'
     maks = max(vals)
     trin = 1
     for t in (1, 2, 5, 10, 20, 25, 50, 100, 200, 500, 1000):
@@ -1641,8 +1648,9 @@ def soejler(vals, kats, titel='', ynavn='', W=560, H=300, farve=None):
         t += trin
     for i, v in enumerate(vals):
         y = yy(v)
+        f = farve[i] if isinstance(farve, (list, tuple)) else (farve or BLA)
         s.append(f'<rect x="{mid[i] - bb / 2:.1f}" y="{y:.1f}" width="{bb:.1f}" '
-                 f'height="{YB - y:.1f}" rx="2" fill="{farve or BLA}"/>')
+                 f'height="{YB - y:.1f}" rx="2" fill="{f}"/>')
         s.append(f'<text x="{mid[i]:.1f}" y="{y - 5:.1f}" text-anchor="middle" '
                  f'fill="{INK}" font-weight="700">{_dk(v)}</text>')
         s.append(f'<text x="{mid[i]:.1f}" y="{YB + 16}" text-anchor="middle" '
