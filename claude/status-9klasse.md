@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-09-22
+Sidst opdateret: 2026-10-06
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -68,6 +68,25 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
+
+## Rettet 6. oktober 2026
+
+- **Håndtegnet graf fundet og rettet.** Figuren til `y = 2x + 1` på
+  `funktioner-og-ligninger.html` var tegnet på øjemål: linjen havde hældning
+  **6/5 i stedet for 2**, det blå punkt lå i **(2, 4)** hvor forskriften giver
+  **(2, 5)** — derfor svævede det ved siden af linjen — og akserne havde ingen
+  tal. Figuren er bygget om med `figurer.koordinatsystem()`, så alle
+  koordinater beregnes, og efterregnet bagefter ved at læse pixelkoordinaterne
+  ud af den færdige SVG og omregne dem til grafkoordinater.
+- **`koordinatsystem()` har fået `trappe=(a, b, x0)`**, som tegner trappetrinnet
+  "1 til højre og a op". Hældningen er den definition, teksten bruger, og den
+  skal vises, ikke kun stå. Funktionen fejler, hvis trinnet falder uden for
+  koordinatsystemet.
+- **Resten af sitets grafer er gennemgået.** De øvrige figurer på siden kommer
+  fra `figurer.py` og er korrekte; aflæsningsfiguren (`y = x`) er håndtegnet,
+  men efterregnet rigtig og har tal på akserne.
+
+---
 
 ## Rettet 28. september 2026
 

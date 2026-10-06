@@ -586,9 +586,12 @@ def _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, tal=True):
 
 
 def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
-                    titel='', vis_tal=True):
+                    titel='', vis_tal=True, trappe=None):
     """linjer: [(a, b, farve, navn)] for y = ax + b.
-       punkter: [(x, y, farve, navn)]."""
+       punkter: [(x, y, farve, navn)].
+       trappe: (a, b, x0) tegner trappetrinnet 1 til hoejre og a op paa linjen
+               y = ax + b med start i (x0, a*x0 + b). Det er den definition af
+               haeldningen, teksten bruger - den skal VISES, ikke kun staa."""
     xmin, xmax, ymin, ymax = F(xmin), F(xmax), F(ymin), F(ymax)
     X0, X1, YT, YB, X, Y = _koord_ramme(xmin, xmax, ymin, ymax)
     # en broek i signaturen har en naevner under linjen og skal have plads
@@ -618,6 +621,26 @@ def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
             (xa, ya), (xb, yb) = pts
             s.append(f'<line x1="{X(xa):.1f}" y1="{Y(ya):.1f}" x2="{X(xb):.1f}" '
                      f'y2="{Y(yb):.1f}" stroke="{farve}" stroke-width="2.6"/>')
+    if trappe is not None:
+        ta, tb, tx = F(trappe[0]), F(trappe[1]), F(trappe[2])
+        p0 = (tx, ta * tx + tb)
+        p1 = (tx + 1, ta * tx + tb)
+        p2 = (tx + 1, ta * (tx + 1) + tb)
+        for px, py in (p0, p1, p2):
+            assert xmin <= px <= xmax and ymin <= py <= ymax, \
+                f'trappetrinnet falder uden for koordinatsystemet: ({px}, {py})'
+        s.append(f'<path d="M {X(p0[0]):.1f} {Y(p0[1]):.1f} '
+                 f'L {X(p1[0]):.1f} {Y(p1[1]):.1f} '
+                 f'L {X(p2[0]):.1f} {Y(p2[1]):.1f}" fill="none" stroke="{ORA}" '
+                 f'stroke-width="2.2" stroke-dasharray="6 4"/>')
+        s.append(f'<text x="{(X(p0[0])+X(p1[0]))/2:.1f}" y="{Y(p0[1])+15:.1f}" '
+                 f'text-anchor="middle" fill="{ORA}" font-weight="700" '
+                 f'stroke="#fff" stroke-width="3.5" paint-order="stroke" '
+                 f'stroke-linejoin="round">1 til højre</text>')
+        s.append(f'<text x="{X(p1[0])+7:.1f}" y="{(Y(p1[1])+Y(p2[1]))/2+4:.1f}" '
+                 f'fill="{ORA}" font-weight="700" stroke="#fff" stroke-width="3.5" '
+                 f'paint-order="stroke" stroke-linejoin="round">'
+                 f'{_dk(abs(ta))} {"op" if ta > 0 else "ned"}</text>')
     for px, py, farve, navn in punkter:
         s.append(f'<circle cx="{X(px):.1f}" cy="{Y(py):.1f}" r="5" fill="{farve}" '
                  f'stroke="#fff" stroke-width="1.5"/>')
