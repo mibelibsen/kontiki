@@ -241,6 +241,26 @@ def tjek_aksernes_skala():
 
 
 # ---------------------------------------------------------------------------
+# 6c. Alt der kan printes, skal vaere A4
+# ---------------------------------------------------------------------------
+# Uden size i @page vaelger Chromium Letter, og et lektieark kom ud i 216x279 mm
+# i stedet for 210x297. Det ses ikke paa skaermen - kun paa papiret.
+def tjek_sidestoerrelse():
+    n = 0
+    for f in alle_html():
+        t = tekst(f)
+        if '@page' not in t:
+            continue
+        n += 1
+        for regel in re.findall(r'@page\s*\{[^}]*\}', t):
+            if 'size:' not in regel.replace(' ', ''):
+                fejl('sidestørrelse',
+                     f'{f}: {regel} mangler size:A4 — Chromium printer den som Letter')
+    if n and not [1 for k, _ in FEJL if k == 'sidestørrelse']:
+        ok('sidestørrelse', f'{n} printbare sider er sat til A4')
+
+
+# ---------------------------------------------------------------------------
 # 7. Quiz-motorens kontrakt skal vaere opfyldt paa de interaktive sider
 # ---------------------------------------------------------------------------
 IDER = ['startOverlay', 'nameInput', 'ovTitle', 'ovText', 'startBtn', 'skipBtn',
@@ -368,7 +388,7 @@ def tjek_filnavne():
 def main():
     for f in (tjek_selvbaerende, tjek_facit_skjult, tjek_lektier_uden_mc,
               tjek_metodetekst, tjek_links, tjek_figurer,
-              tjek_aksernes_skala, tjek_quizmotor,
+              tjek_aksernes_skala, tjek_sidestoerrelse, tjek_quizmotor,
               tjek_aarsplan, tjek_filnavne):
         try:
             f()

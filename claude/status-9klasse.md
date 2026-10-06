@@ -96,8 +96,19 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   akser ikke har samme antal pixels pr. enhed. Den fangede med det samme to
   grafer mere i uge 41-lektien, som jeg ellers havde overset. Lektiearkets PDF
   i `lektieark/` er bygget om.
-- **Facitlisterne har stadig den skæve skala.** De er gamle PDF'er uden kilde i
-  repoet, så de skal skrives om for at kunne bygges igen.
+- **Facitlisterne er skrevet om som kode.** De syv facitlister til forløbet
+  fandtes kun som færdige PDF'er, så deres skæve figurer kunne ikke rettes —
+  de måtte skrives først. `claude/byg_facit.py` holder nu indhold, figurer og
+  efterregning, og bygger alle syv. Hvert svar kontrolleres ved at sætte det
+  ind i ligningen, før filen skrives. De to grafer med kroner på y-aksen
+  beholder deres egen skala (`ens=False`) — der betyder 1:1 ingenting, og det
+  står nu i figurteksten.
+- **Et lektieark kom ud i Letter i stedet for A4.** `@page` manglede `size`,
+  og så vælger Chromium Letter. Tretten sider manglede det. `tjek.py` giver nu
+  FEJL for en printbar side uden `size:A4`.
+- **De øvrige facit-PDF'er har stadig ingen kilde** — statistik, manipulation
+  og sandsynlighed. De skal skrives om på samme måde, før deres figurer kan
+  rettes.
 - **Resten af sitets grafer er gennemgået.** De øvrige figurer på siden kommer
   fra `figurer.py` og er korrekte; aflæsningsfiguren (`y = x`) er håndtegnet,
   men efterregnet rigtig og har tal på akserne.

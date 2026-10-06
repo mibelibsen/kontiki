@@ -347,6 +347,7 @@ ved siden af. De findes med `list_triggers`.
 | [`claude/lektieplan.md`](claude/lektieplan.md) | Hvilken lektie hører til hvilken uge, og hvordan de udgives |
 | [`claude/tjek.py`](claude/tjek.py) | Tjekket der køres før hvert push |
 | [`claude/figurer.py`](claude/figurer.py) | Figurbiblioteket |
+| [`claude/byg_facit.py`](claude/byg_facit.py) | Facitlisterne til *Funktioner og ligninger* — indhold, figurer og efterregning som kode |
 | [`claude/qr.py`](claude/qr.py) | QR-koder i ren Python |
 | [`claude/byg_qr.py`](claude/byg_qr.py) | QR-kode til en adresse som SVG, PNG og A4-ark |
 | [`claude/opsaetning.md`](claude/opsaetning.md) | Hvordan Vercel og GitHub hænger sammen |
@@ -361,5 +362,9 @@ ved siden af. De findes med `list_triggers`.
 - **Lektier fra uge 37 og frem.** Der er lavet til og med uge 36. Aftalt at
   indholdet skal gennemgås, før der laves mere.
 - **Fysik.** Vist som "Kommer snart" i navigationen, ingen side endnu.
-- **Facit til fire filer uden indgang** — `facit/facitark-funktioner-og-ligninger.html`
-  og tre ældre PDF'er. De er ikke omskrevet til det nye format.
+- **Facitlister uden kilde.** De syv facitlister til *Funktioner og ligninger*
+  bygges nu af [`claude/byg_facit.py`](claude/byg_facit.py). De øvrige
+  facit-PDF'er findes stadig kun som færdige filer — de skal skrives om på
+  samme måde, før deres figurer kan rettes.
+- **`facit/facitark-funktioner-og-ligninger.html`** har ingen figurer og er
+  ikke omskrevet til det nye format.
