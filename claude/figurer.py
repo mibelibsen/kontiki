@@ -620,7 +620,8 @@ def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
     """linjer: [(a, b, farve, navn)] for y = ax + b.
        punkter: [(x, y, farve, navn)].
        trappe: (a, b, x0) tegner trappetrinnet 1 til hoejre og a op paa linjen
-               y = ax + b med start i (x0, a*x0 + b). Det er den definition af
+               y = ax + b med start i (x0, a*x0 + b). (a, b, x0, n) gaar n til
+               hoejre og n*a op, saa to givne punkter kan bindes sammen. Det er den definition af
                haeldningen, teksten bruger - den skal VISES, ikke kun staa.
        ens: samme antal pixels pr. enhed paa begge akser. Slaa den kun fra,
             naar akserne har hver sin enhed - fx kroner mod antal."""
@@ -657,9 +658,11 @@ def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
                      f'y2="{Y(yb):.1f}" stroke="{farve}" stroke-width="2.6"/>')
     if trappe is not None:
         ta, tb, tx = F(trappe[0]), F(trappe[1]), F(trappe[2])
+        skridt = F(trappe[3]) if len(trappe) > 3 else F(1)
+        assert skridt > 0, 'trappetrinnet skal gaa til hoejre'
         p0 = (tx, ta * tx + tb)
-        p1 = (tx + 1, ta * tx + tb)
-        p2 = (tx + 1, ta * (tx + 1) + tb)
+        p1 = (tx + skridt, ta * tx + tb)
+        p2 = (tx + skridt, ta * (tx + skridt) + tb)
         for px, py in (p0, p1, p2):
             assert xmin <= px <= xmax and ymin <= py <= ymax, \
                 f'trappetrinnet falder uden for koordinatsystemet: ({px}, {py})'
@@ -670,11 +673,11 @@ def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
         s.append(f'<text x="{X(p0[0])+5:.1f}" y="{Y(p0[1])+16:.1f}" '
                  f'fill="{ORA}" font-weight="700" '
                  f'stroke="#fff" stroke-width="3.5" paint-order="stroke" '
-                 f'stroke-linejoin="round">1 til højre</text>')
+                 f'stroke-linejoin="round">{_dk(skridt)} til højre</text>')
         s.append(f'<text x="{X(p1[0])+7:.1f}" y="{(Y(p1[1])+Y(p2[1]))/2+4:.1f}" '
                  f'fill="{ORA}" font-weight="700" stroke="#fff" stroke-width="3.5" '
                  f'paint-order="stroke" stroke-linejoin="round">'
-                 f'{_dk(abs(ta))} {"op" if ta > 0 else "ned"}</text>')
+                 f'{_dk(abs(ta * skridt))} {"op" if ta > 0 else "ned"}</text>')
     for px, py, farve, navn in punkter:
         s.append(f'<circle cx="{X(px):.1f}" cy="{Y(py):.1f}" r="5" fill="{farve}" '
                  f'stroke="#fff" stroke-width="1.5"/>')
