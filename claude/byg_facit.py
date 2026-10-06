@@ -338,16 +338,17 @@ dok('facit-lektier-2026-09-21-parenteser-og-broeker', 'lektier', '2026-09-21',
     ('note', ['d) Der ganges med 6, fordi 6 er det mindste tal, som både 2 og 3 går op '
               'i. Ganger man med 2, forsvinder kun den første brøk. Ganger man med 12, '
               'virker det også — men tallene bliver unødigt store.']),
-    ('h2', 'Opgave C · Med og uden CAS'),
+    ('h2', 'Opgave C · Med og uden regneprogram'),
     ('tabel', [
         ('a) I hånden', 'x = 8', '7x − 14 = 3x + 18 → 4x = 32'),
-        ('b) Med CAS', 'x = 8', 'GeoGebra: Løs(7(x−2)=3(x+6))'),
+        ('b) Med regneprogram', 'x = 8', 'GeoGebra: Løs(7(x−2)=3(x+6))'),
         ('d) Prøve', '42 = 42', '7(8 − 2) = 42 og 3(8 + 6) = 42'),
     ]),
-    ('note', ['Til c): det gode svar handler ikke om, at CAS er hurtigere. Det handler '
-              'om, at ungen selv skal kunne opstille ligningen og vurdere, om svaret er '
-              'rimeligt. CAS regner — det forstår ikke opgaven. En tastefejl giver et '
-              'pænt svar, som er forkert, og kun prøven fanger det.']),
+    ('note', ['Til c): det gode svar handler ikke om, at regneprogrammet (CAS) er '
+              'hurtigere. Det handler om, at ungen selv skal kunne opstille ligningen '
+              'og vurdere, om svaret er rimeligt. Programmet regner — det forstår ikke '
+              'opgaven. En tastefejl giver et pænt svar, som er forkert, og kun prøven '
+              'fanger det.']),
 ])
 
 # --- 7. Uge 41 - Lineaere funktioner og grafer -----------------------------

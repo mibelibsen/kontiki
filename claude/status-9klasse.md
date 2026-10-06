@@ -79,6 +79,12 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 - **Hverdagstal hører kun til sitet**, aftalt 6. oktober. Lektiearkene bliver
   ved med at være rene tal, så ungerne træner regnereglen uden at skulle tyde en
   situation først.
+- **Uge 39-lektien er også udgivet 6. oktober.** Arket er helt og holdent om
+  ligninger — der var intet fremmed emne at tage ud, som der var i uge 41. Kun
+  sproget er rettet: indledningen siger nu, at opgaverne er rene tal uden en
+  situation, der først skal tydes, og facit bruger samme ord som arket
+  ("regneprogram", ikke "CAS"). Ugen 21.09–25.09 er passeret; den voksne
+  besluttede at udgive alligevel.
 - **Uge 41-lektien er udgivet 6. oktober** og ligger nu i roden med et kort på
   `matematik.html`. Arket handler kun om lineære funktioner: ligningsløsningen
   er taget ud (opgave B's "vis ved regning, at skæringspunktet er rigtigt"), og
