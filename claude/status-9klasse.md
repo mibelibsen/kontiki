@@ -69,6 +69,24 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
 
+## Rettet 6. oktober 2026 · hverdagseksempler
+
+- **Hver illustration på funktionssiden har fået et hverdagseksempel efter sig.**
+  Syv stykker: taxaens pris, vand i en balje, elregningen, kontoen der bliver
+  tom, to fitnesscentre, opsparing til en telefon og euro vekslet til kroner.
+  Hvert eksempel har rigtige tal, en udregning der kan følges skridt for skridt,
+  og sin egen graf med rigtige enheder på akserne.
+- **Hverdagstal hører kun til sitet**, aftalt 6. oktober. Lektiearkene bliver
+  ved med at være rene tal, så ungerne træner regnereglen uden at skulle tyde en
+  situation først.
+- **`koordinatsystem()` har fået `aksenavne`**, så en graf kan sige kWh og kr i
+  stedet for x og y.
+- **`tjek.py` kender nu forskel på en abstrakt og en virkelig graf.** En graf,
+  hvis akser hedder x og y, skal have kvadratiske tern. En graf med rigtige
+  enheder på akserne kan ikke have samme skala og springes over.
+
+---
+
 ## Rettet 6. oktober 2026
 
 - **Håndtegnet graf fundet og rettet.** Figuren til `y = 2x + 1` på

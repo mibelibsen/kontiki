@@ -208,8 +208,10 @@ def tjek_figurer():
 # Grafen for y = 2x + 1 saa knap tre gange for stejl, fordi en x-enhed fyldte
 # 68 px og en y-enhed kun 25 px. Haeldningen er figurens hele pointe, saa den
 # maales her: pixelafstanden mellem to taltikker paa hver akse skal passe.
-# Akser med hver sin enhed - kroner mod antal - findes ikke paa sitet endnu;
-# dukker de op, skal de bygges med ens=False og undtages her.
+# Akser med hver sin enhed - kroner mod kWh i et hverdagseksempel - kan ikke
+# have samme skala. De kendes paa, at akserne har rigtige navne i stedet for
+# x og y, og de springes over. En graf uden enheder paa akserne er abstrakt og
+# skal vaere kvadratisk.
 TIK_X = re.compile(
     r'<line x1="([\d.]+)" y1="[\d.]+" x2="[\d.]+" y2="[\d.]+" stroke="#(?:c9d2e0|1a2233)"'
     r' stroke-width="[\d.]+"/><text x="[\d.]+" y="[\d.]+" text-anchor="middle"'
@@ -220,13 +222,19 @@ TIK_Y = re.compile(
     r' fill="#586074" font-size="10">(-?\d+)<')
 
 
+AKSENAVNE = re.compile(r'font-style="italic">([^<]+)</text>')
+
+
 def tjek_aksernes_skala():
-    antal = 0
+    antal, med_enhed = 0, 0
     for f in alle_html():
         for svg in re.findall(r'<svg viewBox="0 0 470 \d+".*?</svg>', tekst(f), re.S):
             xs = [(float(a), int(b)) for a, b in TIK_X.findall(svg)]
             ys = [(float(a), int(b)) for a, b in TIK_Y.findall(svg)]
             if len(xs) < 2 or len(ys) < 2:
+                continue
+            if sorted(AKSENAVNE.findall(svg)) != ['x', 'y']:
+                med_enhed += 1       # kroner mod kWh kan ikke have samme skala
                 continue
             antal += 1
             px = abs((xs[-1][0] - xs[0][0]) / (xs[-1][1] - xs[0][1]))
@@ -237,7 +245,10 @@ def tjek_aksernes_skala():
                      f'pr. y-enhed — forhold {px/py:.2f}. Hældningen ses forkert. '
                      f'Byg den med figurer.koordinatsystem()')
     if antal and not [1 for k, _ in FEJL if k == 'aksernes skala']:
-        ok('aksernes skala', f'{antal} koordinatsystemer har kvadratiske tern')
+        ok('aksernes skala',
+           f'{antal} koordinatsystemer har kvadratiske tern'
+           + (f' · {med_enhed} har enheder på akserne og er undtaget'
+              if med_enhed else ''))
 
 
 # ---------------------------------------------------------------------------

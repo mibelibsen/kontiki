@@ -589,7 +589,8 @@ def _skridt(spaend, maks_linjer=22):
     return int(tier * 10)
 
 
-def _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, tal=True):
+def _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, tal=True,
+                  aksenavne=('x', 'y')):
     s = []
     xs = _skridt(float(xmax - xmin))
     ys = _skridt(float(ymax - ymin))
@@ -609,14 +610,17 @@ def _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, tal=True):
         if tal and v != 0:
             s.append(f'<text x="{X(0)-7:.1f}" y="{y+4:.1f}" text-anchor="end" '
                      f'fill="{MUT}" font-size="10">{v}</text>')
+    xnavn, ynavn = aksenavne
     s.append(f'<text x="{X1-4}" y="{Y(0)-8:.1f}" text-anchor="end" fill="{INK}" '
-             f'font-style="italic">x</text>')
-    s.append(f'<text x="{X(0)+8:.1f}" y="{YT+12}" fill="{INK}" font-style="italic">y</text>')
+             f'font-style="italic">{xnavn}</text>')
+    s.append(f'<text x="{X(0)+8:.1f}" y="{YT+12}" fill="{INK}" '
+             f'font-style="italic">{ynavn}</text>')
     return s
 
 
 def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
-                    titel='', vis_tal=True, trappe=None, ens=True):
+                    titel='', vis_tal=True, trappe=None, ens=True,
+                    aksenavne=('x', 'y')):
     """linjer: [(a, b, farve, navn)] for y = ax + b.
        punkter: [(x, y, farve, navn)].
        trappe: (a, b, x0) tegner trappetrinnet 1 til hoejre og a op paa linjen
@@ -624,7 +628,9 @@ def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
                hoejre og n*a op, saa to givne punkter kan bindes sammen. Det er den definition af
                haeldningen, teksten bruger - den skal VISES, ikke kun staa.
        ens: samme antal pixels pr. enhed paa begge akser. Slaa den kun fra,
-            naar akserne har hver sin enhed - fx kroner mod antal."""
+            naar akserne har hver sin enhed - fx kroner mod antal.
+       aksenavne: (xnavn, ynavn). Et hverdagseksempel skal have sine rigtige
+            enheder paa akserne - 'kWh' og 'kr', ikke x og y."""
     xmin, xmax, ymin, ymax = F(xmin), F(xmax), F(ymin), F(ymax)
     X0, X1, YT, YB, X, Y, H = _koord_ramme(xmin, xmax, ymin, ymax, ens=ens)
     # en broek i signaturen har en naevner under linjen og skal have plads
@@ -636,7 +642,8 @@ def koordinatsystem(linjer=(), punkter=(), xmin=-2, xmax=8, ymin=-4, ymax=10,
         s.append(f'<text x="235" y="16" text-anchor="middle" fill="{MUT}">{titel}</text>')
     s.append(f'<rect x="{X0:.1f}" y="{YT:.1f}" width="{X1-X0:.1f}" '
              f'height="{YB-YT:.1f}" fill="#fff"/>')
-    s += _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, vis_tal)
+    s += _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, vis_tal,
+                       aksenavne)
     signatur = []
     for a, b, farve, navn in linjer:
         a, b = F(a), F(b)
