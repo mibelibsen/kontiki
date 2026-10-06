@@ -1,0 +1,161 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kvalitativ analyse · Uge 43 · 9. klasse</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;--warn:#b5710a;--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a,nav.tabs span{font-size:.86rem;padding:6px 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+nav.tabs span.soon{color:#9aa6ba;cursor:default}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:2rem}
+.hero p{margin:0;color:var(--muted);max-width:70ch}
+.pill{display:inline-block;font-size:.74rem;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;background:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.card.soon{opacity:.6}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:12px}
+.tag.klar{background:#eaf7f0;color:var(--good);border:1px solid #bfe6d2}
+.tag.kommer{background:#f4f6fb;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
+.num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 0}
+.btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btnlink.ghost:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+.plan{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+.plan th,.plan td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+.plan th{background:var(--panel2);font-weight:700;position:sticky;top:60px}
+.plan tr.block td{background:var(--accent);color:#fff;font-weight:800;font-size:1rem}
+.plan tr.break td{background:#fff7e9;color:var(--warn);font-weight:600;font-style:italic}
+.plan td.uge{white-space:nowrap;font-weight:700;color:var(--accent);width:52px}
+.plan td.per{white-space:nowrap;color:var(--muted);width:110px}
+.plan ul{margin:0;padding-left:18px}.plan li{margin:2px 0}
+.mat{color:var(--muted);font-size:.9rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;text-align:left}.mini th{background:var(--panel2)}
+@media print{header.top,nav.tabs,.btnlink{display:none!important}.hero,.card,.note{box-shadow:none}.plan th{position:static}.plan tr.block td{background:#fff!important;color:#000;border:1px solid #000}body{color:#000}}
+
+h2.sec{font-size:1.4rem;margin:34px 0 8px}
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:18px;margin:16px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.figtekst{color:var(--muted);font-size:.9rem;margin:10px 0 0}
+.trin{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:16px 22px;margin:12px 0}
+.trin.laes{border-left-color:#1a8f5e}.trin.saml{border-left-color:#b5710a}
+.trin h3{margin:0 0 2px;font-size:1.08rem}
+.trin .kort{color:var(--muted);font-size:.92rem;margin:0 0 8px}
+.trin p{margin:0;color:#374151}
+.trin .num{display:inline-flex;align-items:center;justify-content:center;
+width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;
+font-size:.85rem;font-weight:800;margin-right:9px}
+.trin.laes .num{background:#1a8f5e}.trin.saml .num{background:#b5710a}
+table.tab{width:100%;border-collapse:collapse;margin:10px 0;font-size:.95rem}
+table.tab th,table.tab td{border:1px solid var(--line);padding:8px 11px;
+text-align:left;vertical-align:top}
+table.tab thead th{background:var(--panel2)}
+table.tab td.sv{font-style:italic}
+table.tab td.kode{font-weight:700;color:var(--accent);white-space:nowrap}
+table.tab td.kat{font-weight:700;color:#1a8f5e;white-space:nowrap}
+.boks{border-radius:14px;padding:16px 20px;margin:16px 0;border:1px solid var(--line)}
+.boks.hvorfor{background:#eaf2fd;border-left:4px solid var(--accent)}
+.boks.opgave{background:#eaf7f0;border-left:4px solid var(--good)}
+.boks.faelde{background:#fff7e9;border-left:4px solid var(--warn)}
+.boks h3{margin:0 0 6px;font-size:1.08rem}
+.boks p{margin:0 0 8px}.boks p:last-child{margin:0}
+ol.trinliste{margin:6px 0 0;padding-left:22px}ol.trinliste li{margin:6px 0}
+.faelde h4{margin:14px 0 2px;font-size:1rem}
+.faelde h4:first-of-type{margin-top:0}
+.faelde p{margin:0 0 4px;font-size:.95rem}
+@media print{header.top,.printbtn,.btnlink{display:none!important}
+.figur,.trin,.boks,table.tab{break-inside:avoid;page-break-inside:avoid}
+.figur svg{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-size:10.5pt}main{padding:0}@page{size:A4;margin:14mm}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="active" href="samfundsfag.html">Samfundsfag</a><a class="" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header><main><section class="hero"><span class="pill">Samfundsfag · Uge 43</span>
+<h1>Kvalitativ analyse af jeres svar fra Hamborg</h1>
+<p>I kan ikke tælle jeres svar. I kan læse dem — og det er en metode med sine
+egne regler. Her er de.</p>
+<button class="printbtn" onclick="window.print()">Print oplægget</button>
+<a class="btnlink ghost" href="digital-socialisering.html">Dataarket med tallene</a>
+<a class="btnlink ghost" href="samfundsfag.html">Tilbage til samfundsfag</a>
+</section>
+
+<div class="boks hvorfor">
+<h3>Hvorfor tæller vi ikke svarene?</h3>
+<p>Spørgeskemaet fandtes på dansk og på tysk, og de to versioner viste sig ikke
+at spørge om helt det samme. Når to spørgsmål ikke betyder nøjagtig det samme,
+kan svarene ikke lægges sammen og blive til én procent.</p>
+<p><b>Det er ikke en fejl, I skal skjule. Det er et resultat.</b> At få en
+oversættelse til at måle det samme på to sprog er noget af det sværeste ved
+internationale undersøgelser — og det er grunden til, at de store undersøgelser
+bruger år på at teste deres spørgsmål, før de sender dem ud. Skriv det i jeres
+opgave: det viser, at I har forstået, hvad der kan gå galt.</p>
+<p>Til gengæld kan I noget, tallene ikke kan: I kan høre, <b>hvordan</b> de unge
+selv taler om deres mobil. Det er kvalitativ analyse.</p>
+</div>
+
+<h2 class="sec">To måder at undersøge på</h2>
+<table class="tab"><thead><tr><th></th><th>Kvantitativ</th><th>Kvalitativ</th>
+</tr></thead><tbody><tr><th>Spørger om</th><td>Hvor mange?</td><td>Hvad og hvorfor?</td></tr><tr><th>Svarer på</th><td>Udbredelse</td><td>Betydning</td></tr><tr><th>Antal svar</th><td>Mange — tusinder</td><td>Få — læst grundigt</td></tr><tr><th>Resultatet er</th><td>Et tal med en usikkerhed</td><td>Kategorier med citater</td></tr><tr><th>Jeres data fra Hamborg</th><td>Virker ikke — svarene måler ikke det samme</td><td>Den, I skal bruge</td></tr></tbody></table>
+<p>Ingen af dem er finere end den anden. De svarer bare på hver sit spørgsmål.
+Tallene i <a href="digital-socialisering.html">dataarket</a> siger, hvor udbredt
+noget er. Jeres svar siger, hvordan det opleves.</p>
+
+<h2 class="sec">Metoden i fem trin</h2>
+<div class="figur"><svg viewBox="0 0 640 400" width="100%" style="max-width:640px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Processen i 5 trin." font-family="Consolas, monospace" font-size="11"><rect x="10" y="2" width="620" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="27.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="31.0" text-anchor="middle" fill="#fff" font-weight="700">1</text><text x="56" y="22.0" fill="#fff" font-weight="700" font-size="12.5">Læs det hele igennem</text><text x="56" y="39.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Uden at skrive noget</text><line x1="36" y1="55" x2="36" y2="76" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 73 L 36 79 L 40 73 Z" fill="#c9d2e0"/><rect x="10" y="82" width="620" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="107.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="111.0" text-anchor="middle" fill="#fff" font-weight="700">2</text><text x="56" y="102.0" fill="#fff" font-weight="700" font-size="12.5">Sæt et ord på hvert svar</text><text x="56" y="119.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Det kaldes at kode</text><line x1="36" y1="135" x2="36" y2="156" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 153 L 36 159 L 40 153 Z" fill="#c9d2e0"/><rect x="10" y="162" width="620" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="187.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="191.0" text-anchor="middle" fill="#fff" font-weight="700">3</text><text x="56" y="182.0" fill="#fff" font-weight="700" font-size="12.5">Saml koderne i kategorier</text><text x="56" y="199.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Hvilke koder ligner hinanden?</text><line x1="36" y1="215" x2="36" y2="236" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 233 L 36 239 L 40 233 Z" fill="#c9d2e0"/><rect x="10" y="242" width="620" height="50" rx="9" fill="#b5710a"/><circle cx="32" cy="267.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="271.0" text-anchor="middle" fill="#fff" font-weight="700">4</text><text x="56" y="262.0" fill="#fff" font-weight="700" font-size="12.5">Find mønstre — og modsigelser</text><text x="56" y="279.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Hvad siger mange? Hvem siger det modsatte?</text><line x1="36" y1="295" x2="36" y2="316" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 313 L 36 319 L 40 313 Z" fill="#c9d2e0"/><rect x="10" y="322" width="620" height="50" rx="9" fill="#b5710a"/><circle cx="32" cy="347.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="351.0" text-anchor="middle" fill="#fff" font-weight="700">5</text><text x="56" y="342.0" fill="#fff" font-weight="700" font-size="12.5">Vælg citater, der viser kategorien</text><text x="56" y="359.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Et citat beviser ikke noget — det viser noget</text><rect x="10" y="383" width="11" height="11" rx="3" fill="#1a8f5e"/><text x="27" y="392" fill="#586074" font-size="10">Læs</text><rect x="58" y="383" width="11" height="11" rx="3" fill="#1f6fd6"/><text x="75" y="392" fill="#586074" font-size="10">Kod og saml</text><rect x="154" y="383" width="11" height="11" rx="3" fill="#b5710a"/><text x="171" y="392" fill="#586074" font-size="10">Konkludér</text></svg>
+<p class="figtekst">Rækkefølgen er ikke til forhandling. Koder du, før du har
+læst det hele, bestemmer de første svar, hvad du får øje på i resten.</p></div>
+<section class="trin laes"><h3><span class="num">1</span>Læs det hele igennem</h3><p class="kort">Uden at skrive noget</p><p>Læs alle svarene én gang fra ende til anden, før du skriver et eneste ord. Det lyder som spild af tid, men det er det ikke: begynder du at kode fra svar nummer et, kommer de første svar til at bestemme, hvad du overhovedet får øje på i resten.</p></section><section class="trin kod"><h3><span class="num">2</span>Sæt et ord på hvert svar</h3><p class="kort">Det kaldes at kode</p><p>Skriv ét eller to ord i margenen ud for hvert svar — et ord, der fanger, hvad svaret handler om. Ikke hvad du synes om det. "Kedsomhed", "pres fra venner", "forældre skælder ud". Det ord er en <b>kode</b>.</p></section><section class="trin kod"><h3><span class="num">3</span>Saml koderne i kategorier</h3><p class="kort">Hvilke koder ligner hinanden?</p><p>Læg koderne i bunker. "Pres fra venner", "bange for at gå glip af noget" og "alle de andre er der" hører sammen — de kan blive til kategorien <b>socialt pres</b>. En kategori er en bunke koder, der handler om det samme.</p></section><section class="trin saml"><h3><span class="num">4</span>Find mønstre — og modsigelser</h3><p class="kort">Hvad siger mange? Hvem siger det modsatte?</p><p>Nu kan du se, hvad der går igen. Men kig lige så grundigt efter det, der <b>ikke</b> passer ind. Ét svar, der siger det modsatte af alle de andre, er ikke en fejl, der skal væk — det er tit det mest interessante i hele bunken.</p></section><section class="trin saml"><h3><span class="num">5</span>Vælg citater, der viser kategorien</h3><p class="kort">Et citat beviser ikke noget — det viser noget</p><p>Find to-tre svar, der formulerer kategorien tydeligst, og citér dem ordret. Skriv aldrig et citat om, så det passer bedre. Og husk: citatet er et <b>eksempel</b> på kategorien, ikke et bevis på, hvor mange der mener det.</p></section>
+
+<h2 class="sec">Sådan ser det ud i praksis</h2>
+<p>Her er fem svar, der kunne have stået i jeres skema. <b>De er opdigtede</b> —
+de står her for at vise metoden, ikke for at sige noget om de unge, I mødte.</p>
+<table class="tab"><thead><tr><th>Svaret</th><th>Koden</th><th>Kategorien</th>
+</tr></thead><tbody><tr><td class="sv">&quot;Ich schaue abends noch schnell, ob jemand geschrieben hat. Dann ist es plötzlich halb zwei.&quot;</td><td class="kode">mister tiden om aftenen</td><td class="kat">Søvn og tid</td></tr><tr><td class="sv">&quot;Wenn ich nicht antworte, denken sie, ich bin sauer.&quot;</td><td class="kode">skal svare hurtigt</td><td class="kat">Socialt pres</td></tr><tr><td class="sv">&quot;Meine Mutter nimmt das Handy um neun. Finde ich eigentlich okay.&quot;</td><td class="kode">regler hjemmefra — accepteres</td><td class="kat">Voksne og regler</td></tr><tr><td class="sv">&quot;Ohne Handy wüsste ich gar nicht, wann wir uns treffen.&quot;</td><td class="kode">mobilen holder styr på aftaler</td><td class="kat">Mobilen som værktøj</td></tr><tr><td class="sv">&quot;Ich lösche die App manchmal für eine Woche. Dann lade ich sie wieder runter.&quot;</td><td class="kode">prøver selv at holde pause</td><td class="kat">Egen kontrol</td></tr></tbody></table>
+<p>Læg mærke til svar nummer tre og fem: de to unge er <b>ikke</b> frustrerede
+over deres mobil. De passer ikke ind i en historie om afhængighed — og netop
+derfor skal de med. En analyse, hvor alle svar peger samme vej, er som regel en
+analyse, hvor nogle svar er blevet sorteret fra.</p>
+<div class="figur"><svg viewBox="0 0 600 296" width="100%" style="max-width:600px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Processen i 4 trin." font-family="Consolas, monospace" font-size="11"><rect x="10" y="2" width="580" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="27.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="31.0" text-anchor="middle" fill="#fff" font-weight="700">1</text><text x="56" y="22.0" fill="#fff" font-weight="700" font-size="12.5">Svaret, som det står</text><text x="56" y="39.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Ordret, på tysk</text><line x1="36" y1="55" x2="36" y2="76" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 73 L 36 79 L 40 73 Z" fill="#c9d2e0"/><rect x="10" y="82" width="580" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="107.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="111.0" text-anchor="middle" fill="#fff" font-weight="700">2</text><text x="56" y="102.0" fill="#fff" font-weight="700" font-size="12.5">Koden</text><text x="56" y="119.0" fill="#fff" fill-opacity="0.9" font-size="10.5">To ord om, hvad det handler om</text><line x1="36" y1="135" x2="36" y2="156" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 153 L 36 159 L 40 153 Z" fill="#c9d2e0"/><rect x="10" y="162" width="580" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="187.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="191.0" text-anchor="middle" fill="#fff" font-weight="700">3</text><text x="56" y="182.0" fill="#fff" font-weight="700" font-size="12.5">Kategorien</text><text x="56" y="199.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Bunken af koder, der ligner hinanden</text><line x1="36" y1="215" x2="36" y2="236" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 233 L 36 239 L 40 233 Z" fill="#c9d2e0"/><rect x="10" y="242" width="580" height="50" rx="9" fill="#b5710a"/><circle cx="32" cy="267.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="271.0" text-anchor="middle" fill="#fff" font-weight="700">4</text><text x="56" y="262.0" fill="#fff" font-weight="700" font-size="12.5">Citatet i opgaven</text><text x="56" y="279.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Det svar, der viser kategorien bedst</text></svg>
+<p class="figtekst">Vejen fra ét svar til det, der ender i opgaven. Hvert skridt
+fjerner noget — derfor skal det oprindelige svar altid kunne findes frem igen.</p>
+</div>
+
+<h2 class="sec">Jeres opgave</h2>
+<div class="boks opgave">
+<h3>I projektgrupperne</h3>
+<ol class="trinliste">
+<li>Læs <b>alle</b> gruppens svar igennem én gang. Skriv ingenting undervejs.</li>
+<li>Kod hvert svar med ét eller to ord. Gør det <b>hver for sig</b> først —
+og sammenlign så jeres koder. Hvor I har kodet forskelligt, har I fundet et
+svar, der kan læses på to måder. Det er værd at tale om.</li>
+<li>Saml koderne i <b>tre til fem kategorier</b>. Giv hver kategori et navn,
+der siger, hvad den handler om.</li>
+<li>Find til hver kategori <b>to citater</b>: ét der er typisk, og ét der
+trækker i en anden retning. Skriv den tyske sætning og jeres oversættelse.</li>
+<li>Skriv et afsnit pr. kategori: hvad handler den om, hvad siger citaterne,
+og hvad kan I <b>ikke</b> konkludere ud fra den?</li>
+<li>Slut med ét afsnit om oversættelsen: hvor var det svært at få de to sprog
+til at betyde det samme — og hvad gjorde I ved det?</li>
+</ol>
+</div>
+
+<h2 class="sec">Fire fælder</h2>
+<div class="boks faelde"><h4>Du plukker det citat, der passer til din pointe</h4><p>Det hedder at <b>cherry-picke</b>. Hvis du allerede ved, hvad du vil skrive, kan du altid finde ét svar, der bakker dig op. Modgiften: skriv dine kategorier færdige, <i>før</i> du vælger citater — og tag altid det svar med, der passer dårligst.</p><h4>Du skriver &quot;de tyske unge mener…&quot;</h4><p>I har spurgt nogle få unge på én skole i én by. De er ikke Tyskland. Skriv "de unge, vi talte med" eller "flere af svarene peger på". Det er ikke forsigtighed for en sikkerheds skyld — det er det eneste, jeres data kan bære.</p><h4>Du tæller alligevel</h4><p>"Tre ud af fem sagde…" lyder stærkt, men fem svar kan ikke bære en procent. Kvalitativ analyse svarer på <b>hvad</b> og <b>hvorfor</b>, ikke på hvor mange. Vil I vide hvor mange, skal I bruge de store undersøgelser i dataarket.</p><h4>Oversættelsen flytter betydningen</h4><p>Det var præcis dét, der gjorde tallene ubrugelige. Når I citerer, så skriv den tyske sætning <b>og</b> jeres oversættelse. Så kan læseren selv se, om I har ramt rigtigt — og I opdager selv de steder, hvor to ord ikke dækker hinanden.</p></div>
+
+<h2 class="sec">Ord du skal kunne</h2>
+<table class="tab"><thead><tr><th>Ord</th><th>Betyder</th></tr></thead>
+<tbody><tr><th>Kvalitativ</th><td>Undersøger hvad noget betyder, og hvorfor. Få svar, læst grundigt.</td></tr><tr><th>Kvantitativ</th><td>Undersøger hvor mange og hvor meget. Mange svar, talt op.</td></tr><tr><th>Kodning</th><td>At sætte et ord på, hvad et svar handler om.</td></tr><tr><th>Kategori</th><td>En bunke koder, der handler om det samme.</td></tr><tr><th>Mønster</th><td>Noget, der går igen på tværs af flere svar.</td></tr><tr><th>Citat</th><td>Et svar gengivet ordret. Viser en kategori — beviser ikke en udbredelse.</td></tr><tr><th>Repræsentativ</th><td>Når de, man har spurgt, ligner dem, man udtaler sig om. Jeres svar er ikke repræsentative, og det skal stå i opgaven.</td></tr><tr><th>Bias</th><td>Skævhed. Her især: at man finder det, man på forhånd ledte efter.</td></tr></tbody></table>
+<button class="printbtn" onclick="window.print()">Print oplægget</button></main><footer>Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>

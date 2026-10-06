@@ -23,6 +23,10 @@
     {
       "source": "/digital-socialisering",
       "destination": "/digital-socialisering.html"
+    },
+    {
+      "source": "/kvalitativ-analyse",
+      "destination": "/kvalitativ-analyse.html"
     }
   ],
   "redirects": [
