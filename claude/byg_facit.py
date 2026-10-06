@@ -174,59 +174,112 @@ dok('facit-online-2026-09-21-tekst-til-ligning', 'online', '2026-09-21',
 ])
 
 # --- 3. Modul 2, Opgave C - Lineaere funktioner ----------------------------
+# Opgaven er hverdagsstof fra 6. oktober: samme faerdigheder, men tallene
+# kommer fra en kvittering, et batteri og to telefoner. b skal kunne lade sig
+# goere i virkeligheden - et startgebyr kan ikke vaere negativt, og et batteri
+# kan ikke starte uden for 0-100 %.
+KAJ_A, KAJ_B = forskrift((2, 200), (5, 350))
+assert (KAJ_A, KAJ_B) == (50, 100) and KAJ_B >= 0
+assert KAJ_A * 7 + KAJ_B == 450
+BAT_A, BAT_B = forskrift((1, 80), (4, 50))
+assert (BAT_A, BAT_B) == (-10, 90) and 0 <= BAT_B <= 100
+assert nulpunkt(BAT_A, BAT_B) == 9
+
 dok('facit-online-2026-10-05-lineaere-funktioner', 'online', '2026-10-05',
     'Lineære funktioner', 'Funktioner og ligninger, modul 2 · Opgave C', [
     ('h2', 'Opgave C · Find forskriften'),
+    ('h3', 'Kajakudlejningen · 2 timer = 200 kr, 5 timer = 350 kr'),
     ('tabel', [
-        ('a) Hældning gennem <code>(2, 5)</code> og <code>(6, 17)</code>', 'a = 3',
-         '(17 − 5) ÷ (6 − 2) = 12 ÷ 4'),
-        ('b) Hele forskriften', 'y = 3x − 1', 'Sæt (2, 5) ind: 5 = 3·2 + b → b = −1'),
-        ('c) Nulpunkt', 'x = 1/3', '3x − 1 = 0 → x = 1/3 ≈ 0,33'),
-        ('d) Gennem <code>(−1, 8)</code> og <code>(3, −4)</code>', 'y = −3x + 5',
-         'a = (−4 − 8) ÷ (3 + 1) = −3 ; 8 = −3·(−1) + b → b = 5'),
-        ('d) Nulpunkt', 'x = 5/3', '−3x + 5 = 0 → x = 5/3 ≈ 1,67'),
-        ('e) Stejlest', 'y = −3x + 1',
-         'Sammenlign talværdien: |−3| = 3 er større end |2| = 2'),
+        ('a) Pris pr. time', 'a = 50 kr', '(350 − 200) ÷ (5 − 2) = 150 ÷ 3'),
+        ('b) Forskriften', 'y = 50x + 100',
+         'Sæt (2, 200) ind: 200 = 50·2 + b → b = 100'),
+        ('b) Hvad b betyder', '100 kr i startgebyr',
+         'Det du betaler ved 0 timer — redningsvest og udstyr'),
+        ('c) Syv timer', '450 kr', '50 · 7 + 100 = 350 + 100'),
+        ('d) Tegningen', 'Linjen rammer 450 ved 7 timer',
+         'Godkend hvis linjen går gennem begge punkter og skærer y-aksen i 100'),
     ]),
-    ('figur', (graf([(3, -1, FG.BLA, 'y = 3x − 1'), (-3, 5, FG.GRO, 'y = −3x + 5')],
-                    [(F(1, 3), 0, FG.BLA, ''), (F(5, 3), 0, FG.GRO, '')],
-                    xmin=-4, xmax=6, ymin=-4, ymax=6,
-                    titel='De to linjer og deres nulpunkter'),
-               'Punkt f er den blå linje. Nulpunkterne er de steder, hvor linjerne '
-               'skærer x-aksen — den blå ved x = 1/3, den grønne ved x = 5/3. '
-               'Ternene er kvadratiske, så hældningen kan måles direkte: begge linjer '
-               'flytter sig 3 op eller ned for hvert skridt til højre.')),
-    ('note', ['Til e): ungerne svarer ofte "y = 2x + 7, for 2 er større end −3". '
-              'Hældningens fortegn siger, om linjen går op eller ned; det er '
-              'talværdien, der siger hvor stejl den er.']),
+    ('figur', (graf([(KAJ_A, KAJ_B, FG.BLA, 'y = 50x + 100')],
+                    [(0, KAJ_B, FG.GRO, '(0, 100)'), (2, 200, FG.ORA, '(2, 200)'),
+                     (5, 350, FG.ORA, '(5, 350)'), (7, 450, FG.ROD, '(7, 450)')],
+                    xmin=0, xmax=8, ymin=0, ymax=500, ens=False,
+                    aksenavne=('timer', 'kr'), titel='Kajakudlejningen'),
+               'Den færdige linje. De orange punkter er kvitteringerne, det grønne '
+               'er startgebyret, og det røde er de syv timer fra opgave c.')),
+    ('h3', 'Telefonens batteri · 1 time = 80 %, 4 timer = 50 %'),
+    ('tabel', [
+        ('e) Tab pr. time', 'a = −10 %', '(50 − 80) ÷ (4 − 1) = −30 ÷ 3'),
+        ('e) Hvorfor negativ', 'Fordi det falder',
+         'Et negativt a betyder, at linjen går nedad — batteriet bliver mindre'),
+        ('f) Forskriften', 'y = −10x + 90', 'Sæt (1, 80) ind: 80 = −10 + b → b = 90'),
+        ('f) Hvad b betyder', '90 % ved start', 'Batteriet, da målingen begyndte'),
+        ('g) Nulpunkt', 'x = 9 timer', '−10x + 90 = 0 → 10x = 90 → x = 9'),
+    ]),
+    ('figur', (graf([(BAT_A, BAT_B, FG.BLA, 'y = −10x + 90')],
+                    [(0, BAT_B, FG.GRO, '(0, 90)'), (1, 80, FG.ORA, '(1, 80)'),
+                     (4, 50, FG.ORA, '(4, 50)'),
+                     (nulpunkt(BAT_A, BAT_B), 0, FG.ROD, '(9, 0)')],
+                    xmin=0, xmax=12, ymin=0, ymax=100, ens=False,
+                    aksenavne=('timer', '%'), titel='Batteriet'),
+               'Det røde punkt er nulpunktet: efter 9 timer er telefonen død. '
+               'Her er nulpunktet ikke et tal på en akse, men et klokkeslæt.')),
+    ('h3', 'Hvem ændrer sig hurtigst?'),
+    ('tabel', [
+        ('h) Hurtigst', 'Lisas telefon', '|−18| = 18 er større end |12| = 12'),
+        ('h) Hvad fortegnet siger', 'Op eller ned',
+         'Lisas falder (negativ a), Omars stiger (positiv a). Talværdien siger, '
+         'hvor hurtigt — fortegnet siger hvilken vej'),
+    ]),
+    ('note', ['Her svarer ungerne ofte "Omars, for 12 er et pænt tal" eller "Lisas, '
+              'for −18 er mindre end 12". Begge dele viser samme misforståelse: at '
+              'fortegnet og hastigheden er det samme. Lisa taber 18 procentpoint i '
+              'timen, Omar vinder 12 — Lisas telefon ændrer sig hurtigst, selvom '
+              '−18 står lavere på tallinjen.']),
 ])
 
 # --- 4. Modul 3, Opgave D - Aflaesning af grafer ---------------------------
+A_FAST, A_GB = F(50), F(20)
+B_FAST, B_GB = F(150), F(10)
+SK = skaering(A_GB, A_FAST, B_GB, B_FAST)
+assert SK == (10, 250), SK
+assert A_GB * 12 + A_FAST == 290 and B_GB * 12 + B_FAST == 270
+assert A_GB * 5 + A_FAST == 150 and B_GB * 5 + B_FAST == 200
+AARS = (B_GB * 5 + B_FAST - (A_GB * 5 + A_FAST)) * 12
+assert AARS == 600
+
 dok('facit-online-2026-10-05-grafer', 'online', '2026-10-05',
     'Aflæsning af grafer', 'Funktioner og ligninger, modul 3 · Opgave D', [
     ('h2', 'Opgave D · Aflæs og regn efter'),
-    ('figur', (graf([(2, -3, FG.BLA, 'y = 2x − 3'), (-1, 6, FG.GRO, 'y = −x + 6')],
-                    [(3, 3, FG.ROD, '(3, 3)')],
-                    xmin=-5, xmax=7, ymin=-5, ymax=7,
-                    titel='Figuren med svarene på'),
-               'Det røde punkt er skæringen mellem de to linjer. Figuren er den samme '
-               'som på ungernes side, med svarene sat på.')),
+    ('figur', (graf([(A_GB, A_FAST, FG.BLA, 'A: y = 20x + 50'),
+                     (B_GB, B_FAST, FG.GRO, 'B: y = 10x + 150')],
+                    [(SK[0], SK[1], FG.ROD, '(10, 250)')],
+                    xmin=0, xmax=20, ymin=0, ymax=500, ens=False,
+                    aksenavne=('GB', 'kr'), titel='Figuren med svarene på'),
+               'Det røde punkt er skæringen. Figuren er den samme som på ungernes '
+               'side, med svarene sat på.')),
     ('tabel', [
-        ('a) b', '−3 og 6', 'Aflæses hvor linjerne skærer y-aksen'),
-        ('b) a', '2 og −1', 'Blå: 1 til højre, 2 op. Grøn: 1 til højre, 1 ned'),
-        ('c) Forskrifter', 'y = 2x − 3 og y = −x + 6', ''),
-        ('d) Skæringspunkt', '(3, 3)', 'Aflæses på figuren'),
-        ('e) Ved regning', 'x = 3, y = 3',
-         '2x − 3 = −x + 6 → 3x = 9 → x = 3, og y = 2·3 − 3 = 3'),
-        ('f) Nulpunkter', 'x = 1,5 og x = 6', '2x − 3 = 0 og −x + 6 = 0'),
-        ('g) Stejlest', 'den blå', '|2| &gt; |−1|'),
+        ('a) b', '50 kr og 150 kr',
+         'Aflæses på y-aksen. Det er abonnementet — prisen ved 0 GB'),
+        ('b) a', '20 kr og 10 kr pr. GB',
+         'Trappetrin på 5 GB: blå stiger 100 kr, grøn 50 kr. Divider med 5'),
+        ('c) Forskrifter', 'A: y = 20x + 50 · B: y = 10x + 150', ''),
+        ('d) Skæringspunkt', '(10, 250)',
+         'Ved 10 GB koster de præcis det samme, nemlig 250 kr'),
+        ('e) Ved regning', 'x = 10, y = 250',
+         '20x + 50 = 10x + 150 → 10x = 100 → x = 10, og y = 20·10 + 50 = 250'),
+        ('f) 12 GB', 'A: 290 kr · B: 270 kr',
+         '20·12 + 50 = 290 og 10·12 + 150 = 270 — B er billigst'),
+        ('g) Stejlest', 'A', 'A stiger 20 kr pr. GB mod B’s 10 — dobbelt så hurtigt'),
+        ('h) Ved 5 GB', 'A: 150 kr · B: 200 kr',
+         'A er billigst. Forskellen er 50 kr om måneden, altså 600 kr om året'),
     ]),
-    ('note', ['Til g): figuren viser det direkte — den blå linje rejser sig hurtigere. '
-              'Går man ét skridt til højre, flytter den blå sig 2, mens den grønne kun '
-              'flytter sig 1. Det kan måles på figuren, fordi ternene er kvadratiske: '
-              'den grønne ligger præcis på 45° nedad.']),
+    ('note', ['Pointen med d): skæringspunktet er ikke bare et punkt. Det er '
+              'grænsen, hvor det bedste valg skifter. Under 10 GB er A billigst, over '
+              '10 GB er B. Et abonnement kan altså ikke være "billigst" i sig selv — '
+              'det afhænger af, hvor meget man bruger.',
+              'Til g): den stejleste linje er den, hvor prisen stiger hurtigst pr. '
+              'GB. Derfor er A kun billig, så længe man holder sig under skæringen.']),
 ])
-
 
 # --- 5. Uge 38 - Ligninger -------------------------------------------------
 dok('facit-lektier-2026-09-14-ligninger', 'lektier', '2026-09-14', 'Ligninger',

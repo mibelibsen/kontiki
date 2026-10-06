@@ -610,11 +610,13 @@ def _koord_gitter(X0, X1, YT, YB, X, Y, xmin, xmax, ymin, ymax, tal=True,
         if tal and v != 0:
             s.append(f'<text x="{X(0)-7:.1f}" y="{y+4:.1f}" text-anchor="end" '
                      f'fill="{MUT}" font-size="10">{v}</text>')
+    # aksenavnene faar samme hvide kant som punkternes navne, saa de kan laeses,
+    # ogsaa hvor en maerkat ligger taet paa
     xnavn, ynavn = aksenavne
-    s.append(f'<text x="{X1-4}" y="{Y(0)-8:.1f}" text-anchor="end" fill="{INK}" '
-             f'font-style="italic">{xnavn}</text>')
-    s.append(f'<text x="{X(0)+8:.1f}" y="{YT+12}" fill="{INK}" '
-             f'font-style="italic">{ynavn}</text>')
+    kant = (f'fill="{INK}" font-style="italic" stroke="#fff" stroke-width="3" '
+            f'paint-order="stroke" stroke-linejoin="round"')
+    s.append(f'<text x="{X1-4}" y="{Y(0)-8:.1f}" text-anchor="end" {kant}>{xnavn}</text>')
+    s.append(f'<text x="{X(0)+8:.1f}" y="{YT+12}" {kant}>{ynavn}</text>')
     return s
 
 

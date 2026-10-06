@@ -79,6 +79,16 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 - **Hverdagstal hører kun til sitet**, aftalt 6. oktober. Lektiearkene bliver
   ved med at være rene tal, så ungerne træner regnereglen uden at skulle tyde en
   situation først.
+- **Opgave C og D på sitet er lavet om til hverdagsopgaver.** Opgave C er nu
+  en kajakudlejning (to kvitteringer), et telefonbatteri (nulpunktet er det
+  klokkeslæt, telefonen dør) og en sammenligning af to telefoner, der ændrer sig
+  hver sin vej. Opgave D er to mobilabonnementer, hvor skæringspunktet er
+  grænsen, hvor det bedste valg skifter. Samme færdigheder, samme antal
+  delspørgsmål, og begge facitlister er bygget om med.
+- **Tallene er valgt, så de ligger på gitterlinjerne.** Ellers er en
+  aflæsningsopgave gætteri: b = 50 og 150 kr, skæringen i (10, 250), batteriet
+  80 % og 50 %. Trappetrinnet i opgave D går 5 GB, fordi 1 GB er mindre end én
+  gitterlinje.
 - **`koordinatsystem()` har fået `aksenavne`**, så en graf kan sige kWh og kr i
   stedet for x og y.
 - **En unge fangede en fejl i baljen.** Eksemplet sagde 9 liter efter 2 minutter

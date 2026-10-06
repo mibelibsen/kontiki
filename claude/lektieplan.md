@@ -84,6 +84,12 @@ med nye tal.
 | Uge 39, opgave A–C | `funktioner-og-ligninger.html`, Opgave A (udvidet) |
 | Uge 41, opgave A–C | `funktioner-og-ligninger.html`, Opgave C og D |
 
+**Lektierne bliver ved med at være rene tal.** Aftalt 6. oktober 2026: sitets
+eksempler og opgaver bruger hverdagstal — kroner, kWh, GB — så ungerne kan se,
+hvad reglen bruges til. Lektiearkene gør ikke, så de træner selve regnereglen
+uden først at skulle tyde en situation. Opgave C og D på sitet er derfor ikke
+længere ord for ord de samme som uge 39 og 41; det er de samme færdigheder.
+
 ## Test af tallene
 
 Tallene i lektierne er efterregnet programmatisk med brøkregning, ikke i
