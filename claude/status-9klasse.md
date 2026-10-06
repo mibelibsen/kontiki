@@ -81,6 +81,12 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   situation først.
 - **`koordinatsystem()` har fået `aksenavne`**, så en graf kan sige kWh og kr i
   stedet for x og y.
+- **En unge fangede en fejl i baljen.** Eksemplet sagde 9 liter efter 2 minutter
+  og 34 efter 7, hvilket giver `y = 5x − 1` — altså minus én liter i baljen, før
+  hanen blev åbnet. Tallene er rettet til 14 og 39, så b bliver 4 liter, og
+  eksemplet forklarer nu selv, hvorfor grafen ikke starter i (0, 0).
+  **Lære: når en hverdagsgraf har en enhed, skal b også kunne lade sig gøre i
+  virkeligheden.** Det er ikke nok, at hældningen passer.
 - **`tjek.py` kender nu forskel på en abstrakt og en virkelig graf.** En graf,
   hvis akser hedder x og y, skal have kvadratiske tern. En graf med rigtige
   enheder på akserne kan ikke have samme skala og springes over.
