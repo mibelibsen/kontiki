@@ -347,7 +347,9 @@ ved siden af. De findes med `list_triggers`.
 | [`claude/lektieplan.md`](claude/lektieplan.md) | Hvilken lektie hører til hvilken uge, og hvordan de udgives |
 | [`claude/tjek.py`](claude/tjek.py) | Tjekket der køres før hvert push |
 | [`claude/figurer.py`](claude/figurer.py) | Figurbiblioteket |
-| [`claude/byg_facit.py`](claude/byg_facit.py) | Facitlisterne til *Funktioner og ligninger* — indhold, figurer og efterregning som kode |
+| [`claude/facit.py`](claude/facit.py) | Fælles skabelon til facitlisterne: A4-side, tabeller, figurer og noter |
+| [`claude/byg_facit.py`](claude/byg_facit.py) | De syv facitlister til *Funktioner og ligninger* |
+| [`claude/byg_facit_statistik.py`](claude/byg_facit_statistik.py) | De elleve til *Statistik*, *Manipulation* og *Sandsynlighed* |
 | [`claude/qr.py`](claude/qr.py) | QR-koder i ren Python |
 | [`claude/byg_qr.py`](claude/byg_qr.py) | QR-kode til en adresse som SVG, PNG og A4-ark |
 | [`claude/opsaetning.md`](claude/opsaetning.md) | Hvordan Vercel og GitHub hænger sammen |
@@ -362,9 +364,13 @@ ved siden af. De findes med `list_triggers`.
 - **Lektier fra uge 37 og frem.** Der er lavet til og med uge 36. Aftalt at
   indholdet skal gennemgås, før der laves mere.
 - **Fysik.** Vist som "Kommer snart" i navigationen, ingen side endnu.
-- **Facitlister uden kilde.** De syv facitlister til *Funktioner og ligninger*
-  bygges nu af [`claude/byg_facit.py`](claude/byg_facit.py). De øvrige
-  facit-PDF'er findes stadig kun som færdige filer — de skal skrives om på
-  samme måde, før deres figurer kan rettes.
-- **`facit/facitark-funktioner-og-ligninger.html`** har ingen figurer og er
-  ikke omskrevet til det nye format.
+- **Quizzernes facitlister har stadig ingen kilde.** De atten facitlister til
+  de åbne opgaver bygges af `byg_facit.py` og `byg_facit_statistik.py`, men
+  facit til selve quizzerne findes kun som færdige filer:
+  `facit-statistik-online.pdf` (30 spørgsmål), `facitark-manipulation.pdf`
+  (4 opgaver + 25 spørgsmål) og `facitark-funktioner-og-ligninger.html`
+  (26 spørgsmål, og uden figurer). De følger heller ikke navnemønstret.
+- **To filer ser forældede ud.** `facit-statistik-hjemmeopgaver.pdf` hører til
+  en side, der er erstattet af lektiearkene, og `facit-lektier-manipulation.pdf`
+  dækker lektier, der nu har hver sin facitliste. De er ikke slettet — det er
+  den voksnes beslutning.

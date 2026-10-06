@@ -106,9 +106,20 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 - **Et lektieark kom ud i Letter i stedet for A4.** `@page` manglede `size`,
   og så vælger Chromium Letter. Tretten sider manglede det. `tjek.py` giver nu
   FEJL for en printbar side uden `size:A4`.
-- **De øvrige facit-PDF'er har stadig ingen kilde** — statistik, manipulation
-  og sandsynlighed. De skal skrives om på samme måde, før deres figurer kan
-  rettes.
+- **De øvrige elleve facitlister er også skrevet om.** Statistik modul 1–4,
+  manipulation modul 1–3 og lektierne i uge 33 til 36 bygges nu af
+  `claude/byg_facit_statistik.py`. Skabelonen er flyttet ud i `claude/facit.py`,
+  så de to byggescripts kun indeholder deres eget indhold.
+- **Statistikken regnes efter i koden.** Kvartiler efter dansk skolemetode,
+  frekvenser der skal summe til præcis 100 % og grader til 360°, og
+  sumkurvens aflæsninger ved lineær interpolation — samme måde som ungen går
+  på papiret. Alle atten facitlister har samme sidetal som før, og indholdet
+  er sammenlignet token for token med de gamle PDF'er.
+- **Kun quizzernes facit mangler nu en kilde:** `facit-statistik-online.pdf`,
+  `facitark-manipulation.pdf` og `facitark-funktioner-og-ligninger.html`.
+  Dertil ser `facit-statistik-hjemmeopgaver.pdf` og
+  `facit-lektier-manipulation.pdf` forældede ud — begge hører til materiale,
+  der er erstattet. De er ikke slettet.
 - **Resten af sitets grafer er gennemgået.** De øvrige figurer på siden kommer
   fra `figurer.py` og er korrekte; aflæsningsfiguren (`y = x`) er håndtegnet,
   men efterregnet rigtig og har tal på akserne.
