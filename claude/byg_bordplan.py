@@ -98,8 +98,11 @@ def stoerrelser(antal, borde):
 # Bordene er ikke lige store: bord 1 er 6-mandsbordet. Naar der er en fast
 # plan, er det den, der bestemmer, hvor mange der sidder ved hvert bord.
 STOERRELSER = [len(b) for b in FAST] if FAST else stoerrelser(len(NAVNE), PLADSER and len(PLADSER) or BORDE)
-assert max(STOERRELSER) <= 6, (
-    f'{max(STOERRELSER)} unger ved ét bord er for mange — der skal flere borde til')
+# Hvor mange der kan sidde ved ét bord, er noget ved lokalet, ikke noget
+# scriptet kan vide. Staar pladserne i bindinger.json, er det dem der gaelder;
+# ellers er otte en graense, der fanger en tastefejl i antallet af borde.
+assert max(STOERRELSER) <= (max(PLADSER) if PLADSER else 8), (
+    f'{max(STOERRELSER)} unger ved ét bord er flere, end der er stole til')
 
 if PLADSER:
     assert len(PLADSER) == BORDE, f'{len(PLADSER)} tal i pladser, {BORDE} borde'
@@ -196,7 +199,21 @@ TAVLE_H = 9
 TOP = MARGEN + TAVLE_H + 15
 BUND = SIDE_H - MARGEN - 16        # plads til forklaringen nederst
 GANG = 16                          # mellemrum mellem borde i samme raekke
-BORD_B = (SIDE_B - 2 * MARGEN - (max(RAEKKER) - 1) * GANG) / max(RAEKKER)
+# Bordene er ikke lige store, og saa maa de heller ikke tegnes lige brede: et
+# bord faar bredde efter sine stole, saa én plads fylder det samme ved alle
+# borde. Ellers skal syv navne presses ned i samme bredde som fire, og
+# skriften paa det store bord bliver mindre end paa de smaa.
+KAPACITET = PLADSER if PLADSER else STOERRELSER
+_n = 0
+RAEKKE_BORDE = []                  # bordnumrene raekke for raekke, 0-indekseret
+for _antal in RAEKKER:
+    RAEKKE_BORDE.append(list(range(_n, _n + _antal)))
+    _n += _antal
+assert _n == BORDE
+# den raekke, der har mindst plads pr. stol, saetter maalet for dem alle
+PR_STOL = min((SIDE_B - 2 * MARGEN - (len(r) - 1) * GANG)
+              / sum(KAPACITET[i] for i in r) for r in RAEKKE_BORDE)
+BORD_BREDDE = [k * PR_STOL for k in KAPACITET]
 PLADS_H = 9                        # hoejden paa et navneskilt
 BORD_H = 17                        # selve bordpladen
 BLOK_H = 2 * PLADS_H + BORD_H + 4  # skilt + bord + skilt
@@ -206,7 +223,8 @@ _rest = BUND - TOP - len(RAEKKER) * BLOK_H
 LUFT = min(_rest / max(len(RAEKKER) - 1, 1), 26)
 # det, der bliver tilovers, laegges som luft foroven, saa blokken staar midt paa
 TOP += (_rest - LUFT * (len(RAEKKER) - 1)) / 2
-assert BORD_B > 60, f'bordene bliver {BORD_B:.0f} mm brede — for smalle'
+assert min(BORD_BREDDE) > 40, \
+    f'det mindste bord bliver {min(BORD_BREDDE):.0f} mm bredt — for smalt'
 assert LUFT >= 8, f'kun {LUFT:.1f} mm mellem rækkerne — ret RAEKKER'
 
 INK, BLA, MUT, LIN, GRO = '#1a2233', '#1f6fd6', '#586074', '#c9d2e0', '#1a8f5e'
@@ -219,16 +237,23 @@ def sider(navne):
     return navne[:o], navne[o:]
 
 
-def skilt(s, x, y, b, navn, bundet):
+def skriftstoerrelse(navne_og_bredder, loft, gulv, luft):
+    """Én stoerrelse til et helt bord: den stoerste, hvor det laengste navn
+    stadig er inden for sit skilt. Fed Helvetica fylder ca. 0,60 em pr. tegn.
+    Regnes navnene hver for sig, bliver Nor dobbelt saa stor som Helene paa
+    samme bord, og det ser ud som om de to ting betyder noget forskelligt."""
+    st = min([loft] + [(b - luft) / (len(n) * 0.60) for n, b in navne_og_bredder])
+    vaerst = min(navne_og_bredder, key=lambda nb: nb[1] / (len(nb[0]) * 0.60))
+    assert st >= gulv, \
+        f'{vaerst[0]} kan ikke staa paa en plads paa {vaerst[1]:.1f} mm'
+    return st
+
+
+def skilt(s, x, y, b, navn, bundet, st):
     kant = GRO if bundet else LIN
     s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{b:.2f}" height="{PLADS_H}" '
              f'rx="2" fill="#fff" stroke="{kant}" '
              f'stroke-width="{0.9 if bundet else 0.4}"/>')
-    # skriftstoerrelsen regnes ud af pladsen: fed Helvetica fylder ca. 0,60 em
-    # pr. tegn, og der skal vaere 3 mm luft i alt. Et langt navn ved et smalt
-    # bord skal krympe, ikke loebe ud over kanten.
-    st = min(6.2, (b - 3) / (len(navn) * 0.60))
-    assert st >= 3.6, f'{navn} kan ikke staa paa en plads paa {b:.1f} mm'
     s.append(f'<text x="{x + b / 2:.2f}" y="{y + PLADS_H / 2 + st * 0.35:.2f}" '
              f'text-anchor="middle" fill="{INK}" font-size="{st}" '
              f'font-weight="bold">{navn}</text>')
@@ -247,12 +272,13 @@ def tegn():
     bundne_par = [set(p) for p in SAMMEN]
     nr = 0
     for r, antal in enumerate(RAEKKER):
-        bredde = antal * BORD_B + (antal - 1) * GANG
-        x0 = (SIDE_B - bredde) / 2          # raekken centreres
+        numre = RAEKKE_BORDE[r]
+        bredde = sum(BORD_BREDDE[i] for i in numre) + (antal - 1) * GANG
+        x = (SIDE_B - bredde) / 2          # raekken centreres
         y0 = TOP + r * (BLOK_H + LUFT)
         for k in range(antal):
             navne = BORD[nr]
-            x = x0 + k * (BORD_B + GANG)
+            BORD_B = BORD_BREDDE[nr]
             oeverst, nederst = sider(navne)
             # selve bordpladen
             by = y0 + PLADS_H + 2
@@ -262,8 +288,11 @@ def tegn():
             s.append(f'<text x="{x + BORD_B / 2:.2f}" y="{by + BORD_H / 2 + 2.6:.2f}" '
                      f'text-anchor="middle" fill="{MUT}" font-size="7" '
                      f'letter-spacing="0.6">BORD {nr + 1}</text>')
-            for side, navne_her, sy in ((0, oeverst, y0),
-                                        (1, nederst, by + BORD_H + 2)):
+            sider_her = [(oeverst, y0), (nederst, by + BORD_H + 2)]
+            maal = [(n, (BORD_B - (len(r) - 1) * 2) / len(r))
+                    for r, _ in sider_her if r for n in r]
+            st = skriftstoerrelse(maal, 6.2, 3.6, 3)
+            for navne_her, sy in sider_her:
                 if not navne_her:
                     continue
                 sb = (BORD_B - (len(navne_her) - 1) * 2) / len(navne_her)
@@ -271,7 +300,8 @@ def tegn():
                     nabo = navne[navne.index(n) - 1] if navne.index(n) else None
                     bundet = any({n} & par and len(par & set(navne_her)) == 2
                                  for par in bundne_par)
-                    skilt(s, x + j * (sb + 2), sy, sb, n, bundet)
+                    skilt(s, x + j * (sb + 2), sy, sb, n, bundet, st)
+            x += BORD_B + GANG
             nr += 1
 
     fy = SIDE_H - MARGEN - 4
@@ -319,6 +349,9 @@ def bordkort(nr, navne):
              f'&#9650;  MOD TAVLEN  &#9650;</text>')
 
     raekker = [(oeverst, False), (nederst, True)]
+    _bred = lambda r: (K_B - 2 * K_MARGEN - (len(r) - 1) * 6) / len(r)
+    st = skriftstoerrelse([(n, _bred(r)) for r, _ in raekker if r for n in r],
+                          26, 10, 8)
     bh = 46                          # hoejden paa en navnerraekke
     BAAND = 26                       # midterbaandet, hvor bordnummeret staar
     midte = K_H / 2
@@ -334,9 +367,6 @@ def bordkort(nr, navne):
         for j, n in enumerate(navne_her):
             x = K_MARGEN + j * (bred + 6)
             cx, cy = x + bred / 2, y + bh / 2
-            # skriften regnes af pladsen, som paa oversigten
-            st = min(26, (bred - 8) / (len(n) * 0.60))
-            assert st >= 10, f'{n} kan ikke staa paa {bred:.0f} mm'
             drej = f' transform="rotate(180 {cx:.2f} {cy:.2f})"' if paa_hovedet else ''
             s.append(f'<g{drej}>')
             s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{bred:.2f}" '

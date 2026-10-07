@@ -114,12 +114,16 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   **PDF'en ligger i `vejledning/`, som er udelukket fra deploy** — den
   indeholder ungernes navne og må ikke på sitet.
 - **Planen er nu en kilde (7.10.).** Bordene er ikke lige store:
-  **bord 1 har seks pladser, de fire andre har fire** — i alt 22 stole til
-  23 unger. Det går ikke op, og bord 2 har derfor én for meget. Tallene står
-  under **`pladser`** i `bindinger.json`, og scriptet siger det både i
-  terminalen og med rødt nederst på oversigten, så det ikke skal opdages,
-  når ungerne står i lokalet. **Her mangler en afklaring: hvilket bord får
-  den ekstra stol?**
+  **bord 1 har syv pladser, de fire andre har fire** — 23 stole til 23 unger,
+  og det går lige op. Tallene står under **`pladser`** i `bindinger.json`.
+  Sidder der flere ved et bord, end der er stole til, siger scriptet det både
+  i terminalen og med rødt nederst på oversigten, så det ikke skal opdages,
+  når ungerne står i lokalet.
+  **Bordene tegnes så brede, som de har pladser.** Ellers skulle syv navne
+  presses ned i samme bredde som fire, og skriften på det store bord blev
+  mindre end på de små. Og der er **én skriftstørrelse pr. bord**: regnes
+  navnene hver for sig, bliver *Nor* dobbelt så stor som *Helene* ved samme
+  bord, og det ser ud, som om de to ting betyder noget forskelligt.
   Oskar og Anna skal **ikke** sidde sammen — det var et sidespring 7.10.,
   hvor jeg flyttede Oskar derhen, og det er rullet tilbage: Asta kom ind på
   6-mandsbordet i stedet, og Oskar sidder ved sit eget med fire i alt.
