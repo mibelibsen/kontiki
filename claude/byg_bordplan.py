@@ -24,6 +24,7 @@ LISTE = os.path.join(ROD, 'spoergeskema', 'unger.txt')
 DATO = date.today().isoformat()
 UD_HTML = os.path.join(ROD, 'vejledning', f'bordplan-{DATO}.html')
 UD_PDF = os.path.join(ROD, 'vejledning', f'bordplan-{DATO}.pdf')
+UD_KORT = os.path.join(ROD, 'vejledning', f'bordkort-{DATO}.pdf')
 
 # Antal gruppeborde i lokalet, og hvordan de staar: foerste tal er borde i
 # den forreste raekke, andet tal i den bageste. 3 + 2 giver fem borde.
@@ -240,6 +241,82 @@ def tegn():
     return ''.join(s)
 
 
+# ---------------------------------------------------------------------------
+# Bordkortene: ét ark pr. bord, der laegges paa bordet.
+#
+# Navnene paa den side, der vender vaek fra tavlen, staar paa hovedet. Det er
+# med vilje: arket ligger fladt paa bordet, og saa kan hver unge laese sit eget
+# navn rigtigt vej fra sin egen plads. Pilen viser, hvilken kant der skal vende
+# mod tavlen, saa arket ikke bliver lagt forkert.
+# ---------------------------------------------------------------------------
+K_B, K_H = 297, 210                 # A4 paa tvaers
+K_MARGEN = 16
+
+
+def bordkort(nr, navne):
+    oeverst, nederst = sider(navne)
+    s = [f'<svg viewBox="0 0 {K_B} {K_H}" width="{K_B}mm" height="{K_H}mm" '
+         f'xmlns="http://www.w3.org/2000/svg" '
+         f'font-family="Helvetica, Arial, sans-serif">']
+
+    # pilen mod tavlen
+    s.append(f'<text x="{K_B / 2}" y="{K_MARGEN + 4}" text-anchor="middle" '
+             f'fill="{MUT}" font-size="5" letter-spacing="1.8">'
+             f'&#9650;  MOD TAVLEN  &#9650;</text>')
+
+    raekker = [(oeverst, False), (nederst, True)]
+    bh = 46                          # hoejden paa en navnerraekke
+    BAAND = 26                       # midterbaandet, hvor bordnummeret staar
+    midte = K_H / 2
+    # baandet skal kunne rumme bordnummeret uden at skaere ind i navneboksene
+    assert BAAND >= 20, 'bordnummeret staar i vejen for navnene'
+    assert 2 * bh + BAAND + 2 * K_MARGEN <= K_H, 'arket er ikke hoejt nok'
+    for navne_her, paa_hovedet in raekker:
+        if not navne_her:
+            continue
+        # den oeverste raekke ligger over midten, den nederste under
+        y = midte - BAAND / 2 - bh if not paa_hovedet else midte + BAAND / 2
+        bred = (K_B - 2 * K_MARGEN - (len(navne_her) - 1) * 6) / len(navne_her)
+        for j, n in enumerate(navne_her):
+            x = K_MARGEN + j * (bred + 6)
+            cx, cy = x + bred / 2, y + bh / 2
+            # skriften regnes af pladsen, som paa oversigten
+            st = min(26, (bred - 8) / (len(n) * 0.60))
+            assert st >= 10, f'{n} kan ikke staa paa {bred:.0f} mm'
+            drej = f' transform="rotate(180 {cx:.2f} {cy:.2f})"' if paa_hovedet else ''
+            s.append(f'<g{drej}>')
+            s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{bred:.2f}" '
+                     f'height="{bh}" rx="4" fill="#fff" stroke="{LIN}" '
+                     f'stroke-width="0.6"/>')
+            s.append(f'<text x="{cx:.2f}" y="{cy + st * 0.35:.2f}" '
+                     f'text-anchor="middle" fill="{INK}" font-size="{st:.1f}" '
+                     f'font-weight="bold">{n}</text>')
+            s.append('</g>')
+
+    # bordnummeret ligger i midterbaandet, saa det kan laeses fra begge sider
+    s.append(f'<text x="{K_B / 2}" y="{midte + 5.2}" text-anchor="middle" '
+             f'fill="{MUT}" font-size="14" letter-spacing="5" '
+             f'font-weight="bold">BORD {nr}</text>')
+    s.append(f'<text x="{K_B / 2}" y="{K_H - K_MARGEN + 2}" text-anchor="middle" '
+             f'fill="{MUT}" font-size="4.2">9. klasse · {DATO} · '
+             f'{len(navne)} pladser</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+KORT_HTML = (
+    '<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
+    '<title>Bordkort · 9. klasse</title><style>'
+    '*{box-sizing:border-box}body{margin:0}'
+    'svg{display:block}'
+    '.ark{page-break-after:always}.ark:last-child{page-break-after:auto}'
+    '@page{size:A4 landscape;margin:0}'
+    '</style></head><body>'
+    + ''.join(f'<div class="ark">{bordkort(i, b)}</div>'
+              for i, b in enumerate(BORD, 1))
+    + '</body></html>')
+
+
 # alfabetisk opslag, saa en vikar kan finde en unge uden at lede i tegningen
 opslag = sorted((n, i + 1) for i, b in enumerate(BORD) for n in b)
 rk = ''.join(f'<tr><td>{n}</td><td>{b}</td></tr>' for n, b in opslag)
@@ -268,10 +345,11 @@ venstre mod højre, række for række, med tavlen foran.</p>
 </body></html>'''
 
 os.makedirs(os.path.dirname(UD_HTML), exist_ok=True)
-with open(UD_HTML, 'w', encoding='utf-8') as f:
-    f.write(HTML)
-subprocess.run(['node', os.path.join(ROD, 'claude', 'html_til_pdf.mjs'),
-                UD_HTML, UD_PDF], check=True, cwd=ROD)
+for html_tekst, maal in ((HTML, UD_PDF), (KORT_HTML, UD_KORT)):
+    with open(UD_HTML, 'w', encoding='utf-8') as f:
+        f.write(html_tekst)
+    subprocess.run(['node', os.path.join(ROD, 'claude', 'html_til_pdf.mjs'),
+                    UD_HTML, maal], check=True, cwd=ROD)
 os.remove(UD_HTML)
 print(f'{len(NAVNE)} unger · {BORDE} borde · {STOERRELSER} pladser')
 for a, b in SAMMEN:

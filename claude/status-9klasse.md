@@ -94,7 +94,13 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   skal sidde sammen, og hvem der ikke må. Den er i git med vilje: sidst lå det,
   at Johan og Silke er tvillinger, i en samtale og ikke i repoet, og så var det
   væk. Mappen er udelukket i `.vercelignore`, så filen ikke kommer på sitet.
-  Selve PDF'en er ikke i git — den bygges af scriptet og sendes i Code.
+  Selve PDF'erne er ikke i git — de bygges af scriptet og sendes i Code.
+- **Scriptet laver to filer:** `bordplan-<dato>.pdf` med oversigten og den
+  alfabetiske liste, og `bordkort-<dato>.pdf` med ét A4-ark pr. bord til at
+  lægge på bordene. På bordkortene står navnene på den side, der vender væk
+  fra tavlen, **på hovedet** — arket ligger fladt, så hver unge læser sit
+  eget navn rigtigt vej fra sin egen plads. En pil viser, hvilken kant der
+  skal vende mod tavlen.
 - **Ny bordplan (7.10.).** Lokalet har **fem gruppeborde**, ikke dobbeltborde —
   den første udgave gættede på 12 og er slettet. 23 unger fordeles jævnt som
   5+5+5+4+4, tre borde forrest og to bagerst, med tavlen foran. Bindingen
