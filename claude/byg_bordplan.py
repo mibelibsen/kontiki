@@ -175,7 +175,11 @@ def skilt(s, x, y, b, navn, bundet):
     s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{b:.2f}" height="{PLADS_H}" '
              f'rx="2" fill="#fff" stroke="{kant}" '
              f'stroke-width="{0.9 if bundet else 0.4}"/>')
-    st = 6.2 if len(navn) <= 8 else 5.2
+    # skriftstoerrelsen regnes ud af pladsen: fed Helvetica fylder ca. 0,60 em
+    # pr. tegn, og der skal vaere 3 mm luft i alt. Et langt navn ved et smalt
+    # bord skal krympe, ikke loebe ud over kanten.
+    st = min(6.2, (b - 3) / (len(navn) * 0.60))
+    assert st >= 3.6, f'{navn} kan ikke staa paa en plads paa {b:.1f} mm'
     s.append(f'<text x="{x + b / 2:.2f}" y="{y + PLADS_H / 2 + st * 0.35:.2f}" '
              f'text-anchor="middle" fill="{INK}" font-size="{st}" '
              f'font-weight="bold">{navn}</text>')
