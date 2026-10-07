@@ -11,16 +11,21 @@
 
   "sammen": [["Emilie", "Anna"]],
 
-  "samme_bord": [["Anna", "Oskar"]],
+  "samme_bord": [],
 
   "adskilt": [["Milius", "William"],
               ["Nor", "William"],
               ["Johan", "Silke"],
-              ["Jonas", "Hjalte"]],
+              ["Jonas", "Hjalte"],
+              ["Anna", "Oskar"]],
 
-  "fast": [["Emilie", "Anna", "Nor", "Helene", "Milius", "Oskar"],
+  "__pladser": "Stolene ved hvert bord. Bord 1 er 6-mandsbordet, resten har fire.",
+
+  "pladser": [6, 4, 4, 4, 4],
+
+  "fast": [["Emilie", "Anna", "Nor", "Helene", "Milius", "Asta"],
            ["Flora", "Luna", "Jonas", "Viktor", "William"],
-           ["Emily", "Caroline", "Asta", "Savanna"],
+           ["Emily", "Oskar", "Caroline", "Savanna"],
            ["Johan", "Hjalte", "Simone", "Clara"],
            ["Silke", "Ronja", "Frida", "Kasper"]]
 }

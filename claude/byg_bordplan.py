@@ -40,11 +40,17 @@ assert sum(RAEKKER) == BORDE, 'raekkerne skal give det samlede antal borde'
 #   {"sammen":     [["Emilie", "Anna"]],
 #    "samme_bord": [["Anna", "Oskar"]],
 #    "adskilt":    [["Milius", "William"], ["Johan", "Silke"]],
+#    "pladser":    [6, 4, 4, 4, 4],
 #    "fast":       [["Emilie", "Anna", ...], ...]}
 #
 # sammen     = skal sidde ved siden af hinanden ved samme bord
 # samme_bord = skal sidde ved samme bord, men ikke noedvendigvis som nabo
 # adskilt    = maa ikke sidde ved samme bord (ogsaa tvillinger)
+# pladser    = stolene ved hvert bord. Bordene er ikke lige store: bord 1 har
+#              seks pladser, de fire andre har fire. Staar der flere ved et
+#              bord, end der er stole, siger scriptet det - i terminalen og
+#              nederst paa oversigten. Det er ikke noget, der skal opdages,
+#              naar ungerne staar i lokalet.
 # fast       = selve planen. Staar den der, blandes der ikke: planen tegnes som
 #              den er, og bindingerne tjekkes. Saa flytter man én unge ved at
 #              rette én linje, i stedet for at hele klassen bytter plads.
@@ -54,17 +60,18 @@ BINDINGER = os.path.join(ROD, 'spoergeskema', 'bindinger.json')
 def bindinger():
     if not os.path.exists(BINDINGER):
         print(f'BEMÆRK: {BINDINGER} findes ikke — bygger uden bindinger')
-        return [], [], [], []
+        return [], [], [], [], []
     import json
     with open(BINDINGER, encoding='utf-8') as f:
         d = json.load(f)
     return ([tuple(p) for p in d.get('sammen', [])],
             [tuple(p) for p in d.get('samme_bord', [])],
             [tuple(p) for p in d.get('adskilt', [])],
-            [list(b) for b in d.get('fast', [])])
+            [list(b) for b in d.get('fast', [])],
+            list(d.get('pladser', [])))
 
 
-SAMMEN, SAMME_BORD, ADSKILT, FAST = bindinger()
+SAMMEN, SAMME_BORD, ADSKILT, FAST, PLADSER = bindinger()
 
 FROE = 20261006          # fast, saa den samme plan kan bygges igen
 
@@ -90,9 +97,23 @@ def stoerrelser(antal, borde):
 
 # Bordene er ikke lige store: bord 1 er 6-mandsbordet. Naar der er en fast
 # plan, er det den, der bestemmer, hvor mange der sidder ved hvert bord.
-STOERRELSER = [len(b) for b in FAST] if FAST else stoerrelser(len(NAVNE), BORDE)
+STOERRELSER = [len(b) for b in FAST] if FAST else stoerrelser(len(NAVNE), PLADSER and len(PLADSER) or BORDE)
 assert max(STOERRELSER) <= 6, (
     f'{max(STOERRELSER)} unger ved ét bord er for mange — der skal flere borde til')
+
+if PLADSER:
+    assert len(PLADSER) == BORDE, f'{len(PLADSER)} tal i pladser, {BORDE} borde'
+    # 23 unger og 22 stole gaar ikke op. Det skal staa nederst paa oversigten,
+    # ikke opdages i lokalet.
+    MANGLER = [(i + 1, n - k) for i, (n, k) in enumerate(zip(STOERRELSER, PLADSER))
+               if n > k]
+    for nr, ekstra in MANGLER:
+        print(f'ADVARSEL: bord {nr} har {ekstra} unge mere, end der er stole til')
+    if sum(PLADSER) < len(NAVNE):
+        print(f'ADVARSEL: {len(NAVNE)} unger, {sum(PLADSER)} pladser '
+              f'— der mangler {len(NAVNE) - sum(PLADSER)} stol(e) i lokalet')
+else:
+    MANGLER = []
 
 for par in SAMMEN + SAMME_BORD + ADSKILT:
     for n in par:
@@ -259,10 +280,17 @@ def tegn():
     bindinger = ', '.join(f'{a} ved siden af {b}' for a, b in SAMMEN)
     s.append(f'<text x="{MARGEN + 7:.2f}" y="{fy:.2f}" fill="{MUT}" '
              f'font-size="4.4">Grøn kant: {bindinger}</text>')
+    fod = (f'Bordplan · 9. klasse · {DATO} · {len(NAVNE)} unger på '
+           f'{BORDE} borde ({"+".join(str(n) for n in STOERRELSER)})')
+    if PLADSER:
+        fod += f' · {sum(PLADSER)} pladser ({"+".join(str(n) for n in PLADSER)})'
     s.append(f'<text x="{SIDE_B - MARGEN:.2f}" y="{fy:.2f}" text-anchor="end" '
-             f'fill="{MUT}" font-size="4.4">Bordplan · 9. klasse · {DATO} · '
-             f'{len(NAVNE)} unger på {BORDE} borde '
-             f'({"+".join(str(n) for n in STOERRELSER)})</text>')
+             f'fill="{MUT}" font-size="4.4">{fod}</text>')
+    if MANGLER:
+        mgl = ', '.join(f'bord {nr}: {e} for meget' for nr, e in MANGLER)
+        s.append(f'<text x="{SIDE_B - MARGEN:.2f}" y="{fy - 6:.2f}" '
+                 f'text-anchor="end" fill="#b03030" font-size="4.4" '
+                 f'font-weight="bold">Flere end der er stole til — {mgl}</text>')
     s.append('</svg>')
     return ''.join(s)
 

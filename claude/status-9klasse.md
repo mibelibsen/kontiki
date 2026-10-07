@@ -113,12 +113,19 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   unge er blevet væk, eller hvis bordene bliver for smalle.
   **PDF'en ligger i `vejledning/`, som er udelukket fra deploy** — den
   indeholder ungernes navne og må ikke på sitet.
-- **Oskar flyttet til Anna (7.10.), og planen er nu en kilde.** Bordene er
-  ikke lige store: **bord 1 er 6-mandsbordet**, så fordelingen er 6+5+4+4+4,
-  ikke jævn. Oskar stod før som *adskilt* fra Anna; brugeren bad om at flytte
-  ham hen til hende, så den binding er fjernet og erstattet af en ny type,
-  **`samme_bord`** — samme bord, men ikke nødvendigvis nabo (*sammen* kræver
-  stadig, at de sidder ved siden af hinanden).
+- **Planen er nu en kilde (7.10.).** Bordene er ikke lige store:
+  **bord 1 har seks pladser, de fire andre har fire** — i alt 22 stole til
+  23 unger. Det går ikke op, og bord 2 har derfor én for meget. Tallene står
+  under **`pladser`** i `bindinger.json`, og scriptet siger det både i
+  terminalen og med rødt nederst på oversigten, så det ikke skal opdages,
+  når ungerne står i lokalet. **Her mangler en afklaring: hvilket bord får
+  den ekstra stol?**
+  Oskar og Anna skal **ikke** sidde sammen — det var et sidespring 7.10.,
+  hvor jeg flyttede Oskar derhen, og det er rullet tilbage: Asta kom ind på
+  6-mandsbordet i stedet, og Oskar sidder ved sit eget med fire i alt.
+  Bindingen *Anna og Oskar adskilt* står igen. Typen **`samme_bord`** —
+  samme bord, men ikke nødvendigvis nabo — blev lavet undervejs og er der
+  stadig, nu tom (*sammen* kræver stadig, at de sidder ved siden af hinanden).
   Planen står nu under **`fast`** i `bindinger.json`, og så blander scriptet
   ikke: det tegner den og tjekker bindingerne. Derfor flytter man én unge ved
   at rette én linje, i stedet for at hele klassen bytter plads, når der bliver
