@@ -23,9 +23,10 @@
 
   "pladser": [7, 4, 4, 4, 4],
 
-  "__fast": "Bord 1 står på langs: de tre første er venstre langside set fra",
-  "__fast2": "tavlen, de tre næste er højre langside, og den sidste er pladsen",
-  "__fast3": "for enden — længst væk fra tavlen.",
+  "__fast": "Bord 1 står på langs: de tre første er HØJRE langside set fra",
+  "__fast2": "tavlen, de tre næste er venstre langside, og den sidste er",
+  "__fast3": "pladsen for enden — længst væk fra tavlen. Ved bordene langs",
+  "__fast4": "væggene er det de to første og de to næste på samme måde.",
 
   "fast": [["Emilie", "Anna", "Nor", "Helene", "Asta", "Viktor", "Milius"],
            ["Flora", "Luna", "Jonas", "William"],

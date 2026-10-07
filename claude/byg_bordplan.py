@@ -30,14 +30,19 @@ UD_KORT = os.path.join(ROD, 'vejledning', f'bordkort-{DATO}.pdf')
 # paa langs, med kortenden vaek fra tavlen: tre paa hver langside og én for
 # enden - den plads, der er laengst fra tavlen.
 #
+# Planen er tegnet SET FRA TAVLEN. Det vender arket om: staar man ved tavlen
+# og ser ind i lokalet, har man hoejre vaeg paa sin hoejre haand - men paa et
+# kort med tavlen oeverst ligger den vaeg i arkets VENSTRE side. Alt hvad der
+# hedder venstre og hoejre herunder er set fra tavlen, ikke fra arket.
+#
 #   +-------------------- T A V L E --------------------+
 #   |                                                   |
-#   |  [2]                                              |
-#   |  | |            | 1 |                             |
-#   |                 |   |              | 4 |        [] doer
-#   |  [3]            (for enden)        |   |          |
-#   |  | |                                            [] doer
-#   |                                                   |
+#   |                                            [2]    |
+#   | []                  | 1 |                  | |    |
+#   | doer    | 4 |       |   |                         |
+#   |         |   |       (for enden)                   |
+#   | []                                         [3]    |
+#   | doer                                       | |    |
 #   |                     [  5  ]                       |
 #   +---------------------------------------------------+
 #
@@ -304,11 +309,12 @@ ZONE_H = ZONE_Y1 - ZONE_Y0
 # Tre spalter paa tvaers. 7-mandsbordet staar midt i LOKALET - ikke midt i
 # det, der er tilbage, naar doerstriben er trukket fra, for saa ville det
 # staa en smule til venstre uden grund. De to andre staar op ad hver sin vaeg.
+# Set fra tavlen ligger hoejre vaeg i arkets venstre side, og omvendt.
 X_MIDT = (SIDE_B - BLOK[LANGS][0]) / 2
-X_VENSTRE = INDE_X0
-X_HOEJRE = INDE_X1 - BLOK[LODRET][0]
-GANG = min(X_MIDT - (X_VENSTRE + BLOK[LODRET][0]),
-           X_HOEJRE - (X_MIDT + BLOK[LANGS][0]))
+X_HOEJRE = INDE_X0                              # hoejre vaeg set fra tavlen
+X_VENSTRE = INDE_X1 - BLOK[LODRET][0]           # venstre vaeg set fra tavlen
+GANG = min(X_MIDT - (X_HOEJRE + BLOK[LODRET][0]),
+           X_VENSTRE - (X_MIDT + BLOK[LANGS][0]))
 assert GANG / METER >= 0.3, (
     f'der er kun {GANG / METER:.2f} m mellem bordene — der skal kunne gås '
     f'imellem dem, så gør skiltene smallere eller bordene færre')
@@ -374,17 +380,20 @@ def _bordplade(s, x, y, b, h, nr, lodret):
 
 
 def _sider_lodret(navne, antal_pr_side):
+    """De to langsider, set fra tavlen. Foerste halvdel af pladserne er den
+    hoejre side - den ligger i arkets venstre kant, fordi planen er tegnet
+    set fra tavlen."""
     return navne[:antal_pr_side], navne[antal_pr_side:2 * antal_pr_side]
 
 
 def _pladser_lodret(navne, x, y, plade_b, pr_side, hoejde):
     """Et bord, der staar paa langs ad lokalet: lige mange paa hver langside,
-    og skiltene staar ud for hinanden. Venstre side er venstre set fra tavlen."""
-    venstre, hoejre = _sider_lodret(navne, pr_side)
+    og skiltene staar ud for hinanden."""
+    hoejre, venstre = _sider_lodret(navne, pr_side)
     bx = x + C + 2
     y0 = y + (hoejde - (pr_side * PLADS_H + (pr_side - 1) * SKILT_LUFT)) / 2
     ud = []
-    for side, sx in ((venstre, x), (hoejre, bx + plade_b + 2)):
+    for side, sx in ((hoejre, x), (venstre, bx + plade_b + 2)):
         for j, n in enumerate(side):
             ud.append((n, sx, y0 + j * (PLADS_H + SKILT_LUFT), C))
     return ud, (bx, y, plade_b, hoejde, True)
@@ -437,24 +446,26 @@ def tegn():
     # maalene paa rummet
     s.append(f'<text x="{RUM_X1 - 2:.2f}" y="{RUM_Y1 - 2.5:.2f}" '
              f'text-anchor="end" fill="{VAEG}" font-size="4">'
-             f'{RUM_BREDDE_M:.0f} m × {RUM_DYBDE_M:.0f} m</text>')
+             f'{RUM_BREDDE_M:.0f} m × {RUM_DYBDE_M:.0f} m · set fra tavlen</text>')
 
     # de to doere i hoejre vaeg, med bord 4 midt imellem
+    # doerene sidder i hoejre vaeg - paa arket er det den venstre kant
+    vaeg = RUM_X0
     midt_4 = HJOERNE[3][1] + BLOK[LODRET][1] / 2
     doer_h, doer_afstand, blad = 24, 45, 2
     for d in (midt_4 - doer_afstand, midt_4 + doer_afstand):
         y = d - doer_h / 2
         assert RUM_Y0 + 4 <= y and y + doer_h <= RUM_Y1 - 4, \
             'døren falder uden for væggen'
-        s.append(f'<rect x="{RUM_X1 - 1.4:.2f}" y="{y:.2f}" width="2.8" '
+        s.append(f'<rect x="{vaeg - 1.4:.2f}" y="{y:.2f}" width="2.8" '
                  f'height="{doer_h}" fill="#fff"/>')
         for kant in (y, y + doer_h):
-            s.append(f'<path d="M {RUM_X1 - blad:.2f} {kant:.2f} '
-                     f'L {RUM_X1 + blad:.2f} {kant:.2f}" fill="none" '
+            s.append(f'<path d="M {vaeg - blad:.2f} {kant:.2f} '
+                     f'L {vaeg + blad:.2f} {kant:.2f}" fill="none" '
                      f'stroke="{VAEG}" stroke-width="0.7"/>')
         # maerket staar uden for vaeggen: inde i lokalet ville det tage den
         # plads, bordet ved hoejre vaeg skal bruge
-        dx = RUM_X1 + 4.5
+        dx = vaeg - 4.5
         s.append(f'<text x="{dx:.2f}" y="{d + 1.2:.2f}" fill="{VAEG}" '
                  f'font-size="3.6" letter-spacing="0.8" text-anchor="middle" '
                  f'transform="rotate(-90 {dx:.2f} {d:.2f})">DØR</text>')
@@ -531,9 +542,11 @@ def bordkort(nr, navne):
     if langs:
         # arket ligger ud ad bordet. Drejes planen en kvart omgang, kommer
         # hoejre langside (set fra tavlen) op og venstre ned.
+        # Arket ligger ud ad bordet med tavlen mod venstre kant. Saadan set
+        # kommer den langside, der er VENSTRE set fra tavlen, op foroven.
         pr_side = 3 if retning == LANGS else 2
-        venstre, hoejre = _sider_lodret(navne, pr_side)
-        oeverst, nederst, ende = hoejre, venstre, navne[2 * pr_side:]
+        hoejre, venstre = _sider_lodret(navne, pr_side)
+        oeverst, nederst, ende = venstre, hoejre, navne[2 * pr_side:]
     else:
         halv = (len(navne) + 1) // 2
         oeverst, nederst, ende = navne[:halv], navne[halv:], []

@@ -128,14 +128,23 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 
   ```
   +-------------------- T A V L E --------------------+
-  |  [2]                                              |
-  |  | |            | 1 |                             |
-  |                 |   |              | 4 |        [] dør
-  |  [3]            (for enden)        |   |          |
-  |  | |                                            [] dør
+  |                                            [2]    |
+  | []                  | 1 |                  | |    |
+  | dør     | 4 |       |   |                         |
+  |         |   |       (for enden)                   |
+  | []                                         [3]    |
+  | dør                                        | |    |
   |                     [  5  ]                       |
   +---------------------------------------------------+
   ```
+
+  **Planen er tegnet SET FRA TAVLEN, og det vender arket om.** Står man ved
+  tavlen og ser ind i lokalet, har man højre væg på sin højre hånd — men på
+  et kort med tavlen øverst ligger den væg i arkets **venstre** side. Første
+  udgave 7.10. var spejlvendt, fordi jeg tegnede det, som man ser rummet
+  bagfra. Alt hvad der hedder venstre og højre i `LOKALE` og i `bindinger.json`
+  er set fra tavlen, ikke fra arket: de første pladser ved et bord er den
+  **højre** langside og tegnes i arkets venstre kant.
 
   **Lokalet er ca. 6 m bredt og 8 m dybt** — dybere end bredt. Derfor står
   oversigten på **højkant**; på tværs blev rummet tegnet bredere end dybt, og
