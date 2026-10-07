@@ -123,40 +123,44 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   *Nor* dobbelt så stor som *Helene* ved samme bord; regnes de pr. bord,
   står bord 3 mindre end bord 2, fordi *Caroline* er lang. Begge dele ser
   ud, som om forskellen betyder noget.
-- **Lokalets opstilling står i `LOKALE` i scriptet (7.10.).** Rækkerne er
-  væk; hvert bord har en retning og en plads:
+- **Lokalet står i `LOKALE` i scriptet (7.10.).** Rækkerne er væk; hvert bord
+  har en retning og en plads ved en væg:
 
   ```
-  +--------------------- T A V L E ---------------------+
-  |   [  2  ]  [  3  ]      | 1 |      [  4  ]        []|  dør
-  |                         |   |                       |
-  |                         (for enden)                 |
-  |                                     [  5  ]       []|  dør
-  +-----------------------------------------------------+
+  +-------------------- T A V L E --------------------+
+  |  [2]                                              |
+  |  | |            | 1 |                             |
+  |                 |   |              | 4 |        [] dør
+  |  [3]            (for enden)        |   |          |
+  |  | |                                            [] dør
+  |                     [  5  ]                       |
+  +---------------------------------------------------+
   ```
 
-  **Bord 1 står på langs** med kortenden væk fra tavlen: tre på hver
-  langside og én for enden. Den plads er **Milius'**. I `fast` er bord 1's
-  rækkefølge derfor: tre til venstre set fra tavlen, tre til højre, og den
-  sidste for enden. Bord 4 står midt mellem lokalets to døre i højre væg,
-  og de tegnes med.
+  **Lokalet er ca. 6 m bredt og 8 m dybt** — dybere end bredt. Derfor står
+  oversigten på **højkant**; på tværs blev rummet tegnet bredere end dybt, og
+  så lignede planen ikke det lokale, den handler om. Målene står i
+  `RUM_BREDDE_M` og `RUM_DYBDE_M`, og målestokken (1:32) følger af dem.
+  Bordkortene er stadig på tværs.
+  **Bord 1 står på langs** midt i lokalet med kortenden væk fra tavlen: tre på
+  hver langside og én for enden. Den plads er **Milius'**. I `fast` er bord 1's
+  rækkefølge derfor tre til venstre set fra tavlen, tre til højre, og den
+  sidste for enden. Bord 2 og 3 står ved venstre væg, bord 4 ved højre væg
+  mellem de to døre, bord 5 ved bagvæggen.
+  **Navneskiltene er bredere end en stol**, ellers kan navnene ikke stå der.
+  Det går ud over gangene mellem bordene, så scriptet nægter at tegne, hvis
+  der bliver under 30 cm imellem — ungerne skal kunne komme hen til pladsen.
+  Det står i foden, at skiltene er større end en stol.
+  **Scriptet tjekker også, at to borde ikke står oven i hinanden.** En
+  tegning, der er regnet forkert ud, er ikke til at se på.
   **`naboer()` regner ud, hvem der faktisk sidder ved siden af hvem** — på
   samme langside, og pladsen for enden rører den bageste på begge sider.
   Over for hinanden tæller ikke. Det er den, `sammen` tjekkes med, så
   *Emilie ved siden af Anna* betyder det, der står.
-  **Bordkortet til bord 1 ligger på langs:** tavlen peger mod arkets venstre
-  kant, ikke opad, og pladsen for enden står ude i højre side drejet en kvart
-  omgang — den vej, Milius sidder.
-  Oskar og Anna skal **ikke** sidde sammen — det var et sidespring 7.10.,
-  hvor jeg flyttede Oskar derhen, og det er rullet tilbage: Asta kom ind på
-  6-mandsbordet i stedet, og Oskar sidder ved sit eget med fire i alt.
-  Bindingen *Anna og Oskar adskilt* står igen. Typen **`samme_bord`** —
-  samme bord, men ikke nødvendigvis nabo — blev lavet undervejs og er der
-  stadig, nu tom (*sammen* kræver stadig, at de sidder ved siden af hinanden).
-  Planen står nu under **`fast`** i `bindinger.json`, og så blander scriptet
-  ikke: det tegner den og tjekker bindingerne. Derfor flytter man én unge ved
-  at rette én linje, i stedet for at hele klassen bytter plads, når der bliver
-  bygget om. Tages `fast` ud, blander scriptet igen som før.
+  **De fire borde, der står på langs, får bordkort på langs:** tavlen peger
+  mod arkets venstre kant, ikke opad. På bord 1 står pladsen for enden ude i
+  højre side drejet en kvart omgang — den vej, Milius sidder. Kun bord 5 ved
+  bagvæggen har kortet med tavlen opad.
 - **Årsplanen for samfundsfag er rettet.** Uge 43 er skilt ud som sit eget
   forløb, *Digital socialisering: kvalitativ analyse*, og kriminalitet og
   overvågning rykker til uge 44–47. Antallet af uger pr. tema er uændret.
