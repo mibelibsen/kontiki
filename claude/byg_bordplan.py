@@ -31,8 +31,30 @@ BORDE = 5
 RAEKKER = (3, 2)
 assert sum(RAEKKER) == BORDE, 'raekkerne skal give det samlede antal borde'
 
-# Unger der skal sidde ved siden af hinanden, altsaa ved samme dobbeltbord.
-SAMMEN = [('Emilie', 'Anna')]
+# Bindingerne staar i spoergeskema/bindinger.local.json, som IKKE er i git.
+# Repoet er offentligt, og hvem der er soeskende, hvem der ikke kan sidde
+# sammen, hoerer ikke til i en offentlig fil. Filen ser saadan ud:
+#
+#   {"sammen":  [["Emilie", "Anna"]],
+#    "adskilt": [["Milius", "William"], ["Johan", "Silke"]]}
+#
+# sammen  = skal sidde ved siden af hinanden ved samme bord
+# adskilt = maa ikke sidde ved samme bord (ogsaa tvillinger)
+BINDINGER = os.path.join(ROD, 'spoergeskema', 'bindinger.local.json')
+
+
+def bindinger():
+    if not os.path.exists(BINDINGER):
+        print(f'BEMÆRK: {BINDINGER} findes ikke — bygger uden bindinger')
+        return [], []
+    import json
+    with open(BINDINGER, encoding='utf-8') as f:
+        d = json.load(f)
+    return ([tuple(p) for p in d.get('sammen', [])],
+            [tuple(p) for p in d.get('adskilt', [])])
+
+
+SAMMEN, ADSKILT = bindinger()
 
 FROE = 20261006          # fast, saa den samme plan kan bygges igen
 
@@ -60,19 +82,19 @@ STOERRELSER = stoerrelser(len(NAVNE), BORDE)
 assert max(STOERRELSER) <= 6, (
     f'{max(STOERRELSER)} unger ved ét bord er for mange — der skal flere borde til')
 
-for a, b in SAMMEN:
-    for n in (a, b):
+for par in SAMMEN + ADSKILT:
+    for n in par:
         assert n in NAVNE, f'{n} staar ikke i klasselisten'
+for a, b in ADSKILT:
+    assert not any({a, b} <= set(p) for p in SAMMEN), \
+        f'{a} og {b} staar baade som sammen og som adskilt'
 
 
-def plads():
-    """Fordeler ungerne paa gruppebordene. Bundne par laegges foerst ved samme
-    bord og som de to foerste pladser, saa de sidder ved siden af hinanden."""
-    r = random.Random(FROE)
+def _fordel(r):
+    """Ét forsoeg: bundne par ved samme bord foerst, resten fyldt paa."""
     bundne = {n for par in SAMMEN for n in par}
     resten = [n for n in NAVNE if n not in bundne]
     r.shuffle(resten)
-
     borde = [[] for _ in STOERRELSER]
     for i, par in enumerate(SAMMEN):
         assert len(par) <= STOERRELSER[i], 'bindingen fylder mere end bordet'
@@ -84,14 +106,36 @@ def plads():
     return borde
 
 
+def _holder(borde):
+    for a, b in ADSKILT:
+        if any(a in bo and b in bo for bo in borde):
+            return False
+    for a, b in SAMMEN:
+        if not any(a in bo and b in bo and abs(bo.index(a) - bo.index(b)) == 1
+                   for bo in borde):
+            return False
+    return True
+
+
+def plads(forsoeg=5000):
+    """Blander, til alle bindinger holder. Med faa bindinger gaar det paa faa
+    forsoeg; en umulig kombination opdages i stedet for at blive tegnet."""
+    for i in range(forsoeg):
+        borde = _fordel(random.Random(FROE + i))
+        if _holder(borde):
+            if i:
+                print(f'fordeling fundet efter {i + 1} forsøg')
+            return borde
+    raise AssertionError(
+        f'ingen fordeling opfylder alle bindinger efter {forsoeg} forsøg — '
+        f'se efter en binding, der modsiger en anden')
+
+
 BORD = plads()
 assert len(BORD) == BORDE
 assert [len(b) for b in BORD] == STOERRELSER
 assert sorted(n for b in BORD for n in b) == sorted(NAVNE), 'en unge er blevet væk'
-for a, b in SAMMEN:
-    naboer = [bo for bo in BORD if a in bo and b in bo
-              and abs(bo.index(a) - bo.index(b)) == 1]
-    assert naboer, f'{a} sidder ikke ved siden af {b}'
+assert _holder(BORD), 'bindingerne holder ikke'
 
 
 # ---------------------------------------------------------------------------
@@ -226,4 +270,8 @@ subprocess.run(['node', os.path.join(ROD, 'claude', 'html_til_pdf.mjs'),
 os.remove(UD_HTML)
 print(f'{len(NAVNE)} unger · {BORDE} borde · {STOERRELSER} pladser')
 for a, b in SAMMEN:
-    print(f'binding holdt: {a} + {b}')
+    print(f'sammen:  {a} + {b}')
+for a, b in ADSKILT:
+    bord_a = next(i for i, bo in enumerate(BORD, 1) if a in bo)
+    bord_b = next(i for i, bo in enumerate(BORD, 1) if b in bo)
+    print(f'adskilt: {a} (bord {bord_a}) og {b} (bord {bord_b})')

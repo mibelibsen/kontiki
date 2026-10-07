@@ -1,2 +1,10 @@
 __pycache__/
 *.pyc
+
+# Bindinger til bordplanen: hvem der er søskende, hvem der ikke kan
+# sidde sammen. Repoet er offentligt — det hører ikke til her.
+*.local.json
+
+# Bordplaner. De indeholder navnene på ungerne og hvem der sidder
+# sammen. Repoet er offentligt — planerne sendes i Code i stedet.
+vejledning/bordplan-*.pdf

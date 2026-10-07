@@ -85,13 +85,22 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
   og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
   10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
+- **Repoet er OFFENTLIGT, og ungernes fornavne ligger i det.**
+  `spoergeskema/unger.txt`, `unger-links.tsv` og QR-plakaterne blev committet
+  22.9., og `/u/<navn>`-redirects står i `vercel.json`. Det er ikke blevet
+  besluttet — det er sket. **Tag stilling til det.**
+  Bordplanens bindinger (hvem der er tvillinger, hvem der ikke kan sidde
+  sammen) er derfor lagt i `spoergeskema/bindinger.local.json`, som er i
+  `.gitignore` og aldrig committes. Bordplanens PDF er taget ud af
+  versionsstyringen af samme grund og sendes i Code i stedet.
 - **Ny bordplan (7.10.).** Lokalet har **fem gruppeborde**, ikke dobbeltborde —
   den første udgave gættede på 12 og er slettet. 23 unger fordeles jævnt som
   5+5+5+4+4, tre borde forrest og to bagerst, med tavlen foran. Bindingen
   *Emilie ved siden af Anna* er holdt og markeret med grøn kant. Bygges af
   `claude/byg_bordplan.py` med en fast frø, så den samme plan kan laves igen;
   scriptet nægter at skrive filen, hvis en binding ikke er overholdt, hvis en
-  unge er blevet væk, eller hvis bordene bliver for smalle.
+  unge er blevet væk, eller hvis bordene bliver for smalle. Bindingerne er nu
+  både *sammen* og *adskilt*, og scriptet blander, til alle holder.
   **PDF'en ligger i `vejledning/`, som er udelukket fra deploy** — den
   indeholder ungernes navne og må ikke på sitet.
 - **Årsplanen for samfundsfag er rettet.** Uge 43 er skilt ud som sit eget
