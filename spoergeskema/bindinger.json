@@ -1,0 +1,13 @@
+{
+  "_": "Bindinger til bordplanen. Bygges af claude/byg_bordplan.py.",
+  "__": "sammen  = skal sidde ved siden af hinanden ved samme bord.",
+  "___": "adskilt = må ikke sidde ved samme bord. Tvillinger står også her.",
+
+  "sammen": [["Emilie", "Anna"]],
+
+  "adskilt": [["Milius", "William"],
+              ["Nor", "William"],
+              ["Johan", "Silke"],
+              ["Jonas", "Hjalte"],
+              ["Anna", "Oskar"]]
+}

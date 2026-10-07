@@ -31,16 +31,17 @@ BORDE = 5
 RAEKKER = (3, 2)
 assert sum(RAEKKER) == BORDE, 'raekkerne skal give det samlede antal borde'
 
-# Bindingerne staar i spoergeskema/bindinger.local.json, som IKKE er i git.
-# Repoet er offentligt, og hvem der er soeskende, hvem der ikke kan sidde
-# sammen, hoerer ikke til i en offentlig fil. Filen ser saadan ud:
+# Bindingerne staar i spoergeskema/bindinger.json. Den er i git, saa de ikke
+# gaar tabt mellem sessioner - det var netop det, der skete sidst, hvor hvem
+# der var tvillinger laa i en samtale og ikke i repoet. Mappen er udelukket i
+# .vercelignore, saa filen ikke kommer paa sitet. Den ser saadan ud:
 #
 #   {"sammen":  [["Emilie", "Anna"]],
 #    "adskilt": [["Milius", "William"], ["Johan", "Silke"]]}
 #
 # sammen  = skal sidde ved siden af hinanden ved samme bord
 # adskilt = maa ikke sidde ved samme bord (ogsaa tvillinger)
-BINDINGER = os.path.join(ROD, 'spoergeskema', 'bindinger.local.json')
+BINDINGER = os.path.join(ROD, 'spoergeskema', 'bindinger.json')
 
 
 def bindinger():

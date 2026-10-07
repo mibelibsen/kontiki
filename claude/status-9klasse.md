@@ -85,14 +85,16 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
   og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
   10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
-- **Repoet er OFFENTLIGT, og ungernes fornavne ligger i det.**
-  `spoergeskema/unger.txt`, `unger-links.tsv` og QR-plakaterne blev committet
-  22.9., og `/u/<navn>`-redirects står i `vercel.json`. Det er ikke blevet
-  besluttet — det er sket. **Tag stilling til det.**
-  Bordplanens bindinger (hvem der er tvillinger, hvem der ikke kan sidde
-  sammen) er derfor lagt i `spoergeskema/bindinger.local.json`, som er i
-  `.gitignore` og aldrig committes. Bordplanens PDF er taget ud af
-  versionsstyringen af samme grund og sendes i Code i stedet.
+- **Repoet er offentligt, og ungernes fornavne ligger i det** —
+  `spoergeskema/unger.txt`, `unger-links.tsv`, QR-plakaterne og
+  `/u/<navn>`-redirects i `vercel.json`, committet 22.9.
+  **Afgjort 7.10.: det er i orden.** Kun fornavne, ingen følsomme oplysninger.
+  Spørg ikke om det igen.
+- **Bordplanens bindinger ligger i `spoergeskema/bindinger.json`** — hvem der
+  skal sidde sammen, og hvem der ikke må. Den er i git med vilje: sidst lå det,
+  at Johan og Silke er tvillinger, i en samtale og ikke i repoet, og så var det
+  væk. Mappen er udelukket i `.vercelignore`, så filen ikke kommer på sitet.
+  Selve PDF'en er ikke i git — den bygges af scriptet og sendes i Code.
 - **Ny bordplan (7.10.).** Lokalet har **fem gruppeborde**, ikke dobbeltborde —
   den første udgave gættede på 12 og er slettet. 23 unger fordeles jævnt som
   5+5+5+4+4, tre borde forrest og to bagerst, med tavlen foran. Bindingen

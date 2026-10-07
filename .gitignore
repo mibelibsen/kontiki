@@ -1,10 +1,7 @@
 __pycache__/
 *.pyc
 
-# Bindinger til bordplanen: hvem der er søskende, hvem der ikke kan
-# sidde sammen. Repoet er offentligt — det hører ikke til her.
-*.local.json
-
-# Bordplaner. De indeholder navnene på ungerne og hvem der sidder
-# sammen. Repoet er offentligt — planerne sendes i Code i stedet.
+# Bordplanerne bygges af claude/byg_bordplan.py ud fra klasselisten og
+# spoergeskema/bindinger.json. De er en bygget fil, ikke en kilde, og sendes
+# i Code — derfor ikke i git.
 vejledning/bordplan-*.pdf
