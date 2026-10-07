@@ -290,7 +290,7 @@ BLOK = {
     TVAERS: (B_TVAERS, 2 * PLADS_H + 4 + BORD_H),
 }
 
-INK, BLA, MUT, LIN, GRO = '#1a2233', '#1f6fd6', '#586074', '#c9d2e0', '#1a8f5e'
+INK, BLA, MUT, LIN = '#1a2233', '#1f6fd6', '#586074', '#c9d2e0'
 TRAE = '#f4f6fb'
 VAEG = '#8b94a6'
 
@@ -358,11 +358,11 @@ def skriftstoerrelse(navne_og_bredder, loft, gulv, luft):
     return st
 
 
-def skilt(s, x, y, b, navn, bundet, st, h=PLADS_H):
-    kant = GRO if bundet else LIN
+def skilt(s, x, y, b, navn, st, h=PLADS_H):
+    """Alle skilte ser ens ud. Bindingerne er en regel for, hvem der sidder
+    hvor - ikke noget, der skal kunne laeses ud af arket i klassen."""
     s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{b:.2f}" height="{h}" '
-             f'rx="2" fill="#fff" stroke="{kant}" '
-             f'stroke-width="{0.9 if bundet else 0.4}"/>')
+             f'rx="2" fill="#fff" stroke="{LIN}" stroke-width="0.4"/>')
     s.append(f'<text x="{x + b / 2:.2f}" y="{y + h / 2 + st * 0.35:.2f}" '
              f'text-anchor="middle" fill="{INK}" font-size="{st:.2f}" '
              f'font-weight="bold">{navn}</text>')
@@ -470,16 +470,13 @@ def tegn():
                  f'font-size="3.6" letter-spacing="0.8" text-anchor="middle" '
                  f'transform="rotate(-90 {dx:.2f} {d:.2f})">DØR</text>')
 
-    bundne = [set(p) for p in SAMMEN]
     alle = [(n, b) for nr in range(BORDE) for n, _, _, b in _skilte(nr)[0]]
     st = skriftstoerrelse(alle, 6.2, 2.9, 2)
     for nr in range(BORDE):
         skilte, plade = _skilte(nr)
         _bordplade(s, *plade[:4], nr + 1, plade[4])
-        nb = naboer(nr, BORD[nr])
         for n, sx, sy, b in skilte:
-            bundet = any(n in par and frozenset(par) in nb for par in bundne)
-            skilt(s, sx, sy, b, n, bundet, st)
+            skilt(s, sx, sy, b, n, st)
 
     # foden staar i linjer under hinanden. Skrives to ting paa samme linje i
     # hver sin ende, moedes de paa midten, saa snart den ene bliver lang.
@@ -487,8 +484,6 @@ def tegn():
     if MANGLER:
         mgl = ', '.join(f'bord {nr}: {e} for meget' for nr, e in MANGLER)
         linjer.append((f'Flere end der er stole til — {mgl}', '#b03030', True))
-    linjer.append((f'Grøn kant: {", ".join(f"{a} ved siden af {b}" for a, b in SAMMEN)}',
-                   MUT, False))
     fod = (f'Bordplan · 9. klasse · {DATO} · {len(NAVNE)} unger på '
            f'{BORDE} borde · {sum(PLADSER) if PLADSER else len(NAVNE)} pladser')
     linjer.append((fod, MUT, False))
@@ -497,14 +492,8 @@ def tegn():
                    f'stol, så de kan læses.', VAEG, False))
     fy = SIDE_H - MARGEN - 3 - 4.8 * (len(linjer) - 1)
     for tekst, farve, fed in linjer:
-        x = MARGEN
-        if 'Grøn kant' in tekst:
-            s.append(f'<rect x="{MARGEN}" y="{fy - 3.6:.2f}" width="4.2" '
-                     f'height="4.2" rx="1" fill="#fff" stroke="{GRO}" '
-                     f'stroke-width="0.9"/>')
-            x = MARGEN + 6.4
         vaegt = ' font-weight="bold"' if fed else ''
-        s.append(f'<text x="{x:.2f}" y="{fy:.2f}" fill="{farve}" '
+        s.append(f'<text x="{MARGEN}" y="{fy:.2f}" fill="{farve}" '
                  f'font-size="{4.2 if farve != VAEG else 3.8}"'
                  f'{vaegt}>{tekst}</text>')
         fy += 4.8

@@ -107,7 +107,10 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 - **Ny bordplan (7.10.).** Lokalet har **fem gruppeborde**, ikke dobbeltborde —
   den første udgave gættede på 12 og er slettet. 23 unger fordeles jævnt som
   5+5+5+4+4, tre borde forrest og to bagerst, med tavlen foran. Bindingen
-  *Emilie ved siden af Anna* er holdt og markeret med grøn kant. Bygges af
+  *Emilie ved siden af Anna* er holdt, men **ikke markeret på arket** —
+  den er en regel for, hvem der sidder hvor, og ikke noget ungerne skal
+  kunne læse ud af bordplanen. Scriptet siger i terminalen, at den holder.
+  Bygges af
   `claude/byg_bordplan.py` med en fast frø, så den samme plan kan laves igen;
   scriptet nægter at skrive filen, hvis en binding ikke er overholdt, hvis en
   unge er blevet væk, eller hvis bordene bliver for smalle.
