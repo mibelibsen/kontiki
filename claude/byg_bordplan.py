@@ -26,11 +26,32 @@ UD_HTML = os.path.join(ROD, 'vejledning', f'bordplan-{DATO}.html')
 UD_PDF = os.path.join(ROD, 'vejledning', f'bordplan-{DATO}.pdf')
 UD_KORT = os.path.join(ROD, 'vejledning', f'bordkort-{DATO}.pdf')
 
-# Antal gruppeborde i lokalet, og hvordan de staar: foerste tal er borde i
-# den forreste raekke, andet tal i den bageste. 3 + 2 giver fem borde.
-BORDE = 5
-RAEKKER = (3, 2)
-assert sum(RAEKKER) == BORDE, 'raekkerne skal give det samlede antal borde'
+# Lokalet, set fra tavlen. Bord 1 er 7-mandsbordet. Det staar paa langs med
+# kortenden vaek fra tavlen, saa der er tre paa hver langside og én for enden
+# - det er den plads, der er laengst fra tavlen.
+#
+#     +--------------------- T A V L E ---------------------+
+#     |                                                     |
+#     |   [  2  ]  [  3  ]      | 1 |      [  4  ]        []|  doer
+#     |                         |   |                       |
+#     |                         (for enden)                 |
+#     |                                     [  5  ]       []|  doer
+#     +-----------------------------------------------------+
+#
+# Bord 4 staar midt mellem lokalets to doere i hoejre vaeg.
+#
+# Hvert bord: hvilken vej det vender, hvilken kolonne det staar i, og om det
+# staar forrest (0) eller bagerst (1). Skal lokalet laves om, er det her.
+LANGS, TVAERS = 'langs', 'tvaers'
+LOKALE = (
+    (LANGS,  'midt',      0),      # bord 1 - 7-mandsbordet
+    (TVAERS, 'venstre_a', 0),      # bord 2
+    (TVAERS, 'venstre_b', 0),      # bord 3
+    (TVAERS, 'hoejre',    0),      # bord 4 - mellem doerene
+    (TVAERS, 'hoejre',    1),      # bord 5
+)
+BORDE = len(LOKALE)
+RETNING = [r for r, _, _ in LOKALE]
 
 # Bindingerne staar i spoergeskema/bindinger.json. Den er i git, saa de ikke
 # gaar tabt mellem sessioner - det var netop det, der skete sidst, hvor hvem
@@ -142,6 +163,29 @@ def _fordel(r):
     return borde
 
 
+def naboer(nr, navne):
+    """Parrene, der faktisk sidder ved siden af hinanden ved bord nr.
+
+    Pladserne staar i raekkefoelge i planen. Ved et bord paa tvaers er de
+    foerste halvdel den side, der vender mod tavlen, og resten den anden side.
+    Ved 7-mandsbordet er 0-2 den venstre langside, 3-5 den hoejre, og 6 er
+    pladsen for enden - den roerer den bageste plads paa begge langsider.
+    Over for hinanden er ikke ved siden af hinanden.
+    """
+    ud = set()
+    if RETNING[nr] == LANGS:
+        v, h, ende = navne[:3], navne[3:6], navne[6:]
+        for side in (v, h):
+            ud |= {frozenset(par) for par in zip(side, side[1:])}
+        if ende:
+            ud |= {frozenset((ende[0], side[-1])) for side in (v, h) if side}
+    else:
+        halv = (len(navne) + 1) // 2
+        for side in (navne[:halv], navne[halv:]):
+            ud |= {frozenset(par) for par in zip(side, side[1:])}
+    return ud
+
+
 def _holder(borde):
     for a, b in ADSKILT:
         if any(a in bo and b in bo for bo in borde):
@@ -150,8 +194,8 @@ def _holder(borde):
         if not any(a in bo and b in bo for bo in borde):
             return False
     for a, b in SAMMEN:
-        if not any(a in bo and b in bo and abs(bo.index(a) - bo.index(b)) == 1
-                   for bo in borde):
+        if not any(frozenset((a, b)) in naboer(i, bo)
+                   for i, bo in enumerate(borde)):
             return False
     return True
 
@@ -195,46 +239,55 @@ assert _holder(BORD), 'bindingerne holder ikke'
 # ---------------------------------------------------------------------------
 SIDE_B, SIDE_H = 297, 210          # A4 paa tvaers
 MARGEN = 14
-TAVLE_H = 9
-TOP = MARGEN + TAVLE_H + 15
-BUND = SIDE_H - MARGEN - 16        # plads til forklaringen nederst
-GANG = 16                          # mellemrum mellem borde i samme raekke
-# Bordene er ikke lige store, og saa maa de heller ikke tegnes lige brede: et
-# bord faar bredde efter sine stole, saa én plads fylder det samme ved alle
-# borde. Ellers skal syv navne presses ned i samme bredde som fire, og
-# skriften paa det store bord bliver mindre end paa de smaa.
-KAPACITET = PLADSER if PLADSER else STOERRELSER
-_n = 0
-RAEKKE_BORDE = []                  # bordnumrene raekke for raekke, 0-indekseret
-for _antal in RAEKKER:
-    RAEKKE_BORDE.append(list(range(_n, _n + _antal)))
-    _n += _antal
-assert _n == BORDE
-# den raekke, der har mindst plads pr. stol, saetter maalet for dem alle
-PR_STOL = min((SIDE_B - 2 * MARGEN - (len(r) - 1) * GANG)
-              / sum(KAPACITET[i] for i in r) for r in RAEKKE_BORDE)
-BORD_BREDDE = [k * PR_STOL for k in KAPACITET]
+FOD = 13                           # plads til forklaringen under lokalet
+RUM_X0, RUM_Y0 = MARGEN, MARGEN
+RUM_X1, RUM_Y1 = SIDE_B - MARGEN, SIDE_H - MARGEN - FOD
+DOER_STRIBE = 16                   # luft inde langs hoejre vaeg til doerene
+LUFT_VAEG = 10                     # fra vaeg til naermeste bord
+LUFT_TAVLE = 18                    # fra tavlevaeggen ned til forreste bord
+
 PLADS_H = 9                        # hoejden paa et navneskilt
-BORD_H = 17                        # selve bordpladen
-BLOK_H = 2 * PLADS_H + BORD_H + 4  # skilt + bord + skilt
-# Luften mellem raekkerne fylder resten af pladsen, men kappes ved 26 mm:
-# ellers staar de to raekker i hver sin ende af arket med et hul imellem.
-_rest = BUND - TOP - len(RAEKKER) * BLOK_H
-LUFT = min(_rest / max(len(RAEKKER) - 1, 1), 26)
-# det, der bliver tilovers, laegges som luft foroven, saa blokken staar midt paa
-TOP += (_rest - LUFT * (len(RAEKKER) - 1)) / 2
-assert min(BORD_BREDDE) > 40, \
-    f'det mindste bord bliver {min(BORD_BREDDE):.0f} mm bredt — for smalt'
-assert LUFT >= 8, f'kun {LUFT:.1f} mm mellem rækkerne — ret RAEKKER'
+BORD_H = 17                        # bordpladen paa et bord paa tvaers
+B4 = 47                            # bredden paa et bord paa tvaers
+C7 = 24                            # navneskilt langs 7-mandsbordet
+B7 = 23                            # bordpladen paa 7-mandsbordet
+H7 = 3 * PLADS_H + 2 * 5 + 4       # laengden: tre skilte paa hver langside
+
+BLOK_TVAERS = (B4, 2 * PLADS_H + BORD_H + 4)
+BLOK_LANGS = (2 * C7 + B7 + 4, H7 + 2 + PLADS_H)
+BLOK = [BLOK_LANGS if r == LANGS else BLOK_TVAERS for r in RETNING]
 
 INK, BLA, MUT, LIN, GRO = '#1a2233', '#1f6fd6', '#586074', '#c9d2e0', '#1a8f5e'
 TRAE = '#f4f6fb'
+VAEG = '#8b94a6'
 
+# Kolonnerne fra venstre. De to venstre borde staar side om side, saa der er
+# mindre luft mellem dem end ud til de andre.
+KOL = ('venstre_a', 'venstre_b', 'midt', 'hoejre')
+KOL_B = {k: (BLOK_LANGS[0] if k == 'midt' else B4) for k in KOL}
+SMAL, BRED = 6, 10                 # luft mellem de to venstre borde / resten
+_rest = ((RUM_X1 - DOER_STRIBE) - (RUM_X0 + LUFT_VAEG)
+         - sum(KOL_B.values()) - SMAL - 2 * BRED)
+assert _rest >= 0, f'bordene fylder {-_rest:.0f} mm mere, end lokalet er bredt'
+_x = RUM_X0 + LUFT_VAEG + _rest / 2     # det tiloversblevne lagt som luft
+KOL_X = {}
+for _i, _k in enumerate(KOL):
+    KOL_X[_k] = _x
+    _x += KOL_B[_k] + (SMAL if _i == 0 else BRED)
 
-def sider(navne):
-    """Deler pladserne i en oeverste og en nederste side af bordet."""
-    o = (len(navne) + 1) // 2
-    return navne[:o], navne[o:]
+# Raekkerne. Forreste raekke er saa hoej som det hoejeste bord i den.
+_r0 = max(BLOK[i][1] for i, (_, _, r) in enumerate(LOKALE) if r == 0)
+RAEKKE_LUFT = 20
+RAEKKE_Y = {0: 0.0, 1: _r0 + RAEKKE_LUFT}
+_h = max(RAEKKE_Y[r] + BLOK[i][1] for i, (_, _, r) in enumerate(LOKALE))
+_top = RUM_Y0 + LUFT_TAVLE
+_plads = (RUM_Y1 - LUFT_VAEG) - _top
+assert _plads >= _h, f'bordene fylder {_h - _plads:.0f} mm mere, end lokalet er dybt'
+_top += (_plads - _h) / 2
+RAEKKE_Y = {r: _top + v for r, v in RAEKKE_Y.items()}
+
+# hvert bords oeverste venstre hjoerne
+HJOERNE = [(KOL_X[k], RAEKKE_Y[r]) for _, k, r in LOKALE]
 
 
 def skriftstoerrelse(navne_og_bredder, loft, gulv, luft):
@@ -249,62 +302,110 @@ def skriftstoerrelse(navne_og_bredder, loft, gulv, luft):
     return st
 
 
-def skilt(s, x, y, b, navn, bundet, st):
+def skilt(s, x, y, b, navn, bundet, st, h=PLADS_H):
     kant = GRO if bundet else LIN
-    s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{b:.2f}" height="{PLADS_H}" '
+    s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{b:.2f}" height="{h}" '
              f'rx="2" fill="#fff" stroke="{kant}" '
              f'stroke-width="{0.9 if bundet else 0.4}"/>')
-    s.append(f'<text x="{x + b / 2:.2f}" y="{y + PLADS_H / 2 + st * 0.35:.2f}" '
-             f'text-anchor="middle" fill="{INK}" font-size="{st}" '
+    s.append(f'<text x="{x + b / 2:.2f}" y="{y + h / 2 + st * 0.35:.2f}" '
+             f'text-anchor="middle" fill="{INK}" font-size="{st:.2f}" '
              f'font-weight="bold">{navn}</text>')
+
+
+def _bordplade(s, x, y, b, h, nr, lodret):
+    s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{b:.2f}" height="{h:.2f}" '
+             f'rx="3" fill="{TRAE}" stroke="{LIN}" stroke-width="0.5"/>')
+    cx, cy = x + b / 2, y + h / 2
+    drej = f' transform="rotate(-90 {cx:.2f} {cy:.2f})"' if lodret else ''
+    s.append(f'<text x="{cx:.2f}" y="{cy + 2.6:.2f}"{drej} text-anchor="middle" '
+             f'fill="{MUT}" font-size="7" letter-spacing="0.6">BORD {nr}</text>')
+
+
+def _pladser_tvaers(navne, x, y):
+    """Et bord paa tvaers: halvdelen mod tavlen, resten over for."""
+    halv = (len(navne) + 1) // 2
+    ud = []
+    for side, sy in ((navne[:halv], y),
+                     (navne[halv:], y + PLADS_H + 2 + BORD_H + 2)):
+        if not side:
+            continue
+        b = (B4 - (len(side) - 1) * 2) / len(side)
+        for j, n in enumerate(side):
+            ud.append((n, x + j * (b + 2), sy, b))
+    return ud, (x, y + PLADS_H + 2, B4, BORD_H, False)
+
+
+def _pladser_langs(navne, x, y):
+    """7-mandsbordet: tre paa hver langside og én for enden, vaek fra tavlen."""
+    venstre, hoejre, ende = navne[:3], navne[3:6], navne[6:]
+    bx = x + C7 + 2                      # bordpladens venstre kant
+    y0 = y + (H7 - (3 * PLADS_H + 2 * 5)) / 2
+    ud = []
+    for side, sx in ((venstre, x), (hoejre, bx + B7 + 2)):
+        for j, n in enumerate(side):
+            ud.append((n, sx, y0 + j * (PLADS_H + 5), C7))
+    for n in ende:
+        ud.append((n, x + (BLOK_LANGS[0] - C7) / 2, y + H7 + 2, C7))
+    return ud, (bx, y, B7, H7, True)
 
 
 def tegn():
     s = [f'<svg viewBox="0 0 {SIDE_B} {SIDE_H}" width="{SIDE_B}mm" '
          f'height="{SIDE_H}mm" xmlns="http://www.w3.org/2000/svg" '
          f'font-family="Helvetica, Arial, sans-serif">']
-    s.append(f'<rect x="{MARGEN}" y="{MARGEN}" width="{SIDE_B - 2 * MARGEN}" '
-             f'height="{TAVLE_H}" rx="2" fill="{INK}"/>')
-    s.append(f'<text x="{SIDE_B / 2}" y="{MARGEN + TAVLE_H - 2.6}" '
-             f'text-anchor="middle" fill="#fff" font-size="5" '
-             f'letter-spacing="1.6">TAVLE</text>')
 
-    bundne_par = [set(p) for p in SAMMEN]
-    nr = 0
-    for r, antal in enumerate(RAEKKER):
-        numre = RAEKKE_BORDE[r]
-        bredde = sum(BORD_BREDDE[i] for i in numre) + (antal - 1) * GANG
-        x = (SIDE_B - bredde) / 2          # raekken centreres
-        y0 = TOP + r * (BLOK_H + LUFT)
-        for k in range(antal):
-            navne = BORD[nr]
-            BORD_B = BORD_BREDDE[nr]
-            oeverst, nederst = sider(navne)
-            # selve bordpladen
-            by = y0 + PLADS_H + 2
-            s.append(f'<rect x="{x:.2f}" y="{by:.2f}" width="{BORD_B:.2f}" '
-                     f'height="{BORD_H}" rx="3" fill="{TRAE}" stroke="{LIN}" '
-                     f'stroke-width="0.5"/>')
-            s.append(f'<text x="{x + BORD_B / 2:.2f}" y="{by + BORD_H / 2 + 2.6:.2f}" '
-                     f'text-anchor="middle" fill="{MUT}" font-size="7" '
-                     f'letter-spacing="0.6">BORD {nr + 1}</text>')
-            sider_her = [(oeverst, y0), (nederst, by + BORD_H + 2)]
-            maal = [(n, (BORD_B - (len(r) - 1) * 2) / len(r))
-                    for r, _ in sider_her if r for n in r]
-            st = skriftstoerrelse(maal, 6.2, 3.6, 3)
-            for navne_her, sy in sider_her:
-                if not navne_her:
-                    continue
-                sb = (BORD_B - (len(navne_her) - 1) * 2) / len(navne_her)
-                for j, n in enumerate(navne_her):
-                    nabo = navne[navne.index(n) - 1] if navne.index(n) else None
-                    bundet = any({n} & par and len(par & set(navne_her)) == 2
-                                 for par in bundne_par)
-                    skilt(s, x + j * (sb + 2), sy, sb, n, bundet, st)
-            x += BORD_B + GANG
-            nr += 1
+    # lokalets vaegge
+    s.append(f'<rect x="{RUM_X0}" y="{RUM_Y0}" width="{RUM_X1 - RUM_X0}" '
+             f'height="{RUM_Y1 - RUM_Y0}" rx="2" fill="none" stroke="{VAEG}" '
+             f'stroke-width="1.1"/>')
+    # tavlen paa den forreste vaeg
+    tb = (RUM_X1 - RUM_X0) * 0.52
+    s.append(f'<rect x="{(SIDE_B - tb) / 2:.2f}" y="{RUM_Y0 - 3}" '
+             f'width="{tb:.2f}" height="6" rx="1.5" fill="{INK}"/>')
+    s.append(f'<text x="{SIDE_B / 2}" y="{RUM_Y0 + 1.4}" text-anchor="middle" '
+             f'fill="#fff" font-size="4" letter-spacing="1.6">TAVLE</text>')
 
-    fy = SIDE_H - MARGEN - 4
+    # de to doere i hoejre vaeg, med bord 4 midt imellem
+    _, _, bh4 = BLOK[3][0], BLOK[3][1], BLOK[3][1]
+    midt_4 = RAEKKE_Y[LOKALE[3][2]] + bh4 / 2
+    doer_h, doer_afstand, blad = 22, 32, 11
+    assert blad < DOER_STRIBE, 'dørbladet rager ind over bordet'
+    for d in (midt_4 - doer_afstand, midt_4 + doer_afstand):
+        y = d - doer_h / 2
+        assert RUM_Y0 + 4 <= y and y + doer_h <= RUM_Y1 - 4, \
+            'døren falder uden for væggen'
+        # vaeggen brydes, hvor doeren er, og bladet staar ind i lokalet
+        s.append(f'<rect x="{RUM_X1 - 1.4:.2f}" y="{y:.2f}" width="2.8" '
+                 f'height="{doer_h}" fill="#fff"/>')
+        for kant in (y, y + doer_h):
+            s.append(f'<path d="M {RUM_X1 - 1.6:.2f} {kant:.2f} '
+                     f'L {RUM_X1 - blad:.2f} {kant:.2f}" fill="none" '
+                     f'stroke="{LIN}" stroke-width="0.6"/>')
+        s.append(f'<text x="{RUM_X1 - 4:.2f}" y="{d + 1.4:.2f}" text-anchor="end" '
+                 f'fill="{VAEG}" font-size="3.8" letter-spacing="1">DØR</text>')
+
+    bundne = [set(p) for p in SAMMEN]
+    # alle borde faar samme skriftstoerrelse. Skrives der efter hvert bord for
+    # sig, staar bord 3 med mindre skrift end bord 2, fordi Caroline er lang -
+    # og det ligner, at de to borde ikke er det samme slags bord.
+    alle = []
+    for nr, (retning, _, _) in enumerate(LOKALE):
+        lav = _pladser_langs if retning == LANGS else _pladser_tvaers
+        alle += [(n, b) for n, _, _, b in lav(BORD[nr], *HJOERNE[nr])[0]]
+    st = skriftstoerrelse(alle, 6.2, 3.6, 3)
+    for nr, (retning, _, _) in enumerate(LOKALE):
+        navne = BORD[nr]
+        x, y = HJOERNE[nr]
+        lav = _pladser_langs if retning == LANGS else _pladser_tvaers
+        skilte, plade = lav(navne, x, y)
+        _bordplade(s, *plade[:4], nr + 1, plade[4])
+        nb = naboer(nr, navne)
+        for n, sx, sy, b in skilte:
+            bundet = any(par <= set(navne) and frozenset(par) in nb
+                         and n in par for par in bundne)
+            skilt(s, sx, sy, b, n, bundet, st)
+
+    fy = SIDE_H - MARGEN - 3
     s.append(f'<rect x="{MARGEN}" y="{fy - 4.6:.2f}" width="4.6" height="4.6" '
              f'rx="1" fill="#fff" stroke="{GRO}" stroke-width="0.9"/>')
     bindinger = ', '.join(f'{a} ved siden af {b}' for a, b in SAMMEN)
@@ -332,55 +433,92 @@ def tegn():
 # med vilje: arket ligger fladt paa bordet, og saa kan hver unge laese sit eget
 # navn rigtigt vej fra sin egen plads. Pilen viser, hvilken kant der skal vende
 # mod tavlen, saa arket ikke bliver lagt forkert.
+#
+# 7-mandsbordet staar paa langs, og arket ligger med laengden ud ad bordet. Saa
+# peger tavlen mod arkets venstre kant, ikke opad, og pladsen for enden staar
+# ude i hoejre side, drejet en kvart omgang - den vej, den unge sidder.
 # ---------------------------------------------------------------------------
 K_B, K_H = 297, 210                 # A4 paa tvaers
 K_MARGEN = 16
+K_RAEKKE_H = 46                     # hoejden paa en navneraekke
+K_BAAND = 26                        # midterbaandet, hvor bordnummeret staar
+K_ENDE_B = 52                       # pladsen for enden, ude i siden
+assert K_BAAND >= 20, 'bordnummeret staar i vejen for navnene'
+assert 2 * K_RAEKKE_H + K_BAAND + 2 * K_MARGEN <= K_H, 'arket er ikke hoejt nok'
 
 
 def bordkort(nr, navne):
-    oeverst, nederst = sider(navne)
+    langs = RETNING[nr - 1] == LANGS
+    if langs:
+        # arket ligger ud ad bordet: hoejre langside foroven, venstre forneden
+        oeverst, nederst, ende = navne[3:6], navne[:3], navne[6:]
+    else:
+        halv = (len(navne) + 1) // 2
+        oeverst, nederst, ende = navne[:halv], navne[halv:], []
+
     s = [f'<svg viewBox="0 0 {K_B} {K_H}" width="{K_B}mm" height="{K_H}mm" '
          f'xmlns="http://www.w3.org/2000/svg" '
          f'font-family="Helvetica, Arial, sans-serif">']
 
-    # pilen mod tavlen
-    s.append(f'<text x="{K_B / 2}" y="{K_MARGEN + 4}" text-anchor="middle" '
-             f'fill="{MUT}" font-size="5" letter-spacing="1.8">'
-             f'&#9650;  MOD TAVLEN  &#9650;</text>')
+    hoejre_kant = K_B - K_MARGEN - (K_ENDE_B + 8 if ende else 0)
+    bredde = lambda r: (hoejre_kant - K_MARGEN - (len(r) - 1) * 6) / len(r)
+    ende_h = 2 * K_RAEKKE_H + K_BAAND
+    maal = [(n, bredde(r)) for r in (oeverst, nederst) if r for n in r]
+    maal += [(n, ende_h) for n in ende]
+    st = skriftstoerrelse(maal, 26, 10, 8)
 
-    raekker = [(oeverst, False), (nederst, True)]
-    _bred = lambda r: (K_B - 2 * K_MARGEN - (len(r) - 1) * 6) / len(r)
-    st = skriftstoerrelse([(n, _bred(r)) for r, _ in raekker if r for n in r],
-                          26, 10, 8)
-    bh = 46                          # hoejden paa en navnerraekke
-    BAAND = 26                       # midterbaandet, hvor bordnummeret staar
+    # pilen mod tavlen: opad ved bordene paa tvaers, mod venstre ved 7-mandsbordet
+    if langs:
+        # teksten drejes med arket, men en pil af tekst ville saa pege op og
+        # ned i stedet for mod tavlen. Den tegnes derfor som en trekant.
+        px, py = K_MARGEN - 5, K_H / 2
+        s.append(f'<text x="{px}" y="{py}" fill="{MUT}" font-size="5" '
+                 f'letter-spacing="1.8" text-anchor="middle" '
+                 f'transform="rotate(-90 {px} {py})">MOD TAVLEN</text>')
+        for dy in (-46, 46):
+            s.append(f'<path d="M {px - 2.6:.2f} {py + dy:.2f} '
+                     f'l 4.4 -2.6 l 0 5.2 Z" fill="{MUT}"/>')
+    else:
+        s.append(f'<text x="{K_B / 2}" y="{K_MARGEN + 4}" text-anchor="middle" '
+                 f'fill="{MUT}" font-size="5" letter-spacing="1.8">'
+                 f'&#9650;  MOD TAVLEN  &#9650;</text>')
+
     midte = K_H / 2
-    # baandet skal kunne rumme bordnummeret uden at skaere ind i navneboksene
-    assert BAAND >= 20, 'bordnummeret staar i vejen for navnene'
-    assert 2 * bh + BAAND + 2 * K_MARGEN <= K_H, 'arket er ikke hoejt nok'
-    for navne_her, paa_hovedet in raekker:
+    for navne_her, paa_hovedet in ((oeverst, False), (nederst, True)):
         if not navne_her:
             continue
-        # den oeverste raekke ligger over midten, den nederste under
-        y = midte - BAAND / 2 - bh if not paa_hovedet else midte + BAAND / 2
-        bred = (K_B - 2 * K_MARGEN - (len(navne_her) - 1) * 6) / len(navne_her)
+        y = (midte - K_BAAND / 2 - K_RAEKKE_H if not paa_hovedet
+             else midte + K_BAAND / 2)
+        bred = bredde(navne_her)
         for j, n in enumerate(navne_her):
             x = K_MARGEN + j * (bred + 6)
-            cx, cy = x + bred / 2, y + bh / 2
+            cx, cy = x + bred / 2, y + K_RAEKKE_H / 2
             drej = f' transform="rotate(180 {cx:.2f} {cy:.2f})"' if paa_hovedet else ''
             s.append(f'<g{drej}>')
             s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{bred:.2f}" '
-                     f'height="{bh}" rx="4" fill="#fff" stroke="{LIN}" '
+                     f'height="{K_RAEKKE_H}" rx="4" fill="#fff" stroke="{LIN}" '
                      f'stroke-width="0.6"/>')
             s.append(f'<text x="{cx:.2f}" y="{cy + st * 0.35:.2f}" '
                      f'text-anchor="middle" fill="{INK}" font-size="{st:.1f}" '
                      f'font-weight="bold">{n}</text>')
             s.append('</g>')
 
-    # bordnummeret ligger i midterbaandet, saa det kan laeses fra begge sider
-    s.append(f'<text x="{K_B / 2}" y="{midte + 5.2}" text-anchor="middle" '
-             f'fill="{MUT}" font-size="14" letter-spacing="5" '
-             f'font-weight="bold">BORD {nr}</text>')
+    # pladsen for enden: den unge sidder yderst og ser ind mod tavlen, saa
+    # navnet drejes en kvart omgang og staar rigtigt vej fra den plads
+    for n in ende:
+        x, y = K_B - K_MARGEN - K_ENDE_B, midte - ende_h / 2
+        cx, cy = x + K_ENDE_B / 2, midte
+        s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="{K_ENDE_B}" '
+                 f'height="{ende_h}" rx="4" fill="#fff" stroke="{LIN}" '
+                 f'stroke-width="0.6"/>')
+        s.append(f'<text x="{cx:.2f}" y="{cy + st * 0.35:.2f}" '
+                 f'transform="rotate(-90 {cx:.2f} {cy:.2f})" '
+                 f'text-anchor="middle" fill="{INK}" font-size="{st:.1f}" '
+                 f'font-weight="bold">{n}</text>')
+
+    s.append(f'<text x="{(K_MARGEN + hoejre_kant) / 2:.2f}" y="{midte + 5.2}" '
+             f'text-anchor="middle" fill="{MUT}" font-size="14" '
+             f'letter-spacing="5" font-weight="bold">BORD {nr}</text>')
     s.append(f'<text x="{K_B / 2}" y="{K_H - K_MARGEN + 2}" text-anchor="middle" '
              f'fill="{MUT}" font-size="4.2">9. klasse · {DATO} · '
              f'{len(navne)} pladser</text>')

@@ -119,11 +119,34 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   Sidder der flere ved et bord, end der er stole til, siger scriptet det både
   i terminalen og med rødt nederst på oversigten, så det ikke skal opdages,
   når ungerne står i lokalet.
-  **Bordene tegnes så brede, som de har pladser.** Ellers skulle syv navne
-  presses ned i samme bredde som fire, og skriften på det store bord blev
-  mindre end på de små. Og der er **én skriftstørrelse pr. bord**: regnes
-  navnene hver for sig, bliver *Nor* dobbelt så stor som *Helene* ved samme
-  bord, og det ser ud, som om de to ting betyder noget forskelligt.
+  **Én skriftstørrelse på hele arket.** Regnes navnene hver for sig, bliver
+  *Nor* dobbelt så stor som *Helene* ved samme bord; regnes de pr. bord,
+  står bord 3 mindre end bord 2, fordi *Caroline* er lang. Begge dele ser
+  ud, som om forskellen betyder noget.
+- **Lokalets opstilling står i `LOKALE` i scriptet (7.10.).** Rækkerne er
+  væk; hvert bord har en retning og en plads:
+
+  ```
+  +--------------------- T A V L E ---------------------+
+  |   [  2  ]  [  3  ]      | 1 |      [  4  ]        []|  dør
+  |                         |   |                       |
+  |                         (for enden)                 |
+  |                                     [  5  ]       []|  dør
+  +-----------------------------------------------------+
+  ```
+
+  **Bord 1 står på langs** med kortenden væk fra tavlen: tre på hver
+  langside og én for enden. Den plads er **Milius'**. I `fast` er bord 1's
+  rækkefølge derfor: tre til venstre set fra tavlen, tre til højre, og den
+  sidste for enden. Bord 4 står midt mellem lokalets to døre i højre væg,
+  og de tegnes med.
+  **`naboer()` regner ud, hvem der faktisk sidder ved siden af hvem** — på
+  samme langside, og pladsen for enden rører den bageste på begge sider.
+  Over for hinanden tæller ikke. Det er den, `sammen` tjekkes med, så
+  *Emilie ved siden af Anna* betyder det, der står.
+  **Bordkortet til bord 1 ligger på langs:** tavlen peger mod arkets venstre
+  kant, ikke opad, og pladsen for enden står ude i højre side drejet en kvart
+  omgang — den vej, Milius sidder.
   Oskar og Anna skal **ikke** sidde sammen — det var et sidespring 7.10.,
   hvor jeg flyttede Oskar derhen, og det er rullet tilbage: Asta kom ind på
   6-mandsbordet i stedet, og Oskar sidder ved sit eget med fire i alt.

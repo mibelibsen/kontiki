@@ -23,7 +23,11 @@
 
   "pladser": [7, 4, 4, 4, 4],
 
-  "fast": [["Emilie", "Anna", "Nor", "Helene", "Milius", "Asta", "Viktor"],
+  "__fast": "Bord 1 står på langs: de tre første er venstre langside set fra",
+  "__fast2": "tavlen, de tre næste er højre langside, og den sidste er pladsen",
+  "__fast3": "for enden — længst væk fra tavlen.",
+
+  "fast": [["Emilie", "Anna", "Nor", "Helene", "Asta", "Viktor", "Milius"],
            ["Flora", "Luna", "Jonas", "William"],
            ["Emily", "Oskar", "Caroline", "Savanna"],
            ["Johan", "Hjalte", "Simone", "Clara"],
