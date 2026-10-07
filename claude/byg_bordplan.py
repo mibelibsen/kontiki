@@ -37,26 +37,34 @@ assert sum(RAEKKER) == BORDE, 'raekkerne skal give det samlede antal borde'
 # der var tvillinger laa i en samtale og ikke i repoet. Mappen er udelukket i
 # .vercelignore, saa filen ikke kommer paa sitet. Den ser saadan ud:
 #
-#   {"sammen":  [["Emilie", "Anna"]],
-#    "adskilt": [["Milius", "William"], ["Johan", "Silke"]]}
+#   {"sammen":     [["Emilie", "Anna"]],
+#    "samme_bord": [["Anna", "Oskar"]],
+#    "adskilt":    [["Milius", "William"], ["Johan", "Silke"]],
+#    "fast":       [["Emilie", "Anna", ...], ...]}
 #
-# sammen  = skal sidde ved siden af hinanden ved samme bord
-# adskilt = maa ikke sidde ved samme bord (ogsaa tvillinger)
+# sammen     = skal sidde ved siden af hinanden ved samme bord
+# samme_bord = skal sidde ved samme bord, men ikke noedvendigvis som nabo
+# adskilt    = maa ikke sidde ved samme bord (ogsaa tvillinger)
+# fast       = selve planen. Staar den der, blandes der ikke: planen tegnes som
+#              den er, og bindingerne tjekkes. Saa flytter man én unge ved at
+#              rette én linje, i stedet for at hele klassen bytter plads.
 BINDINGER = os.path.join(ROD, 'spoergeskema', 'bindinger.json')
 
 
 def bindinger():
     if not os.path.exists(BINDINGER):
         print(f'BEMÆRK: {BINDINGER} findes ikke — bygger uden bindinger')
-        return [], []
+        return [], [], [], []
     import json
     with open(BINDINGER, encoding='utf-8') as f:
         d = json.load(f)
     return ([tuple(p) for p in d.get('sammen', [])],
-            [tuple(p) for p in d.get('adskilt', [])])
+            [tuple(p) for p in d.get('samme_bord', [])],
+            [tuple(p) for p in d.get('adskilt', [])],
+            [list(b) for b in d.get('fast', [])])
 
 
-SAMMEN, ADSKILT = bindinger()
+SAMMEN, SAMME_BORD, ADSKILT, FAST = bindinger()
 
 FROE = 20261006          # fast, saa den samme plan kan bygges igen
 
@@ -80,15 +88,17 @@ def stoerrelser(antal, borde):
     return ud
 
 
-STOERRELSER = stoerrelser(len(NAVNE), BORDE)
+# Bordene er ikke lige store: bord 1 er 6-mandsbordet. Naar der er en fast
+# plan, er det den, der bestemmer, hvor mange der sidder ved hvert bord.
+STOERRELSER = [len(b) for b in FAST] if FAST else stoerrelser(len(NAVNE), BORDE)
 assert max(STOERRELSER) <= 6, (
     f'{max(STOERRELSER)} unger ved ét bord er for mange — der skal flere borde til')
 
-for par in SAMMEN + ADSKILT:
+for par in SAMMEN + SAMME_BORD + ADSKILT:
     for n in par:
         assert n in NAVNE, f'{n} staar ikke i klasselisten'
 for a, b in ADSKILT:
-    assert not any({a, b} <= set(p) for p in SAMMEN), \
+    assert not any({a, b} <= set(p) for p in SAMMEN + SAMME_BORD), \
         f'{a} og {b} staar baade som sammen og som adskilt'
 
 
@@ -112,6 +122,9 @@ def _holder(borde):
     for a, b in ADSKILT:
         if any(a in bo and b in bo for bo in borde):
             return False
+    for a, b in SAMME_BORD:
+        if not any(a in bo and b in bo for bo in borde):
+            return False
     for a, b in SAMMEN:
         if not any(a in bo and b in bo and abs(bo.index(a) - bo.index(b)) == 1
                    for bo in borde):
@@ -133,7 +146,20 @@ def plads(forsoeg=5000):
         f'se efter en binding, der modsiger en anden')
 
 
-BORD = plads()
+def fast_plan():
+    """Tegner planen fra bindinger.json i stedet for at blande en ny. En
+    rettelse dér skal fange sig selv her, ikke staa paa et ark i klassen."""
+    flad = [n for b in FAST for n in b]
+    assert len(flad) == len(set(flad)), 'en unge staar to steder i planen'
+    mangler = sorted(set(NAVNE) - set(flad))
+    ukendte = sorted(set(flad) - set(NAVNE))
+    assert not mangler, f'ingen plads til {", ".join(mangler)}'
+    assert not ukendte, f'{", ".join(ukendte)} staar ikke i klasselisten'
+    assert len(FAST) == BORDE, f'planen har {len(FAST)} borde, lokalet har {BORDE}'
+    return [list(b) for b in FAST]
+
+
+BORD = fast_plan() if FAST else plads()
 assert len(BORD) == BORDE
 assert [len(b) for b in BORD] == STOERRELSER
 assert sorted(n for b in BORD for n in b) == sorted(NAVNE), 'en unge er blevet væk'

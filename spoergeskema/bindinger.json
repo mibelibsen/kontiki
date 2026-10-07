@@ -1,13 +1,26 @@
 {
-  "_": "Bindinger til bordplanen. Bygges af claude/byg_bordplan.py.",
-  "__": "sammen  = skal sidde ved siden af hinanden ved samme bord.",
-  "___": "adskilt = må ikke sidde ved samme bord. Tvillinger står også her.",
+  "_": "Bindinger og bordplan. Bygges af claude/byg_bordplan.py.",
+  "__": "sammen     = skal sidde ved siden af hinanden ved samme bord.",
+  "___": "samme_bord = skal sidde ved samme bord, men ikke nødvendigvis lige ved siden af.",
+  "____": "adskilt    = må ikke sidde ved samme bord. Tvillinger står også her.",
+  "_____": "fast       = selve planen. Når den står her, blander scriptet ikke: det tegner",
+  "______": "             den og tjekker, at bindingerne holder. Så flytter man én unge ved at",
+  "_______": "             rette én linje, i stedet for at hele klassen bytter plads.",
+  "________": "             Rækkefølgen i et bord er pladserne: første halvdel sidder på den",
+  "_________": "             side, der vender mod tavlen, anden halvdel over for.",
 
   "sammen": [["Emilie", "Anna"]],
+
+  "samme_bord": [["Anna", "Oskar"]],
 
   "adskilt": [["Milius", "William"],
               ["Nor", "William"],
               ["Johan", "Silke"],
-              ["Jonas", "Hjalte"],
-              ["Anna", "Oskar"]]
+              ["Jonas", "Hjalte"]],
+
+  "fast": [["Emilie", "Anna", "Nor", "Helene", "Milius", "Oskar"],
+           ["Flora", "Luna", "Jonas", "Viktor", "William"],
+           ["Emily", "Caroline", "Asta", "Savanna"],
+           ["Johan", "Hjalte", "Simone", "Clara"],
+           ["Silke", "Ronja", "Frida", "Kasper"]]
 }

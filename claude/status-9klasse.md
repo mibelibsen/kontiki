@@ -90,11 +90,14 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `/u/<navn>`-redirects i `vercel.json`, committet 22.9.
   **Afgjort 7.10.: det er i orden.** Kun fornavne, ingen følsomme oplysninger.
   Spørg ikke om det igen.
-- **Bordplanens bindinger ligger i `spoergeskema/bindinger.json`** — hvem der
-  skal sidde sammen, og hvem der ikke må. Den er i git med vilje: sidst lå det,
-  at Johan og Silke er tvillinger, i en samtale og ikke i repoet, og så var det
-  væk. Mappen er udelukket i `.vercelignore`, så filen ikke kommer på sitet.
+- **Bordplanen ligger i `spoergeskema/bindinger.json`** — både bindingerne
+  (hvem der skal sidde sammen, og hvem der ikke må) og under `fast` selve
+  planen, bord for bord. Den er i git med vilje: sidst lå det, at Johan og
+  Silke er tvillinger, i en samtale og ikke i repoet, og så var det væk.
+  Mappen er udelukket i `.vercelignore`, så filen ikke kommer på sitet.
   Selve PDF'erne er ikke i git — de bygges af scriptet og sendes i Code.
+  Begge er ignoreret; `bordkort-*.pdf` blev glemt i mønstret 7.10. og er
+  taget ud igen.
 - **Scriptet laver to filer:** `bordplan-<dato>.pdf` med oversigten og den
   alfabetiske liste, og `bordkort-<dato>.pdf` med ét A4-ark pr. bord til at
   lægge på bordene. På bordkortene står navnene på den side, der vender væk
@@ -107,10 +110,19 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   *Emilie ved siden af Anna* er holdt og markeret med grøn kant. Bygges af
   `claude/byg_bordplan.py` med en fast frø, så den samme plan kan laves igen;
   scriptet nægter at skrive filen, hvis en binding ikke er overholdt, hvis en
-  unge er blevet væk, eller hvis bordene bliver for smalle. Bindingerne er nu
-  både *sammen* og *adskilt*, og scriptet blander, til alle holder.
+  unge er blevet væk, eller hvis bordene bliver for smalle.
   **PDF'en ligger i `vejledning/`, som er udelukket fra deploy** — den
   indeholder ungernes navne og må ikke på sitet.
+- **Oskar flyttet til Anna (7.10.), og planen er nu en kilde.** Bordene er
+  ikke lige store: **bord 1 er 6-mandsbordet**, så fordelingen er 6+5+4+4+4,
+  ikke jævn. Oskar stod før som *adskilt* fra Anna; brugeren bad om at flytte
+  ham hen til hende, så den binding er fjernet og erstattet af en ny type,
+  **`samme_bord`** — samme bord, men ikke nødvendigvis nabo (*sammen* kræver
+  stadig, at de sidder ved siden af hinanden).
+  Planen står nu under **`fast`** i `bindinger.json`, og så blander scriptet
+  ikke: det tegner den og tjekker bindingerne. Derfor flytter man én unge ved
+  at rette én linje, i stedet for at hele klassen bytter plads, når der bliver
+  bygget om. Tages `fast` ud, blander scriptet igen som før.
 - **Årsplanen for samfundsfag er rettet.** Uge 43 er skilt ud som sit eget
   forløb, *Digital socialisering: kvalitativ analyse*, og kriminalitet og
   overvågning rykker til uge 44–47. Antallet af uger pr. tema er uændret.
