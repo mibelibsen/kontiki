@@ -16,7 +16,8 @@ pptxgenjs, og retter derefter to ting i OOXML'en, som pptxgenjs ikke kan skrive:
     "Indsaet billede" med et billedikon, og at et indsat billede lander i
     rammen af sig selv.
 
-Selve .pptx'en er en bygget fil og ligger ikke i git - den bygges her.
+Filen ligger i materiale/ og udgives paa sitet, saa ungerne kan hente den
+fra pecha-kucha.html.
 """
 import os
 import re
@@ -27,7 +28,10 @@ import zipfile
 
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MJS = os.path.join(ROD, 'claude', 'byg_pecha_kucha.mjs')
-UD = os.path.join(ROD, 'vejledning', 'pecha-kucha-skabelon.pptx')
+# Skabelonen ligger i materiale/, ikke i vejledning/: ungerne skal kunne
+# hente den selv fra pecha-kucha.html. Alt i materiale/ udgives, og det,
+# der udgives, skal ligge i git - derfor er netop denne byggede fil med.
+UD = os.path.join(ROD, 'materiale', 'pecha-kucha-skabelon.pptx')
 # pptxgenjs saetter selv .pptx paa filnavnet, hvis det ikke er der i
 # forvejen. Raafilen hedder derfor det samme med -raa foran endelsen.
 RAA = UD[:-5] + '-raa.pptx'

@@ -35,6 +35,17 @@ TEKSTER = [
   'hvorfra, og hvad vil afsenderen have dig til at mene?',
   'https://kontikiskolen.sharepoint.com/:b:/s/HavetsVogtere/'
   'IQBj5R9_wNHRS4gxHnxDoJidAc9ZLuaP3q46v3qTsIaYgxQ?e=8zbFPE', ''),
+ ('Digital dannelse',
+  'Faktalink · Anne Anthon Andersen, journalist', 'januar 2016', 15,
+  'Socialisering · uge 40-43',
+  'Hele Faktalinks emne om digital dannelse: hvad begrebet dækker, hvorfor '
+  'det blev til, og hvad det betyder for unges identitet og fællesskaber. '
+  'Den skriver direkte, at de sociale medier er blevet unges primære forum '
+  'for socialisering. Rettighederne er dækket af skolens aftale. '
+  'BEMÆRK ÅRSTALLET: teksten er fra 2016, og dens tal er fra 2013-2014 — '
+  'brug den til begreberne og vores eget dataark til tallene.',
+  'https://kontikiskolen.sharepoint.com/:b:/s/HavetsVogtere/'
+  'IQChsTjeFoPNRKx1mihWSVhmAWInmJMh-wDWfF6-YX8Q72Q?e=s62Nqw', ''),
  ('Hvad er socialisering?',
   'Lavet til klassen', '', 1, 'Socialisering · uge 40-43',
   'Normer, arenaer og sanktioner — primær, sekundær og tertiær socialisering '

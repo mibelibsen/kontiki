@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pecha Kucha · 9. klasse</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;--warn:#b5710a;--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a,nav.tabs span{font-size:.86rem;padding:6px 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+nav.tabs span.soon{color:#9aa6ba;cursor:default}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:2rem}
+.hero p{margin:0;color:var(--muted);max-width:70ch}
+.pill{display:inline-block;font-size:.74rem;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;background:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.card.soon{opacity:.6}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:12px}
+.tag.klar{background:#eaf7f0;color:var(--good);border:1px solid #bfe6d2}
+.tag.kommer{background:#f4f6fb;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
+.num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 0}
+.btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btnlink.ghost:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+.plan{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+.plan th,.plan td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+.plan th{background:var(--panel2);font-weight:700;position:sticky;top:60px}
+.plan tr.block td{background:var(--accent);color:#fff;font-weight:800;font-size:1rem}
+.plan tr.break td{background:#fff7e9;color:var(--warn);font-weight:600;font-style:italic}
+.plan td.uge{white-space:nowrap;font-weight:700;color:var(--accent);width:52px}
+.plan td.per{white-space:nowrap;color:var(--muted);width:110px}
+.plan ul{margin:0;padding-left:18px}.plan li{margin:2px 0}
+.mat{color:var(--muted);font-size:.9rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;text-align:left}.mini th{background:var(--panel2)}
+@media print{header.top,nav.tabs,.btnlink{display:none!important}.hero,.card,.note{box-shadow:none}.plan th{position:static}.plan tr.block td{background:#fff!important;color:#000;border:1px solid #000}body{color:#000}}
+
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:18px;margin:18px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.figtekst{color:var(--muted);font-size:.9rem;margin-top:10px;text-align:left;
+max-width:68ch;margin-left:auto;margin-right:auto}
+.afsnit{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:18px 22px;
+margin:14px 0;box-shadow:var(--shadow)}
+.afsnit h2{font-size:1.2rem;margin:0 0 10px;display:flex;align-items:center;
+gap:12px}
+.afsnit .num{width:30px;height:30px;border-radius:9px;display:grid;
+place-items:center;font-weight:800;font-size:.95rem;background:var(--accent);
+color:#fff;flex:0 0 auto}
+.afsnit p{margin:8px 0;color:var(--muted);font-size:.97rem;max-width:74ch}
+.afsnit p b{color:var(--ink)}
+table.liste{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+table.liste th,table.liste td{border:1px solid var(--line);padding:10px 12px;
+text-align:left;vertical-align:top}
+table.liste th{background:var(--panel2);width:34%}
+table.liste thead th{width:auto}
+.hent{background:var(--accent-soft);border:1px solid var(--line);
+border-left:4px solid var(--accent);border-radius:12px;padding:16px 20px;
+margin:18px 0}
+.hent p{margin:0 0 10px;color:var(--ink);font-size:.97rem;max-width:74ch}
+ul.tjek{list-style:none;padding:0;margin:12px 0;max-width:74ch}
+ul.tjek li{background:var(--panel);border:1px solid var(--line);
+border-radius:10px;padding:10px 14px 10px 40px;margin:7px 0;position:relative;
+color:var(--muted);font-size:.95rem}
+ul.tjek li:before{content:"";position:absolute;left:14px;top:12px;width:13px;
+height:13px;border:1.5px solid var(--muted);border-radius:3px}
+.printbtn{background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;
+color:var(--ink);font-family:inherit;margin:6px 8px 0 0}
+.printbtn:hover{border-color:var(--accent);color:var(--accent)}
+h2.sec{font-size:1.4rem;margin:30px 0 6px}
+@media print{header.top,.printbtn,.btnlink{display:none!important}
+.afsnit,.figur{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+body{font-size:11pt}main{padding:0}@page{size:A4;margin:14mm}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header><main><section class="hero">
+<span class="pill">Fremlæggelse · metode</span>
+<h1>Pecha Kucha</h1>
+<p>20 slides. 20 sekunder hver. De skifter af sig selv, og de venter
+ikke på dig. Her er, hvad formen går ud på, og hvordan I griber den an som
+gruppe.</p>
+<button class="printbtn" onclick="window.print()">Print siden</button>
+<a class="btnlink ghost" href="index.html">Tilbage til forsiden</a>
+</section>
+<section class="afsnit"><h2><span class="num">1</span>Reglen er hele pointen</h2><p>En Pecha Kucha er <b>20 slides, der hver står præcis 20 sekunder</b> og skifter af sig selv. Det giver 6 minutter og 40 sekunder. Hver gang.</p><p>Formen blev opfundet på et arkitektkontor i Tokyo i 2003, fordi de var trætte af oplæg, der trak ud. Navnet er japansk og betyder noget i retning af "snakkesnak".</p><p>Det, der gør den svær, er også det, der gør den god: du kan ikke tale over tiden, du kan ikke stoppe op og lede efter noget, og du kan ikke stå og læse op af dit eget slide. <b>Slidet venter ikke på dig.</b></p><div class="figur"><svg viewBox="0 0 640 66" width="100%" style="max-width:640px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="20 slides, der hver varer 20 sekunder." font-family="Consolas, monospace" font-size="11"><rect x="10.0" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="23.6" y="27.0" text-anchor="middle" fill="#fff" font-size="10">1</text><rect x="41.2" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="54.8" y="27.0" text-anchor="middle" fill="#fff" font-size="10">2</text><rect x="72.4" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="86.0" y="27.0" text-anchor="middle" fill="#fff" font-size="10">3</text><rect x="103.6" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="117.2" y="27.0" text-anchor="middle" fill="#fff" font-size="10">4</text><rect x="134.8" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="148.4" y="27.0" text-anchor="middle" fill="#fff" font-size="10">5</text><rect x="166.0" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="179.6" y="27.0" text-anchor="middle" fill="#fff" font-size="10">6</text><rect x="197.2" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="210.8" y="27.0" text-anchor="middle" fill="#fff" font-size="10">7</text><rect x="228.4" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="242.0" y="27.0" text-anchor="middle" fill="#fff" font-size="10">8</text><rect x="259.6" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="273.2" y="27.0" text-anchor="middle" fill="#fff" font-size="10">9</text><rect x="290.8" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="304.4" y="27.0" text-anchor="middle" fill="#fff" font-size="10">10</text><rect x="322.0" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="335.6" y="27.0" text-anchor="middle" fill="#fff" font-size="10">11</text><rect x="353.2" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="366.8" y="27.0" text-anchor="middle" fill="#fff" font-size="10">12</text><rect x="384.4" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="398.0" y="27.0" text-anchor="middle" fill="#fff" font-size="10">13</text><rect x="415.6" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="429.2" y="27.0" text-anchor="middle" fill="#fff" font-size="10">14</text><rect x="446.8" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="460.4" y="27.0" text-anchor="middle" fill="#fff" font-size="10">15</text><rect x="478.0" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="491.6" y="27.0" text-anchor="middle" fill="#fff" font-size="10">16</text><rect x="509.2" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="522.8" y="27.0" text-anchor="middle" fill="#fff" font-size="10">17</text><rect x="540.4" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="554.0" y="27.0" text-anchor="middle" fill="#fff" font-size="10">18</text><rect x="571.6" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="585.2" y="27.0" text-anchor="middle" fill="#fff" font-size="10">19</text><rect x="602.8" y="6" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="616.4" y="27.0" text-anchor="middle" fill="#fff" font-size="10">20</text><text x="162.0" y="54" text-anchor="middle" fill="#586074" font-size="9.5">1:40</text><text x="318.0" y="54" text-anchor="middle" fill="#586074" font-size="9.5">3:20</text><text x="474.0" y="54" text-anchor="middle" fill="#586074" font-size="9.5">5:00</text><text x="10" y="54" fill="#586074" font-size="9.5">0:00</text><text x="630" y="65" text-anchor="end" fill="#1a2233" font-size="10.5" font-weight="700">20 × 20 sek = 6 min 40 sek</text></svg><div class="figtekst">Alle felter er lige brede, fordi alle slides varer lige længe. Du kan ikke give ét slide mere tid ved at tage fra et andet.</div></div></section><section class="afsnit"><h2><span class="num">2</span>Billeder på slidesene, ord i munden</h2><p>Der er ingen tekstfelter i skabelonen. Det er med vilje. Et slide i en Pecha Kucha er <b>ét billede</b> — og så siger du resten.</p><p>Grunden er praktisk: hvis der står noget på slidet, læser publikum det i stedet for at høre på dig. Og du begynder selv at læse op. Så står I to steder i lokalet og læser den samme tekst.</p><p>Skal der endelig et tal med, så ét stort tal. Ikke en tabel.</p><p><b>20 sekunder er omkring 47 ord.</b> Det er mindre, end du tror — cirka fire linjer. Skriv dem i noterne under slidet; de står der allerede i skabelonen, sammen med ordantallet.</p></section><section class="afsnit"><h2><span class="num">3</span>Sådan deler I den i en gruppe</h2><p><b>Del slidesene, ikke emnerne.</b> Er I tre, tager én slide 1–7, den næste 8–14 og den sidste 15–20. I taler i rækkefølge, og I skifter kun taler <b>mellem</b> to slides.</p><p>Deler I i stedet efter emne, ender I med at skulle skifte taler midt i et slide — og det går galt, for slidet skifter alligevel.</p><p>Aftal på forhånd, hvem der starter afspilningen, og hvor I står, mens I venter. Det lyder som en detalje. Det er det ikke, når der er 20 sekunder til at finde ud af det i.</p><div class="figur"><svg viewBox="0 0 640 84" width="100%" style="max-width:640px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="20 slides, der hver varer 20 sekunder." font-family="Consolas, monospace" font-size="11"><rect x="10.0" y="24" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="23.6" y="45.0" text-anchor="middle" fill="#fff" font-size="10">1</text><rect x="41.2" y="24" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="54.8" y="45.0" text-anchor="middle" fill="#fff" font-size="10">2</text><rect x="72.4" y="24" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="86.0" y="45.0" text-anchor="middle" fill="#fff" font-size="10">3</text><rect x="103.6" y="24" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="117.2" y="45.0" text-anchor="middle" fill="#fff" font-size="10">4</text><rect x="134.8" y="24" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="148.4" y="45.0" text-anchor="middle" fill="#fff" font-size="10">5</text><rect x="166.0" y="24" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="179.6" y="45.0" text-anchor="middle" fill="#fff" font-size="10">6</text><rect x="197.2" y="24" width="27.2" height="34" rx="4" fill="#1f6fd6"/><text x="210.8" y="45.0" text-anchor="middle" fill="#fff" font-size="10">7</text><rect x="228.4" y="24" width="27.2" height="34" rx="4" fill="#1a8f5e"/><text x="242.0" y="45.0" text-anchor="middle" fill="#fff" font-size="10">8</text><rect x="259.6" y="24" width="27.2" height="34" rx="4" fill="#1a8f5e"/><text x="273.2" y="45.0" text-anchor="middle" fill="#fff" font-size="10">9</text><rect x="290.8" y="24" width="27.2" height="34" rx="4" fill="#1a8f5e"/><text x="304.4" y="45.0" text-anchor="middle" fill="#fff" font-size="10">10</text><rect x="322.0" y="24" width="27.2" height="34" rx="4" fill="#1a8f5e"/><text x="335.6" y="45.0" text-anchor="middle" fill="#fff" font-size="10">11</text><rect x="353.2" y="24" width="27.2" height="34" rx="4" fill="#1a8f5e"/><text x="366.8" y="45.0" text-anchor="middle" fill="#fff" font-size="10">12</text><rect x="384.4" y="24" width="27.2" height="34" rx="4" fill="#1a8f5e"/><text x="398.0" y="45.0" text-anchor="middle" fill="#fff" font-size="10">13</text><rect x="415.6" y="24" width="27.2" height="34" rx="4" fill="#1a8f5e"/><text x="429.2" y="45.0" text-anchor="middle" fill="#fff" font-size="10">14</text><rect x="446.8" y="24" width="27.2" height="34" rx="4" fill="#b5710a"/><text x="460.4" y="45.0" text-anchor="middle" fill="#fff" font-size="10">15</text><rect x="478.0" y="24" width="27.2" height="34" rx="4" fill="#b5710a"/><text x="491.6" y="45.0" text-anchor="middle" fill="#fff" font-size="10">16</text><rect x="509.2" y="24" width="27.2" height="34" rx="4" fill="#b5710a"/><text x="522.8" y="45.0" text-anchor="middle" fill="#fff" font-size="10">17</text><rect x="540.4" y="24" width="27.2" height="34" rx="4" fill="#b5710a"/><text x="554.0" y="45.0" text-anchor="middle" fill="#fff" font-size="10">18</text><rect x="571.6" y="24" width="27.2" height="34" rx="4" fill="#b5710a"/><text x="585.2" y="45.0" text-anchor="middle" fill="#fff" font-size="10">19</text><rect x="602.8" y="24" width="27.2" height="34" rx="4" fill="#b5710a"/><text x="616.4" y="45.0" text-anchor="middle" fill="#fff" font-size="10">20</text><text x="117.2" y="16" text-anchor="middle" fill="#1f6fd6" font-size="10.5" font-weight="700">Første taler · 140 sek</text><text x="335.6" y="16" text-anchor="middle" fill="#1a8f5e" font-size="10.5" font-weight="700">Anden taler · 140 sek</text><text x="538.4" y="16" text-anchor="middle" fill="#b5710a" font-size="10.5" font-weight="700">Tredje taler · 120 sek</text><text x="162.0" y="72" text-anchor="middle" fill="#586074" font-size="9.5">1:40</text><text x="318.0" y="72" text-anchor="middle" fill="#586074" font-size="9.5">3:20</text><text x="474.0" y="72" text-anchor="middle" fill="#586074" font-size="9.5">5:00</text><text x="10" y="72" fill="#586074" font-size="9.5">0:00</text><text x="630" y="83" text-anchor="end" fill="#1a2233" font-size="10.5" font-weight="700">20 × 20 sek = 6 min 40 sek</text></svg><div class="figtekst">En gruppe på tre. Taleren skifter kun mellem to slides, aldrig midt i et. Er I fire, bliver det 5 slides hver.</div></div></section><section class="afsnit"><h2><span class="num">4</span>Øvning er ikke noget, I gør til sidst</h2><p>Første gennemløb går galt. Det gør det for alle. Du er ikke færdig med at sige det, du ville, når slidet skifter.</p><p>Når det sker, er der kun én rigtig løsning: <b>skær ord væk</b>. Ikke tal hurtigere. En Pecha Kucha, der bliver læst op i hast, er værre end en almindelig fremlæggelse.</p><p>Regn med fire-fem gennemløb med et ur. Det er her, formen lærer jer noget: I opdager selv, hvad der var overflødigt.</p><div class="figur"><svg viewBox="0 0 560 360" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kredsløb med 4 trin, der gentager sig." font-family="Consolas, monospace" font-size="11"><defs><marker id="pilr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1f6fd6"/></marker></defs><path d="M 345.3 46.1 A 149.0 149.0 0 0 1 413.9 114.7" fill="none" stroke="#1f6fd6" stroke-width="1.6" marker-end="url(#pilr)"/><path d="M 413.9 245.3 A 149.0 149.0 0 0 1 345.3 313.9" fill="none" stroke="#1f6fd6" stroke-width="1.6" marker-end="url(#pilr)"/><path d="M 214.7 313.9 A 149.0 149.0 0 0 1 146.1 245.3" fill="none" stroke="#1f6fd6" stroke-width="1.6" marker-end="url(#pilr)"/><path d="M 146.1 114.7 A 149.0 149.0 0 0 1 214.7 46.1" fill="none" stroke="#1f6fd6" stroke-width="1.6" marker-end="url(#pilr)"/><rect x="205.0" y="6.0" width="150" height="50" rx="9" fill="#fff" stroke="#1f6fd6" stroke-width="1.4"/><text x="280.0" y="27.0" text-anchor="middle" fill="#1a2233" font-size="11.5" font-weight="700">Skriv</text><text x="280.0" y="43.0" text-anchor="middle" fill="#586074" font-size="10.0">hvad du vil sige</text><rect x="354.0" y="155.0" width="150" height="50" rx="9" fill="#fff" stroke="#1f6fd6" stroke-width="1.4"/><text x="429.0" y="176.0" text-anchor="middle" fill="#1a2233" font-size="11.5" font-weight="700">Læs højt</text><text x="429.0" y="192.0" text-anchor="middle" fill="#586074" font-size="10.0">med et ur i hånden</text><rect x="205.0" y="304.0" width="150" height="50" rx="9" fill="#fff" stroke="#1f6fd6" stroke-width="1.4"/><text x="280.0" y="325.0" text-anchor="middle" fill="#1a2233" font-size="11.5" font-weight="700">Skær væk</text><text x="280.0" y="341.0" text-anchor="middle" fill="#586074" font-size="10.0">det, der ikke nåede med</text><rect x="56.0" y="155.0" width="150" height="50" rx="9" fill="#fff" stroke="#1f6fd6" stroke-width="1.4"/><text x="131.0" y="176.0" text-anchor="middle" fill="#1a2233" font-size="11.5" font-weight="700">Igen</text><text x="131.0" y="192.0" text-anchor="middle" fill="#586074" font-size="9.9">til det passer hver gang</text><text x="280.0" y="178.0" text-anchor="middle" fill="#1a2233" font-size="12.5" font-weight="700">Fire-fem gange</text><text x="280.0" y="194.0" text-anchor="middle" fill="#586074" font-size="10">så sidder den</text></svg><div class="figtekst">Løkken, I skal igennem for hvert slide. Den tredje gang er den, der rykker — dér begynder I at kunne høre, hvad der kan undværes.</div></div></section>
+<h2 class="sec">Hent skabelonen</h2>
+<div class="hent">
+<p><b>20 tomme slides med tiden sat.</b> Sæt jeres billeder ind, skriv
+manuskriptet i noterne, og lad være med at røre ved tiden. Hvert slide har
+allerede et ordantal i noten.</p>
+<a class="btnlink" href="materiale/pecha-kucha-skabelon.pptx" download>Hent skabelonen (.pptx)</a>
+</div>
+<p style="color:var(--muted);max-width:74ch;font-size:.93rem">To ting, I skal
+vide om filen: klik er slået fra, så et uheldigt tryk ikke spoler frem midt i
+en fremlæggelse. Og tjek under <b>Diasshow</b>, at <b>Brug tidsindstillinger</b>
+er slået til — ellers kører tiden ikke af sig selv.</p>
+<h2 class="sec">Fem fælder</h2>
+<table class="liste"><thead><tr><th>Fælden</th><th>Hvorfor den koster</th>
+</tr></thead><tbody><tr><th>At skrive manuskriptet til sidst</th><td>Billedet skal vælges ud fra, hvad du siger — ikke omvendt. Skriv først.</td></tr><tr><th>At øve uden ur</th><td>Uden ur ved du ikke, om du er på 20 eller 35 sekunder. Du tror, du er på 20.</td></tr><tr><th>At tale hurtigere, når tiden er knap</th><td>Det kan publikum høre med det samme. Skær i stedet et par sætninger væk.</td></tr><tr><th>At lave et slide, der skal forklares</th><td>Et kompliceret billede koster tid, du ikke har. Vælg et, der kan fanges på et sekund.</td></tr><tr><th>At regne med at kunne klikke sig frem</th><td>Det kan du ikke. Tiden løber, uanset hvad du gør.</td></tr></tbody></table>
+<h2 class="sec">Tjek før I går op</h2>
+<ul class="tjek"><li>Alle 20 slides har et billede.</li><li>Der står ingen sætninger på slidesene.</li><li>Manuskriptet står i noterne, og det er læst højt med ur.</li><li>I ved hver især, hvilke slidenumre der er jeres.</li><li>I har kørt hele fremlæggelsen igennem mindst to gange i træk uden at stoppe.</li><li>I ved, hvem der trykker start.</li></ul>
+<button class="printbtn" onclick="window.print()">Print siden</button></main><footer>Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>

@@ -186,14 +186,31 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   og `kredsloeb`. De regner alle skriftstørrelsen ud af pladsen — ringene
   måler korden dér, hvor teksten når længst ud, ikke på midterlinjen, for
   ellers løber den yderste tekst ud over kanten med et par bogstaver.
-- **Pecha Kucha-skabelon (20.10.):** `vejledning/pecha-kucha-skabelon.pptx`,
-  bygget af `claude/byg_pecha_kucha.py` + `.mjs`. 20 tomme slides, hver sat
-  til at skifte efter 20 sekunder. pptxgenjs kan hverken skrive
-  slideovergange eller en rigtig billedpladsholder, så scriptet retter begge
-  dele bagefter i OOXML'en. Manuskriptet skrives i noterne, hvor hvert slide
-  har et ordantal. **pptxgenjs ligger ikke i containeren** — `npm install -g
-  pptxgenjs`, og den importeres med sin fulde sti, fordi et ES-modul ikke
-  kan slå globale pakker op på navnet.
+- **Pecha Kucha (20.10.):** siden `pecha-kucha.html` til ungerne, bygget af
+  `claude/byg_pecha_kucha_side.py`, og skabelonen
+  `materiale/pecha-kucha-skabelon.pptx`, bygget af
+  `claude/byg_pecha_kucha.py` + `.mjs`. 20 tomme slides, hver sat til at
+  skifte efter 20 sekunder. pptxgenjs kan hverken skrive slideovergange
+  eller en rigtig billedpladsholder, så scriptet retter begge dele bagefter
+  i OOXML'en. Manuskriptet skrives i noterne, hvor hvert slide har et
+  ordantal.
+  **Skabelonen ligger i `materiale/` og ER i git** — i modsætning til
+  bordplanen. Reglen om, at byggede filer ikke hører i versionsstyringen,
+  viger for en anden: det, der udgives, skal ligge i git, ellers kan Vercel
+  ikke servere det. Ungerne henter den fra siden.
+  Ny figur i `figurer.py`: `slidebaand` — de 20 slides som lige brede
+  felter, eventuelt farvet op efter hvem der taler.
+  **pptxgenjs ligger ikke i containeren** — `npm install -g pptxgenjs`, og
+  den importeres med sin fulde sti, fordi et ES-modul ikke kan slå globale
+  pakker op på navnet. Den validerende `validate.py` fra pptx-skillen skal
+  køres med `python3.13`, ikke `python3`: modulerne ligger i 3.13.
+- **Faktalinks *Digital dannelse* er lagt på tekstsiden (20.10.).** PDF'en
+  ligger i `tekster/`, som er udelukket fra deploy, og kortet linker til
+  klassens Teams. Rettighederne er dækket af skolens aftale, og en
+  skoleaftale giver ret til at dele med klassen på en lukket platform — ikke
+  til at lægge teksten frit på sitet. **Teksten er fra januar 2016, og dens
+  tal er fra 2013-2014.** Det står på kortet: brug den til begreberne og
+  `digital-socialisering.html` til tallene.
 - **Årsplanen for samfundsfag er rettet.** Uge 43 er skilt ud som sit eget
   forløb, *Digital socialisering: kvalitativ analyse*, og kriminalitet og
   overvågning rykker til uge 44–47. Antallet af uger pr. tema er uændret.

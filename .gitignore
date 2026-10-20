@@ -7,7 +7,6 @@ __pycache__/
 vejledning/bordplan-*.pdf
 vejledning/bordkort-*.pdf
 
-# Pecha Kucha-skabelonen bygges af claude/byg_pecha_kucha.py (og .mjs). Også
-# en bygget fil — scriptet er kilden, .pptx'en er det, der kommer ud af det.
-vejledning/pecha-kucha-skabelon.pptx
-vejledning/pecha-kucha-skabelon-raa.pptx
+# Raafilen fra pptxgenjs, foer de 20 sekunder er sat ind. Den færdige
+# skabelon ligger i materiale/ og SKAL i git — den udgives på sitet.
+materiale/pecha-kucha-skabelon-raa.pptx

@@ -2145,3 +2145,72 @@ def kredsloeb(trin, midte=('', ''), W=560, H=360):
                  f'fill="{MUT}" font-size="10">{midte[1]}</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+def slidebaand(antal, sekunder, grupper=None, W=640, farver=None):
+    """De slides, en Pecha Kucha bestaar af, som et baand.
+
+    antal    hvor mange slides.
+    sekunder hvor laenge hvert slide staar.
+    grupper  [(navn, antal_slides)] - farver baandet op i blokke, saa man kan
+             se, hvem der taler hvornaar. Udelades den, er baandet ensfarvet.
+
+    Felterne er lige brede, fordi hvert slide varer lige laenge. Det er hele
+    pointen i formen, og det skal figuren vise - ikke antyde.
+    """
+    F = farver or [BLA, GRO, ORA, ROD]
+    if grupper:
+        assert sum(n for _, n in grupper) == antal, (
+            f'grupperne har {sum(n for _, n in grupper)} slides, '
+            f'men der er {antal}')
+    M, GAB, BH = 10, 4, 34
+    b = (W - 2 * M - (antal - 1) * GAB) / antal
+    assert b >= 8, f'{antal} felter bliver {b:.1f} px brede — for smalle'
+    top = 24 if grupper else 6
+    H = top + BH + 26
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'
+         f'{antal} slides, der hver varer {sekunder} sekunder." {FONT}>']
+
+    # hvilken gruppe hvert slide hoerer til, saa farven kan slaas op pr. felt
+    hold = []
+    for g, (_, n) in enumerate(grupper or [('', antal)]):
+        hold += [g] * n
+    for i in range(antal):
+        x = M + i * (b + GAB)
+        s.append(f'<rect x="{x:.1f}" y="{top}" width="{b:.1f}" height="{BH}" '
+                 f'rx="4" fill="{F[hold[i] % len(F)]}"/>')
+        if b >= 16:
+            s.append(f'<text x="{x + b / 2:.1f}" y="{top + BH / 2 + 4:.1f}" '
+                     f'text-anchor="middle" fill="#fff" font-size="10">'
+                     f'{i + 1}</text>')
+
+    # navnene over hver blok, med den tid blokken varer
+    i = 0
+    for g, (navn, n) in enumerate(grupper or []):
+        x1 = M + i * (b + GAB)
+        x2 = M + (i + n - 1) * (b + GAB) + b
+        tekst = f'{navn} · {n * sekunder} sek'
+        st = _skrift(tekst, x2 - x1, loft=10.5, gulv=6.5, luft=6)
+        s.append(f'<text x="{(x1 + x2) / 2:.1f}" y="{top - 8}" '
+                 f'text-anchor="middle" fill="{F[g % len(F)]}" '
+                 f'font-size="{st:.1f}" font-weight="700">{tekst}</text>')
+        i += n
+
+    # tiden under baandet: maerker hvert femte slide, og summen til sidst
+    # ikke paa det sidste slide: dér staar summen allerede, og de to tal
+    # ville lande oven i hinanden ude i hoejre kant
+    for i in range(4, antal - 1, 5):
+        x = M + i * (b + GAB) + b
+        t = (i + 1) * sekunder
+        s.append(f'<text x="{x:.1f}" y="{top + BH + 14}" text-anchor="middle" '
+                 f'fill="{MUT}" font-size="9.5">{t // 60}:{t % 60:02d}</text>')
+    i_alt = antal * sekunder
+    s.append(f'<text x="{M}" y="{top + BH + 14}" fill="{MUT}" font-size="9.5">'
+             f'0:00</text>')
+    s.append(f'<text x="{W - M}" y="{top + BH + 25}" text-anchor="end" '
+             f'fill="{INK}" font-size="10.5" font-weight="700">'
+             f'{antal} × {sekunder} sek = {i_alt // 60} min {i_alt % 60} sek'
+             f'</text>')
+    s.append('</svg>')
+    return ''.join(s)
