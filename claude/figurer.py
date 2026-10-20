@@ -2247,22 +2247,33 @@ def standplan(zoner, W=620, bord_h=76):
 
     for i, (navn, hvad, hvem) in enumerate(zoner):
         x = M + PAD + i * (zb + GAB)
-        # hvem der staar ved zonen, oven over bordet
-        s.append(f'<text x="{x + zb / 2:.1f}" y="{TOP + 11}" '
-                 f'text-anchor="middle" fill="{BLA}" font-weight="700" '
-                 f'font-size="{_skrift(hvem, zb, loft=10, gulv=6.5, luft=4):.1f}">'
-                 f'{hvem}</text>')
+        # En tom zone er ikke en fejl: figuren bruges ogsaa som noget, man
+        # tegner paa. Staar der ingenting, kommer der en skrivelinje i stedet
+        # for en tekst - saa er formen givet og indholdet ikke.
+        if hvem:
+            s.append(f'<text x="{x + zb / 2:.1f}" y="{TOP + 11}" '
+                     f'text-anchor="middle" fill="{BLA}" font-weight="700" '
+                     f'font-size="{_skrift(hvem, zb, loft=10, gulv=6.5, luft=4):.1f}">'
+                     f'{hvem}</text>')
+        else:
+            s.append(f'<path d="M {x + 8:.1f} {TOP + 11} L {x + zb - 8:.1f} '
+                     f'{TOP + 11}" stroke="{LIN}" stroke-width="0.9"/>')
         s.append(f'<rect x="{x:.1f}" y="{by + PAD}" width="{zb:.1f}" '
                  f'height="{bord_h - 2 * PAD}" rx="6" fill="#fff" '
                  f'stroke="{LIN}" stroke-width="1"/>')
-        s.append(f'<text x="{x + zb / 2:.1f}" y="{by + PAD + 20:.1f}" '
-                 f'text-anchor="middle" fill="{INK}" font-weight="700" '
-                 f'font-size="{_skrift(navn, zb, loft=11.5, gulv=7, luft=8):.1f}">'
-                 f'{navn}</text>')
-        s.append(f'<text x="{x + zb / 2:.1f}" y="{by + PAD + 37:.1f}" '
-                 f'text-anchor="middle" fill="{MUT}" '
-                 f'font-size="{_skrift(hvad, zb, loft=10, gulv=6.5, luft=8):.1f}">'
-                 f'{hvad}</text>')
+        for dy, tekst, loft, farve, vaegt in (
+                (20, navn, 11.5, INK, '700'), (37, hvad, 10, MUT, '400')):
+            y = by + PAD + dy
+            if tekst:
+                s.append(f'<text x="{x + zb / 2:.1f}" y="{y:.1f}" '
+                         f'text-anchor="middle" fill="{farve}" '
+                         f'font-weight="{vaegt}" font-size="'
+                         f'{_skrift(tekst, zb, loft=loft, gulv=6.5, luft=8):.1f}">'
+                         f'{tekst}</text>')
+            else:
+                s.append(f'<path d="M {x + 10:.1f} {y + 2:.1f} '
+                         f'L {x + zb - 10:.1f} {y + 2:.1f}" stroke="{LIN}" '
+                         f'stroke-width="0.9"/>')
         # nummeret paa ruten, ud for zonen
         cx = x + zb / 2
         s.append(f'<circle cx="{cx:.1f}" cy="{rute_y}" r="9" fill="{GRO}"/>')

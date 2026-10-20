@@ -184,8 +184,16 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   stand for besøgende fra andre klasser og forældre.
   Siden er **rammen, ikke forløbet**: fem dele (mål, standen, medie- og
   materialeliste, opgaveliste, roller og ansvar), og hver del har en
-  forklaring, et eksempel og en skriveplads med linjer. Printer en gruppe
-  siden, har de deres plan på ét ark, der kan ligge på standen.
+  forklaring og et tomt felt — linjer eller et skema med kolonner. Printer
+  en gruppe siden, har de deres plan på ét ark, der kan ligge på standen.
+  **Der er ingen eksempler på siden, og det er med vilje (afgjort 20.10.).**
+  Første udgave havde et gennemført eksempel på hver del — et mål om
+  plasttyper, en stand med en vægt, fire færdige roller. Det opfinder
+  undervisningen for ungerne: et eksempel bliver skrevet af i stedet for
+  tænkt. Nu viser figurerne formen og ikke indholdet: `standplan` tegnes
+  tom med skrivelinjer, og målfiguren giver sætningsstarter, ikke svar.
+  **Siden linker heller ikke til værkstedssiden.** Inspirationen skal komme
+  fra ungernes egne noter fra naturfagsugen.
   De hårde rammer står først: ét bord, 7-10 minutter pr. besøgende, skal
   kunne køre hele dagen, og **besøgende er både børn og voksne** — samme
   stand skal virke for en fra 3. klasse og for en forælder.

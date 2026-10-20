@@ -3,8 +3,14 @@
 
 Grupper paa tre til fem bygger en stand om plastik, som besoegende fra andre
 klasser og foraeldre kan komme igennem. Siden er rammen, ikke forloebet: den
-siger, hvad der skal vaere med, viser et eksempel paa hver del og giver plads
-til at skrive deres eget. Den kan printes, saa hver gruppe har ét ark.
+siger, hvad der skal vaere med, og giver plads til at skrive det. Den kan
+printes, saa hver gruppe har ét ark.
+
+**Der er ingen eksempler paa siden med vilje.** Ungerne skal opfinde deres
+egen undervisning om plastik, og de har deres egne noter fra naturfagsugen at
+hente inspiration i. Et eksempel paa et maal eller en stand bliver afskrevet i
+stedet for taenkt - saa er opgaven lavet for dem. Felterne staar tomme, og
+figurerne viser formen, ikke indholdet.
 
     python3 claude/byg_plastikstand.py
 """
@@ -18,12 +24,9 @@ import figurer as FG
 UD = 'plastik-stand.html'
 
 # Den besoegendes vej gennem en stand - eksemplet i del 2.
-ZONER = [
-    ('Velkomst', 'Ét spørgsmål, der fanger', 'Vært'),
-    ('Prøv selv', 'Den besøgende gør noget', 'Instruktør'),
-    ('Svaret', 'Hvad viste det?', 'Forklarer'),
-    ('Tag med', 'Noget at huske det på', 'Vært'),
-]
+# Tomme med vilje: figuren viser, at en stand har zoner i en raekkefoelge.
+# Hvad zonerne hedder, er det, gruppen skal finde ud af.
+ZONER = [('', '', '') for _ in range(4)]
 
 # Maalet: det handler om den besoegende, ikke om jer.
 MAAL_TRIN = [
@@ -54,8 +57,9 @@ RAMMEN = [
      '3. klasse og for en forælder. Det er den sværeste del af opgaven.'),
 ]
 
-# (nr, overskrift, [afsnit], figur, figurtekst, eksempeloverskrift,
-#  [eksempellinjer], skrivefelt-overskrift, antal_linjer)
+# (overskrift, [afsnit], figur, figurtekst, skrivefelt)
+# skrivefelt: ('linjer', overskrift, antal) eller
+#             ('skema', overskrift, [kolonner], antal raekker)
 DELE = [
  ('Målet', [
    'Et mål er ikke, hvad <b>I</b> vil lave. Det er, hvad den <b>besøgende</b> '
@@ -67,13 +71,8 @@ DELE = [
   FG.procesdiagram(MAAL_TRIN, W=620,
                    farver={'foer': FG.MUT, 'under': FG.BLA, 'efter': FG.GRO}),
   'Målet måles på forskellen mellem første og sidste kasse — ikke på, hvor '
-  'meget I nåede at fortælle.',
-  'Sådan kan et mål se ud',
-  ['Efter vores stand kan den besøgende <b>kende forskel på de tre '
-   'plasttyper</b> ved at se på mærket i bunden.',
-   'Efter vores stand kan den besøgende <b>nævne én ting, plastemballage gør '
-   'bedre end papir</b>, og én ting den gør værre.'],
-  'Jeres mål', 4),
+  'meget I nåede at fortælle. Sætningerne skal gøres færdige af jer.',
+  ('linjer', 'Jeres mål', 5)),
 
  ('Standen', [
    'Tegn bordet set oppefra, før I bygger noget. Hvor står den besøgende? '
@@ -84,31 +83,22 @@ DELE = [
    'Husk det kedelige: strøm, vand, spild, skraldespand. Og husk, at nogen '
    'skal kunne se standen på afstand — hvad er jeres skilt?'],
   FG.standplan(ZONER),
-  'Et eksempel på en rute. Zonerne må gerne hedde noget andet, men der skal '
-  'være en rækkefølge, og den besøgende skal kunne se den uden at spørge.',
-  'Sådan kan standen beskrives',
-  ['<b>Venstre ende:</b> skilt med spørgsmålet "Hvilken pose er værst?" og '
-   'tre poser lagt frem.',
-   '<b>Midten:</b> vægten og tre bægre. Den besøgende vejer selv.',
-   '<b>Højre ende:</b> plakaten med svaret, og en skål med små mærkater.'],
-  'Jeres stand — tegn den og beskriv den', 6),
+  'Formen på en stand: zoner i en rækkefølge, og én fra gruppen ved hver. '
+  'Hvad zonerne hedder, og hvad der sker i dem, bestemmer I selv — print '
+  'siden, og udfyld figuren i hånden.',
+  ('linjer', 'Jeres stand — beskriv hver zone', 6)),
 
  ('Medier og materialer', [
    'Skriv <b>alt</b> ned, også det, I tror, der er i forvejen. Det er altid '
    'det, ingen skrev ned, der mangler fredag morgen.',
-   'Del listen i to: <b>medier</b> er det, der viser noget — skilt, plakat, '
-   'skærm, QR-kode, lyd. <b>Materialer</b> er det, der bliver brugt — poser, '
-   'bægre, vand, tape, mærkater.',
+   'Der er to slags. <b>Medier</b> er det, der viser noget — skilt, plakat, '
+   'skærm, lyd, en QR-kode. <b>Materialer</b> er det, der bliver brugt, og '
+   'som kan slippe op.',
    'Ud for hver ting skal der stå, <b>hvem</b> der skaffer den, og hvornår '
    'den er her. Ikke "nogen". Et navn.'],
   None, None,
-  'Skriv listen sådan her',
-  ['<b>Medie:</b> Plakat A3 med svaret · 1 stk. · printes på skolen · Asta · '
-   'onsdag',
-   '<b>Materiale:</b> Plastposer · 6 stk. · hjemmefra · Viktor · tirsdag',
-   '<b>Materiale:</b> Køkkenvægt · 1 stk. · lånes i hjemkundskab · Nor · '
-   'tirsdag'],
-  'Jeres medie- og materialeliste', 10),
+  ('skema', 'Jeres medie- og materialeliste',
+   ['Hvad', 'Antal', 'Hvorfra', 'Hvem skaffer det', 'Hvornår'], 11)),
 
  ('Opgaver, så standen bliver færdig', [
    'En opgave er noget, <b>én person</b> kan gøre færdig, og som man kan se '
@@ -118,32 +108,40 @@ DELE = [
    'Læg de ting først, som <b>andre venter på</b>: skal plakaten printes, '
    'skal teksten være færdig i god tid før.'],
   FG.aarslinje(UGE, W=620, farver=UGE_FARVER),
-  'Et eksempel på en uge — ikke skemaet; det får I af læreren. Læg mærke '
-  'til, at prøvekørslen har sin egen dag. Den skal ikke klemmes ind fredag '
-  'morgen.',
-  'Sådan kan en opgave se ud',
-  ['Skrive teksten til plakaten · Asta · mandag · ✔',
-   'Printe plakaten i A3 · Nor · onsdag · ✔',
-   'Købe mærkater · Viktor · tirsdag · ikke endnu'],
-  'Jeres opgaveliste', 10),
+  'Rækkefølgen i en uge som denne — ikke skemaet; det får I af læreren. Læg '
+  'mærke til, at prøvekørslen har sin egen dag. Den skal ikke klemmes ind '
+  'fredag morgen.',
+  ('skema', 'Jeres opgaveliste',
+   ['Opgave', 'Hvem', 'Hvornår', 'Færdig'], 11)),
 
  ('Roller og ansvar', [
    'Giv hinanden roller, der gælder <b>hele dagen</b>. Rollerne byttes ikke '
    'undervejs — det er dér, standene går i stå.',
-   'Er I tre, slår I to roller sammen. Er I fem, deler I værtsrollen, så I '
-   'kan skiftes til at holde pause. Der kommer besøgende i mange timer.',
-   'Alle i gruppen skal kunne svare på det, standen handler om. En besøgende '
-   'spørger den, der står nærmest — ikke den, der kan svaret.'],
+   'Find selv ud af, hvilke roller netop jeres stand har brug for. De '
+   'afhænger af, hvad der sker på den: en stand, hvor de besøgende selv laver '
+   'noget, har brug for andre roller end en, hvor de ser på.',
+   'Er I tre, får nogen to roller. Er I fem, kan to deles om den samme, så I '
+   'kan skiftes til at holde pause — der kommer besøgende i mange timer.',
+   'Uanset rollerne: <b>alle</b> i gruppen skal kunne svare på det, standen '
+   'handler om. En besøgende spørger den, der står nærmest — ikke den, der '
+   'kan svaret.'],
   None, None,
-  'Fire roller, der plejer at virke',
-  ['<b>Vært:</b> tager imod, stiller spørgsmålet, siger farvel. Taler mest.',
-   '<b>Instruktør:</b> viser, hvad den besøgende selv skal gøre. Rører '
-   'tingene.',
-   '<b>Forklarer:</b> siger, hvad resultatet betyder. Kender tallene.',
-   '<b>Materialemester:</b> fylder op, rydder op, holder styr på spild. '
-   'Standen kan køre igen om to minutter.'],
-  'Jeres roller — skriv navne på', 6),
+  ('skema', 'Jeres roller', ['Rolle', 'Navn', 'Ansvar på dagen'], 6)),
 ]
+
+
+def tomt_skema(kolonner, raekker):
+    """Et skema med overskrifter og tomme felter. Formen er givet, resten er
+    deres. Bredden paa kolonnerne fordeles, saa den foerste faar mest plads -
+    det er dér, der skal skrives mest."""
+    n = len(kolonner)
+    bred = [40 if i == 0 else 60 / (n - 1) for i in range(n)]
+    hoved = ''.join(f'<th style="width:{b:.0f}%">{html.escape(k)}</th>'
+                    for k, b in zip(kolonner, bred))
+    krop = ('<tr>' + '<td></td>' * n + '</tr>') * raekker
+    return f'<table class="skema"><thead><tr>{hoved}</tr></thead>' \
+           f'<tbody>{krop}</tbody></table>'
+
 
 TJEK = [
  'Vi kan sige vores mål højt i én sætning, der begynder med "Efter vores stand kan den besøgende …".',
@@ -157,8 +155,7 @@ TJEK = [
 
 # ------------------------------------------------------------------- opsaetning
 dele_html = ''
-for i, (o, stykker, figur, figtekst, eks_o, eks, skriv_o, linjer) in enumerate(
-        DELE, 1):
+for i, (o, stykker, figur, figtekst, felt) in enumerate(DELE, 1):
     dele_html += (f'<section class="afsnit"><h2><span class="num">{i}</span>'
                   f'{html.escape(o)}</h2>')
     dele_html += ''.join(f'<p>{t}</p>' for t in stykker)
@@ -166,12 +163,11 @@ for i, (o, stykker, figur, figtekst, eks_o, eks, skriv_o, linjer) in enumerate(
         dele_html += (f'<div class="figur">{figur}'
                       f'<div class="figtekst">{html.escape(figtekst)}</div>'
                       f'</div>')
-    dele_html += (f'<div class="eks"><h3>{html.escape(eks_o)}</h3><ul>'
-                  + ''.join(f'<li>{t}</li>' for t in eks) + '</ul></div>')
-    dele_html += (f'<div class="skriv"><h3>{html.escape(skriv_o)}</h3>'
-                  + '<div class="linjer" style="height:'
-                  + f'{linjer * 26}px"></div></div>')
-    dele_html += '</section>'
+    art, titel = felt[0], felt[1]
+    indhold = (f'<div class="linjer" style="height:{felt[2] * 26}px"></div>'
+               if art == 'linjer' else tomt_skema(felt[2], felt[3]))
+    dele_html += (f'<div class="skriv"><h3>{html.escape(titel)}</h3>'
+                  f'{indhold}</div></section>')
 
 rammen_html = ''.join(
     f'<li><b>{html.escape(a)}</b> — {html.escape(b)}</li>' for a, b in RAMMEN)
@@ -195,13 +191,13 @@ place-items:center;font-weight:800;font-size:.95rem;background:var(--accent);
 color:#fff;flex:0 0 auto}
 .afsnit p{margin:8px 0;color:var(--muted);font-size:.97rem;max-width:74ch}
 .afsnit p b{color:var(--ink)}
-.eks{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
-padding:12px 18px;margin:14px 0}
-.eks h3{font-size:.82rem;letter-spacing:.5px;text-transform:uppercase;
-color:var(--accent);margin:0 0 6px}
-.eks ul{margin:0;padding-left:20px}
-.eks li{color:var(--muted);font-size:.93rem;margin:5px 0;max-width:72ch}
-.eks li b{color:var(--ink)}
+table.skema{width:100%;border-collapse:collapse;font-size:.92rem;
+table-layout:fixed}
+table.skema th,table.skema td{border:1px solid var(--line);padding:7px 9px;
+text-align:left}
+table.skema th{background:var(--panel2);font-size:.82rem;letter-spacing:.4px;
+text-transform:uppercase;color:var(--muted)}
+table.skema td{height:26px}
 .skriv{border:1.5px dashed var(--line);border-radius:12px;padding:12px 18px 16px;
 margin:14px 0;background:#fff}
 .skriv h3{font-size:.82rem;letter-spacing:.5px;text-transform:uppercase;
@@ -234,19 +230,21 @@ body{font-size:11pt}main{padding:0}@page{size:A4;margin:13mm}}
 KROP = f'''<section class="hero">
 <span class="pill">Feature · uge 44 · plastik</span>
 <h1>Byg en stand om plastik</h1>
-<p>I skal lave jeres eget lille undervisningsforløb og holde det fra en stand.
-De besøgende er elever fra andre klasser og forældre. De kommer, prøver noget,
-og går igen — og bagefter kan de noget, de ikke kunne før.</p>
+<p>I skal opfinde jeres eget lille undervisningsforløb om plastik og holde
+det fra en stand. De besøgende er elever fra andre klasser og forældre. De
+kommer, prøver noget, og går igen — og bagefter kan de noget, de ikke kunne
+før.</p>
+<p>Siden her er <b>rammen</b>, ikke forløbet. Den siger, hvad der skal være
+med. Hvad der står i felterne, er helt jeres.</p>
 <button class="printbtn" onclick="window.print()">Print rammen</button>
-<a class="btnlink ghost" href="feature-plastik-og-foedevarer.html">Værkstedet om plast og fødevarer</a>
-<a class="btnlink ghost" href="index.html">Forsiden</a>
 </section>
 <h2 class="sec">Rammen, I skal holde jer inden for</h2>
 <div class="ramme"><ul>{rammen_html}</ul></div>
 <h2 class="sec">De fem dele, der skal være med</h2>
-<p style="color:var(--muted);max-width:74ch">Hver del har en forklaring, et
-eksempel og en plads, I selv skriver i. Printer I siden, har I jeres plan på
-ét sted — og så kan den ligge på standen.</p>
+<p style="color:var(--muted);max-width:74ch">Hver del har en forklaring og
+en plads, I skriver i. Der er ingen eksempler — de ville blive skrevet af i
+stedet for tænkt. Printer I siden, har I jeres plan på ét sted, og så kan den
+ligge på standen.</p>
 {dele_html}
 <h2 class="sec">Prøvekørslen</h2>
 <div class="ramme"><ul>
@@ -263,12 +261,15 @@ på to minutter, holder standen ikke en hel dag.</li>
 </ul></div>
 <h2 class="sec">Tjek før I åbner</h2>
 <ul class="tjek">{tjek_html}</ul>
-<h2 class="sec">Hvor I kan hente idéer</h2>
-<p style="color:var(--muted);max-width:74ch">Værkstedet fra naturfagsugen har
-tre forsøg om plast og fødevarer — emballagetesten, bioplasten og
-plasttyperne. De er lavet til en lektion, men de kan skæres ned og bygges om
-til en stand. I må også gerne finde på noget helt andet.</p>
-<a class="btnlink" href="feature-plastik-og-foedevarer.html">Åbn værkstedet</a>
+<h2 class="sec">Hvor idéen skal komme fra</h2>
+<p style="color:var(--muted);max-width:74ch">Fra jer. Standen er jeres eget
+lille undervisningsforløb, og der står ikke nogen steder, hvad den skal
+handle om — ud over plastik.</p>
+<p style="color:var(--muted);max-width:74ch">Hent inspiration i <b>jeres egne
+noter fra naturfagsugen</b>. Hvad undrede jer dengang? Hvad var der ikke tid
+til at undersøge? Hvad troede I, før I målte, og hvad viste det sig at være?
+Det sidste er som regel det bedste sted at begynde: <b>en stand er stærk, når
+den besøgende tror ét og opdager noget andet.</b></p>
 <button class="printbtn" onclick="window.print()">Print rammen</button>'''
 
 DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
