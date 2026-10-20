@@ -1968,3 +1968,180 @@ def rutekort(punkter, rute=(), W=620, H=430, maalestok=500):
              f'font-size="10.5">N</text>')
     d.append('</svg>')
     return ''.join(d)
+
+
+# -------------------------------------------------------------- socialisering
+# Figurerne til fagteksten om socialisering. Alle vinkler og radier regnes ud,
+# saa ringene bliver lige tykke og pilene rammer midten.
+
+def _skrift(tekst, plads, loft=11.0, gulv=7.0, luft=8):
+    """Den stoerste skrift, hvor teksten bliver inden for `plads` px.
+    Consolas fylder ca. 0,60 em pr. tegn. Er der ikke plads nok til gulvet,
+    skal figuren ikke tegnes - saa er teksten for lang til den form."""
+    st = min(loft, (plads - luft) / (max(len(tekst), 1) * 0.60))
+    assert st >= gulv, (
+        f'"{tekst}" kan ikke stå på {plads:.0f} px — gør teksten kortere')
+    return st
+
+
+def socialisationsringe(ringe, midte='DIG', W=560):
+    """Socialisationsarenaerne som ringe uden om én selv.
+
+    ringe  [(navn, farve, eksempeltekst)] indefra og ud.
+    Ringene tegnes udefra og ind, saa den inderste ligger oeverst. Navnet staar
+    i toppen af sin ring og eksemplerne i bunden - begge steder er baandet lige
+    tykt, saa teksten staar ikke paa en skraa kant.
+    """
+    r0 = 36                              # radius paa midterkredsen
+    baand = 54                           # tykkelsen paa hver ring
+    rad = [r0 + baand * (i + 1) for i in range(len(ringe))]
+    ydre = rad[-1]
+    H = 2 * ydre + 16
+    cx, cy = W / 2, ydre + 8
+    assert ydre * 2 + 16 <= 2 * W, 'ringene er bredere end figuren'
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'
+         f'Socialisering tegnet som ringe uden om én selv: '
+         f'{", ".join(n for n, _, _ in ringe)}." {FONT}>']
+    for i in range(len(ringe) - 1, -1, -1):
+        navn, farve, eks = ringe[i]
+        indre = r0 if i == 0 else rad[i - 1]
+        s.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{rad[i]:.1f}" '
+                 f'fill="{farve}" stroke="#fff" stroke-width="2"/>')
+        # Navnet staar i toppen af baandet og eksemplerne i bunden, begge
+        # midt i baandet. Hvor bred en tekst der er plads til, afhaenger af
+        # ringen: korden gennem cirklen i netop den hoejde. Regnes den ikke,
+        # loeber den lange yderste tekst ud over kanten af ringen.
+        rm = (indre + rad[i]) / 2
+        # Korden maales ikke paa midterlinjen, men dér hvor teksten naar
+        # laengst ud: et bogstav staar et stykke under sin grundlinje, og
+        # ringen er smallere dér. Maales der paa midten, rager den yderste
+        # tekst ud over kanten med et par bogstaver i hver ende.
+        yderst = rm + 8
+        assert yderst < rad[i], 'ringen er for smal til en tekst'
+        assert rm - 8 >= indre, 'teksten lapper ind over den indre ring'
+        bred = 2 * math.sqrt(rad[i] ** 2 - yderst ** 2)
+        for y, tekst, loft, vaegt in ((cy - rm, navn, 12.5, '700'),
+                                      (cy + rm, eks, 10.5, '400')):
+            st = _skrift(tekst, bred, loft=loft, luft=10)
+            s.append(f'<text x="{cx:.1f}" y="{y + 4:.1f}" text-anchor="middle" '
+                     f'fill="#fff" font-size="{st:.1f}" font-weight="{vaegt}">'
+                     f'{tekst}</text>')
+    s.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r0}" fill="#fff" '
+             f'stroke="{LIN}" stroke-width="1.5"/>')
+    s.append(f'<text x="{cx:.1f}" y="{cy + 5:.1f}" text-anchor="middle" '
+             f'fill="{INK}" font-size="14" font-weight="700">{midte}</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+def krydspres(kraefter, midte='DIG', W=600, H=360):
+    """Krydspres: flere arenaer vil noget forskelligt med én samtidig.
+
+    kraefter  [(hvorfra, hvad den vil)] - mindst to.
+    Kasserne fordeles jaevnt paa en cirkel om midten, og hver pil regnes ud
+    fra kassens kant mod midterkredsen, saa den hverken starter inde i kassen
+    eller ender inde i cirklen.
+    """
+    n = len(kraefter)
+    assert n >= 2, 'et krydspres kraever mindst to, der vil noget forskelligt'
+    cx, cy = W / 2, H / 2
+    rm = 44                              # midterkredsen
+    kb, kh = 170, 56                     # kassernes maal
+    # afstanden ud til kasserne: saa langt, at ingen kasse rammer kanten
+    ra = min((W - kb) / 2 - 6, (H - kh) / 2 - 6)
+    assert ra > rm + 26, 'der er ikke plads til en pil mellem kasse og midte'
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'
+         f'Krydspres: {n} arenaer vil noget forskelligt med den samme person '
+         f'samtidig." {FONT}>']
+    for i, (hvorfra, hvad) in enumerate(kraefter):
+        v = -math.pi / 2 + 2 * math.pi * i / n
+        kx, ky = cx + ra * math.cos(v), cy + ra * math.sin(v)
+        # Pilen gaar fra kassens kant ind mod midten: den starter et stykke
+        # inde paa linjen mellem kasse og midte og stopper lige uden for
+        # midterkredsen, saa den hverken ligger oven i kassen eller i cirklen.
+        # hvor langt der er ud til kassens kant i netop den retning: en kasse
+        # er ikke en cirkel, saa en kasse over midten skal rammes paa sin
+        # underkant, ikke 76 px ude i den tomme luft ved siden af
+        c, sn = abs(math.cos(v)), abs(math.sin(v))
+        fra = min(kb / 2 / c if c > 1e-9 else 1e9,
+                  kh / 2 / sn if sn > 1e-9 else 1e9) + 4
+        px1, py1 = kx - fra * math.cos(v), ky - fra * math.sin(v)
+        px2, py2 = cx + (rm + 10) * math.cos(v), cy + (rm + 10) * math.sin(v)
+        s.append(f'<path d="M {px1:.1f} {py1:.1f} L {px2:.1f} {py2:.1f}" '
+                 f'stroke="{MUT}" stroke-width="1.6" marker-end="url(#pil)"/>')
+        s.append(f'<rect x="{kx - kb / 2:.1f}" y="{ky - kh / 2:.1f}" '
+                 f'width="{kb}" height="{kh}" rx="9" fill="#fff" '
+                 f'stroke="{LIN}" stroke-width="1.2"/>')
+        # kassen maa ikke naa ind over midterkredsen - det naermeste hjoerne
+        # tjekkes, ikke midten af kanten
+        hj = max(abs(abs(kx - cx) - kb / 2), 0), max(abs(abs(ky - cy) - kh / 2), 0)
+        inde = (abs(kx - cx) < kb / 2 + rm) and (abs(ky - cy) < kh / 2 + rm)
+        assert not inde or math.hypot(*hj) > rm + 6, \
+            f'kassen "{hvorfra}" støder ind i midten — giv figuren mere plads'
+        s.append(f'<text x="{kx:.1f}" y="{ky - 6:.1f}" text-anchor="middle" '
+                 f'fill="{INK}" font-size="{_skrift(hvorfra, kb, loft=11.5):.1f}" '
+                 f'font-weight="700">{hvorfra}</text>')
+        s.append(f'<text x="{kx:.1f}" y="{ky + 11:.1f}" text-anchor="middle" '
+                 f'fill="{MUT}" font-size="{_skrift(hvad, kb, loft=10):.1f}">'
+                 f'{hvad}</text>')
+    s.insert(1, f'<defs><marker id="pil" viewBox="0 0 10 10" refX="9" refY="5" '
+                f'markerWidth="6" markerHeight="6" orient="auto-start-reverse">'
+                f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{MUT}"/></marker></defs>')
+    s.append(f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{rm}" fill="{BLA}"/>')
+    s.append(f'<text x="{cx:.1f}" y="{cy + 5:.1f}" text-anchor="middle" '
+             f'fill="#fff" font-size="14" font-weight="700">{midte}</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+def kredsloeb(trin, midte=('', ''), W=560, H=360):
+    """Et kredsloeb: trin i en ring med pile hele vejen rundt.
+
+    trin  [(overskrift, undertekst)] - fire klaeder figuren bedst.
+    Buerne mellem kasserne regnes ud af cirklen, saa pilene foelger ringen og
+    altid peger samme vej rundt.
+    """
+    n = len(trin)
+    assert n >= 3, 'et kredsløb skal have mindst tre trin'
+    cx, cy = W / 2, H / 2
+    kb, kh = 150, 50
+    ra = min((W - kb) / 2 - 6, (H - kh) / 2 - 6)
+    bue = ra                             # pilene foelger den samme cirkel
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'
+         f'Kredsløb med {n} trin, der gentager sig." {FONT}>',
+         f'<defs><marker id="pilr" viewBox="0 0 10 10" refX="9" refY="5" '
+         f'markerWidth="6" markerHeight="6" orient="auto-start-reverse">'
+         f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{BLA}"/></marker></defs>']
+    vink = [-math.pi / 2 + 2 * math.pi * i / n for i in range(n)]
+    # bue fra kasse i til kasse i+1, trukket ind fra kasserne i begge ender
+    luft = math.radians(26)
+    for i in range(n):
+        a, b = vink[i] + luft, vink[(i + 1) % n] - luft
+        if b < a:
+            b += 2 * math.pi
+        x1, y1 = cx + bue * math.cos(a), cy + bue * math.sin(a)
+        x2, y2 = cx + bue * math.cos(b), cy + bue * math.sin(b)
+        stor = 1 if (b - a) > math.pi else 0
+        s.append(f'<path d="M {x1:.1f} {y1:.1f} A {bue:.1f} {bue:.1f} 0 '
+                 f'{stor} 1 {x2:.1f} {y2:.1f}" fill="none" stroke="{BLA}" '
+                 f'stroke-width="1.6" marker-end="url(#pilr)"/>')
+    for i, (o, u) in enumerate(trin):
+        kx, ky = cx + ra * math.cos(vink[i]), cy + ra * math.sin(vink[i])
+        s.append(f'<rect x="{kx - kb / 2:.1f}" y="{ky - kh / 2:.1f}" '
+                 f'width="{kb}" height="{kh}" rx="9" fill="#fff" '
+                 f'stroke="{BLA}" stroke-width="1.4"/>')
+        s.append(f'<text x="{kx:.1f}" y="{ky - 4:.1f}" text-anchor="middle" '
+                 f'fill="{INK}" font-size="{_skrift(o, kb, loft=11.5):.1f}" '
+                 f'font-weight="700">{o}</text>')
+        s.append(f'<text x="{kx:.1f}" y="{ky + 12:.1f}" text-anchor="middle" '
+                 f'fill="{MUT}" font-size="{_skrift(u, kb, loft=10):.1f}">{u}</text>')
+    if midte[0]:
+        s.append(f'<text x="{cx:.1f}" y="{cy - 2:.1f}" text-anchor="middle" '
+                 f'fill="{INK}" font-size="12.5" font-weight="700">{midte[0]}</text>')
+        s.append(f'<text x="{cx:.1f}" y="{cy + 14:.1f}" text-anchor="middle" '
+                 f'fill="{MUT}" font-size="10">{midte[1]}</text>')
+    s.append('</svg>')
+    return ''.join(s)

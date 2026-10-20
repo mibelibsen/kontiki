@@ -199,6 +199,7 @@ KROP = f'''<section class="hero"><span class="pill">Samfundsfag · {UGE}</span>
 <p>I kan ikke tælle jeres svar. I kan læse dem — og det er en metode med sine
 egne regler. Her er de.</p>
 <button class="printbtn" onclick="window.print()">Print oplægget</button>
+<a class="btnlink ghost" href="hvad-er-socialisering.html">Begreberne: hvad er socialisering?</a>
 <a class="btnlink ghost" href="digital-socialisering.html">Dataarket med tallene</a>
 <a class="btnlink ghost" href="samfundsfag.html">Tilbage til samfundsfag</a>
 </section>

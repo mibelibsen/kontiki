@@ -35,6 +35,14 @@ TEKSTER = [
   'hvorfra, og hvad vil afsenderen have dig til at mene?',
   'https://kontikiskolen.sharepoint.com/:b:/s/HavetsVogtere/'
   'IQBj5R9_wNHRS4gxHnxDoJidAc9ZLuaP3q46v3qTsIaYgxQ?e=8zbFPE', ''),
+ ('Hvad er socialisering?',
+  'Lavet til klassen', '', 1, 'Socialisering · uge 40-43',
+  'Normer, arenaer og sanktioner — primær, sekundær og tertiær socialisering '
+  'forklaret med eksempler fra jeres eget digitale liv. Teksten findes, fordi '
+  'der ikke var nogen: det frie danske materiale er enten leksikonkort eller '
+  'skrevet til gymnasiet. Slutter med fem spørgsmål, I kan stille til jeres '
+  'egne svar fra Hamborg. Siden kan printes.',
+  '', 'hvad-er-socialisering.html'),
  ('Kom godt i gang med en alkoholpolitik',
   'Fra guiden "Få en alkoholpolitik" til ledelse og bestyrelse i foreninger',
   '', 1, 'Socialisering',

@@ -173,6 +173,27 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   mod arkets venstre kant, ikke opad. På bord 1 står pladsen for enden ude i
   højre side drejet en kvart omgang — den vej, Milius sidder. Kun bord 5 ved
   bagvæggen har kortet med tavlen opad.
+- **Fagtekst om socialisering (20.10.):** `hvad-er-socialisering.html`,
+  bygget af `claude/byg_socialisering_tekst.py`. Den findes, fordi der ikke
+  var nogen: det frie danske materiale er enten leksikonkort (lex.dk) eller
+  skrevet til gymnasiet (samfundsfag.dk, Levende Grønland) — resten ligger
+  bag betaling hos Clio, Gyldendal og Alinea. Fem afsnit med fire figurer:
+  arenaerne som ringe, norm → brud → sanktion, krydspres, og algoritmens
+  kredsløb. Slutter med fem spørgsmål, der kan stilles til ungernes egne
+  svar i uge 43, og en kildeliste. Ligger på `samfundsfag-tekster.html` som
+  åben for alle, og er linket fra `kvalitativ-analyse.html`.
+  Tre nye figurer i `claude/figurer.py`: `socialisationsringe`, `krydspres`
+  og `kredsloeb`. De regner alle skriftstørrelsen ud af pladsen — ringene
+  måler korden dér, hvor teksten når længst ud, ikke på midterlinjen, for
+  ellers løber den yderste tekst ud over kanten med et par bogstaver.
+- **Pecha Kucha-skabelon (20.10.):** `vejledning/pecha-kucha-skabelon.pptx`,
+  bygget af `claude/byg_pecha_kucha.py` + `.mjs`. 20 tomme slides, hver sat
+  til at skifte efter 20 sekunder. pptxgenjs kan hverken skrive
+  slideovergange eller en rigtig billedpladsholder, så scriptet retter begge
+  dele bagefter i OOXML'en. Manuskriptet skrives i noterne, hvor hvert slide
+  har et ordantal. **pptxgenjs ligger ikke i containeren** — `npm install -g
+  pptxgenjs`, og den importeres med sin fulde sti, fordi et ES-modul ikke
+  kan slå globale pakker op på navnet.
 - **Årsplanen for samfundsfag er rettet.** Uge 43 er skilt ud som sit eget
   forløb, *Digital socialisering: kvalitativ analyse*, og kriminalitet og
   overvågning rykker til uge 44–47. Antallet af uger pr. tema er uændret.
