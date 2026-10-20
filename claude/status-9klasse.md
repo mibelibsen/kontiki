@@ -173,6 +173,21 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   mod arkets venstre kant, ikke opad. På bord 1 står pladsen for enden ude i
   højre side drejet en kvart omgang — den vej, Milius sidder. Kun bord 5 ved
   bagvæggen har kortet med tavlen opad.
+- **Ramme til ungernes egen stand om plastik (20.10.):**
+  `plastik-stand.html`, bygget af `claude/byg_plastikstand.py`. Feature uge
+  44: grupper på 3-5 laver deres eget korte forløb og holder det fra en
+  stand for besøgende fra andre klasser og forældre.
+  Siden er **rammen, ikke forløbet**: fem dele (mål, standen, medie- og
+  materialeliste, opgaveliste, roller og ansvar), og hver del har en
+  forklaring, et eksempel og en skriveplads med linjer. Printer en gruppe
+  siden, har de deres plan på ét ark, der kan ligge på standen.
+  De hårde rammer står først: ét bord, 7-10 minutter pr. besøgende, skal
+  kunne køre hele dagen, og **besøgende er både børn og voksne** — samme
+  stand skal virke for en fra 3. klasse og for en forælder.
+  **Tiderne i ugeplanen er et eksempel, ikke skemaet.** Det står i
+  figurteksten, så ungerne ikke tager mandag-fredag for pålydende.
+  Ny figur i `figurer.py`: `standplan` — bordet set oppefra med zoner, hvem
+  der står hvor, og den rute den besøgende går.
 - **Fagtekst om socialisering (20.10.):** `hvad-er-socialisering.html`,
   bygget af `claude/byg_socialisering_tekst.py`. Den findes, fordi der ikke
   var nogen: det frie danske materiale er enten leksikonkort (lex.dk) eller

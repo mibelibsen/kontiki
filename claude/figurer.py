@@ -33,6 +33,7 @@ import math
 INK, MUT, LIN = '#1a2233', '#586074', '#c9d2e0'
 BLA, ORA, GRO, ROD = '#1f6fd6', '#b5710a', '#1a8f5e', '#c23b4b'
 FONT = 'font-family="Consolas, monospace" font-size="11"'
+TRAE_LYS = '#f4f6fb'                     # bordplade set oppefra
 
 
 def _dk(x):
@@ -2212,5 +2213,67 @@ def slidebaand(antal, sekunder, grupper=None, W=640, farver=None):
              f'fill="{INK}" font-size="10.5" font-weight="700">'
              f'{antal} × {sekunder} sek = {i_alt // 60} min {i_alt % 60} sek'
              f'</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+def standplan(zoner, W=620, bord_h=76):
+    """En stand set oppefra: bordet med zoner, og den vej den besoegende gaar.
+
+    zoner  [(navn, hvad der sker, hvem der staar der)]
+    Zonerne faar lige stor plads paa bordet, og ruten nedenunder faar et
+    nummer pr. zone. Figuren skal kunne laegges paa bordet og passe.
+    """
+    n = len(zoner)
+    assert 2 <= n <= 5, 'en stand med færre end to eller flere end fem zoner'
+    M, GAB, PAD = 10, 8, 9
+    TOP, ROLLE_H = 16, 15
+    by = TOP + ROLLE_H + 6                    # bordets overkant
+    zb = (W - 2 * M - 2 * PAD - (n - 1) * GAB) / n
+    assert zb >= 60, f'zonerne bliver {zb:.0f} px brede — for smalle'
+    rute_y = by + bord_h + 24
+    H = rute_y + 26
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="En stand '
+         f'set oppefra med {n} zoner og den rute, en besøgende går." {FONT}>',
+         f'<defs><marker id="rute" viewBox="0 0 10 10" refX="9" refY="5" '
+         f'markerWidth="6" markerHeight="6" orient="auto-start-reverse">'
+         f'<path d="M 0 0 L 10 5 L 0 10 z" fill="{GRO}"/></marker></defs>']
+
+    s.append(f'<text x="{M}" y="10" fill="{MUT}" font-size="9.5" '
+             f'letter-spacing="1">GRUPPEN STÅR HER</text>')
+    s.append(f'<rect x="{M}" y="{by}" width="{W - 2 * M}" height="{bord_h}" '
+             f'rx="8" fill="{TRAE_LYS}" stroke="{LIN}" stroke-width="1.2"/>')
+
+    for i, (navn, hvad, hvem) in enumerate(zoner):
+        x = M + PAD + i * (zb + GAB)
+        # hvem der staar ved zonen, oven over bordet
+        s.append(f'<text x="{x + zb / 2:.1f}" y="{TOP + 11}" '
+                 f'text-anchor="middle" fill="{BLA}" font-weight="700" '
+                 f'font-size="{_skrift(hvem, zb, loft=10, gulv=6.5, luft=4):.1f}">'
+                 f'{hvem}</text>')
+        s.append(f'<rect x="{x:.1f}" y="{by + PAD}" width="{zb:.1f}" '
+                 f'height="{bord_h - 2 * PAD}" rx="6" fill="#fff" '
+                 f'stroke="{LIN}" stroke-width="1"/>')
+        s.append(f'<text x="{x + zb / 2:.1f}" y="{by + PAD + 20:.1f}" '
+                 f'text-anchor="middle" fill="{INK}" font-weight="700" '
+                 f'font-size="{_skrift(navn, zb, loft=11.5, gulv=7, luft=8):.1f}">'
+                 f'{navn}</text>')
+        s.append(f'<text x="{x + zb / 2:.1f}" y="{by + PAD + 37:.1f}" '
+                 f'text-anchor="middle" fill="{MUT}" '
+                 f'font-size="{_skrift(hvad, zb, loft=10, gulv=6.5, luft=8):.1f}">'
+                 f'{hvad}</text>')
+        # nummeret paa ruten, ud for zonen
+        cx = x + zb / 2
+        s.append(f'<circle cx="{cx:.1f}" cy="{rute_y}" r="9" fill="{GRO}"/>')
+        s.append(f'<text x="{cx:.1f}" y="{rute_y + 3.5}" text-anchor="middle" '
+                 f'fill="#fff" font-size="10" font-weight="700">{i + 1}</text>')
+        if i:
+            fx = M + PAD + (i - 1) * (zb + GAB) + zb / 2
+            s.append(f'<path d="M {fx + 12:.1f} {rute_y} L {cx - 12:.1f} '
+                     f'{rute_y}" stroke="{GRO}" stroke-width="1.6" '
+                     f'marker-end="url(#rute)"/>')
+    s.append(f'<text x="{M}" y="{H - 4}" fill="{GRO}" font-size="9.5" '
+             f'letter-spacing="1">DEN BESØGENDES VEJ GENNEM STANDEN</text>')
     s.append('</svg>')
     return ''.join(s)

@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Byg en stand om plastik · uge 44 · 9. klasse</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;--warn:#b5710a;--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a,nav.tabs span{font-size:.86rem;padding:6px 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+nav.tabs span.soon{color:#9aa6ba;cursor:default}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:2rem}
+.hero p{margin:0;color:var(--muted);max-width:70ch}
+.pill{display:inline-block;font-size:.74rem;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;background:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.card.soon{opacity:.6}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:12px}
+.tag.klar{background:#eaf7f0;color:var(--good);border:1px solid #bfe6d2}
+.tag.kommer{background:#f4f6fb;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
+.num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 0}
+.btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btnlink.ghost:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+.plan{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+.plan th,.plan td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+.plan th{background:var(--panel2);font-weight:700;position:sticky;top:60px}
+.plan tr.block td{background:var(--accent);color:#fff;font-weight:800;font-size:1rem}
+.plan tr.break td{background:#fff7e9;color:var(--warn);font-weight:600;font-style:italic}
+.plan td.uge{white-space:nowrap;font-weight:700;color:var(--accent);width:52px}
+.plan td.per{white-space:nowrap;color:var(--muted);width:110px}
+.plan ul{margin:0;padding-left:18px}.plan li{margin:2px 0}
+.mat{color:var(--muted);font-size:.9rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;text-align:left}.mini th{background:var(--panel2)}
+@media print{header.top,nav.tabs,.btnlink{display:none!important}.hero,.card,.note{box-shadow:none}.plan th{position:static}.plan tr.block td{background:#fff!important;color:#000;border:1px solid #000}body{color:#000}}
+
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:18px;margin:18px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.figtekst{color:var(--muted);font-size:.9rem;margin-top:10px;text-align:left;
+max-width:68ch;margin-left:auto;margin-right:auto}
+.afsnit{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:18px 22px;
+margin:16px 0;box-shadow:var(--shadow)}
+.afsnit h2{font-size:1.2rem;margin:0 0 10px;display:flex;align-items:center;
+gap:12px}
+.afsnit .num{width:30px;height:30px;border-radius:9px;display:grid;
+place-items:center;font-weight:800;font-size:.95rem;background:var(--accent);
+color:#fff;flex:0 0 auto}
+.afsnit p{margin:8px 0;color:var(--muted);font-size:.97rem;max-width:74ch}
+.afsnit p b{color:var(--ink)}
+.eks{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+padding:12px 18px;margin:14px 0}
+.eks h3{font-size:.82rem;letter-spacing:.5px;text-transform:uppercase;
+color:var(--accent);margin:0 0 6px}
+.eks ul{margin:0;padding-left:20px}
+.eks li{color:var(--muted);font-size:.93rem;margin:5px 0;max-width:72ch}
+.eks li b{color:var(--ink)}
+.skriv{border:1.5px dashed var(--line);border-radius:12px;padding:12px 18px 16px;
+margin:14px 0;background:#fff}
+.skriv h3{font-size:.82rem;letter-spacing:.5px;text-transform:uppercase;
+color:var(--muted);margin:0 0 8px}
+.linjer{background-image:repeating-linear-gradient(to bottom,transparent 0,
+transparent 25px,var(--line) 25px,var(--line) 26px)}
+.ramme{background:var(--accent-soft);border:1px solid var(--line);
+border-left:4px solid var(--accent);border-radius:12px;padding:14px 20px 16px;
+margin:18px 0}
+.ramme ul{margin:0;padding-left:20px}
+.ramme li{color:var(--muted);font-size:.96rem;margin:7px 0;max-width:74ch}
+.ramme li b{color:var(--ink)}
+ul.tjek{list-style:none;padding:0;margin:12px 0;max-width:76ch}
+ul.tjek li{background:var(--panel);border:1px solid var(--line);
+border-radius:10px;padding:10px 14px 10px 40px;margin:7px 0;position:relative;
+color:var(--muted);font-size:.95rem}
+ul.tjek li:before{content:"";position:absolute;left:14px;top:12px;width:13px;
+height:13px;border:1.5px solid var(--muted);border-radius:3px}
+.printbtn{background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;
+color:var(--ink);font-family:inherit;margin:6px 8px 0 0}
+.printbtn:hover{border-color:var(--accent);color:var(--accent)}
+h2.sec{font-size:1.4rem;margin:30px 0 6px}
+@media print{header.top,.printbtn,.btnlink{display:none!important}
+.afsnit,.figur,.skriv,.eks{box-shadow:none;break-inside:avoid;
+page-break-inside:avoid}
+body{font-size:11pt}main{padding:0}@page{size:A4;margin:13mm}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header><main><section class="hero">
+<span class="pill">Feature · uge 44 · plastik</span>
+<h1>Byg en stand om plastik</h1>
+<p>I skal lave jeres eget lille undervisningsforløb og holde det fra en stand.
+De besøgende er elever fra andre klasser og forældre. De kommer, prøver noget,
+og går igen — og bagefter kan de noget, de ikke kunne før.</p>
+<button class="printbtn" onclick="window.print()">Print rammen</button>
+<a class="btnlink ghost" href="feature-plastik-og-foedevarer.html">Værkstedet om plast og fødevarer</a>
+<a class="btnlink ghost" href="index.html">Forsiden</a>
+</section>
+<h2 class="sec">Rammen, I skal holde jer inden for</h2>
+<div class="ramme"><ul><li><b>Tre til fem i gruppen</b> — Alle skal have en rolle, der er noget værd hele tiden.</li><li><b>Ét bord</b> — Alt skal kunne stå på det, og det skal kunne ryddes på fem minutter.</li><li><b>7–10 minutter pr. besøgende</b> — Kort nok til, at der kan komme mange igennem. Langt nok til, at de laver noget selv.</li><li><b>Den skal kunne køre hele dagen</b> — Alt, hvad I bruger op, skal kunne fyldes op igen. Tænk det med fra starten.</li><li><b>Besøgende er både børn og voksne</b> — Samme stand skal virke for en fra 3. klasse og for en forælder. Det er den sværeste del af opgaven.</li></ul></div>
+<h2 class="sec">De fem dele, der skal være med</h2>
+<p style="color:var(--muted);max-width:74ch">Hver del har en forklaring, et
+eksempel og en plads, I selv skriver i. Printer I siden, har I jeres plan på
+ét sted — og så kan den ligge på standen.</p>
+<section class="afsnit"><h2><span class="num">1</span>Målet</h2><p>Et mål er ikke, hvad <b>I</b> vil lave. Det er, hvad den <b>besøgende</b> kan bagefter. Prøv at skrive sætningen færdig: <i>"Efter vores stand kan den besøgende …"</i></p><p>Hvis I ikke kan skrive den sætning, ved I ikke, hvad standen går ud på — og så kan de besøgende heller ikke finde ud af det.</p><p><b>Højst to mål.</b> Ét er bedre. Syv minutter er ikke lang tid.</p><div class="figur"><svg viewBox="0 0 620 216" width="100%" style="max-width:620px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Processen i 3 trin." font-family="Consolas, monospace" font-size="11"><rect x="10" y="2" width="600" height="50" rx="9" fill="#586074"/><circle cx="32" cy="27.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="31.0" text-anchor="middle" fill="#fff" font-weight="700">1</text><text x="56" y="22.0" fill="#fff" font-weight="700" font-size="12.5">Før</text><text x="56" y="39.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Den besøgende ved ikke, at …</text><line x1="36" y1="55" x2="36" y2="76" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 73 L 36 79 L 40 73 Z" fill="#c9d2e0"/><rect x="10" y="82" width="600" height="50" rx="9" fill="#1f6fd6"/><circle cx="32" cy="107.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="111.0" text-anchor="middle" fill="#fff" font-weight="700">2</text><text x="56" y="102.0" fill="#fff" font-weight="700" font-size="12.5">På standen</text><text x="56" y="119.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Den besøgende prøver selv at …</text><line x1="36" y1="135" x2="36" y2="156" stroke="#c9d2e0" stroke-width="2"/><path d="M 32 153 L 36 159 L 40 153 Z" fill="#c9d2e0"/><rect x="10" y="162" width="600" height="50" rx="9" fill="#1a8f5e"/><circle cx="32" cy="187.0" r="12" fill="#fff" fill-opacity="0.22"/><text x="32" y="191.0" text-anchor="middle" fill="#fff" font-weight="700">3</text><text x="56" y="182.0" fill="#fff" font-weight="700" font-size="12.5">Efter</text><text x="56" y="199.0" fill="#fff" fill-opacity="0.9" font-size="10.5">Den besøgende kan selv …</text></svg><div class="figtekst">Målet måles på forskellen mellem første og sidste kasse — ikke på, hvor meget I nåede at fortælle.</div></div><div class="eks"><h3>Sådan kan et mål se ud</h3><ul><li>Efter vores stand kan den besøgende <b>kende forskel på de tre plasttyper</b> ved at se på mærket i bunden.</li><li>Efter vores stand kan den besøgende <b>nævne én ting, plastemballage gør bedre end papir</b>, og én ting den gør værre.</li></ul></div><div class="skriv"><h3>Jeres mål</h3><div class="linjer" style="height:104px"></div></div></section><section class="afsnit"><h2><span class="num">2</span>Standen</h2><p>Tegn bordet set oppefra, før I bygger noget. Hvor står den besøgende? Hvor står I? Hvad er det første, man ser?</p><p>En stand, der virker, har som regel en <b>rute</b>: man kommer ind et sted, laver noget i midten og går derfra med noget. Hvis alt ligger i en bunke, ved den besøgende ikke, hvor han skal begynde.</p><p>Husk det kedelige: strøm, vand, spild, skraldespand. Og husk, at nogen skal kunne se standen på afstand — hvad er jeres skilt?</p><div class="figur"><svg viewBox="0 0 620 163" width="100%" style="max-width:620px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="En stand set oppefra med 4 zoner og den rute, en besøgende går." font-family="Consolas, monospace" font-size="11"><defs><marker id="rute" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1a8f5e"/></marker></defs><text x="10" y="10" fill="#586074" font-size="9.5" letter-spacing="1">GRUPPEN STÅR HER</text><rect x="10" y="37" width="600" height="76" rx="8" fill="#f4f6fb" stroke="#c9d2e0" stroke-width="1.2"/><text x="88.8" y="27" text-anchor="middle" fill="#1f6fd6" font-weight="700" font-size="10.0">Vært</text><rect x="19.0" y="46" width="139.5" height="58" rx="6" fill="#fff" stroke="#c9d2e0" stroke-width="1"/><text x="88.8" y="66.0" text-anchor="middle" fill="#1a2233" font-weight="700" font-size="11.5">Velkomst</text><text x="88.8" y="83.0" text-anchor="middle" fill="#586074" font-size="9.1">Ét spørgsmål, der fanger</text><circle cx="88.8" cy="137" r="9" fill="#1a8f5e"/><text x="88.8" y="140.5" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">1</text><text x="236.2" y="27" text-anchor="middle" fill="#1f6fd6" font-weight="700" font-size="10.0">Instruktør</text><rect x="166.5" y="46" width="139.5" height="58" rx="6" fill="#fff" stroke="#c9d2e0" stroke-width="1"/><text x="236.2" y="66.0" text-anchor="middle" fill="#1a2233" font-weight="700" font-size="11.5">Prøv selv</text><text x="236.2" y="83.0" text-anchor="middle" fill="#586074" font-size="9.5">Den besøgende gør noget</text><circle cx="236.2" cy="137" r="9" fill="#1a8f5e"/><text x="236.2" y="140.5" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">2</text><path d="M 100.8 137 L 224.2 137" stroke="#1a8f5e" stroke-width="1.6" marker-end="url(#rute)"/><text x="383.8" y="27" text-anchor="middle" fill="#1f6fd6" font-weight="700" font-size="10.0">Forklarer</text><rect x="314.0" y="46" width="139.5" height="58" rx="6" fill="#fff" stroke="#c9d2e0" stroke-width="1"/><text x="383.8" y="66.0" text-anchor="middle" fill="#1a2233" font-weight="700" font-size="11.5">Svaret</text><text x="383.8" y="83.0" text-anchor="middle" fill="#586074" font-size="10.0">Hvad viste det?</text><circle cx="383.8" cy="137" r="9" fill="#1a8f5e"/><text x="383.8" y="140.5" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">3</text><path d="M 248.2 137 L 371.8 137" stroke="#1a8f5e" stroke-width="1.6" marker-end="url(#rute)"/><text x="531.2" y="27" text-anchor="middle" fill="#1f6fd6" font-weight="700" font-size="10.0">Vært</text><rect x="461.5" y="46" width="139.5" height="58" rx="6" fill="#fff" stroke="#c9d2e0" stroke-width="1"/><text x="531.2" y="66.0" text-anchor="middle" fill="#1a2233" font-weight="700" font-size="11.5">Tag med</text><text x="531.2" y="83.0" text-anchor="middle" fill="#586074" font-size="10.0">Noget at huske det på</text><circle cx="531.2" cy="137" r="9" fill="#1a8f5e"/><text x="531.2" y="140.5" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">4</text><path d="M 395.8 137 L 519.2 137" stroke="#1a8f5e" stroke-width="1.6" marker-end="url(#rute)"/><text x="10" y="159" fill="#1a8f5e" font-size="9.5" letter-spacing="1">DEN BESØGENDES VEJ GENNEM STANDEN</text></svg><div class="figtekst">Et eksempel på en rute. Zonerne må gerne hedde noget andet, men der skal være en rækkefølge, og den besøgende skal kunne se den uden at spørge.</div></div><div class="eks"><h3>Sådan kan standen beskrives</h3><ul><li><b>Venstre ende:</b> skilt med spørgsmålet "Hvilken pose er værst?" og tre poser lagt frem.</li><li><b>Midten:</b> vægten og tre bægre. Den besøgende vejer selv.</li><li><b>Højre ende:</b> plakaten med svaret, og en skål med små mærkater.</li></ul></div><div class="skriv"><h3>Jeres stand — tegn den og beskriv den</h3><div class="linjer" style="height:156px"></div></div></section><section class="afsnit"><h2><span class="num">3</span>Medier og materialer</h2><p>Skriv <b>alt</b> ned, også det, I tror, der er i forvejen. Det er altid det, ingen skrev ned, der mangler fredag morgen.</p><p>Del listen i to: <b>medier</b> er det, der viser noget — skilt, plakat, skærm, QR-kode, lyd. <b>Materialer</b> er det, der bliver brugt — poser, bægre, vand, tape, mærkater.</p><p>Ud for hver ting skal der stå, <b>hvem</b> der skaffer den, og hvornår den er her. Ikke "nogen". Et navn.</p><div class="eks"><h3>Skriv listen sådan her</h3><ul><li><b>Medie:</b> Plakat A3 med svaret · 1 stk. · printes på skolen · Asta · onsdag</li><li><b>Materiale:</b> Plastposer · 6 stk. · hjemmefra · Viktor · tirsdag</li><li><b>Materiale:</b> Køkkenvægt · 1 stk. · lånes i hjemkundskab · Nor · tirsdag</li></ul></div><div class="skriv"><h3>Jeres medie- og materialeliste</h3><div class="linjer" style="height:260px"></div></div></section><section class="afsnit"><h2><span class="num">4</span>Opgaver, så standen bliver færdig</h2><p>En opgave er noget, <b>én person</b> kan gøre færdig, og som man kan se er færdig. "Lave plakaten" er en opgave. "Arbejde med plakaten" er ikke.</p><p>Skriv opgaverne op, og sæt et navn og en dag på hver. Det, der ikke har et navn, bliver ikke gjort.</p><p>Læg de ting først, som <b>andre venter på</b>: skal plakaten printes, skal teksten være færdig i god tid før.</p><div class="figur"><svg viewBox="0 0 620 98" width="100%" style="max-width:620px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tidslinje over skoleårets forløb." font-family="Consolas, monospace" font-size="11"><text x="14" y="19" fill="#586074" font-size="10">Uge 44</text><rect x="14.0" y="26" width="116.4" height="30" rx="5" fill="#1f6fd6"/><text x="73.2" y="45" text-anchor="middle" fill="#fff" font-size="10">Idé og mål</text><text x="73.2" y="70" text-anchor="middle" fill="#586074" font-size="9">Man</text><rect x="132.4" y="26" width="234.8" height="30" rx="5" fill="#1a8f5e"/><text x="250.8" y="45" text-anchor="middle" fill="#fff" font-size="10">Byg standen, skaf materialer</text><text x="250.8" y="70" text-anchor="middle" fill="#586074" font-size="9">Tir–Ons</text><rect x="369.2" y="26" width="116.4" height="30" rx="5" fill="#b5710a"/><text x="428.4" y="45" text-anchor="middle" fill="#fff" font-size="10">Prøvekørsel</text><text x="428.4" y="70" text-anchor="middle" fill="#586074" font-size="9">Tor</text><rect x="487.6" y="26" width="116.4" height="30" rx="5" fill="#c23b4b"/><text x="546.8" y="45" text-anchor="middle" fill="#fff" font-size="10">Åbent hele dagen</text><text x="546.8" y="70" text-anchor="middle" fill="#586074" font-size="9">Fre</text></svg><div class="figtekst">Et eksempel på en uge — ikke skemaet; det får I af læreren. Læg mærke til, at prøvekørslen har sin egen dag. Den skal ikke klemmes ind fredag morgen.</div></div><div class="eks"><h3>Sådan kan en opgave se ud</h3><ul><li>Skrive teksten til plakaten · Asta · mandag · ✔</li><li>Printe plakaten i A3 · Nor · onsdag · ✔</li><li>Købe mærkater · Viktor · tirsdag · ikke endnu</li></ul></div><div class="skriv"><h3>Jeres opgaveliste</h3><div class="linjer" style="height:260px"></div></div></section><section class="afsnit"><h2><span class="num">5</span>Roller og ansvar</h2><p>Giv hinanden roller, der gælder <b>hele dagen</b>. Rollerne byttes ikke undervejs — det er dér, standene går i stå.</p><p>Er I tre, slår I to roller sammen. Er I fem, deler I værtsrollen, så I kan skiftes til at holde pause. Der kommer besøgende i mange timer.</p><p>Alle i gruppen skal kunne svare på det, standen handler om. En besøgende spørger den, der står nærmest — ikke den, der kan svaret.</p><div class="eks"><h3>Fire roller, der plejer at virke</h3><ul><li><b>Vært:</b> tager imod, stiller spørgsmålet, siger farvel. Taler mest.</li><li><b>Instruktør:</b> viser, hvad den besøgende selv skal gøre. Rører tingene.</li><li><b>Forklarer:</b> siger, hvad resultatet betyder. Kender tallene.</li><li><b>Materialemester:</b> fylder op, rydder op, holder styr på spild. Standen kan køre igen om to minutter.</li></ul></div><div class="skriv"><h3>Jeres roller — skriv navne på</h3><div class="linjer" style="height:156px"></div></div></section>
+<h2 class="sec">Prøvekørslen</h2>
+<div class="ramme"><ul>
+<li><b>Prøv standen på en, der ikke ved noget om den.</b> En fra en anden
+gruppe, en lærer, en lillebror. Ikke jer selv — I ved allerede svaret, og så
+virker alt.</li>
+<li><b>Tag tid.</b> Fra "hej" til "farvel". Er det over 10 minutter, skal der
+skæres noget væk, ikke tales hurtigere.</li>
+<li><b>Sig ingenting undervejs.</b> Lad den besøgende prøve. Hver gang I er
+nødt til at forklare noget ekstra, har I fundet et sted, standen ikke er
+tydelig nok.</li>
+<li><b>Ryd op bagefter, og tag tid på det også.</b> Kan I ikke være klar igen
+på to minutter, holder standen ikke en hel dag.</li>
+</ul></div>
+<h2 class="sec">Tjek før I åbner</h2>
+<ul class="tjek"><li>Vi kan sige vores mål højt i én sætning, der begynder med &quot;Efter vores stand kan den besøgende …&quot;.</li><li>Standen er prøvet på en, der ikke vidste noget i forvejen.</li><li>Vi har taget tid på den — den holder sig under 10 minutter.</li><li>Alt på materialelisten er her, og der er nok til hele dagen.</li><li>Alle fire roller er besat, og alle kan svare på, hvad standen handler om.</li><li>Standen kan ryddes op og gøres klar igen på to minutter.</li><li>Der er et skilt, man kan læse på tre meters afstand.</li></ul>
+<h2 class="sec">Hvor I kan hente idéer</h2>
+<p style="color:var(--muted);max-width:74ch">Værkstedet fra naturfagsugen har
+tre forsøg om plast og fødevarer — emballagetesten, bioplasten og
+plasttyperne. De er lavet til en lektion, men de kan skæres ned og bygges om
+til en stand. I må også gerne finde på noget helt andet.</p>
+<a class="btnlink" href="feature-plastik-og-foedevarer.html">Åbn værkstedet</a>
+<button class="printbtn" onclick="window.print()">Print rammen</button></main><footer>Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>
