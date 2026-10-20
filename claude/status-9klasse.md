@@ -85,6 +85,11 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
   og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
   10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
+- **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
+  CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
+  Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar
+  bare fortæller, at en side er lagt op: der er mibelibsen.space-adressen
+  støj. Skriv filnavnet i stedet.
 - **Repoet er offentligt, og ungernes fornavne ligger i det** —
   `spoergeskema/unger.txt`, `unger-links.tsv`, QR-plakaterne og
   `/u/<navn>`-redirects i `vercel.json`, committet 22.9.
