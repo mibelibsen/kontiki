@@ -6,3 +6,8 @@ __pycache__/
 # kilder, og sendes i Code — derfor ikke i git.
 vejledning/bordplan-*.pdf
 vejledning/bordkort-*.pdf
+
+# Pecha Kucha-skabelonen bygges af claude/byg_pecha_kucha.py (og .mjs). Også
+# en bygget fil — scriptet er kilden, .pptx'en er det, der kommer ud af det.
+vejledning/pecha-kucha-skabelon.pptx
+vejledning/pecha-kucha-skabelon-raa.pptx
