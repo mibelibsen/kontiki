@@ -24,10 +24,6 @@ import figurer as FG
 UD = 'plastik-stand.html'
 
 # Den besoegendes vej gennem en stand - eksemplet i del 2.
-# Tomme med vilje: figuren viser, at en stand har zoner i en raekkefoelge.
-# Hvad zonerne hedder, er det, gruppen skal finde ud af.
-ZONER = [('', '', '') for _ in range(4)]
-
 # Maalet: det handler om den besoegende, ikke om jer.
 MAAL_TRIN = [
     ('Før', 'Den besøgende ved ikke, at …', 'foer'),
@@ -76,11 +72,8 @@ DELE = [
    'er det første, man ser?',
    'Husk det kedelige: strøm, vand, spild, skraldespand. Og husk, at nogen '
    'skal kunne se hvad standen fortæller — måske skal der være et skilt?'],
-  FG.standplan(ZONER),
-  'Formen på en stand: zoner i en rækkefølge, og én fra gruppen ved hver. '
-  'Hvad zonerne hedder, og hvad der sker i dem, bestemmer I selv — print '
-  'siden, og udfyld figuren i hånden.',
-  ('linjer', 'Jeres stand — beskriv hver zone', 6)),
+  None, None,
+  ('tegn', 'Jeres stand — tegn den, og beskriv den', 290, 5)),
 
  ('Medier og materialer', [
    'Skriv <b>alt</b> ned, også det, I tror, der er i forvejen. Det er altid '
@@ -158,8 +151,14 @@ for i, (o, stykker, figur, figtekst, felt) in enumerate(DELE, 1):
                       f'<div class="figtekst">{html.escape(figtekst)}</div>'
                       f'</div>')
     art, titel = felt[0], felt[1]
-    indhold = (f'<div class="linjer" style="height:{felt[2] * 26}px"></div>'
-               if art == 'linjer' else tomt_skema(felt[2], felt[3]))
+    if art == 'linjer':
+        indhold = f'<div class="linjer" style="height:{felt[2] * 26}px"></div>'
+    elif art == 'tegn':
+        # en flade at tegne paa, og linjer under til at skrive paa
+        indhold = (f'<div class="tegneflade" style="height:{felt[2]}px"></div>'
+                   f'<div class="linjer" style="height:{felt[3] * 26}px"></div>')
+    else:
+        indhold = tomt_skema(felt[2], felt[3])
     dele_html += (f'<div class="skriv"><h3>{html.escape(titel)}</h3>'
                   f'{indhold}</div></section>')
 
@@ -199,6 +198,12 @@ margin:14px 0;background:#fff}
 color:var(--muted);margin:0 0 8px}
 .linjer{background-image:repeating-linear-gradient(to bottom,transparent 0,
 transparent 25px,var(--line) 25px,var(--line) 26px)}
+/* ternet flade at tegne standen paa - svagt nok til at tegne oven paa */
+.tegneflade{border:1px solid var(--line);border-radius:8px;margin-bottom:14px;
+background-color:#fff;background-size:26px 26px;background-image:
+linear-gradient(to right,var(--line) 1px,transparent 1px),
+linear-gradient(to bottom,var(--line) 1px,transparent 1px);
+background-position:-1px -1px;opacity:.9}
 .ramme{background:var(--accent-soft);border:1px solid var(--line);
 border-left:4px solid var(--accent);border-radius:12px;padding:14px 20px 16px;
 margin:18px 0}

@@ -187,13 +187,20 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   forklaring og et tomt felt — linjer eller et skema med kolonner. Printer
   en gruppe siden, har de deres plan på ét ark, der kan ligge på standen.
   **Der er ingen eksempler på siden, og det er med vilje (afgjort 20.10.).**
-  Første udgave havde et gennemført eksempel på hver del — et mål om
-  plasttyper, en stand med en vægt, fire færdige roller. Det opfinder
+  Første udgave havde et gennemført eksempel på hver del. Det opfinder
   undervisningen for ungerne: et eksempel bliver skrevet af i stedet for
-  tænkt. Nu viser figurerne formen og ikke indholdet: `standplan` tegnes
-  tom med skrivelinjer, og målfiguren giver sætningsstarter, ikke svar.
+  tænkt. Målfiguren giver sætningsstarter, ikke svar.
   **Siden linker heller ikke til værkstedssiden.** Inspirationen skal komme
   fra ungernes egne noter fra naturfagsugen.
+  **Standen har ingen zoner og intet flow (afgjort 21.10.).** Jeg havde
+  tegnet en `standplan` med zoner i en rækkefølge og den besøgendes vej
+  igennem. Sådan er standen ikke. Figuren er væk — også ud af
+  `figurer.py` — og i stedet er der en ternet tegneflade med linjer under:
+  *tegn den, og beskriv den*. Ungerne skal beskrive standen, ikke flowet
+  omkring den.
+  **Dagene:** åbent både **fredag og lørdag**, ca. **15 minutter** pr.
+  besøgende. Tallet står tre steder — rammen, prøvekørslen og tjeklisten —
+  og de skal følges ad.
   De hårde rammer står først: ét bord, 7-10 minutter pr. besøgende, skal
   kunne køre hele dagen, og **besøgende er både børn og voksne** — samme
   stand skal virke for en fra 3. klasse og for en forælder.
