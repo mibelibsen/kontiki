@@ -10,3 +10,7 @@ vejledning/bordkort-*.pdf
 # Raafilen fra pptxgenjs, foer de 20 sekunder er sat ind. Den færdige
 # skabelon ligger i materiale/ og SKAL i git — den udgives på sitet.
 materiale/pecha-kucha-skabelon-raa.pptx
+
+# Samtalearket bygges af claude/byg_samtaleark.py. Bygget fil, ikke kilde —
+# og et udfyldt ark indeholder vurderinger af et navngivet barn.
+vejledning/skolehjemsamtale.pdf

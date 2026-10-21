@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-10-06
+Sidst opdateret: 2026-10-21
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -133,6 +133,25 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `manipulation.html`, `funktioner-og-ligninger.html` og
   `test-statistik.html` — og de er rettet alle fire. Ingen af dem bygges af
   et script, så en rettelse i motoren skal laves fire steder.
+- **Samtaleark til skole-hjem-samtaler (21.10.).** `claude/byg_samtaleark.py`
+  bygger `vejledning/skolehjemsamtale.pdf` — to A4-sider pr. elev til en
+  samtale på en halv time, fagligt fokus. Side 1: tidsplan som figur
+  (4 + 8 + 12 + 6 = 30 min), tre punkter om forberedelse og et skema med
+  alle otte fag — standpunkt, mål, fremskridt, støtte/ændring. Side 2: to
+  tomme blokke til de fag, der skal i dybden, hvor *hvad skal der til* er
+  delt i **I skolen · Hjemme · Ændret adfærd** i én række, plus aftaler og
+  underskrifter.
+  **Otte fag på tredive minutter er under fire minutter hvert**, og så når
+  man ingenting i nogen af dem. Derfor er standpunkt og fremskridt noget,
+  man udfylder *før* samtalen, og kun to-tre fag får tid. Det står som
+  punkt 1 på arket, ikke som en antagelse i et script.
+  Ny funktion i `figurer.py`: **`tidsplan`** — minutblokke i rigtige
+  proportioner med et samlet ur under.
+  **PDF'en er ikke i git** (`.gitignore`). Den er en bygget fil, og et
+  udfyldt ark er vurderinger af et navngivet barn — scriptet er kilden.
+  Sidetallet er **målt i browseren**, ikke gættet: første udkast fyldte tre
+  sider, og `maal2.mjs` sagde *side 2 er 2,8 mm for høj*, hvorefter
+  marginerne blev trimmet præcis så meget.
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar
