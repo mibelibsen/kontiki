@@ -2215,3 +2215,69 @@ def slidebaand(antal, sekunder, grupper=None, W=640, farver=None):
              f'</text>')
     s.append('</svg>')
     return ''.join(s)
+
+def histogram(graenser, antal, xnavn='', ynavn='', titel='', W=540, H=270):
+    """Histogram med akser, tal og intervalgraenser.
+
+    graenser  [0, 2, 4, 6, 8] - ét tal mere end der er soejler.
+    antal     [4, 8, 12, 6]   - hvor mange i hvert interval.
+
+    Soejlerne roerer hinanden, fordi intervallerne graenser op til hinanden.
+    Det er forskellen paa et histogram og et soejlediagram, og den skal kunne
+    ses. Tallene staar paa x-aksen ved graenserne - ikke midt under soejlen -
+    for det er dér, intervallet begynder og slutter.
+    """
+    assert len(graenser) == len(antal) + 1, \
+        f'{len(graenser)} grænser passer ikke til {len(antal)} søjler'
+    assert all(b > a for a, b in zip(graenser, graenser[1:])), \
+        'grænserne skal vokse'
+    # y-aksens navn staar over det oeverste tal og skal have plads
+    X0, X1, YT, YB = 46, W - 16, 30 if titel else (26 if ynavn else 18), H - 42
+    ph, pb = YB - YT, X1 - X0
+    maks = max(antal)
+    trin = next((t for t in (1, 2, 5, 10, 20, 25, 50, 100)
+                 if 4 <= math.ceil(maks / t) <= 8), 1)
+    top = math.ceil(maks / trin) * trin
+    lo, hi = graenser[0], graenser[-1]
+    xx = lambda v: X0 + (v - lo) / (hi - lo) * pb
+    yy = lambda v: YB - v / top * ph
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Histogram '
+         f'med {len(antal)} intervaller fra {_dk(lo)} til {_dk(hi)}; '
+         f'det højeste interval har {_dk(maks)}." {FONT}>']
+    if titel:
+        s.append(f'<text x="{W / 2}" y="16" text-anchor="middle" fill="{MUT}" '
+                 f'font-size="11">{titel}</text>')
+    # vandrette hjaelpelinjer og tal paa y-aksen
+    v = 0
+    while v <= top:
+        s.append(f'<line x1="{X0}" y1="{yy(v):.1f}" x2="{X1}" y2="{yy(v):.1f}" '
+                 f'stroke="{LIN}" stroke-width="0.6"/>')
+        s.append(f'<text x="{X0 - 7}" y="{yy(v) + 3.5:.1f}" text-anchor="end" '
+                 f'fill="{MUT}" font-size="10">{_dk(v)}</text>')
+        v += trin
+    for i, a in enumerate(antal):
+        x1, x2 = xx(graenser[i]), xx(graenser[i + 1])
+        s.append(f'<rect x="{x1:.1f}" y="{yy(a):.1f}" width="{x2 - x1:.1f}" '
+                 f'height="{YB - yy(a):.1f}" fill="{GRO}" stroke="#fff" '
+                 f'stroke-width="1.5"/>')
+        s.append(f'<text x="{(x1 + x2) / 2:.1f}" y="{yy(a) - 5:.1f}" '
+                 f'text-anchor="middle" fill="{INK}" font-size="10.5" '
+                 f'font-weight="700">{_dk(a)}</text>')
+    s.append(f'<line x1="{X0}" y1="{YB}" x2="{X1}" y2="{YB}" stroke="{INK}" '
+             f'stroke-width="1.4"/>')
+    s.append(f'<line x1="{X0}" y1="{YT}" x2="{X0}" y2="{YB}" stroke="{INK}" '
+             f'stroke-width="1.4"/>')
+    for g in graenser:
+        s.append(f'<line x1="{xx(g):.1f}" y1="{YB}" x2="{xx(g):.1f}" '
+                 f'y2="{YB + 4}" stroke="{INK}" stroke-width="1.2"/>')
+        s.append(f'<text x="{xx(g):.1f}" y="{YB + 16}" text-anchor="middle" '
+                 f'fill="{MUT}" font-size="10">{_dk(g)}</text>')
+    if xnavn:
+        s.append(f'<text x="{X1}" y="{YB + 32}" text-anchor="end" '
+                 f'fill="{INK}" font-size="10.5" font-style="italic">{xnavn}</text>')
+    if ynavn:
+        s.append(f'<text x="{X0 - 7}" y="{YT - 5}" text-anchor="end" '
+                 f'fill="{INK}" font-size="10.5" font-style="italic">{ynavn}</text>')
+    s.append('</svg>')
+    return ''.join(s)

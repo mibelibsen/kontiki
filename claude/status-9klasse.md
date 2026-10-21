@@ -85,6 +85,20 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
   og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
   10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
+- **Alle 111 quizspørgsmål er regnet efter (21.10.).** Facit er rigtigt i
+  dem alle — statistik (30), manipulation (25), funktioner og ligninger (26)
+  og test-statistik (30). De fem, der afhænger af en figur, er tjekket mod
+  figurens egne tal.
+  **To spørgsmål pegede på en figur, der ikke kunne aflæses.** "Hvilket
+  interval har flest unger i histogrammet?" og "Hvad er typetallet ifølge
+  søjlediagrammet?" brugte `mini_histogram` og `mini_soejler` — pyntefigurer
+  på 100×100 uden akser, uden tal og uden en eneste tekst. Svarene var
+  rigtige; spørgsmålene var ikke til at besvare uden at gætte, at tredje
+  søjle svarede til tredje svarmulighed. De har nu rigtige figurer.
+  Ny funktion i `figurer.py`: **`histogram`** — søjler der rører hinanden,
+  med intervalgrænserne på x-aksen. Det er forskellen på et histogram og et
+  søjlediagram, og den skal kunne ses. Pyntefigurerne bliver stående; de
+  duer til at illustrere et afsnit, bare ikke til at aflæse.
 - **GeoGebra-vejledning til opgave C og D (21.10., IKKE udgivet).** Ligger
   i `kommende/geogebra-lineaere-funktioner.html`, bygget af
   `claude/byg_geogebra.py`. Brugeren vil teste den selv først — den flyttes
