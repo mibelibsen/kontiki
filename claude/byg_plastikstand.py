@@ -136,7 +136,6 @@ TJEK = [
  'Alt på materialelisten er her, og der er nok til hele dagen.',
  'Alle roller er beskrevet og alle kan fortælle alt om hvad vi har lavet.',
  'Standen kan ryddes op og gøres klar igen på to minutter.',
- 'Der er et skilt, man kan læse på tre meters afstand.',
 ]
 
 # ------------------------------------------------------------------- opsaetning
