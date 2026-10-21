@@ -31,12 +31,13 @@ MAAL_TRIN = [
     ('Efter', 'Den besøgende ved, at …', 'efter'),
 ]
 
-# Standen holder aabent baade fredag og loerdag, saa ugen gaar til loerdag.
-UGE = [('Uge 44', ['Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør'], [
+# Teksten i en blok skal kunne staa i den. Derfor er det korte etiketter her,
+# og hvad dagene gaar ud paa staar i figurteksten, hvor der er plads.
+UGE = [('Uge 44', ['Man', 'Tir', 'Ons', 'Tor', 'Fre'], [
     ('Man', 'Man', ('Idé og mål', 'Idé'), 'plan'),
     ('Tir', 'Ons', ('Byg standen, skaf materialer', 'Byg'), 'byg'),
-    ('Tor', 'Tor', ('Prøvekørsel', 'Prøve'), 'proeve'),
-    ('Fre', 'Lør', ('Åbent for besøgende', 'Åbent'), 'aabent'),
+    ('Tor', 'Tor', ('Test og evaluering', 'Test'), 'proeve'),
+    ('Fre', 'Fre', ('6. og 7. klasse', '6.+7.'), 'aabent'),
 ])]
 UGE_FARVER = {'plan': FG.BLA, 'byg': FG.GRO, 'proeve': FG.ORA,
               'aabent': FG.ROD}
@@ -95,9 +96,11 @@ DELE = [
    'Læg de ting først, som <b>andre venter på</b>: skal plakaten printes, '
    'skal teksten være færdig i god tid før.'],
   FG.aarslinje(UGE, W=620, farver=UGE_FARVER),
-  'Fredag og lørdag er der åbent — resten er rækkefølgen og ikke skemaet; '
-  'det får I af læreren. Læg mærke til, at prøvekørslen har sin egen dag. '
-  'Den skal ikke klemmes ind fredag morgen.',
+  'Rækkefølgen i en uge som denne — ikke skemaet. Læg mærke til, at test '
+  'har sin egen dag; den skal ikke klemmes ind fredag morgen. Torsdag '
+  'tester I forløbet med hinanden i 8. og 9. klasse, og så er der '
+  'evaluering og sidste afpudsning. Fredag kommer 6. og 7. klasse og lærer '
+  'hos os i en hel time — og vi skal også selv på besøg for at lære noget.',
   ('skema', 'Jeres opgaveliste',
    ['Opgave', 'Hvem', 'Hvornår', 'Færdig'], 11)),
 
