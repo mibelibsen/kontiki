@@ -33,11 +33,12 @@ MAAL_TRIN = [
 
 # Teksten i en blok skal kunne staa i den. Derfor er det korte etiketter her,
 # og hvad dagene gaar ud paa staar i figurteksten, hvor der er plads.
-UGE = [('Uge 44', ['Man', 'Tir', 'Ons', 'Tor', 'Fre'], [
+UGE = [('Uge 44', ['Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør'], [
     ('Man', 'Man', ('Idé og mål', 'Idé'), 'plan'),
     ('Tir', 'Ons', ('Byg standen, skaf materialer', 'Byg'), 'byg'),
     ('Tor', 'Tor', ('Test og evaluering', 'Test'), 'proeve'),
     ('Fre', 'Fre', ('6. og 7. klasse', '6.+7.'), 'aabent'),
+    ('Lør', 'Lør', ('Åbent for besøgende', 'Åbent'), 'aabent'),
 ])]
 UGE_FARVER = {'plan': FG.BLA, 'byg': FG.GRO, 'proeve': FG.ORA,
               'aabent': FG.ROD}
@@ -100,7 +101,8 @@ DELE = [
   'har sin egen dag; den skal ikke klemmes ind fredag morgen. Torsdag '
   'tester I forløbet med hinanden i 8. og 9. klasse, og så er der '
   'evaluering og sidste afpudsning. Fredag kommer 6. og 7. klasse og lærer '
-  'hos os i en hel time — og vi skal også selv på besøg for at lære noget.',
+  'hos os i en hel time — og vi skal også selv på besøg for at lære noget. '
+  'Lørdag er der åbent igen, og der kommer både børn og voksne.',
   ('skema', 'Jeres opgaveliste',
    ['Opgave', 'Hvem', 'Hvornår', 'Færdig'], 11)),
 
@@ -241,19 +243,6 @@ hvordan og hvorfor, og hvad I skal bruge af materialer.</p>
 <div class="ramme"><ul>{rammen_html}</ul></div>
 <h2 class="sec">De fem dele, der skal være med</h2>
 {dele_html}
-<h2 class="sec">Prøvekørslen</h2>
-<div class="ramme"><ul>
-<li><b>Prøv standen på en, der ikke ved noget om den.</b> En fra en anden
-gruppe, en lærer, en lillebror. Ikke jer selv — I ved allerede svaret, og så
-virker alt.</li>
-<li><b>Tag tid.</b> Fra "hej" til "farvel". Tager det meget mere end et kvarter, skal der
-skæres noget væk, ikke tales hurtigere.</li>
-<li><b>Sig ingenting undervejs.</b> Lad den besøgende prøve. Hver gang I er
-nødt til at forklare noget ekstra, har I fundet et sted, standen ikke er
-tydelig nok.</li>
-<li><b>Ryd op bagefter, og tag tid på det også.</b> Kan I ikke være klar igen
-på to minutter, holder standen ikke en hel dag.</li>
-</ul></div>
 <h2 class="sec">Tjek før I åbner</h2>
 <ul class="tjek">{tjek_html}</ul>
 <h2 class="sec">Hvor idéen skal komme fra</h2>
