@@ -85,6 +85,19 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
   og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
   10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
+- **Quizmotoren: et fejlklik låste spørgsmålet for altid (rettet 21.10.).**
+  Svarede man forkert, blev alle knapper spærret, og det eneste, der kunne
+  låse op, var *Nulstil mine svar* — som sletter hele sidens svar. Svaret
+  blev gemt i localStorage, så "Ikke helt" kom igen ved hver genindlæsning.
+  Oven i det stod der kun "Ikke helt" og derefter det rigtige regnestykke:
+  *"Ikke helt. y = 2·3 + 1 = 7."* Når 7 står på en af knapperne, ser siden
+  ud til at modsige sig selv. Nu står der, hvilket bogstav der var det
+  rigtige, og der er en **Prøv igen**-knap, der kun nulstiller det ene
+  spørgsmål.
+  Motoren er kopieret ind i fire sider — `statistik.html`,
+  `manipulation.html`, `funktioner-og-ligninger.html` og
+  `test-statistik.html` — og de er rettet alle fire. Ingen af dem bygges af
+  et script, så en rettelse i motoren skal laves fire steder.
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar

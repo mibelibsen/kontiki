@@ -169,6 +169,12 @@
   .fb.ok{background:var(--good-soft);border:1px solid var(--good);color:#12633f}
   .fb.no{background:var(--bad-soft);border:1px solid var(--bad);color:#8f2733}
   .fb b{color:#111}
+  .fb .igen{
+    margin-left:8px;background:#fff;border:1px solid var(--bad);border-radius:8px;
+    padding:4px 11px;font:inherit;font-size:.88rem;font-weight:700;
+    color:#8f2733;cursor:pointer;
+  }
+  .fb .igen:hover{background:var(--bad);color:#fff}
 
   .scorebar{
     margin-top:16px;font-size:.95rem;color:var(--muted);
@@ -310,7 +316,22 @@ ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margi
     }else{
       if(opts[chosenIdx]) opts[chosenIdx].classList.add('wrong');
       fb.className = 'fb show no';
-      fb.innerHTML = '<b>Ikke helt.</b> ' + exp;
+      // Sig hvilken knap der var den rigtige. Uden bogstavet staar der bare
+      // "Ikke helt" og saa det rigtige regnestykke, og saa ser siden ud til
+      // at modsige sig selv: regnestykket giver jo 7, og 7 staar paa en knap.
+      var mkEl = opts[correct] ? opts[correct].querySelector('.mk') : null;
+      var mk = mkEl ? mkEl.textContent.trim() : '';
+      fb.innerHTML = '<b>Ikke helt.</b> ' + (mk ? 'Det rigtige er ' + mk + '. ' : '')
+        + exp + ' <button type="button" class="igen">Prøv igen</button>';
+      // Et fejlklik laaste foer spoergsmaalet for altid - den eneste vej ud
+      // var at nulstille hele siden og miste alle de andre svar.
+      var igen = fb.querySelector('.igen');
+      if(igen) igen.addEventListener('click', function(){
+        delete state.chosen[idx];
+        save();
+        resetQuestion(q);
+        refresh();
+      });
     }
   }
 
