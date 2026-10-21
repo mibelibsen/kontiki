@@ -134,7 +134,7 @@ TJEK = [
  'Standen er prøvet på en, der ikke vidste noget i forvejen.',
  'Vi har taget tid på den, og den varer .. minutter.',
  'Alt på materialelisten er her, og der er nok til hele dagen.',
- 'Alle roller er besat, og alle kan svare på, hvad standen handler om.',
+ 'Alle roller er beskrevet og alle kan fortælle alt om hvad vi har lavet.',
  'Standen kan ryddes op og gøres klar igen på to minutter.',
  'Der er et skilt, man kan læse på tre meters afstand.',
 ]
