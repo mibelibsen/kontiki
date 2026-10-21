@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """Bygger GeoGebra-vejledningen til opgave C og D i lineaere funktioner.
 
-Siden bygges til kommende/ og er dermed udelukket fra sitet. Naar den er
-afproevet, flyttes filen op i roden - se claude/lektieplan.md for maaden.
+Siden ligger i roden og udgives, men **ingen side linker til den**. Den kan
+kun naas, hvis man kender adressen. Saadan skal det vaere, indtil den er
+proevet af - saa kobles den paa matematik.html og funktioner-og-ligninger.html.
+Ulistet er ikke privat: har man adressen, kan man laese den.
 
 **Der staar ingen facit paa siden.** Alle eksempler bruger tal, der ikke
 findes i opgave C eller D, saa ungerne kan foelge fremgangsmaaden uden at
@@ -22,7 +24,13 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import figurer as FG
 
-UD = os.path.join('kommende', 'geogebra-lineaere-funktioner.html')
+# Siden ligger i roden og bliver udgivet - men der linkes ikke til den fra
+# nogen anden side. Den kan kun findes, hvis man kender adressen:
+#     mibelibsen.space/geogebra-lineaere-funktioner.html
+# Det er med vilje: den skal kunne aabnes i en browser og proeves af, foer
+# den kobles paa matematiksiden. Bemaerk, at ulistet ikke er det samme som
+# privat - enhver med adressen kan laese den.
+UD = 'geogebra-lineaere-funktioner.html'
 GEOGEBRA = 'https://www.geogebra.org/classic?lang=da'
 
 # Eksempeltallene. De maa IKKE vaere opgavernes egne - se docstringen.
@@ -272,8 +280,8 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '</nav></div></header><main>' + KROP + '</main><footer>'
        'Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>')
 
-os.makedirs('kommende', exist_ok=True)
 open(UD, 'w', encoding='utf-8').write(DOK)
 print(f'skrevet:  {UD}  ·  {len(TRIN)} trin, '
       f'{sum(1 for t in TRIN if t[3])} figurer, {len(FALDER)} faldgruber')
-print('IKKE udgivet: filen ligger i kommende/, som er udelukket fra sitet.')
+print('UDGIVET, men ULINKET: ingen side peger på den. Adressen er')
+print(f'  mibelibsen.space/{UD}')

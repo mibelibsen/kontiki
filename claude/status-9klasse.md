@@ -99,10 +99,14 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   med intervalgrænserne på x-aksen. Det er forskellen på et histogram og et
   søjlediagram, og den skal kunne ses. Pyntefigurerne bliver stående; de
   duer til at illustrere et afsnit, bare ikke til at aflæse.
-- **GeoGebra-vejledning til opgave C og D (21.10., IKKE udgivet).** Ligger
-  i `kommende/geogebra-lineaere-funktioner.html`, bygget af
-  `claude/byg_geogebra.py`. Brugeren vil teste den selv først — den flyttes
-  op i roden, når hun siger til.
+- **GeoGebra-vejledning til opgave C og D (21.10.) — UDGIVET, men ULINKET.**
+  `geogebra-lineaere-funktioner.html` i roden, bygget af
+  `claude/byg_geogebra.py`. **Ingen side linker til den.** Den kan kun nås på
+  `mibelibsen.space/geogebra-lineaere-funktioner.html`, så brugeren kan sidde
+  og nørkle med den i en rigtig browser, før den kobles på matematik.html og
+  funktioner-og-ligninger.html. **Ulistet er ikke privat** — har man
+  adressen, kan man læse den. `tjek_links` kræver kun, at links peger på noget,
+  der findes, så en ulinket side består tjekket.
   **Kommandonavnene er prøvet af i GeoGebra Classic på dansk, ikke husket.**
   De hedder `Linje`, `Hældning`, `Rod` og `Skæring`. **Der findes ingen
   `Nulpunkt`-kommando** — den hedder `Rod`, selv om vi siger nulpunkt i
