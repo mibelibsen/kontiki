@@ -35,26 +35,26 @@ MAAL_TRIN = [
     ('Efter', 'Den besøgende kan selv …', 'efter'),
 ]
 
-UGE = [('Uge 44', ['Man', 'Tir', 'Ons', 'Tor', 'Fre'], [
+# Standen holder aabent baade fredag og loerdag, saa ugen gaar til loerdag.
+UGE = [('Uge 44', ['Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør'], [
     ('Man', 'Man', ('Idé og mål', 'Idé'), 'plan'),
     ('Tir', 'Ons', ('Byg standen, skaf materialer', 'Byg'), 'byg'),
     ('Tor', 'Tor', ('Prøvekørsel', 'Prøve'), 'proeve'),
-    ('Fre', 'Fre', ('Åbent hele dagen', 'Åbent'), 'aabent'),
+    ('Fre', 'Lør', ('Åbent for besøgende', 'Åbent'), 'aabent'),
 ])]
 UGE_FARVER = {'plan': FG.BLA, 'byg': FG.GRO, 'proeve': FG.ORA,
               'aabent': FG.ROD}
 
+# Et punkt uden forklaring staar alene - de er ikke alle lige lange.
 RAMMEN = [
     ('Tre til fem i gruppen', 'Alle skal have en rolle, der er noget værd '
      'hele tiden.'),
-    ('Ét bord eller et tilsvarende stykke plads', 'Alt skal kunne stå på '
-     'det, og det skal kunne ryddes på fem minutter.'),
-    ('7–10 minutter pr. besøgende', 'Kort nok til, at der kan komme mange '
-     'igennem. Langt nok til, at de laver noget selv.'),
-    ('Den skal kunne køre hele dagen', 'Alt, hvad I bruger op, skal kunne '
-     'fyldes op igen. Tænk det med fra starten.'),
-    ('Besøgende er både børn og voksne', 'Samme stand skal virke for en fra '
-     '3. klasse og for en forælder. Det er den sværeste del af opgaven.'),
+    ('Ét bord eller et tilsvarende stykke plads pr. gruppe', ''),
+    ('Ca. 15 minutter pr. besøgende', ''),
+    ('Den skal kunne køre flere gange i løbet af både fredag og lørdag',
+     'Alt, hvad I bruger op, skal kunne fyldes op igen. Tænk det med fra '
+     'starten.'),
+    ('Besøgende er både børn og voksne fredag og lørdag', ''),
 ]
 
 # (overskrift, [afsnit], figur, figurtekst, skrivefelt)
@@ -108,9 +108,9 @@ DELE = [
    'Læg de ting først, som <b>andre venter på</b>: skal plakaten printes, '
    'skal teksten være færdig i god tid før.'],
   FG.aarslinje(UGE, W=620, farver=UGE_FARVER),
-  'Rækkefølgen i en uge som denne — ikke skemaet; det får I af læreren. Læg '
-  'mærke til, at prøvekørslen har sin egen dag. Den skal ikke klemmes ind '
-  'fredag morgen.',
+  'Fredag og lørdag er der åbent — resten er rækkefølgen og ikke skemaet; '
+  'det får I af læreren. Læg mærke til, at prøvekørslen har sin egen dag. '
+  'Den skal ikke klemmes ind fredag morgen.',
   ('skema', 'Jeres opgaveliste',
    ['Opgave', 'Hvem', 'Hvornår', 'Færdig'], 11)),
 
@@ -146,7 +146,7 @@ def tomt_skema(kolonner, raekker):
 TJEK = [
  'Vi kan sige vores mål højt i én sætning, der begynder med "Efter vores stand kan den besøgende …".',
  'Standen er prøvet på en, der ikke vidste noget i forvejen.',
- 'Vi har taget tid på den — den holder sig under 10 minutter.',
+ 'Vi har taget tid på den — den holder sig omkring de 15 minutter.',
  'Alt på materialelisten er her, og der er nok til hele dagen.',
  'Alle fire roller er besat, og alle kan svare på, hvad standen handler om.',
  'Standen kan ryddes op og gøres klar igen på to minutter.',
@@ -170,7 +170,8 @@ for i, (o, stykker, figur, figtekst, felt) in enumerate(DELE, 1):
                   f'{indhold}</div></section>')
 
 rammen_html = ''.join(
-    f'<li><b>{html.escape(a)}</b> — {html.escape(b)}</li>' for a, b in RAMMEN)
+    f'<li><b>{html.escape(a)}</b>'
+    + (f' — {html.escape(b)}' if b else '') + '</li>' for a, b in RAMMEN)
 tjek_html = ''.join(f'<li>{html.escape(t)}</li>' for t in TJEK)
 
 BASIS = open('samfundsfag.html', encoding='utf-8').read()
@@ -253,7 +254,7 @@ ligge på standen.</p>
 <li><b>Prøv standen på en, der ikke ved noget om den.</b> En fra en anden
 gruppe, en lærer, en lillebror. Ikke jer selv — I ved allerede svaret, og så
 virker alt.</li>
-<li><b>Tag tid.</b> Fra "hej" til "farvel". Er det over 10 minutter, skal der
+<li><b>Tag tid.</b> Fra "hej" til "farvel". Tager det meget mere end et kvarter, skal der
 skæres noget væk, ikke tales hurtigere.</li>
 <li><b>Sig ingenting undervejs.</b> Lad den besøgende prøve. Hver gang I er
 nødt til at forklare noget ekstra, har I fundet et sted, standen ikke er
