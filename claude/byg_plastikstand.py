@@ -132,9 +132,9 @@ def tomt_skema(kolonner, raekker):
 TJEK = [
  'Vi kan sige vores mål højt i én sætning, der begynder med "Efter vores stand ved den besøgende …".',
  'Standen er prøvet på en, der ikke vidste noget i forvejen.',
- 'Vi har taget tid på den — den holder sig omkring de 15 minutter.',
+ 'Vi har taget tid på den, og den varer .. minutter.',
  'Alt på materialelisten er her, og der er nok til hele dagen.',
- 'Alle fire roller er besat, og alle kan svare på, hvad standen handler om.',
+ 'Alle roller er besat, og alle kan svare på, hvad standen handler om.',
  'Standen kan ryddes op og gøres klar igen på to minutter.',
  'Der er et skilt, man kan læse på tre meters afstand.',
 ]
