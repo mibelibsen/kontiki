@@ -244,10 +244,6 @@ hvordan og hvorfor, og hvad I skal bruge af materialer.</p>
 <h2 class="sec">Beskrivelse</h2>
 <div class="ramme"><ul>{rammen_html}</ul></div>
 <h2 class="sec">De fem dele, der skal være med</h2>
-<p style="color:var(--muted);max-width:74ch">Hver del har en forklaring og
-en plads, I skriver i. Der er ingen eksempler — de ville blive skrevet af i
-stedet for tænkt. Printer I siden, har I jeres plan på ét sted, og så kan den
-ligge på standen.</p>
 {dele_html}
 <h2 class="sec">Prøvekørslen</h2>
 <div class="ramme"><ul>
