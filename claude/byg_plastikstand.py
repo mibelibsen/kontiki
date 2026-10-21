@@ -221,6 +221,8 @@ padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;
 color:var(--ink);font-family:inherit;margin:6px 8px 0 0}
 .printbtn:hover{border-color:var(--accent);color:var(--accent)}
 h2.sec{font-size:1.4rem;margin:30px 0 6px}
+/* to afsnit i heroen loeb sammen til én klump uden den her */
+.hero p+p{margin-top:12px}
 @media print{header.top,.printbtn,.btnlink{display:none!important}
 .afsnit,.figur,.skriv,.eks{box-shadow:none;break-inside:avoid;
 page-break-inside:avoid}
@@ -229,16 +231,16 @@ body{font-size:11pt}main{padding:0}@page{size:A4;margin:13mm}}
 
 KROP = f'''<section class="hero">
 <span class="pill">Feature · uge 44 · plastik</span>
-<h1>Byg en stand om plastik</h1>
-<p>I skal opfinde jeres eget lille undervisningsforløb om plastik og holde
-det fra en stand. De besøgende er elever fra andre klasser og forældre. De
-kommer, prøver noget, og går igen — og bagefter kan de noget, de ikke kunne
-før.</p>
-<p>Siden her er <b>rammen</b>, ikke forløbet. Den siger, hvad der skal være
-med. Hvad der står i felterne, er helt jeres.</p>
+<h1>Lav undervisning om plastik</h1>
+<p>I skal lave jeres eget undervisningsforløb om plastik og afholde det fra
+et bord, som om det var en stand på en messe. De besøgende er børn fra andre
+klasser og forældre. De kommer, prøver noget, og går igen — og bagefter er de
+klogere end da de kom.</p>
+<p>Dette er en ramme, hvor I skal beskrive jeres stand, hvem der gør hvad,
+hvordan og hvorfor, og hvad I skal bruge af materialer.</p>
 <button class="printbtn" onclick="window.print()">Print rammen</button>
 </section>
-<h2 class="sec">Rammen, I skal holde jer inden for</h2>
+<h2 class="sec">Beskrivelse</h2>
 <div class="ramme"><ul>{rammen_html}</ul></div>
 <h2 class="sec">De fem dele, der skal være med</h2>
 <p style="color:var(--muted);max-width:74ch">Hver del har en forklaring og
@@ -274,7 +276,7 @@ den besøgende tror ét og opdager noget andet.</b></p>
 
 DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<meta name="viewport" content="width=device-width,initial-scale=1">'
-       '<title>Byg en stand om plastik · uge 44 · 9. klasse</title><style>'
+       '<title>Lav undervisning om plastik · uge 44 · 9. klasse</title><style>'
        + CSS + '</style></head><body><header class="top"><div class="top-inner">'
        '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>'
        '<nav class="tabs"><a class="" href="matematik.html">Matematik</a>'
