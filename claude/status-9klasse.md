@@ -85,6 +85,23 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   containeren — alle deres adresser giver 000. DR's dækning blev brugt i stedet,
   og den havde endda bedre tal med: tre måneder efter forbuddet brugte 8 ud af
   10 stadig sociale medier, og andelen med egen konto faldt kun fra 52 til 42 %.
+- **GeoGebra-vejledning til opgave C og D (21.10., IKKE udgivet).** Ligger
+  i `kommende/geogebra-lineaere-funktioner.html`, bygget af
+  `claude/byg_geogebra.py`. Brugeren vil teste den selv først — den flyttes
+  op i roden, når hun siger til.
+  **Kommandonavnene er prøvet af i GeoGebra Classic på dansk, ikke husket.**
+  De hedder `Linje`, `Hældning`, `Rod` og `Skæring`. **Der findes ingen
+  `Nulpunkt`-kommando** — den hedder `Rod`, selv om vi siger nulpunkt i
+  timen. Det stod der i første udkast, og det ville have kostet en lektion.
+  API'et (`ggbApplet.evalCommand`) tager kun engelske navne, men
+  algebravinduet *viser* de danske — det er sådan, de blev slået fast.
+  **Ingen facit på siden:** alle eksempler bruger y = 2x + 1 og y = x + 4,
+  ikke opgavernes egne tal. Skriver man opgave C's to kvitteringer ind i
+  GeoGebra, står svaret på skærmen med det samme, og det skal ungerne selv
+  nå frem til.
+  Siden henter CSS fra `funktioner-og-ligninger.html` og skal derfor bruge
+  **den sides header** (`.top-inner` og `.jump`, ikke `.tabs`) og `.btn`,
+  ikke `.btnlink`.
 - **Quizmotoren: et fejlklik låste spørgsmålet for altid (rettet 21.10.).**
   Svarede man forkert, blev alle knapper spærret, og det eneste, der kunne
   låse op, var *Nulstil mine svar* — som sletter hele sidens svar. Svaret

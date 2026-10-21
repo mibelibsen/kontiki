@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GeoGebra til lineære funktioner · 9. klasse</title><style>
+  :root{
+    --bg:#ffffff;
+    --panel:#ffffff;
+    --panel2:#f4f6fb;
+    --ink:#1a2233;
+    --muted:#586074;
+    --line:#d3dae7;
+    --accent:#1f6fd6;
+    --accent-soft:#eaf2fd;
+    --good:#1a8f5e;
+    --good-soft:#eaf7f0;
+    --bad:#c23b4b;
+    --bad-soft:#fdeef0;
+    --warn:#b5710a;
+    --shadow:0 1px 3px rgba(20,30,60,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  header.top{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(8px);
+    background:rgba(255,255,255,.9);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1000px;margin:0 auto;padding:12px 20px;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}
+  .brand span{color:var(--accent)}
+  nav.jump{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  nav.jump a{
+    color:var(--muted);text-decoration:none;font-size:.86rem;
+    padding:6px 11px;border-radius:999px;border:1px solid transparent;
+    transition:.15s;
+  }
+  nav.jump a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+
+  main{max-width:1000px;margin:0 auto;padding:28px 20px 90px}
+
+  .hero{
+    background:var(--panel2);
+    border:1px solid var(--line);border-radius:20px;
+    padding:34px 32px;box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  .hero h1{margin:0 0 10px;font-size:2.1rem;line-height:1.15}
+  .hero p{margin:0;color:var(--muted);font-size:1.06rem;max-width:72ch}
+  .pill{
+    display:inline-block;font-size:.76rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--line);border-radius:999px;
+    padding:4px 12px;margin-bottom:14px;background:#fff;font-weight:700;
+  }
+
+  .progress-wrap{margin:22px 0 4px}
+  .progress-bar{height:10px;border-radius:999px;background:#e4e9f2;overflow:hidden;border:1px solid var(--line)}
+  .progress-fill{height:100%;width:0;background:var(--accent);transition:width .5s ease}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+  section.lesson{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:28px 30px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  section.lesson h2{
+    font-size:1.5rem;margin:0 0 6px;display:flex;align-items:center;gap:12px;
+  }
+  .num{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    display:grid;place-items:center;font-weight:800;font-size:1rem;
+    background:var(--accent);color:#fff;
+  }
+  section.lesson .sub{color:var(--muted);margin:0 0 18px;font-size:1rem}
+  section.lesson h3{font-size:1.15rem;margin:26px 0 8px;color:#243149}
+  p{margin:12px 0}
+
+  .box{
+    background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;margin:16px 0;
+  }
+  .box.tip{border-left:4px solid var(--good)}
+  .box.note{border-left:4px solid var(--warn)}
+  .box.rule{border-left:4px solid var(--accent);background:var(--accent-soft)}
+  .box.hverdag{border-left:4px solid var(--good);background:var(--good-soft)}
+  .box.hverdag p{margin:10px 0}
+  .opg h5{font-size:1rem;margin:20px 0 6px;color:#243149;border-bottom:1px solid var(--line);padding-bottom:4px}
+  .box.hverdag .figur{margin:14px 0 2px}
+  .box.hverdag .figur svg{max-width:460px;background:#fff}
+  .box.hverdag .hlabel{
+    display:inline-block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--good);font-weight:800;margin-bottom:2px;
+  }
+  .box b{color:#111}
+  .box .rlabel{
+    display:inline-block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);font-weight:800;margin-bottom:2px;
+  }
+
+  .formula{
+    font-family:"Cambria Math","Times New Roman",Georgia,serif;
+    background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0;text-align:center;
+    font-size:1.3rem;letter-spacing:.4px;color:#111;
+  }
+  .formula small{display:block;font-size:.8rem;color:var(--muted);margin-top:6px;font-family:inherit;letter-spacing:0}
+  code.inl{
+    font-family:"Cambria Math",Georgia,serif;background:var(--panel2);
+    padding:2px 8px;border-radius:6px;border:1px solid var(--line);font-size:1.05em;color:#111;
+  }
+
+  .steps{margin:16px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .steps .row{display:flex;gap:0;border-top:1px solid var(--line)}
+  .steps .row:first-child{border-top:none}
+  .steps .calc{
+    flex:1;padding:11px 18px;font-family:"Cambria Math",Georgia,serif;font-size:1.12rem;
+    background:#fff;color:#111;display:flex;align-items:center;
+  }
+  .steps .why{
+    flex:1;padding:11px 18px;color:var(--muted);font-size:.92rem;background:var(--panel2);
+    display:flex;align-items:center;
+  }
+  @media(max-width:620px){.steps .row{flex-direction:column}}
+
+  .graphwrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin:18px 0}
+  .graphwrap svg{background:#fff;border:1px solid var(--line);border-radius:12px;flex:0 0 auto}
+  .graphwrap .caption{flex:1;min-width:220px;color:var(--muted);font-size:.95rem}
+
+  /* QUIZ */
+  .quiz{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:18px;padding:24px 28px;margin:24px 0;box-shadow:var(--shadow);
+  }
+  .quiz .qhead{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+  .quiz .qtag{
+    font-size:.72rem;letter-spacing:.7px;text-transform:uppercase;color:#fff;
+    background:var(--accent);padding:4px 11px;border-radius:999px;font-weight:800;
+  }
+  .quiz h3{margin:0;font-size:1.22rem}
+  .quiz .qsub{color:var(--muted);margin:6px 0 16px;font-size:.95rem}
+  .q{margin:18px 0;padding-top:18px;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:none;padding-top:0}
+  .q .qtext{font-weight:600;margin-bottom:12px;font-size:1.04rem}
+  .q .qtext .qn{color:var(--accent);font-weight:800;margin-right:6px}
+  .lvl{
+    display:inline-block;font-size:.68rem;letter-spacing:.5px;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:8px;
+    color:var(--muted);font-weight:700;vertical-align:middle;background:#fff;
+  }
+  .opts{display:grid;gap:9px}
+  .opt{
+    text-align:left;width:100%;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);color:var(--ink);
+    padding:11px 15px;border-radius:10px;font-size:1rem;font-family:inherit;
+    transition:.15s;display:flex;align-items:center;gap:10px;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .mk{
+    flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);
+    display:grid;place-items:center;font-weight:800;font-size:.85rem;color:var(--muted);background:#fff;
+  }
+  .opt.correct{border-color:var(--good);background:var(--good-soft)}
+  .opt.correct .mk{background:var(--good);color:#fff;border-color:var(--good)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.wrong .mk{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt:disabled{cursor:default}
+  .fb{
+    margin-top:12px;padding:11px 15px;border-radius:10px;font-size:.95rem;display:none;
+  }
+  .fb.show{display:block}
+  .fb.ok{background:var(--good-soft);border:1px solid var(--good);color:#12633f}
+  .fb.no{background:var(--bad-soft);border:1px solid var(--bad);color:#8f2733}
+  .fb b{color:#111}
+  .fb .igen{
+    margin-left:8px;background:#fff;border:1px solid var(--bad);border-radius:8px;
+    padding:4px 11px;font:inherit;font-size:.88rem;font-weight:700;
+    color:#8f2733;cursor:pointer;
+  }
+  .fb .igen:hover{background:var(--bad);color:#fff}
+
+  .scorebar{
+    margin-top:16px;font-size:.95rem;color:var(--muted);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .scorebar .badge{
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:5px 14px;font-weight:700;color:var(--ink);
+  }
+  .final-note{text-align:center;color:var(--muted);margin-top:16px;font-size:.95rem}
+
+  footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  @media(max-width:620px){.cheat{grid-template-columns:1fr}}
+  .cheat .card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .cheat .card h4{margin:0 0 6px;font-size:1rem;color:#243149}
+  .cheat .card p{margin:0;font-size:.92rem;color:var(--muted)}
+
+  .printbtn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:#fff;border:1px solid var(--line);color:var(--ink);
+    padding:9px 16px;border-radius:10px;font-size:.92rem;font-family:inherit;cursor:pointer;
+    font-weight:600;
+  }
+  .printbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .btn{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn:hover{background:#195cb5}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* start overlay */
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(26,34,51,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}
+  .overlay.hidden{display:none}
+  .overlay .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 32px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(20,30,60,.25)}
+  .overlay h2{margin:0 0 6px;font-size:1.5rem}
+  .overlay p{margin:0 0 18px;color:var(--muted)}
+  .overlay input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:1.05rem;font-family:inherit;margin-bottom:14px}
+  .overlay input:focus{outline:none;border-color:var(--accent)}
+  .overlay .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* welcome bar */
+  .welcome{display:none;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .welcome.show{display:flex}
+  .welcome .hi{font-weight:800;font-size:1.05rem}
+  .welcome .live{color:var(--muted);font-size:.95rem}
+  .welcome .spacer{margin-left:auto}
+  .welcome .btn{padding:8px 14px;font-size:.9rem}
+
+  /* results */
+  #results .rtable{width:100%;border-collapse:collapse;margin-top:10px}
+  #results .rtable th,#results .rtable td{border:1px solid var(--line);padding:9px 12px;text-align:left;font-size:.98rem}
+  #results .rtable th{background:var(--panel2);font-weight:700}
+  #results .rtable tr.total td{font-weight:800;background:var(--accent-soft)}
+  #results .grade{font-size:1.08rem;margin-top:16px;font-weight:600}
+
+
+.opg{background:#fdf8f0;border:1px solid var(--line);border-left:4px solid #b5710a;border-radius:10px;padding:14px 18px;margin:18px 0 4px}
+.opg h4{margin:0 0 6px;font-size:1.02rem}
+.opg h4 em{font-style:normal;color:#b5710a;font-weight:800;margin-right:8px}
+ol.abc{list-style:lower-alpha;padding-left:26px;margin:8px 0 4px}
+ol.abc li{margin:5px 0}
+.figur{margin:14px 0}
+.figur svg{display:block;width:100%;max-width:520px;margin:0 auto;height:auto;background:#fff;border:1px solid var(--line);border-radius:10px}
+.figur .caption{color:var(--muted);font-size:.92rem;margin-top:6px}
+@media print{.opg{background:#fff !important;border:1px solid #999;border-left:3px solid #000}.opg h4 em{color:#000}
+.figur,.opg{break-inside:avoid;page-break-inside:avoid}
+.figur svg{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  /* ---------- PRINT ---------- */
+  @media print{
+    @page{size:A4;margin:16mm}
+    body{background:#fff;color:#000;font-size:11.5pt;line-height:1.45}
+    header.top,nav.jump,.progress-wrap,.printbtn,.overlay,.welcome .btn{display:none !important}
+    .welcome{border:1px solid #999;background:#fff !important}
+    main{max-width:none;padding:0}
+    .hero,section.lesson,.quiz,.box,.steps,.cheat .card,.formula,.graphwrap svg{
+      box-shadow:none !important;
+    }
+    .hero,section.lesson,.quiz{
+      border:1px solid #999;background:#fff !important;border-radius:0;
+      padding:14px 16px;margin:10px 0;break-inside:avoid;page-break-inside:avoid;
+    }
+    section.lesson h2,.quiz h3,section.lesson h3{break-after:avoid}
+    .num{background:#fff !important;color:#000;border:1.5px solid #000}
+    .pill,.qtag{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .box,.box.rule,.box.hverdag{background:#fff !important;border:1px solid #bbb;border-left:3px solid #000}
+    .hlabel{color:#000 !important}
+    .rlabel{color:#000 !important}
+    .formula,.steps .calc,.opt,.opt .mk,.cheat .card{background:#fff !important}
+    .steps .why{background:#fff !important;color:#333}
+    .opt{border:1px solid #888}
+    .opt .mk{border:1px solid #000;color:#000}
+    /* keep quizzes usable as a paper worksheet: neutral options, hide screen-only feedback state */
+    .opt.correct,.opt.wrong{background:#fff !important;border:1px solid #888 !important}
+    .opt.correct .mk,.opt.wrong .mk{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .fb{display:none !important}
+    .q{break-inside:avoid;page-break-inside:avoid}
+    a{color:#000;text-decoration:none}
+    svg line[stroke="#1f6fd6"],svg line[stroke="#4f9dff"]{stroke:#000 !important}
+    svg circle{fill:#000 !important}
+    .caption{color:#333}
+  }
+
+  /* Brøker med vandret brøkstreg */
+  .frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.16;font-size:.88em;margin:0 .16em}
+  .frac>span{display:block;padding:0 .3em;white-space:nowrap}
+  .frac>span:first-child{border-bottom:1.6px solid currentColor;padding-bottom:.05em}
+  .frac>span:last-child{padding-top:.05em}
+
+.trin{background:var(--panel,#fff);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:18px 22px;
+margin:16px 0}
+.trin h2{font-size:1.18rem;margin:0 0 10px;display:flex;align-items:center;
+gap:12px}
+.trin .num{width:30px;height:30px;border-radius:9px;display:grid;
+place-items:center;font-weight:800;font-size:.95rem;background:var(--accent);
+color:#fff;flex:0 0 auto}
+.trin p{margin:8px 0;color:var(--muted);font-size:.97rem;max-width:72ch}
+.trin p b{color:var(--ink)}
+table.skriv{width:100%;border-collapse:collapse;margin:14px 0}
+table.skriv td{border:1px solid var(--line);padding:9px 12px;
+vertical-align:middle}
+table.skriv td.kmd{width:40%;background:#1a2233;border-color:#1a2233}
+table.skriv td.kmd code{color:#eaf0ff;font-size:1.02rem;font-weight:700}
+table.skriv td.sker{color:var(--muted);font-size:.93rem}
+.opg{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+padding:14px 20px;margin:14px 0}
+.opg h3{margin:0 0 6px;font-size:1.05rem}
+.opg p{margin:6px 0;color:var(--muted);font-size:.95rem;max-width:72ch}
+table.falder{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+table.falder th,table.falder td{border:1px solid var(--line);padding:10px 12px;
+text-align:left;vertical-align:top}
+table.falder th{background:var(--panel2);width:30%}
+.figtekst{color:var(--muted);font-size:.9rem;margin-top:10px;text-align:left;
+max-width:66ch;margin-left:auto;margin-right:auto}
+h2.sec{font-size:1.4rem;margin:30px 0 6px}
+@media print{header.top,.printbtn,.btn{display:none!important}
+.trin,.figur,.opg{break-inside:avoid;page-break-inside:avoid}
+body{font-size:11pt}main{padding:0}@page{size:A4;margin:14mm}}
+</style></head><body><header class="top"><div class="top-inner"><div class="brand">Matematik · <span>GeoGebra til opgave C og D</span></div><nav class="jump"><a href="#trin">Trinnene</a><a href="#opgaver">I opgaverne</a><a href="#falder">Det der driller</a></nav></div></header><main><section class="hero">
+<span class="pill">Matematik · lineære funktioner</span>
+<h1>GeoGebra på ti minutter</h1>
+<p>Ni trin, der dækker præcis det, du skal bruge i <b>opgave C og D</b>.
+Alle eksempler bruger andre tal end opgaverne — fremgangsmåden er den samme,
+men svarene skal du selv finde.</p>
+<button class="printbtn" onclick="window.print()">Print vejledningen</button>
+<a class="btn" href="https://www.geogebra.org/classic?lang=da" target="_blank" rel="noopener">Åbn GeoGebra</a>
+</section>
+<div id="trin"><section class="trin"><h2><span class="num">1</span>Åbn GeoGebra</h2><p>Gå ind på <b>geogebra.org/classic</b> og vælg <b>Graf</b>. Du skal ikke logge ind, og du skal ikke hente noget.</p><p>Til venstre er <b>algebravinduet</b> med feltet, der hedder <i>Input…</i> — det er dér, du skriver. Til højre er <b>grafikvinduet</b>, hvor tingene bliver tegnet.</p><p>Alt, hvad du skriver i Input-feltet, afsluttes med <b>Enter</b>.</p></section><section class="trin"><h2><span class="num">2</span>Sæt de to punkter ind</h2><p>Har du to målinger — to kvitteringer, to aflæsninger — så er de to punkter. Skriv dem ét ad gangen.</p><p>Pas på kommaet: koordinater skrives <code class="inl">(1,3)</code>. Decimaltal skrives med <b>punktum</b> i GeoGebra, så 2,5 skrives <code class="inl">2.5</code>.</p><table class="skriv"><tbody><tr><td class="kmd"><code>A=(1,3)</code></td><td class="sker">Punktet A dukker op i grafikvinduet</td></tr><tr><td class="kmd"><code>B=(4,9)</code></td><td class="sker">Punktet B kommer også</td></tr></tbody></table></section><section class="trin"><h2><span class="num">3</span>Tegn linjen gennem dem</h2><p>Nu trækker du linjen gennem de to punkter. Den får automatisk navnet <code class="inl">f</code>.</p><p><b>Her kommer en overraskelse.</b> GeoGebra skriver ikke linjen som <code class="inl">y = ax + b</code>. Den skriver noget i retning af <code class="inl">−2x + y = 1</code>. Det er den <i>samme</i> linje — flyt leddet over på den anden side, så står der <code class="inl">y = 2x + 1</code>. Bliv ikke forvirret af det.</p><table class="skriv"><tbody><tr><td class="kmd"><code>Linje(A,B)</code></td><td class="sker">Linjen tegnes, og dens ligning står i algebravinduet</td></tr></tbody></table></section><section class="trin"><h2><span class="num">4</span>Få hældningen a</h2><p>Det her er den vigtigste kommando på siden. Den giver dig ikke bare tallet — den <b>tegner trappetrinnet</b> ude på linjen, så du kan se, hvor tallet kommer fra.</p><p>Det er præcis det trappetrin, opgaven beder dig om at aflæse. GeoGebra tegner ét trin til højre; i opgaven går du fem til højre og deler med fem bagefter — det er det samme.</p><table class="skriv"><tbody><tr><td class="kmd"><code>Hældning(f)</code></td><td class="sker">Tallet a kommer frem, og trappetrinnet tegnes på linjen</td></tr></tbody></table><div class="figur"><svg viewBox="0 0 470 500" role="img" aria-label="Koordinatsystem med 1 rette linjer."><g font-family="Consolas, monospace" font-size="11"><rect x="121.8" y="30.0" width="254.3" height="436.0" fill="#fff"/><line x1="121.8" y1="30.0" x2="121.8" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="121.8" y="444.7" text-anchor="middle" fill="#586074" font-size="10">-1</text><line x1="158.2" y1="30.0" x2="158.2" y2="466.0" stroke="#1a2233" stroke-width="1.4"/><line x1="194.5" y1="30.0" x2="194.5" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="194.5" y="444.7" text-anchor="middle" fill="#586074" font-size="10">1</text><line x1="230.8" y1="30.0" x2="230.8" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="230.8" y="444.7" text-anchor="middle" fill="#586074" font-size="10">2</text><line x1="267.2" y1="30.0" x2="267.2" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="267.2" y="444.7" text-anchor="middle" fill="#586074" font-size="10">3</text><line x1="303.5" y1="30.0" x2="303.5" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="303.5" y="444.7" text-anchor="middle" fill="#586074" font-size="10">4</text><line x1="339.8" y1="30.0" x2="339.8" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="339.8" y="444.7" text-anchor="middle" fill="#586074" font-size="10">5</text><line x1="376.2" y1="30.0" x2="376.2" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="376.2" y="444.7" text-anchor="middle" fill="#586074" font-size="10">6</text><line x1="121.83333333333333" y1="466.0" x2="376.1666666666667" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="470.0" text-anchor="end" fill="#586074" font-size="10">-1</text><line x1="121.83333333333333" y1="429.7" x2="376.1666666666667" y2="429.7" stroke="#1a2233" stroke-width="1.4"/><line x1="121.83333333333333" y1="393.3" x2="376.1666666666667" y2="393.3" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="397.3" text-anchor="end" fill="#586074" font-size="10">1</text><line x1="121.83333333333333" y1="357.0" x2="376.1666666666667" y2="357.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="361.0" text-anchor="end" fill="#586074" font-size="10">2</text><line x1="121.83333333333333" y1="320.7" x2="376.1666666666667" y2="320.7" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="324.7" text-anchor="end" fill="#586074" font-size="10">3</text><line x1="121.83333333333333" y1="284.3" x2="376.1666666666667" y2="284.3" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="288.3" text-anchor="end" fill="#586074" font-size="10">4</text><line x1="121.83333333333333" y1="248.0" x2="376.1666666666667" y2="248.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="252.0" text-anchor="end" fill="#586074" font-size="10">5</text><line x1="121.83333333333333" y1="211.7" x2="376.1666666666667" y2="211.7" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="215.7" text-anchor="end" fill="#586074" font-size="10">6</text><line x1="121.83333333333333" y1="175.3" x2="376.1666666666667" y2="175.3" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="179.3" text-anchor="end" fill="#586074" font-size="10">7</text><line x1="121.83333333333333" y1="139.0" x2="376.1666666666667" y2="139.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="143.0" text-anchor="end" fill="#586074" font-size="10">8</text><line x1="121.83333333333333" y1="102.7" x2="376.1666666666667" y2="102.7" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="106.7" text-anchor="end" fill="#586074" font-size="10">9</text><line x1="121.83333333333333" y1="66.3" x2="376.1666666666667" y2="66.3" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="70.3" text-anchor="end" fill="#586074" font-size="10">10</text><line x1="121.83333333333333" y1="30.0" x2="376.1666666666667" y2="30.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="34.0" text-anchor="end" fill="#586074" font-size="10">11</text><text x="372.1666666666667" y="421.7" text-anchor="end" fill="#1a2233" font-style="italic" stroke="#fff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">x</text><text x="166.2" y="42.0" fill="#1a2233" font-style="italic" stroke="#fff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">y</text><line x1="121.8" y1="466.0" x2="339.8" y2="30.0" stroke="#1f6fd6" stroke-width="2.6"/><path d="M 194.5 320.7 L 303.5 320.7 L 303.5 102.7" fill="none" stroke="#b5710a" stroke-width="2.2" stroke-dasharray="6 4"/><text x="199.5" y="336.7" fill="#b5710a" font-weight="700" stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">3 til højre</text><text x="310.5" y="215.7" fill="#b5710a" font-weight="700" stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">6 op</text><circle cx="194.5" cy="320.7" r="5" fill="#c23b4b" stroke="#fff" stroke-width="1.5"/><text x="205.5" y="310.7" fill="#c23b4b" font-weight="700" stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">A</text><circle cx="303.5" cy="102.7" r="5" fill="#c23b4b" stroke="#fff" stroke-width="1.5"/><text x="314.5" y="92.7" fill="#c23b4b" font-weight="700" stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">B</text><line x1="121.83333333333333" y1="492.0" x2="143.83333333333331" y2="492.0" stroke="#1f6fd6" stroke-width="3"/><text x="149.83333333333331" y="496.0" fill="#1a2233">f</text></g></svg><div class="figtekst">Sådan ser det ud. Trappetrinnet viser, hvor meget linjen stiger, når du går til højre. Her er der gået 3 til højre og 6 op.</div></div></section><section class="trin"><h2><span class="num">5</span>Aflæs b, og skriv din egen forskrift</h2><p><code class="inl">b</code> er dér, hvor linjen skærer <b>y-aksen</b>. Det kan du aflæse direkte i grafikvinduet — kig på, hvor linjen krydser den lodrette akse.</p><p>Nu har du både <code class="inl">a</code> og <code class="inl">b</code>. <b>Skriv selv forskriften</b>, og giv den et nyt navn, fx <code class="inl">g</code>. Skriv <code class="inl">g(x)=</code> foran — så bliver det en funktion, og så virker de næste kommandoer.</p><p><b>Sådan tjekker du dig selv:</b> hvis din forskrift er rigtig, lægger <code class="inl">g</code> sig præcis oven på <code class="inl">f</code>, og du kan ikke se to linjer. Kan du det, er der en fejl i a eller b.</p><table class="skriv"><tbody><tr><td class="kmd"><code>g(x)=2x+1</code></td><td class="sker">Din egen forskrift tegnes — den skal dække linjen f</td></tr></tbody></table></section><section class="trin"><h2><span class="num">6</span>Regn en værdi ud</h2><p>Skal du vide, hvad noget koster ved et bestemt x — 7 timer, 12 GB — så skriver du bare tallet i parentesen.</p><p>Det svarer til at sætte tallet ind i forskriften i hånden. Gør gerne begge dele: GeoGebra er god til at fange regnefejl.</p><table class="skriv"><tbody><tr><td class="kmd"><code>g(7)</code></td><td class="sker">Svaret står med det samme i algebravinduet</td></tr></tbody></table></section><section class="trin"><h2><span class="num">7</span>Find nulpunktet</h2><p>Nulpunktet er dér, hvor grafen rammer <b>x-aksen</b> — hvor y er nul. Det er fx dér, hvor telefonen er løbet tør for strøm.</p><p>Kommandoen hedder <b>Rod</b>. Ikke "Nulpunkt" — det findes ikke i GeoGebra, selv om det er det, vi kalder det i timen.</p><p><b>Den virker kun på en funktion.</b> Har du kun linjen <code class="inl">f</code> fra Linje-kommandoen, får du ingenting. Brug din egen <code class="inl">g</code> fra trin 5.</p><table class="skriv"><tbody><tr><td class="kmd"><code>Rod(g)</code></td><td class="sker">Punktet, hvor grafen krydser x-aksen</td></tr></tbody></table></section><section class="trin"><h2><span class="num">8</span>To linjer og skæringspunktet</h2><p>I opgave D er der to abonnementer. Skriv begge forskrifter som funktioner, og find så punktet, hvor de krydser hinanden.</p><p>Skæringspunktet er det sted, hvor de to koster <b>det samme</b>. Til venstre for punktet er den ene billigst, til højre den anden. Det er hele pointen i opgaven.</p><table class="skriv"><tbody><tr><td class="kmd"><code>g(x)=2x+1</code></td><td class="sker">Den første linje</td></tr><tr><td class="kmd"><code>h(x)=x+4</code></td><td class="sker">Den anden linje</td></tr><tr><td class="kmd"><code>Skæring(g,h)</code></td><td class="sker">Punktet, hvor de krydser, med begge koordinater</td></tr></tbody></table><div class="figur"><svg viewBox="0 0 470 500" role="img" aria-label="Koordinatsystem med 2 rette linjer."><g font-family="Consolas, monospace" font-size="11"><rect x="121.8" y="30.0" width="254.3" height="436.0" fill="#fff"/><line x1="121.8" y1="30.0" x2="121.8" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="121.8" y="444.7" text-anchor="middle" fill="#586074" font-size="10">-1</text><line x1="158.2" y1="30.0" x2="158.2" y2="466.0" stroke="#1a2233" stroke-width="1.4"/><line x1="194.5" y1="30.0" x2="194.5" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="194.5" y="444.7" text-anchor="middle" fill="#586074" font-size="10">1</text><line x1="230.8" y1="30.0" x2="230.8" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="230.8" y="444.7" text-anchor="middle" fill="#586074" font-size="10">2</text><line x1="267.2" y1="30.0" x2="267.2" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="267.2" y="444.7" text-anchor="middle" fill="#586074" font-size="10">3</text><line x1="303.5" y1="30.0" x2="303.5" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="303.5" y="444.7" text-anchor="middle" fill="#586074" font-size="10">4</text><line x1="339.8" y1="30.0" x2="339.8" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="339.8" y="444.7" text-anchor="middle" fill="#586074" font-size="10">5</text><line x1="376.2" y1="30.0" x2="376.2" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="376.2" y="444.7" text-anchor="middle" fill="#586074" font-size="10">6</text><line x1="121.83333333333333" y1="466.0" x2="376.1666666666667" y2="466.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="470.0" text-anchor="end" fill="#586074" font-size="10">-1</text><line x1="121.83333333333333" y1="429.7" x2="376.1666666666667" y2="429.7" stroke="#1a2233" stroke-width="1.4"/><line x1="121.83333333333333" y1="393.3" x2="376.1666666666667" y2="393.3" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="397.3" text-anchor="end" fill="#586074" font-size="10">1</text><line x1="121.83333333333333" y1="357.0" x2="376.1666666666667" y2="357.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="361.0" text-anchor="end" fill="#586074" font-size="10">2</text><line x1="121.83333333333333" y1="320.7" x2="376.1666666666667" y2="320.7" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="324.7" text-anchor="end" fill="#586074" font-size="10">3</text><line x1="121.83333333333333" y1="284.3" x2="376.1666666666667" y2="284.3" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="288.3" text-anchor="end" fill="#586074" font-size="10">4</text><line x1="121.83333333333333" y1="248.0" x2="376.1666666666667" y2="248.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="252.0" text-anchor="end" fill="#586074" font-size="10">5</text><line x1="121.83333333333333" y1="211.7" x2="376.1666666666667" y2="211.7" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="215.7" text-anchor="end" fill="#586074" font-size="10">6</text><line x1="121.83333333333333" y1="175.3" x2="376.1666666666667" y2="175.3" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="179.3" text-anchor="end" fill="#586074" font-size="10">7</text><line x1="121.83333333333333" y1="139.0" x2="376.1666666666667" y2="139.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="143.0" text-anchor="end" fill="#586074" font-size="10">8</text><line x1="121.83333333333333" y1="102.7" x2="376.1666666666667" y2="102.7" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="106.7" text-anchor="end" fill="#586074" font-size="10">9</text><line x1="121.83333333333333" y1="66.3" x2="376.1666666666667" y2="66.3" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="70.3" text-anchor="end" fill="#586074" font-size="10">10</text><line x1="121.83333333333333" y1="30.0" x2="376.1666666666667" y2="30.0" stroke="#c9d2e0" stroke-width="0.6"/><text x="151.2" y="34.0" text-anchor="end" fill="#586074" font-size="10">11</text><text x="372.1666666666667" y="421.7" text-anchor="end" fill="#1a2233" font-style="italic" stroke="#fff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">x</text><text x="166.2" y="42.0" fill="#1a2233" font-style="italic" stroke="#fff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">y</text><line x1="121.8" y1="466.0" x2="339.8" y2="30.0" stroke="#1f6fd6" stroke-width="2.6"/><line x1="121.8" y1="320.7" x2="376.2" y2="66.3" stroke="#1a8f5e" stroke-width="2.6"/><circle cx="267.2" cy="175.3" r="5" fill="#c23b4b" stroke="#fff" stroke-width="1.5"/><text x="278.2" y="165.3" fill="#c23b4b" font-weight="700" stroke="#fff" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">S</text><line x1="121.83333333333333" y1="492.0" x2="143.83333333333331" y2="492.0" stroke="#1f6fd6" stroke-width="3"/><text x="149.83333333333331" y="496.0" fill="#1a2233">f</text><line x1="162.83333333333331" y1="492.0" x2="184.83333333333331" y2="492.0" stroke="#1a8f5e" stroke-width="3"/><text x="190.83333333333331" y="496.0" fill="#1a2233">g</text></g></svg><div class="figtekst">Skæringspunktet S er dér, hvor de to linjer møder hinanden. Koordinaterne fortæller både ved hvilket x og til hvilken pris.</div></div></section><section class="trin"><h2><span class="num">9</span>Få billedet ind i Word</h2><p>Opgaven siger, at udregningerne skal laves i Word, og at du skal vise din metode. Billedet fra GeoGebra <b>er</b> en del af metoden.</p><p>Klik på <b>menuen</b> øverst til højre (de tre streger) → <b>Fil</b> → <b>Eksporter billede</b>. Så kan du hente billedet og sætte det ind i Word.</p><p><b>Skriv altid under billedet, hvad x og y står for.</b> Et koordinatsystem uden enheder siger ingenting — er det timer og kroner, eller GB og kroner?</p></section></div>
+<h2 class="sec" id="opgaver">Sådan bruger du trinnene i opgaverne</h2>
+<div class="opg"><h3>Opgave C · kajakudlejningen og batteriet</h3><p>De to kvitteringer er dine to punkter. Sæt dem ind (trin 2), tegn linjen (trin 3) og find hældningen (trin 4).</p><p>Aflæs b på y-aksen, skriv forskriften, og tjek at den dækker linjen (trin 5).</p><p>Hvad 7 timer koster, finder du med trin 6.</p><p>I batteridelen skal du finde nulpunktet — det er trin 7. Læg mærke til, at a bliver <b>negativ</b> her. Trappetrinnet peger nedad.</p></div><div class="opg"><h3>Opgave D · de to abonnementer</h3><p>Her er linjerne tegnet i forvejen. Du skal aflæse a og b og vise ved regning, at det passer.</p><p>Skriv de to forskrifter, du har aflæst, ind som funktioner (trin 8). Lægger de sig oven i de to tegnede linjer, har du aflæst rigtigt.</p><p>Find skæringspunktet med trin 8. Sammenlign med det, du aflæste på figuren — og med det, du får ved at sætte de to forskrifter lig hinanden i hånden.</p><p>Prisen ved 12 GB hos hver af dem er to gange trin 6.</p></div>
+<h2 class="sec" id="falder">Fem ting, der driller</h2>
+<table class="falder"><tbody><tr><th>Komma og punktum</th><td>Koordinater skilles med komma: <code class="inl">(2,200)</code>. Decimaltal skrives med punktum: <code class="inl">2.5</code>.</td></tr><tr><th>Linjen er ikke en funktion</th><td><code class="inl">Linje(A,B)</code> laver en linje, ikke en funktion. <code class="inl">Rod</code> og <code class="inl">g(7)</code> virker kun på noget, du har skrevet som <code class="inl">g(x)=</code>.</td></tr><tr><th>Ligningen ser forkert ud</th><td>GeoGebra skriver gerne <code class="inl">−2x + y = 1</code> i stedet for <code class="inl">y = 2x + 1</code>. Det er den samme linje.</td></tr><tr><th>Du kan ikke se noget</th><td>Punkterne i opgaverne har store y-værdier — 200, 350. Rul ud med musehjulet, eller brug forstørrelsesglasset nede til højre, indtil punkterne er inde i billedet.</td></tr><tr><th>Det hedder Rod</th><td>Ikke Nulpunkt. Begynd at skrive <b>Rod</b>, så foreslår GeoGebra resten selv.</td></tr></tbody></table>
+<button class="printbtn" onclick="window.print()">Print vejledningen</button></main><footer>Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>
