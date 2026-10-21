@@ -72,13 +72,10 @@ DELE = [
   ('linjer', 'Jeres mål', 5)),
 
  ('Standen', [
-   'Tegn bordet set oppefra, før I bygger noget. Hvor står den besøgende? '
-   'Hvor står I? Hvad er det første, man ser?',
-   'En stand, der virker, har som regel en <b>rute</b>: man kommer ind et '
-   'sted, laver noget i midten og går derfra med noget. Hvis alt ligger i en '
-   'bunke, ved den besøgende ikke, hvor han skal begynde.',
+   'Tegn bordet eller standen. Hvor står den besøgende? Hvor står I? Hvad '
+   'er det første, man ser?',
    'Husk det kedelige: strøm, vand, spild, skraldespand. Og husk, at nogen '
-   'skal kunne se standen på afstand — hvad er jeres skilt?'],
+   'skal kunne se hvad standen fortæller — måske skal der være et skilt?'],
   FG.standplan(ZONER),
   'Formen på en stand: zoner i en rækkefølge, og én fra gruppen ved hver. '
   'Hvad zonerne hedder, og hvad der sker i dem, bestemmer I selv — print '
