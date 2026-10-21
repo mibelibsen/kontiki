@@ -105,13 +105,7 @@ DELE = [
    ['Opgave', 'Hvem', 'Hvornår', 'Færdig'], 11)),
 
  ('Roller og ansvar', [
-   'Giv hinanden roller, der gælder <b>hele dagen</b>. Rollerne byttes ikke '
-   'undervejs — det er dér, standene går i stå.',
-   'Find selv ud af, hvilke roller netop jeres stand har brug for. De '
-   'afhænger af, hvad der sker på den: en stand, hvor de besøgende selv laver '
-   'noget, har brug for andre roller end en, hvor de ser på.',
-   'Er I tre, får nogen to roller. Er I fem, kan to deles om den samme, så I '
-   'kan skiftes til at holde pause — der kommer besøgende i mange timer.',
+   'Giv jer selv og hinanden ansvar.',
    'Uanset rollerne: <b>alle</b> i gruppen skal kunne svare på det, standen '
    'handler om. En besøgende spørger den, der står nærmest — ikke den, der '
    'kan svaret.'],
