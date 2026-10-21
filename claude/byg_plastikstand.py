@@ -47,8 +47,8 @@ UGE_FARVER = {'plan': FG.BLA, 'byg': FG.GRO, 'proeve': FG.ORA,
 RAMMEN = [
     ('Tre til fem i gruppen', 'Alle skal have en rolle, der er noget værd '
      'hele tiden.'),
-    ('Ét bord', 'Alt skal kunne stå på det, og det skal kunne ryddes på fem '
-     'minutter.'),
+    ('Ét bord eller et tilsvarende stykke plads', 'Alt skal kunne stå på '
+     'det, og det skal kunne ryddes på fem minutter.'),
     ('7–10 minutter pr. besøgende', 'Kort nok til, at der kan komme mange '
      'igennem. Langt nok til, at de laver noget selv.'),
     ('Den skal kunne køre hele dagen', 'Alt, hvad I bruger op, skal kunne '
