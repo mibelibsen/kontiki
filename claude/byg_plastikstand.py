@@ -32,7 +32,7 @@ ZONER = [('', '', '') for _ in range(4)]
 MAAL_TRIN = [
     ('Før', 'Den besøgende ved ikke, at …', 'foer'),
     ('På standen', 'Den besøgende prøver selv at …', 'under'),
-    ('Efter', 'Den besøgende kan selv …', 'efter'),
+    ('Efter', 'Den besøgende ved, at …', 'efter'),
 ]
 
 # Standen holder aabent baade fredag og loerdag, saa ugen gaar til loerdag.
@@ -63,11 +63,8 @@ RAMMEN = [
 DELE = [
  ('Målet', [
    'Et mål er ikke, hvad <b>I</b> vil lave. Det er, hvad den <b>besøgende</b> '
-   'kan bagefter. Prøv at skrive sætningen færdig: <i>"Efter vores stand kan '
-   'den besøgende …"</i>',
-   'Hvis I ikke kan skrive den sætning, ved I ikke, hvad standen går ud på — '
-   'og så kan de besøgende heller ikke finde ud af det.',
-   '<b>Højst to mål.</b> Ét er bedre. Syv minutter er ikke lang tid.'],
+   'ved bagefter. Prøv at skrive sætningen færdig: <i>"Efter vores stand ved '
+   'den besøgende …"</i>'],
   FG.procesdiagram(MAAL_TRIN, W=620,
                    farver={'foer': FG.MUT, 'under': FG.BLA, 'efter': FG.GRO}),
   'Målet måles på forskellen mellem første og sidste kasse — ikke på, hvor '
@@ -144,7 +141,7 @@ def tomt_skema(kolonner, raekker):
 
 
 TJEK = [
- 'Vi kan sige vores mål højt i én sætning, der begynder med "Efter vores stand kan den besøgende …".',
+ 'Vi kan sige vores mål højt i én sætning, der begynder med "Efter vores stand ved den besøgende …".',
  'Standen er prøvet på en, der ikke vidste noget i forvejen.',
  'Vi har taget tid på den — den holder sig omkring de 15 minutter.',
  'Alt på materialelisten er her, og der er nok til hele dagen.',
