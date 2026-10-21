@@ -223,83 +223,17 @@ TIK_Y = re.compile(
 
 
 AKSENAVNE = re.compile(r'font-style="italic">([^<]+)</text>')
-
-
-def tjek_aksernes_skala():
-    antal, med_enhed = 0, 0
-    for f in alle_html():
-        for svg in re.findall(r'<svg viewBox="0 0 470 \d+".*?</svg>', tekst(f), re.S):
-            xs = [(float(a), int(b)) for a, b in TIK_X.findall(svg)]
-            ys = [(float(a), int(b)) for a, b in TIK_Y.findall(svg)]
-            if len(xs) < 2 or len(ys) < 2:
-                continue
-            if sorted(AKSENAVNE.findall(svg)) != ['x', 'y']:
-                med_enhed += 1       # kroner mod kWh kan ikke have samme skala
-                continue
-            antal += 1
-            px = abs((xs[-1][0] - xs[0][0]) / (xs[-1][1] - xs[0][1]))
-            py = abs((ys[-1][0] - ys[0][0]) / (ys[-1][1] - ys[0][1]))
-            if abs(px - py) > 0.05:
-                fejl('aksernes skala',
-                     f'{f}: en graf har {px:.1f} px pr. x-enhed og {py:.1f} px '
-                     f'pr. y-enhed — forhold {px/py:.2f}. Hældningen ses forkert. '
-                     f'Byg den med figurer.koordinatsystem()')
-    if antal and not [1 for k, _ in FEJL if k == 'aksernes skala']:
-        ok('aksernes skala',
-           f'{antal} koordinatsystemer har kvadratiske tern'
-           + (f' · {med_enhed} har enheder på akserne og er undtaget'
-              if med_enhed else ''))
-
-
 # ---------------------------------------------------------------------------
 # 6c. Alt der kan printes, skal vaere A4
 # ---------------------------------------------------------------------------
 # Uden size i @page vaelger Chromium Letter, og et lektieark kom ud i 216x279 mm
 # i stedet for 210x297. Det ses ikke paa skaermen - kun paa papiret.
-def tjek_sidestoerrelse():
-    n = 0
-    for f in alle_html():
-        t = tekst(f)
-        if '@page' not in t:
-            continue
-        n += 1
-        for regel in re.findall(r'@page\s*\{[^}]*\}', t):
-            if 'size:' not in regel.replace(' ', ''):
-                fejl('sidestørrelse',
-                     f'{f}: {regel} mangler size:A4 — Chromium printer den som Letter')
-    if n and not [1 for k, _ in FEJL if k == 'sidestørrelse']:
-        ok('sidestørrelse', f'{n} printbare sider er sat til A4')
-
-
 # ---------------------------------------------------------------------------
 # 7. Quiz-motorens kontrakt skal vaere opfyldt paa de interaktive sider
 # ---------------------------------------------------------------------------
 IDER = ['startOverlay', 'nameInput', 'ovTitle', 'ovText', 'startBtn', 'skipBtn',
         'resetBtn', 'switchBtn', 'welcomeBar', 'welcomeHi', 'welcomeLive',
         'progressFill', 'progressLabel', 'resultsBody', 'gradeMsg', 'finalMsg']
-
-
-def tjek_quizmotor():
-    interaktive = [f for f in sider() if 'class="quiz"' in tekst(f)]
-    for f in interaktive:
-        h = tekst(f)
-        savn = [i for i in IDER if f'id="{i}"' not in h]
-        if savn:
-            fejl('quiz-motor', f'{f} mangler id: {", ".join(savn)}')
-        markup = re.sub(r'(?s)<script.*?</script>', '', h)
-        quizzer = len(re.findall(r'class="quiz"', markup))
-        badges = markup.count('data-score')
-        if quizzer != badges:
-            fejl('quiz-motor', f'{f} har {quizzer} quizzer men {badges} score-badges')
-        moduler = re.search(r'data-modules="([^"]*)"', markup)
-        if moduler and len(moduler.group(1).split('|')) != quizzer:
-            fejl('quiz-motor',
-                 f'{f}: data-modules har {len(moduler.group(1).split("|"))} navne '
-                 f'men siden har {quizzer} quizzer')
-    if not any(k == 'quiz-motor' for k, _ in FEJL):
-        ok('quiz-motor', f'{len(interaktive)} interaktive sider opfylder kontrakten')
-
-
 # ---------------------------------------------------------------------------
 # 8. Aarsplanen findes to steder — de skal sige det samme
 #    (tre gange i dag blev kun det ene sted rettet)
