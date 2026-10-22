@@ -133,25 +133,26 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `manipulation.html`, `funktioner-og-ligninger.html` og
   `test-statistik.html` — og de er rettet alle fire. Ingen af dem bygges af
   et script, så en rettelse i motoren skal laves fire steder.
-- **Samtaleark til skole-hjem-samtaler (21.10.).** `claude/byg_samtaleark.py`
-  bygger `vejledning/skolehjemsamtale.pdf` — to A4-sider pr. elev til en
-  samtale på en halv time, fagligt fokus. Side 1: tidsplan som figur
-  (4 + 8 + 12 + 6 = 30 min), tre punkter om forberedelse og et skema med
-  alle otte fag — standpunkt, mål, fremskridt, støtte/ændring. Side 2: to
-  tomme blokke til de fag, der skal i dybden, hvor *hvad skal der til* er
-  delt i **I skolen · Hjemme · Ændret adfærd** i én række, plus aftaler og
-  underskrifter.
-  **Otte fag på tredive minutter er under fire minutter hvert**, og så når
-  man ingenting i nogen af dem. Derfor er standpunkt og fremskridt noget,
-  man udfylder *før* samtalen, og kun to-tre fag får tid. Det står som
-  punkt 1 på arket, ikke som en antagelse i et script.
-  Ny funktion i `figurer.py`: **`tidsplan`** — minutblokke i rigtige
-  proportioner med et samlet ur under.
+- **Samtaleark til skole-hjem-samtaler (21.10., omskrevet 22.10.).**
+  `claude/byg_samtaleark.py` bygger `vejledning/skolehjemsamtale.pdf` — to
+  A4-sider pr. elev til en samtale på en halv time, fagligt fokus. Side 1:
+  tidsbåndet som figur, felter til elev og dato, og et skema med alle otte
+  fag — standpunkt og støtte/ændring. Side 2: to tomme **fokusfag**-blokke
+  med standpunkt (faglige områder), mål, og *hvad skal der til* delt i
+  **I skolen · Hjemme · Barn**, plus aftaler.
+  **Tidsbåndet har ingen tal, og det er med vilje.** Den blå blok "Eleven
+  selv" er præcis lige så bred som de tre andre tilsammen og ligger
+  forrest. Det står ingen steder på arket, at eleven skal have halvdelen af
+  tiden — figuren viser det, og det er nok til at skubbe samtalen den vej.
+  Et minuttal på en farve ville gøre båndet til et skema, man skal
+  overholde. `figurer.py`-funktionen `tidsplan` har derfor `tal=False`.
+  Ingen numre ud for fagene i fokusblokkene: de to fag vælges under
+  samtalen, og et nummer ligner en rangordning.
+  **Skrivelinjerne tegnes én ad gangen**, ikke som et gentaget
+  baggrundsmønster. Mønsteret blev klippet af feltets højde, så der stod
+  tre linjer i den ene blok og to i den anden — præcis samme felt.
   **PDF'en er ikke i git** (`.gitignore`). Den er en bygget fil, og et
   udfyldt ark er vurderinger af et navngivet barn — scriptet er kilden.
-  Sidetallet er **målt i browseren**, ikke gættet: første udkast fyldte tre
-  sider, og `maal2.mjs` sagde *side 2 er 2,8 mm for høj*, hvorefter
-  marginerne blev trimmet præcis så meget.
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar

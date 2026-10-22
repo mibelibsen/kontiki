@@ -2283,45 +2283,58 @@ def histogram(graenser, antal, xnavn='', ynavn='', titel='', W=540, H=270):
     return ''.join(s)
 
 
-def tidsplan(blokke, W=620, farver=None):
+def tidsplan(blokke, W=620, farver=None, tal=True):
     """En samtale eller en lektion delt op i minutter.
 
     blokke  [(hvad der sker, minutter)]
+    tal     skriv minuttallene; uden dem er baandet kun proportioner
+
     Blokkene faar bredde efter deres minutter - ikke lige store - for det er
     hele pointen: man kan se, hvad der fylder, og hvad der ikke goer. Uret
     under baandet loeber op, saa man kan se, hvornaar man er bagud.
+
+    Med tal=False staar der ingen minutter nogen steder. Bredden er stadig
+    beregnet af minutterne, saa figuren viser forholdet uden at saette et tal
+    paa, hvor laenge man er forpligtet til at vente.
     """
     F = farver or [BLA, GRO, ORA, ROD, MUT]
     i_alt = sum(m for _, m in blokke)
     assert i_alt > 0, 'en tidsplan uden minutter'
     M, GAB, BH, TOP = 10, 3, 38, 16
+    if not tal:
+        BH, TOP = 30, 14
     pb = W - 2 * M - (len(blokke) - 1) * GAB
-    H = TOP + BH + 30
+    H = TOP + BH + (30 if tal else 4)
     s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
          f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tidsplan '
          f'paa {i_alt} minutter, delt i {len(blokke)} dele." {FONT}>']
-    s.append(f'<text x="{M}" y="10" fill="{MUT}" font-size="9.5" '
-             f'letter-spacing="1">{i_alt} MINUTTER</text>')
+    if tal:
+        s.append(f'<text x="{M}" y="10" fill="{MUT}" font-size="9.5" '
+                 f'letter-spacing="1">{i_alt} MINUTTER</text>')
     x, gaaet = M, 0
     for i, (navn, min_) in enumerate(blokke):
         b = pb * min_ / i_alt
         s.append(f'<rect x="{x:.1f}" y="{TOP}" width="{b:.1f}" height="{BH}" '
                  f'rx="5" fill="{F[i % len(F)]}"/>')
         st = _skrift(navn, b, loft=11, gulv=6.5, luft=8)
-        s.append(f'<text x="{x + b / 2:.1f}" y="{TOP + 16:.1f}" '
+        s.append(f'<text x="{x + b / 2:.1f}" y="{TOP + (16 if tal else 19):.1f}" '
                  f'text-anchor="middle" fill="#fff" font-size="{st:.1f}" '
                  f'font-weight="700">{navn}</text>')
-        s.append(f'<text x="{x + b / 2:.1f}" y="{TOP + 30:.1f}" '
-                 f'text-anchor="middle" fill="#fff" fill-opacity="0.9" '
-                 f'font-size="9.5">{_dk(min_)} min</text>')
+        if tal:
+            s.append(f'<text x="{x + b / 2:.1f}" y="{TOP + 30:.1f}" '
+                     f'text-anchor="middle" fill="#fff" fill-opacity="0.9" '
+                     f'font-size="9.5">{_dk(min_)} min</text>')
         gaaet += min_
-        if i < len(blokke) - 1:
+        if tal and i < len(blokke) - 1:
             s.append(f'<text x="{x + b + GAB / 2:.1f}" y="{TOP + BH + 13:.1f}" '
                      f'text-anchor="middle" fill="{MUT}" font-size="9">'
                      f'{_dk(gaaet)}</text>')
         x += b + GAB
-    s.append(f'<text x="{M}" y="{TOP + BH + 13}" fill="{MUT}" font-size="9">0</text>')
-    s.append(f'<text x="{W - M}" y="{TOP + BH + 13}" text-anchor="end" '
-             f'fill="{INK}" font-size="9.5" font-weight="700">{_dk(i_alt)}</text>')
+    if tal:
+        s.append(f'<text x="{M}" y="{TOP + BH + 13}" fill="{MUT}" '
+                 f'font-size="9">0</text>')
+        s.append(f'<text x="{W - M}" y="{TOP + BH + 13}" text-anchor="end" '
+                 f'fill="{INK}" font-size="9.5" font-weight="700">'
+                 f'{_dk(i_alt)}</text>')
     s.append('</svg>')
     return ''.join(s)
