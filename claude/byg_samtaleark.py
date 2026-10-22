@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Bygger vejledning/skolehjemsamtale.pdf — skabelon til en samtale paa 30 min.
 
-Ét ark pr. elev. Fokus er fagligt: hvor staar hun, hvad er maalet, og hvad
+Ét ark pr. barn. Fokus er fagligt: hvor staar hun, hvad er maalet, og hvad
 skal der til - i skolen, hjemme og hos barnet selv.
 
 Arket ligger i vejledning/, som er udelukket fra deploy. Det bliver udfyldt
@@ -24,7 +24,7 @@ UD_PDF = os.path.join(ROD, 'vejledning', 'skolehjemsamtale.pdf')
 
 MINUTTER = 30
 
-# Eleven faar halvdelen af baandet. De tre andre dele deler den anden
+# Barnet faar halvdelen af baandet. De tre andre dele deler den anden
 # halvdel. Det staar ingen steder paa arket - baandet er en tegning, ikke en
 # instruks - men den blaa blok er lige saa bred som de tre andre tilsammen,
 # og den ligger forrest. Den, der ser arket, kan se, hvem der skal tale.
@@ -32,20 +32,20 @@ MINUTTER = 30
 # Tallene staar ikke paa figuren (tal=False). Et minuttal paa en farve goer
 # baandet til et skema, man skal overholde; uden tal er det et forhold.
 TIDSPLAN = [
-    ('Eleven selv', 15),
+    ('Barnet selv', 15),
     ('Overblik', 4),
     ('Fokusfag', 7),
     ('Aftaler', 4),
 ]
 assert sum(m for _, m in TIDSPLAN) == MINUTTER
-_eleven = TIDSPLAN[0][1]
-assert _eleven * 2 == MINUTTER, 'eleven skal have praecis halvdelen'
-assert sum(m for _, m in TIDSPLAN[1:]) == _eleven, 'de tre deler den anden halvdel'
+_barnet = TIDSPLAN[0][1]
+assert _barnet * 2 == MINUTTER, 'barnet skal have praecis halvdelen'
+assert sum(m for _, m in TIDSPLAN[1:]) == _barnet, 'de tre deler den anden halvdel'
 
 FAG = ['Dansk', 'Matematik', 'Fysik/kemi', 'Samfundsfag',
        'Historie', 'Engelsk', 'Tysk', 'Idræt']
 
-OVERSIGT_KOL = ['Fag', 'Standpunkt', 'Støtte / ændring']
+OVERSIGT_KOL = ['Fag', 'Standpunkt', 'Barnets vurdering']
 
 # Stoette i skolen, hjemme og hos barnet selv er det samme spoergsmaal stillet
 # tre steder: hvad skal der til. De staar derfor i én raekke med tre kolonner -
@@ -151,11 +151,11 @@ color:#586074;font-weight:700}
 @page{size:A4;margin:12mm}
 '''
 
-FELTER = ['Elev', 'Klasse', 'Dato', 'Kl.', 'Til stede']
+FELTER = ['Barn', 'Klasse', 'Dato', 'Kl.', 'Til stede']
 
 KROP = f'''
 <div class="topline"><span>Skole-hjem-samtale · fagligt fokus</span>
-<span>{MINUTTER} minutter · ét ark pr. elev</span></div>
+<span>{MINUTTER} minutter · ét ark pr. barn</span></div>
 <h1>Samtaleark</h1>
 <div class="felter">
 {''.join(f'<div><span class="mrk">{f}</span><span class="udfyld"></span></div>'
@@ -180,4 +180,4 @@ subprocess.run(['node', os.path.join(ROD, 'claude', 'html_til_pdf.mjs'),
                 UD_HTML, UD_PDF], check=True)
 os.remove(UD_HTML)
 print(f'skrevet:  {UD_PDF}')
-print(f'{len(FAG)} fag · {MINUTTER} min · eleven selv {_eleven} af {MINUTTER}')
+print(f'{len(FAG)} fag · {MINUTTER} min · barnet selv {_barnet} af {MINUTTER}')

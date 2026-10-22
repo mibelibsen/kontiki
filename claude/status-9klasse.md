@@ -135,14 +135,14 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   et script, så en rettelse i motoren skal laves fire steder.
 - **Samtaleark til skole-hjem-samtaler (21.10., omskrevet 22.10.).**
   `claude/byg_samtaleark.py` bygger `vejledning/skolehjemsamtale.pdf` — to
-  A4-sider pr. elev til en samtale på en halv time, fagligt fokus. Side 1:
-  tidsbåndet som figur, felter til elev og dato, og et skema med alle otte
-  fag — standpunkt og støtte/ændring. Side 2: to tomme **fokusfag**-blokke
+  A4-sider pr. barn til en samtale på en halv time, fagligt fokus. Side 1:
+  tidsbåndet som figur, felter til barn og dato, og et skema med alle otte
+  fag — standpunkt og barnets vurdering. Side 2: to tomme **fokusfag**-blokke
   med standpunkt (faglige områder), mål, og *hvad skal der til* delt i
   **I skolen · Hjemme · Barn**, plus aftaler.
-  **Tidsbåndet har ingen tal, og det er med vilje.** Den blå blok "Eleven
+  **Tidsbåndet har ingen tal, og det er med vilje.** Den blå blok "Barnet
   selv" er præcis lige så bred som de tre andre tilsammen og ligger
-  forrest. Det står ingen steder på arket, at eleven skal have halvdelen af
+  forrest. Det står ingen steder på arket, at barnet skal have halvdelen af
   tiden — figuren viser det, og det er nok til at skubbe samtalen den vej.
   Et minuttal på en farve ville gøre båndet til et skema, man skal
   overholde. `figurer.py`-funktionen `tidsplan` har derfor `tal=False`.
