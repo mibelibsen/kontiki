@@ -136,8 +136,10 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 - **Samtaleark til skole-hjem-samtaler (21.10., omskrevet 22.10.).**
   `claude/byg_samtaleark.py` bygger `vejledning/skolehjemsamtale.pdf` — to
   A4-sider pr. barn til en samtale på en halv time, fagligt fokus. Side 1:
-  tidsbåndet som figur, felter til barn og dato, og et skema med alle otte
-  fag — standpunkt og barnets vurdering. Side 2: to tomme **fokusfag**-blokke
+  tidsbåndet som figur, felter til barn og dato, og et skema med fagene —
+  standpunkt og barnets vurdering. **Kun fire fag (26.10.):** dansk,
+  matematik, samfundsfag og idræt. Overskriften tæller selv, så der
+  ikke kommer til at stå "otte" dagen efter, listen laves om. Side 2: to tomme **fokusfag**-blokke
   med standpunkt (faglige områder), mål, og *hvad skal der til* delt i
   **I skolen · Hjemme · Barn**, plus aftaler.
   **Tidsbåndet har ingen tal, og det er med vilje.** Den blå blok "Barnet

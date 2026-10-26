@@ -42,8 +42,14 @@ _barnet = TIDSPLAN[0][1]
 assert _barnet * 2 == MINUTTER, 'barnet skal have praecis halvdelen'
 assert sum(m for _, m in TIDSPLAN[1:]) == _barnet, 'de tre deler den anden halvdel'
 
-FAG = ['Dansk', 'Matematik', 'Fysik/kemi', 'Samfundsfag',
-       'Historie', 'Engelsk', 'Tysk', 'Idræt']
+FAG = ['Dansk', 'Matematik', 'Samfundsfag', 'Idræt']
+
+# Overskriften over skemaet taeller fagene selv. Stod tallet skrevet i
+# overskriften, ville den sige "otte", dagen efter listen blev lavet om.
+TAL = {1: 'ét', 2: 'to', 3: 'tre', 4: 'fire', 5: 'fem', 6: 'seks',
+       7: 'syv', 8: 'otte', 9: 'ni', 10: 'ti'}
+assert len(FAG) in TAL, 'skriv flere talord, hvis der skal være flere fag'
+OVERSKRIFT = f'Alle {TAL[len(FAG)]} fag'
 
 OVERSIGT_KOL = ['Fag', 'Standpunkt', 'Barnets vurdering']
 
@@ -55,6 +61,11 @@ DYBDE = [
     ('Mål', 'Hvad er det næste skridt', 2, None),
     ('Hvad skal der til?', '', 4, ('I skolen', 'Hjemme', 'Barn')),
 ]
+
+# Raekkehoejden i oversigten er sat, saa de faa fag fylder side 1 ud.
+# 192 mm er den plads, der er tilbage under overskriften paa en A4 med
+# 12 mm margen, naar hoved, felter, baand og skemaets hovedraekke er taget.
+RAEKKE = f'{192 / len(FAG):.0f}mm'
 
 AFTALER_KOL = ['Aftale', 'Hvem gør det', 'Hvornår']
 AFTALER_RAEKKER = 3
@@ -162,8 +173,8 @@ KROP = f'''
          for f in FELTER)}
 </div>
 <div class="figur">{FG.tidsplan(TIDSPLAN, W=700, tal=False)}</div>
-<h2>Alle otte fag</h2>
-{skema(OVERSIGT_KOL, FAG, hoejde='24mm', bredder=[17, 45, 38])}
+<h2>{OVERSKRIFT}</h2>
+{skema(OVERSIGT_KOL, FAG, hoejde=RAEKKE, bredder=[17, 45, 38])}
 <div class="side2"></div>
 <h2>Fokusfag</h2>
 {dybde_html}
