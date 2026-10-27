@@ -153,6 +153,16 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   **Skrivelinjerne tegnes én ad gangen**, ikke som et gentaget
   baggrundsmønster. Mønsteret blev klippet af feltets højde, så der stod
   tre linjer i den ene blok og to i den anden — præcis samme felt.
+  **Udfyldelig PDF (27.10.).** De 34 skrivepladser er rigtige
+  formularfelter, saa barnet selv kan skrive i kolonnen *Barnets
+  vurdering*. Layoutet er uændret — felterne ligger oven på de streger,
+  der var der i forvejen. Målene gættes ikke: hvert felt får to usynlige
+  markører i hjørnerne, PDF'en bygges, og `pdftotext -bbox` siger
+  bagefter, hvor de landede. `claude/pdf_felter.py` lægger dem ind med
+  pypdf, som kun findes i python3.13 her.
+  **Første forsøg lavede en helt ny side 1 til barnet** med nye
+  spørgsmål. Det var for meget: brugeren ville have arket, som det var,
+  bare udfyldeligt. Lav ikke side 1 om igen.
   **PDF'en er ikke i git** (`.gitignore`). Den er en bygget fil, og et
   udfyldt ark er vurderinger af et navngivet barn — scriptet er kilden.
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
