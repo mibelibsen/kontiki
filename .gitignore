@@ -17,3 +17,6 @@ vejledning/skolehjemsamtale.pdf
 
 # Gruppelisten til fredag i uge 44 bygges af claude/byg_grupper.py.
 vejledning/grupper-fredag.pdf
+
+# Word-udgaven af gruppelisten bygges af claude/byg_grupper_word.py.
+vejledning/grupper-fredag.docx

@@ -79,11 +79,15 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        f'<span>Tallet til højre er, hvor mange I er i gruppen.</span>'
        '</footer></body></html>')
 
-os.makedirs(os.path.dirname(UD_HTML), exist_ok=True)
-open(UD_HTML, 'w', encoding='utf-8').write(DOK)
-subprocess.run(['node', os.path.join(ROD, 'claude', 'html_til_pdf.mjs'),
-                UD_HTML, UD_PDF], check=True, stdout=subprocess.DEVNULL)
-os.remove(UD_HTML)
-print(f'skrevet:  {UD_PDF}')
-print(f'{len(GRUPPER)} grupper · {I_ALT} unger · '
-      f'{min(len(g) for g in GRUPPER)}–{max(len(g) for g in GRUPPER)} pr. gruppe')
+# Guard, saa claude/byg_grupper_word.py kan hente navnelisten herfra uden
+# at bygge PDF'en med. Listen staar ét sted; de to filer kan ikke drive fra
+# hinanden.
+if __name__ == '__main__':
+    os.makedirs(os.path.dirname(UD_HTML), exist_ok=True)
+    open(UD_HTML, 'w', encoding='utf-8').write(DOK)
+    subprocess.run(['node', os.path.join(ROD, 'claude', 'html_til_pdf.mjs'),
+                    UD_HTML, UD_PDF], check=True, stdout=subprocess.DEVNULL)
+    os.remove(UD_HTML)
+    print(f'skrevet:  {UD_PDF}')
+    print(f'{len(GRUPPER)} grupper · {I_ALT} unger · '
+          f'{min(len(g) for g in GRUPPER)}–{max(len(g) for g in GRUPPER)} pr. gruppe')
