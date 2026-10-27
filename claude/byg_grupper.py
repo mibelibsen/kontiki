@@ -38,46 +38,27 @@ assert len(_alle) == len(set(_alle)), \
     f'disse navne står to steder: {sorted(n for n in set(_alle) if _alle.count(n) > 1)}'
 I_ALT = len(_alle)
 
-kort = ''
-for nr, navne in enumerate(GRUPPER, 1):
-    kort += (f'<div class="kort"><div class="nr">{nr}</div>'
-             f'<div class="navne">'
-             + ''.join(f'<span>{html.escape(n)}</span>' for n in navne)
-             + f'</div><div class="antal">{len(navne)}</div></div>')
+liste = ''.join(f'<li>{html.escape(", ".join(g))}</li>' for g in GRUPPER)
 
 CSS = '''
-*{box-sizing:border-box}
-body{margin:0;font-family:Helvetica,Arial,sans-serif;color:#1a2233;
-font-size:10pt;line-height:1.35}
-.topline{color:#586074;font-size:9pt;letter-spacing:.4px;
-text-transform:uppercase;margin-bottom:2mm}
-h1{font-size:17pt;margin:0 0 1mm}
-.under{color:#586074;font-size:11pt;margin:0 0 6mm}
-.gitter{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
-.kort{display:flex;align-items:center;gap:4mm;border:1px solid #c9d2e0;
-border-radius:3mm;padding:4mm;background:#fbfcfe;min-height:26mm}
-.nr{flex:0 0 11mm;height:11mm;border-radius:50%;background:#1f6fd6;color:#fff;
-font-weight:700;font-size:12pt;display:flex;align-items:center;
-justify-content:center}
-.navne{flex:1;display:flex;flex-wrap:wrap;gap:1.5mm 3mm}
-.navne span{font-size:11pt;font-weight:600}
-.navne span:not(:last-child)::after{content:' ·';color:#9aa4b5;font-weight:400}
-.antal{flex:0 0 auto;color:#9aa4b5;font-size:9pt;font-weight:700}
-footer{margin-top:6mm;border-top:1px solid #c9d2e0;padding-top:2mm;
-color:#586074;font-size:8.5pt;display:flex;justify-content:space-between}
-@page{size:A4;margin:14mm}
+body{margin:0;font-family:Georgia,'Times New Roman',serif;color:#000;
+font-size:12pt;line-height:1.5}
+h1{font-size:18pt;margin:0 0 2mm;font-weight:700}
+.under{margin:0 0 8mm;font-size:12pt}
+ol{margin:0;padding-left:9mm}
+li{margin:0 0 3.5mm;padding-left:2mm}
+p.slut{margin:10mm 0 0;font-size:11pt}
+@page{size:A4;margin:20mm}
 '''
 
 DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<title>Grupper · fredag uge 44</title><style>' + CSS
        + '</style></head><body>'
-       f'<div class="topline">Info til 8. og 9. klasse</div>'
        f'<h1>{html.escape(TITEL)}</h1>'
        f'<p class="under">{html.escape(UNDER)}</p>'
-       f'<div class="gitter">{kort}</div>'
-       f'<footer><span>{len(GRUPPER)} grupper · {I_ALT} unger</span>'
-       f'<span>Tallet til højre er, hvor mange I er i gruppen.</span>'
-       '</footer></body></html>')
+       f'<ol>{liste}</ol>'
+       f'<p class="slut">{len(GRUPPER)} grupper · {I_ALT} unger.</p>'
+       '</body></html>')
 
 # Guard, saa claude/byg_grupper_word.py kan hente navnelisten herfra uden
 # at bygge PDF'en med. Listen staar ét sted; de to filer kan ikke drive fra
