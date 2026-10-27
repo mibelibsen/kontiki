@@ -165,6 +165,14 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   bare udfyldeligt. Lav ikke side 1 om igen.
   **PDF'en er ikke i git** (`.gitignore`). Den er en bygget fil, og et
   udfyldt ark er vurderinger af et navngivet barn — scriptet er kilden.
+- **Grupperne til fredag i uge 44 (27.10.).** Renskrift af den håndskrevne
+  seddel "Info til 9. kl": ti grupper, 35 unger fra 8. og 9. klasse, til når
+  6. og 7. klasse kommer på besøg **fredag kl. 11–12**. Dagen passer med
+  ugeplanen på `plastik-stand.html`; tidspunktet er nyt.
+  Navnelisten står i `claude/byg_grupper.py`, PDF'en er bygget og ikke i git.
+  **Tre grupper er på to (1, 9 og 10)**, selvom rammen siger tre til fem.
+  Det er sagt til brugeren, ikke rettet — det er hendes opdeling.
+
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar
