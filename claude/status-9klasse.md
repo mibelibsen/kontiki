@@ -173,6 +173,18 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   **Tre grupper er på to (1, 9 og 10)**, selvom rammen siger tre til fem.
   Det er sagt til brugeren, ikke rettet — det er hendes opdeling.
 
+- **Vejledning: spejlvend en video (29.10.).** Et ark til en elev, der
+  skulle have en video vendt vandret. Tre gratis veje, ingen af dem over en
+  fremmed server: **Billeder** på iPad/iPhone (Rediger → Beskær → det
+  *trekantede* vend-ikon, ikke det firkantede, som roterer), **Clipchamp**
+  på Windows 11 med skolekontoen, og **QuickTime Player** på Mac.
+  Trinene er slået efter, ikke husket — Microsofts egen vejledning til
+  Clipchamp og to kilder på iOS-metoden.
+  Bygges af `claude/byg_spejlvend.py` som PDF og Word; teksten står ét sted
+  i scriptet. **Word tæller ikke selv:** stilen List Number deler én tæller
+  mellem alle lister i dokumentet, så Windows-afsnittet begyndte ved 6 og
+  Mac ved 11. Numrene skrives nu som tekst med hængende indrykning.
+
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar
