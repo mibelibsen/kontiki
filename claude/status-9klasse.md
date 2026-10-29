@@ -173,17 +173,25 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   **Tre grupper er på to (1, 9 og 10)**, selvom rammen siger tre til fem.
   Det er sagt til brugeren, ikke rettet — det er hendes opdeling.
 
-- **Vejledning: spejlvend en video (29.10.).** Et ark til en elev, der
-  skulle have en video vendt vandret. Tre gratis veje, ingen af dem over en
-  fremmed server: **Billeder** på iPad/iPhone (Rediger → Beskær → det
-  *trekantede* vend-ikon, ikke det firkantede, som roterer), **Clipchamp**
-  på Windows 11 med skolekontoen, og **QuickTime Player** på Mac.
-  Trinene er slået efter, ikke husket — Microsofts egen vejledning til
-  Clipchamp og to kilder på iOS-metoden.
-  Bygges af `claude/byg_spejlvend.py` som PDF og Word; teksten står ét sted
-  i scriptet. **Word tæller ikke selv:** stilen List Number deler én tæller
-  mellem alle lister i dokumentet, så Windows-afsnittet begyndte ved 6 og
-  Mac ved 11. Numrene skrives nu som tekst med hængende indrykning.
+- **Vejledning: fra stående til liggende video (29.10.).** En elev havde
+  en video, der skulle være vandret. **Første udgave ramte ved siden af:**
+  "vendes horisontalt" blev læst som spejlvending, men det var orientering.
+  Vejledningen hedder nu `vejledning/staaende-til-liggende-video.pdf` og
+  skiller de to problemer ad, fordi de ligner hinanden og har hver sin knap:
+  1. **Billedet ligger på siden** — videoen er optaget rigtigt, bare gemt
+     forkert vendt. Den skal roteres en kvart omgang.
+  2. **Billedet står rigtigt, men er højt og smalt** — den skal have et nyt
+     format, og **man skal vælge**: enten beskæres top og bund væk, eller
+     også kommer der bjælker i siderne. Der er ikke en tredje mulighed, og
+     figuren viser netop det valg.
+  Tre maskiner hver gang: Billeder på iPad, QuickTime/iMovie på Mac,
+  Clipchamp på Windows. Trinene er slået efter hos Microsoft, ikke husket.
+  Bygges af `claude/byg_videoformat.py` som PDF og Word; teksten står ét
+  sted. `claude/svg_til_png.mjs` gengiver figuren, så Word-udgaven viser
+  den samme tegning.
+  **Word tæller ikke selv:** stilen List Number deler én tæller mellem alle
+  lister i dokumentet, så anden liste begyndte ved 5. Numrene skrives som
+  tekst med hængende indrykning.
 
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —

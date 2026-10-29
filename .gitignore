@@ -21,6 +21,6 @@ vejledning/grupper-fredag.pdf
 # Word-udgaven af gruppelisten bygges af claude/byg_grupper_word.py.
 vejledning/grupper-fredag.docx
 
-# Vejledningen om at spejlvende en video bygges af claude/byg_spejlvend.py.
-vejledning/spejlvend-video.pdf
-vejledning/spejlvend-video.docx
+# Vejledningen om videoens format bygges af claude/byg_videoformat.py.
+vejledning/staaende-til-liggende-video.pdf
+vejledning/staaende-til-liggende-video.docx
