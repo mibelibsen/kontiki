@@ -334,9 +334,11 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 - **Navnet «Mibelibsen» er væk fra sitet (3.11.).** 64 forekomster på 39
   sider: sidehovedet («Mibelibsen · 9. klasse») og sidefoden. **Fjern
   betyder fjern** — der blev ikke sat et nyt navn ind, hverken domænets
-  eller skolens. Sidehovedet hedder nu bare **9. klasse**, og sidefoden
-  slutter dér, hvor den stod før navnet: *Undervisningsmateriale ·
-  9. klasse.*
+  eller skolens. Sidehovedet hed først bare **9. klasse**; brugeren valgte
+  bagefter **321flyv · 9. klasse**, sat i husets eget mønster med navnet i
+  sort og resten i accentfarven, præcis som fagsiderne gør det
+  («Matematik · Statistik»). Sidefoden slutter dér, hvor den stod før
+  navnet: *Undervisningsmateriale · 9. klasse.*
   **De 24 byggescripts blev rettet med**, ellers ville navnet være kommet
   tilbage, næste gang en side blev bygget. Fire steder stod strengen delt
   over to linjer i Python og blev ikke fanget af den brede erstatning —
