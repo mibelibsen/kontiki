@@ -271,6 +271,25 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   skrives igen fra beskrivelsen her: `newPage({viewport:{width:390,…}})` —
   ikke `viewportSize`, som bliver ignoreret.
 
+- **Vercel-projekterne kortlagt (3.11.).** Det live site ligger på
+  projektet **`kontiki-9klasse`** (`prj_WT1oGfW1ztnMBkYQ3tzH5Z4i1iup`) —
+  det er det eneste, der har `mibelibsen.space` og `www.mibelibsen.space`.
+  Alle andre har kun deres eget `.vercel.app`-navn.
+  **Elleve projekter er rester** fra de fejlslagne deploy-forsøg: `kontiki`,
+  `kontiki9`, `mibelibsen-site`, `mibelibsen-skole`, `mibelibsen-space`,
+  `mibelibsen-9klasse`, `mibelib-space`, `matematik-9-klasse`,
+  `matematik-9-kontiki`, `matematik-9-kontiki-probe` og
+  `funktioner-og-ligninger-kontiki`.
+  **Pas på navnene:** `mibelib-space` (den gamle dansk-side) og
+  `mibelibsen-space` ligner hinanden, og ingen af dem er den live.
+  **Reglen om ikke at bruge Vercels API holder kun halvt.** Læsning virker
+  fint — projekter, domæner og deres id'er kan hentes. Det er *skrivning*,
+  der ikke skal bruges, og **sletning kan slet ikke lade sig gøre**:
+  `get_project_deletion_link` svarer `mutationExecuted: false` og
+  `requires_user_action`. Vercel kræver, at et menneske bekræfter i
+  dashboardet. Brug læsningen til at finde det rigtige id og give et
+  præcist link — gæt aldrig på en projektadresse.
+
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar
