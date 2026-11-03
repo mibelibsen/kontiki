@@ -27,3 +27,9 @@ vejledning/staaende-til-liggende-video.docx
 
 # Svararket til klippeøvelsen bygges af claude/byg_klip_areal.py.
 vejledning/klip-arealet-fri-svar.pdf
+
+# Svarene fra Hamborg. 170 besvarelser fra unge på en anden skole; repoet er
+# offentligt. Dokumenterne bygges af claude/byg_hamborg_segmenter.py, som
+# henter dataene fra regnearket, når der er brug for dem.
+tekster/hamborg-segmenter.pdf
+tekster/hamborg-segmenter.docx
