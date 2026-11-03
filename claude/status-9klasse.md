@@ -250,6 +250,27 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `newPage({viewport:{width:390,height:844}})` — ikke `viewportSize`, som
   bliver ignoreret, så man måler på 1280 og tror, alt er i orden.
 
+- **Alle knapper gennemgået (3.11.).** Brugeren bad om at få rettet dem
+  alle, så de virker. Et script måler nu hver knap på hver side ved 390 og
+  1280 px og melder fire ting: overlap, noget uden for skærmen, knapper i
+  samme række med forskellig top, og knapper under 40 px. Start: 2 overlap,
+  22 ujævne og 22 for lave. Slut: **0 på alle fire, på begge bredder.**
+  Fire rigtige fejl:
+  1. `.btn` havde ingen `display` og blev `inline`. Rettet til `inline-flex`.
+  2. Knapperne i hero var 44, 48 og 50 px høje og stod derfor 6-7 px
+     forskudt. De har nu samme kasse: 48 px, `vertical-align:top`.
+  3. Tapmål under 44 px på 22 sider. Hævet.
+  4. Menuen i toppen brækkede over to linjer. Forsøgt løst med vandret
+     rulning — men det **skjulte det sidste menupunkt**, og på GeoGebra-siden
+     er netop det vejen tilbage til opgaverne. Rullet tilbage: menuen
+     ombryder, men kompakt.
+  **En CSS-regel kan tabe, selv om den står sidst.** `.jump{flex-wrap:nowrap}`
+  virkede ikke, fordi originalen hedder `nav.jump` — element plus klasse
+  vejer tungere end klasse alene. Den hedder nu `header.top .jump`.
+  **Mål det, før du tror på det.** Målescriptet ligger i scratchpad og kan
+  skrives igen fra beskrivelsen her: `newPage({viewport:{width:390,…}})` —
+  ikke `viewportSize`, som bliver ignoreret.
+
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar

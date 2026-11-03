@@ -51,4 +51,26 @@ footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);fon
    siden sidelaens, og en figur i en graphwrap kan krympe. */
 @media(max-width:600px){table{display:block;overflow-x:auto}
 .graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
+
+/* Knapper. Tre ting, maalt paa 360-1280 px:
+   1. En raekke knapper stod 6-7 px forskudt. De er inline-flex med hver sin
+      polstring og staar derfor paa hver sin tekstlinje. vertical-align
+      stiller dem paa samme linje, og samme margen giver samme mellemrum.
+   2. En finger skal kunne ramme. 44 px er det maal, baade Apple og Google
+      bruger; flere knapper var 37.
+   3. Menuen i toppen braekkede over to linjer paa en telefon, og den faste
+      header aad 150 px af skaermen hele tiden. Den ruller nu vandret paa
+      én linje i stedet. */
+@media(min-width:601px){
+/* Samme kasse til alle tre, saa de staar paa linje: .btn var 46 px, den med
+   ramme 48, og printbtn 44 - derfor stod de forskudt. */
+.hero .btn,.hero .btnlink,.hero .printbtn{vertical-align:top;height:48px;
+padding:0 20px;box-sizing:border-box;display:inline-flex;align-items:center;
+justify-content:center;margin:12px 8px 0 0}}
+.btn,.btnlink,.printbtn,.vaelg a{min-height:44px}
+.jump a{display:inline-flex;align-items:center;min-height:40px}
+@media(max-width:600px){
+.top-inner{gap:10px;padding:10px 16px}
+header.top .jump{width:100%;margin-left:0;gap:4px}
+header.top .jump a{padding:5px 9px;font-size:.8rem;min-height:40px}}
 </style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header><main><section class="hero"><span class="pill">Tysk · 9. klasse</span><h1>Tysk</h1><p>Først et projekt: et spørgeskema om at være ung i Tyskland, som I selv laver spørgsmålene til, og som hver af jer får sin egen QR-kode til.</p><a class="btnlink" href="https://docs.google.com/spreadsheets/d/1tV_rBMFwAtc8jQUXqP32TBOSEg52ZBQ05T-MIrfAK-Y/edit" target="_blank" rel="noopener">Skriv dit spørgsmål i arket</a><a class="btnlink ghost" href="tysk-spoergeskema.html">Læs om projektet</a></section><div class="grid"><a class="card" href="tysk-spoergeskema.html"><h3>Ung i Tyskland</h3><p>Spørgeskema med jeres egne spørgsmål og personlige QR-koder.</p><span class="tag klar">Projekt</span></a></div><div class="video" id="video"><video controls playsinline preload="metadata" poster="materiale/peter-hoffmann-plakat.jpg" src="materiale/peter-hoffmann-spoerg-paa-tysk.mp4"><track kind="subtitles" src="materiale/peter-hoffmann-spoerg-paa-tysk.de.vtt" srclang="de" label="Deutsch" default><track kind="subtitles" src="materiale/peter-hoffmann-spoerg-paa-tysk.da.vtt" srclang="da" label="Dansk">Din browser kan ikke afspille videoen. <a href="materiale/peter-hoffmann-spoerg-paa-tysk.mp4">Hent den her</a>.</video><div><h3>Sådan spørger du på tysk</h3><p>Peter Hoffmann viser, hvordan du spørger unge på tysk, om de vil udfylde spørgeskemaet. Se den et par gange, og sig sætningerne højt, til den sidder. Så er det bare at holde kortet frem, hvis du har brug for at supplere.</p></div></div><a class="btnlink ghost" href="index.html">Tilbage til fagoversigten</a></main><footer>Undervisningsmateriale · 9. klasse · Mibelibsen. Faner uden indhold fyldes ud efterhånden.</footer></body></html>
