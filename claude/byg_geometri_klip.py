@@ -35,6 +35,7 @@ RUMFANG = _hent('byg_klip_rumfang')
 OVERFLADE = _hent('byg_klip_overflade')
 PYTHAGORAS = _hent('byg_klip_pythagoras')
 TRIGONOMETRI = _hent('byg_klip_trigonometri')
+LIGNINGER = _hent('byg_klip_ligninger')
 
 
 def mini(s, h=150):
@@ -91,6 +92,15 @@ ARK = [
    'En højde, du ikke kan nå'],
   ['Saks', 'Lineal med mm', 'Lommeregner', 'Målebånd'],
   TRIGONOMETRI.pak(TRIGONOMETRI.A_TREKANTER)),
+
+ ('materiale/klip-ligninger-fri.pdf', 'Klip ligningen fri',
+  'Det eneste ark, der ikke handler om geometri. En ligning bliver lagt '
+  'på en vægt: x-brikker og 1-brikker på to skåle. Så er reglerne ikke '
+  'regler længere — de er det eneste, man kan gøre, uden at vægten tipper.',
+  ['At man skal gøre det samme ved begge sider', 'x på begge sider',
+   'Hvad en parentes er'],
+  ['Saks'],
+  LIGNINGER.vaegt()),
 ]
 
 for _sti, _t, *_ in ARK:
@@ -139,7 +149,7 @@ margin:18px 0}
 KROP = f'''<section class="hero">
 <span class="pill">Matematik · klip og fold</span>
 <h1>Geometri klip</h1>
-<p>Fem ark, hvor svaret ikke står nogen steder. Det bliver klippet,
+<p>Seks ark, hvor svaret ikke står nogen steder. Det bliver klippet,
 foldet, hældt eller målt frem, og først bagefter skrevet ned — med
 ungernes egne ord. Arkene kan tages hver for sig, men de bygger på
 hinanden i den rækkefølge, de står her.</p>

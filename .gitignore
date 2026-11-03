@@ -45,3 +45,6 @@ vejledning/klip-pythagoras-fri-svar.pdf
 
 # Svararket til trigonometri-øvelsen bygges af claude/byg_klip_trigonometri.py.
 vejledning/klip-trigonometri-fri-svar.pdf
+
+# Svararket til ligningsøvelsen bygges af claude/byg_klip_ligninger.py.
+vejledning/klip-ligninger-fri-svar.pdf

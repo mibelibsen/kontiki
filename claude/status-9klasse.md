@@ -282,6 +282,33 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   dashboardet. Brug læsningen til at finde det rigtige id og give et
   præcist link — gæt aldrig på en projektadresse.
 
+- **Klip ligningen fri (3.11.).** `materiale/klip-ligninger-fri.pdf`,
+  bygget af `claude/byg_klip_ligninger.py`. Sjette ark, og det eneste, der
+  ikke handler om geometri. Reglerne for at løse ligninger er lette at
+  lære udenad og lige så lette at glemme, fordi de ikke ligner noget. På
+  en vægt er de ikke regler: de er det eneste, man kan gøre.
+  **A** 3x + 2 = 11 — fjern det samme fra begge sider, del resten i lige
+  store bunker. **B** 5x + 1 = 2x + 7 — man må også fjerne x-brikker, ikke
+  kun tal, og man behøver ikke vide, hvad de vejer. **C** 2(x + 3) = 14 —
+  to ens bunker giver 2x + **6**; tretallet bliver ganget med.
+  **x-brikken er 45 × 18 mm, og 45 går ikke op i 18.** Det er bevidst og
+  vogtet af en assert: ellers kan svaret måles med en lineal i stedet for
+  at regnes ud, og så er hele øvelsen spildt.
+  **Antallet af brikker er regnet, ikke gættet.** Otte x-brikker og tyve
+  1-brikker — lige præcis nok til den af de tre opgaver, der bruger flest
+  (C bruger 6 + 14 = 20). En assert tjekker hver opgave mod arket.
+  Vægten klippes ikke ud; den ligger på bordet, og brikkerne lægges oven
+  på. Svararket viser de tre stillinger for hver opgave som små vægte med
+  pile imellem — facit skal vise det, opgaven beder om.
+  **Tre små figurer i hver sin ramme blev for bredt** (3 × 66 mm mod de
+  184, der er plads til). De tegnes nu som ÉN figur med regnede afstande,
+  og brikkerne i dem har ingen bogstaver — farven skiller dem ad, så
+  figuren slipper for tekst i 2 punkt.
+  **Navnet på flisen passer ikke længere.** Den hedder «Geometri klip»,
+  og ligninger er algebra. Arket ligger der alligevel, fordi det er samme
+  format og samme praksis — men brugeren skal spørges, om flisen skal
+  hedde noget andet.
+
 - **Klip trigonometrien fri (3.11.).** `materiale/klip-trigonometri-fri.pdf`,
   bygget af `claude/byg_klip_trigonometri.py`. Femte ark, og det første
   uden en formel at klippe frem. I stedet en påstand, som saks og lineal
