@@ -308,6 +308,32 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   hvad der sker ved 32 eller 64 udsnit — grænseovergangen, som kan mærkes
   med en saks, længe før den kan skrives.
 
+- **Svarene fra Hamborg delt i fem segmenter (3.11.).**
+  `claude/byg_hamborg_segmenter.py` henter de 170 besvarelser fra
+  regnearket og bygger `tekster/hamborg-segmenter.docx` og `.pdf` — ét
+  segment til hver gruppe: byen og at rejse væk, skole og job, fritid og
+  venner, mobil og medier, mad og værdier.
+  **Segmenterne er afbalanceret efter målt arbejde**, ikke efter fornemmelse:
+  352, 299, 208, 211 og 304 *forskellige* svar at oversætte. Første
+  opdeling gav segment 5 over 400, og spørgsmålet om rejser flyttede derfor
+  til segment 1.
+  **Frie svar står én gang med antal** — `Hafen (12)` — ikke 170 gange.
+  Grupperne oversætter hvert svar én gang og kan se, hvad der er typisk.
+  **82 af de 170 bor ikke i Hamborg.** Derfor står der *keine Ahnung, bin
+  nicht von hier* i en del af svarene om byen. Det står som en advarsel
+  øverst i dokumentet: det er et resultat, ikke en fejl i skemaet.
+  **Hverken data eller dokumenter er i git** — det er besvarelser fra unge
+  på en anden skole, og repoet er offentligt. Scriptet er kilden.
+
+- **Rettighedsbeskyttede tekster i det offentlige repo (3.11.).**
+  `tekster/digital-dannelse-faktalink.pdf`, `tekster/big-tech-debatindlaeg-politiken.pdf`
+  og `tekster/alkoholpolitik-guide.pdf` er udelukket fra *sitet*, men
+  GitHub-repoet er offentligt, så de kan hentes derfra. En skoleaftale
+  dækker deling med klassen, ikke udgivelse på GitHub.
+  **Brugeren er gjort opmærksom på det 3.11. og har besluttet, at de bliver
+  liggende for nu.** Rejs det ikke igen af dig selv. At fjerne dem helt
+  kræver en omskrivning af historikken.
+
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar
