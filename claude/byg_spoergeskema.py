@@ -456,7 +456,7 @@ def skriv_side(unger):
     status = ('<ul class="plan">' + ''.join(
         f'<li><b>{html.escape(t)}</b> {html.escape(h)}</li>' for t, h in PLAN)
         + '</ul>')
-    krop = f'''<header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a><a class="" href="dansk.html">Dansk</a></nav></div></header>
+    krop = f'''<header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header>
 <main>
 <section class="hero"><span class="pill">Tysk · 9. klasse</span>
 <h1>Ung i Tyskland</h1>

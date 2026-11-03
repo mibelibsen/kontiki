@@ -193,27 +193,30 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   lister i dokumentet, så anden liste begyndte ved 5. Numrene skrives som
   tekst med hængende indrykning.
 
-- **Dansk er kommet på sitet (3.11.).** `dansk.html`, bygget af
-  `claude/byg_dansk.py`. **Der var ingen dansk-side før** — brugeren bad om
-  at lægge en essay-vejledning op "på dansksiden", og den fandtes ikke.
-  Siden har brugerens egen tekst om essaygenren, de fire trin i
-  skriveprocessen, og **opgavesæt 3** med tre emner: sociale medier og
-  forventningspres, drømme om fremtid og uddannelse, og fremtidens
-  arbejdsmarked med AI.
-  To nye funktioner i `figurer.py`:
-  **`konkret_abstrakt`** tegner tre kurver på en akse fra konkret til
-  abstrakt — stilen bliver nede, kronikken bliver oppe, essayet går op og
-  ned. Det er genrens hele forskel, og den er ikke til at forklare med ord
-  alene.
-  **`afsaet`** tegner tre konkrete indgange, der peger op mod ét stort
-  spørgsmål. Hvert af de tre emner har sin egen, så ungerne har et sted at
-  begynde, der ikke er en generel betragtning om unge.
-  **Dansk-fanen er sat ind i navigationen på alle sider — og i de 14
-  byggescripts, der skriver navigationen selv.** Ellers var fanen forsvundet
-  igen, næste gang en af de sider blev bygget om.
-  **Opgavesættet er udgivet med det samme.** Reglen om, at intet udgives før
-  den dag, lektien gives, gælder lektier; her bad brugeren om at få sættet
-  op. Skal det ligge skjult til en bestemt dag, flyttes det til `kommende/`.
+- **Dansk: `mibelibsen.space/dansk` (3.11.) — UDGIVET, men ULINKET.**
+  `dansk.html` i roden, bygget af `claude/byg_dansk.py`, med en omskrivning
+  i `vercel.json` fra `/dansk`. **Ingen side linker til den**, og den står
+  ikke i menuen eller på forsiden. **Ulistet er ikke privat** — har man
+  adressen, kan man læse den.
+  **Brugeren havde en dansk-side med Sæt 1 og Sæt 2, som ikke findes her.**
+  Den var hverken i repoet, på det live site, i hendes 69 artifacts eller i
+  nogen af hendes seks repoer. Første forsøg antog derfor, at der ingen
+  dansk-side fandtes, og byggede en ny med fane og forsidekort — forkert på
+  begge punkter. **Sæt 1 og Sæt 2 på den nye side er skrevet herfra**, ikke
+  hendes egne; de kan byttes ud, når hun finder originalerne.
+  Siden har tre sæt a tre opgaver i tre genrer (novelle, debatindlæg,
+  reportage, tale, essay) og et selvstændigt menupunkt **Essay** med
+  genrevejledningen. Menupunkterne er `.jump`-pillerne fra
+  `funktioner-og-ligninger.html`, ikke `.tabs`.
+  Tre nye funktioner i `figurer.py`: **`konkret_abstrakt`** (stilen bliver
+  nede, kronikken oppe, essayet går op og ned), **`afsaet`** (tre konkrete
+  indgange, der peger op mod ét spørgsmål — etiketten øverst kan sættes, så
+  samme figur kan hedde "påstanden" i et debatindlæg) og etiketten som
+  parameter.
+  **Sitet var ikke nede (3.11.)** — brugeren meldte, at intet åbnede. Alle
+  adresser svarede 200 herfra, certifikatet var gyldigt, og forsiden
+  rendererede i Chromium. Det var hendes eget netværk. Mål udefra, før du
+  leder efter fejlen i repoet.
 
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —

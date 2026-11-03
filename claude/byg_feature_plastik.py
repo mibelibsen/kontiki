@@ -204,7 +204,7 @@ def side(titel, pill, krop, aktiv='matematik', fane=True):
            '<a class="" href="matematik.html">Matematik</a>'
            '<a class="" href="samfundsfag.html">Samfundsfag</a>'
            '<a class="" href="tysk.html">Tysk</a>'
-           '<a class="" href="fysik.html">Fysik</a><a class="" href="dansk.html">Dansk</a></nav>') if fane else ''
+           '<a class="" href="fysik.html">Fysik</a></nav>') if fane else ''
     return ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{titel}</title><style>' + GRUND + EKSTRA +

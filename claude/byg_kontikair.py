@@ -478,7 +478,7 @@ def side(titel, krop):
             '<nav class="tabs"><a class="" href="matematik.html">Matematik</a>'
             '<a class="" href="samfundsfag.html">Samfundsfag</a>'
             '<a class="" href="tysk.html">Tysk</a>'
-            '<a class="" href="fysik.html">Fysik</a><a class="" href="dansk.html">Dansk</a></nav>'
+            '<a class="" href="fysik.html">Fysik</a></nav>'
             '</div></header><main>' + krop + '</main><footer>'
             'KontikAir · Mibelibsen · 9. klasse.'
             '</footer></body></html>')

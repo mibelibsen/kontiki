@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/dansk",
+      "destination": "/dansk.html"
+    },
+    {
       "source": "/kontikair",
       "destination": "/kontikair.html"
     },

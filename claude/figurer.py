@@ -2429,12 +2429,16 @@ def konkret_abstrakt(kurver, afsnit, W=640, H=300, farver=None):
     return ''.join(s)
 
 
-def afsaet(spoergsmaal, konkrete, W=640, H=215, farve=None):
+def afsaet(spoergsmaal, konkrete, W=640, H=215, farve=None,
+           overskrift='DET STORE SPØRGSMÅL'):
     """Afsaettet til et essay: tre konkrete steder at begynde, og det store
     spoergsmaal, de alle sammen peger op mod.
 
     spoergsmaal  det abstrakte, oeverst
     konkrete     [tekst] - de konkrete indgange forneden, to til fire
+    overskrift   den lille linje over spoergsmaalet. Et essay har et stort
+                 spoergsmaal, et debatindlaeg en paastand - samme figur,
+                 forskellig etiket
 
     Figuren er genrens form sat op som en tegning: man begynder nede i noget,
     man selv har set, og zoomer ud. Kasserne er lige brede, for ingen af
@@ -2458,7 +2462,7 @@ def afsaet(spoergsmaal, konkrete, W=640, H=215, farve=None):
     st = _skrift(spoergsmaal, W - 2 * M, loft=14, gulv=9, luft=24)
     s.append(f'<text x="{W / 2:.1f}" y="{y_top + 20}" text-anchor="middle" '
              f'fill="#fff" fill-opacity="0.75" font-size="9.5" '
-             f'letter-spacing="1">DET STORE SPØRGSMÅL</text>')
+             f'letter-spacing="1">{overskrift}</text>')
     s.append(f'<text x="{W / 2:.1f}" y="{y_top + 38}" text-anchor="middle" '
              f'fill="#fff" font-weight="700" font-size="{st:.1f}">'
              f'{spoergsmaal}</text>')
