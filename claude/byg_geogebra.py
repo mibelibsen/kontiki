@@ -259,6 +259,7 @@ Alle eksempler bruger andre tal end opgaverne — fremgangsmåden er den samme,
 men svarene skal du selv finde.</p>
 <button class="printbtn" onclick="window.print()">Print vejledningen</button>
 <a class="btn" href="{GEOGEBRA}" target="_blank" rel="noopener">Åbn GeoGebra</a>
+<a class="btn ghost" href="funktioner-og-ligninger.html">Tilbage til opgaverne</a>
 </section>
 <div id="trin">{trin_html}</div>
 <h2 class="sec" id="opgaver">Sådan bruger du trinnene i opgaverne</h2>
@@ -277,11 +278,11 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '</div><nav class="jump">'
        '<a href="#trin">Trinnene</a><a href="#opgaver">I opgaverne</a>'
        '<a href="#falder">Det der driller</a>'
+       '<a href="funktioner-og-ligninger.html">Opgaverne</a>'
        '</nav></div></header><main>' + KROP + '</main><footer>'
        'Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>')
 
 open(UD, 'w', encoding='utf-8').write(DOK)
 print(f'skrevet:  {UD}  ·  {len(TRIN)} trin, '
       f'{sum(1 for t in TRIN if t[3])} figurer, {len(FALDER)} faldgruber')
-print('UDGIVET, men ULINKET: ingen side peger på den. Adressen er')
-print(f'  mibelibsen.space/{UD}')
+print('Linket op fra matematik.html og funktioner-og-ligninger.html.')

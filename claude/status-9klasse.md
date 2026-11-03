@@ -99,7 +99,15 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   med intervalgrænserne på x-aksen. Det er forskellen på et histogram og et
   søjlediagram, og den skal kunne ses. Pyntefigurerne bliver stående; de
   duer til at illustrere et afsnit, bare ikke til at aflæse.
-- **GeoGebra-vejledning til opgave C og D (21.10.) — UDGIVET, men ULINKET.**
+- **GeoGebra-vejledningen er koblet på matematikken (3.11.).** Den var
+  udgivet og ulinket, mens brugeren testede den selv. Nu linker
+  `matematik.html` til den med et kort, og `funktioner-og-ligninger.html`
+  har en tip-boks lige før **opgave C** og et link i **opgave D** — præcis
+  de to opgaver, vejledningen er skrevet til. Siden har selv fået en vej
+  tilbage: *Opgaverne* i menuen og *Tilbage til opgaverne* i toppen. Før
+  havde den ingen udgang overhovedet.
+
+- **GeoGebra-vejledning til opgave C og D (21.10.) — byggede som ULINKET.**
   `geogebra-lineaere-funktioner.html` i roden, bygget af
   `claude/byg_geogebra.py`. **Ingen side linker til den.** Den kan kun nås på
   `mibelibsen.space/geogebra-lineaere-funktioner.html`, så brugeren kan sidde
