@@ -31,13 +31,11 @@ ARK = ('https://docs.google.com/spreadsheets/d/'
        '1QwwgmHeMVc-lsMEtmXtT4BobkF0HGyjVr9Twi1tCWbY/gviz/tq?tqx=out:csv')
 TOP = 6          # saa mange af de hyppigste aabne svar vises
 
-# Svar, der ikke skal staa paa en aaben skoleside, selv om de er givet.
-# Herbertstrasse er bordelgaden paa St. Pauli; den er lukket for kvinder og
-# for alle under 18, og den laa oeverst paa listen over steder, de unge
-# ville anbefale os at se. Den staar stadig i klassens eget dokument, hvor
-# en voksen er til stede - men ikke her. Det er en redaktionel beslutning,
-# ikke en rettelse af data: tallet for, hvor mange der svarede, er uaendret.
-UDE = {'Herbertstraße', 'Herbertstrasse', 'Herbertstr.'}
+# Ingen svar sorteres fra. Herbertstrasse - bordelgaden paa St. Pauli - laa
+# oeverst over steder, de unge ville anbefale os at se, og blev i foerste
+# udgave holdt ude af den offentlige liste. **Brugeren har 3.11. besluttet,
+# at svarene skal staa, som de er.** Det er hendes klasse og hendes data.
+# Tag dem ikke ud igen af dig selv.
 
 
 def hent():
@@ -107,8 +105,7 @@ def figur(hoved, data, i, slags):
         # Kun svar, mere end én har givet. Et svar, kun én har skrevet, er
         # ikke et resultat - og det er dét, der goer en besvarelse til en
         # enkelt persons udsagn i stedet for en optaelling.
-        flest = [(k, v) for k, v in flest
-                 if v > 1 and k not in UDE]
+        flest = [(k, v) for k, v in flest if v > 1]
         if not flest:
             return '', f'Ingen svar går igen hos mere end én af de {n}.'
         liste = ''.join(

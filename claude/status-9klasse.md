@@ -338,12 +338,11 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   hvis mere end én har givet dem — et svar, kun én har skrevet, er ikke et
   resultat, det er en persons udsagn. De fulde svar ligger i
   `tekster/hamborg-segmenter.docx`, som ikke udgives.
-  **Ét svar er taget ud af den offentlige liste:** *Herbertstraße* lå
-  øverst over steder, de unge ville anbefale os at se. Det er bordelgaden
-  på St. Pauli, lukket for kvinder og for alle under 18. Den står stadig i
-  klassens eget dokument, hvor en voksen er til stede. Udeladelsen står som
-  `UDE` i scriptet med begrundelsen, så den er til at se og til at fortryde
-  — tallene for, hvor mange der svarede, er uændrede.
+  **Ingen svar sorteres fra.** *Herbertstraße* — bordelgaden på St. Pauli,
+  lukket for alle under 18 — lå øverst over steder, de unge ville anbefale
+  os at se. Første udgave holdt den ude af den offentlige liste, og
+  brugeren blev spurgt. **Afgjort 3.11.: svarene står, som de er.** Det er
+  hendes klasse og hendes data. Tag dem ikke ud igen af dig selv.
   **Årsplanen i tysk er droppet (3.11.).** Brugeren har besluttet, at der
   ikke kommer en. Forsidens tysk-kort sagde *Årsplan for tysk* og
   indledningen lovede *årsplaner til samfundsfag og tysk* — begge dele er
