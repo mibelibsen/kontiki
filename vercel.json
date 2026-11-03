@@ -57,7 +57,7 @@
     },
     {
       "source": "/u/eksempel",
-      "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
+      "destination": "/tysk-spoergeskema.html",
       "permanent": false
     },
     {
