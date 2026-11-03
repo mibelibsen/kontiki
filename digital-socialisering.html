@@ -87,6 +87,11 @@ table.kilder td.dato{white-space:nowrap;color:var(--muted);width:150px}
 .figur svg{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 a.kilde{color:#000;border-bottom:none}
 body{font-size:10.5pt}main{padding:0}@page{size:A4;margin:14mm}}
+
+/* Telefon: en bred tabel ruller selv i stedet for at skubbe hele
+   siden sidelaens, og en figur i en graphwrap kan krympe. */
+@media(max-width:600px){table{display:block;overflow-x:auto}
+.graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
 </style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="active" href="samfundsfag.html">Samfundsfag</a><a class="" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header><main><section class="hero"><span class="pill">Samfundsfag · Digital socialisering</span>
 <h1>Unges brug af mobil og digitale medier</h1>
 <p>Dataark til forløbet i uge 40 og 41. Alle tal herunder er hentet i kilden selv,

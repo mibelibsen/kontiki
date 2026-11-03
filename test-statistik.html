@@ -204,7 +204,9 @@
   }
   .printbtn:hover{border-color:var(--accent);color:var(--accent)}
 
-  .btn{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+/* Paa en telefon staar knapperne i hero oven paa hinanden i stedet for ved siden af. */
+@media(max-width:600px){.hero .btn,.hero .btnlink,.hero .printbtn{display:flex;width:100%;margin:8px 0 0}}
   .btn:hover{background:#195cb5}
   .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
   .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
@@ -314,6 +316,11 @@ ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margi
         font-size:.95rem;border:1px solid var(--line);border-radius:10px;padding:12px}
   table.rtable td.smal{white-space:nowrap}
   .fejlliste{color:var(--bad);font-size:.9rem}
+
+/* Telefon: en bred tabel ruller selv i stedet for at skubbe hele
+   siden sidelaens, og en figur i en graphwrap kan krympe. */
+@media(max-width:600px){table{display:block;overflow-x:auto}
+.graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
 </style></head>
 <body data-store-key="test9_statistik_v1" data-modules="Beskriv data|Diagrammer|Sumkurve og frekvens|Sandsynlighed|Manipulation">
 <div class="overlay" id="startOverlay"><div class="card">

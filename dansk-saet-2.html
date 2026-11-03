@@ -211,7 +211,9 @@
   }
   .printbtn:hover{border-color:var(--accent);color:var(--accent)}
 
-  .btn{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+/* Paa en telefon staar knapperne i hero oven paa hinanden i stedet for ved siden af. */
+@media(max-width:600px){.hero .btn,.hero .btnlink,.hero .printbtn{display:flex;width:100%;margin:8px 0 0}}
   .btn:hover{background:#195cb5}
   .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
   .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
@@ -293,6 +295,11 @@ ol.abc li{margin:5px 0}
   .frac>span{display:block;padding:0 .3em;white-space:nowrap}
   .frac>span:first-child{border-bottom:1.6px solid currentColor;padding-bottom:.05em}
   .frac>span:last-child{padding-top:.05em}
+
+/* Telefon: en bred tabel ruller selv i stedet for at skubbe hele
+   siden sidelaens, og en figur i en graphwrap kan krympe. */
+@media(max-width:600px){table{display:block;overflow-x:auto}
+.graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
 
 .jump a.aktiv{color:var(--accent);background:var(--accent-soft);
 border-color:var(--accent-soft);font-weight:700}
@@ -404,6 +411,16 @@ gap:6px;font-size:.77rem;font-family:"Consolas",monospace;color:var(--accent)}
 padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;
 color:var(--ink);font-family:inherit;margin:6px 8px 0 0}
 .printbtn:hover{border-color:var(--accent);color:var(--accent)}
+/* Paa en telefon ruller brede tabeller normalt sidelaens. Netop de to her
+   skal laeses, ikke rulles, saa de tvinges til at ombryde i stedet. */
+@media(max-width:600px){
+table.krit,table.liste{display:table;table-layout:fixed;width:100%;
+font-size:.85rem}
+table.krit th,table.krit td,table.liste th,table.liste td{padding:7px 8px;
+overflow-wrap:break-word;hyphens:auto}
+table.krit td.dim{width:22%}
+table.krit td.omr{width:30%}
+table.liste th{width:34%}}
 @media print{header.top,.printbtn,.vaelg{display:none!important}
 .opg,.afsnit,.figur,.boks{box-shadow:none;break-inside:avoid;
 page-break-inside:avoid}

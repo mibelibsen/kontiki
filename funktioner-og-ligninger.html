@@ -217,7 +217,9 @@
   }
   .printbtn:hover{border-color:var(--accent);color:var(--accent)}
 
-  .btn{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+/* Paa en telefon staar knapperne i hero oven paa hinanden i stedet for ved siden af. */
+@media(max-width:600px){.hero .btn,.hero .btnlink,.hero .printbtn{display:flex;width:100%;margin:8px 0 0}}
   .btn:hover{background:#195cb5}
   .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
   .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
@@ -299,6 +301,11 @@ ol.abc li{margin:5px 0}
   .frac>span{display:block;padding:0 .3em;white-space:nowrap}
   .frac>span:first-child{border-bottom:1.6px solid currentColor;padding-bottom:.05em}
   .frac>span:last-child{padding-top:.05em}
+
+/* Telefon: en bred tabel ruller selv i stedet for at skubbe hele
+   siden sidelaens, og en figur i en graphwrap kan krympe. */
+@media(max-width:600px){table{display:block;overflow-x:auto}
+.graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
 </style>
 </head>
 <body data-store-key="fol9_state_v1" data-modules="Modul 1: Ligninger|Modul 2: Lineære funktioner|Modul 3: Grafer|Blandet quiz">

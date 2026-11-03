@@ -10,6 +10,11 @@ h1{font-size:1.3rem;margin:0 0 4px}.tal{font-size:3rem;font-weight:800;line-heig
 svg{width:100%;height:auto;display:block}
 button{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:700;font-size:.95rem;cursor:pointer;font-family:inherit}
 a{color:var(--accent)}
+
+/* Telefon: en bred tabel ruller selv i stedet for at skubbe hele
+   siden sidelaens, og en figur i en graphwrap kan krympe. */
+@media(max-width:600px){table{display:block;overflow-x:auto}
+.graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
 </style></head><body><main>
 <a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>
 <div class="boks"><h1>Svar på spørgeskemaet</h1><div class="tal" id="ialt">…</div>

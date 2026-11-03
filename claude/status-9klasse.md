@@ -230,6 +230,26 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   certifikatet var gyldigt, og forsiden rendererede i Chromium. Det var
   brugerens eget netværk. Mål udefra, før du leder efter fejlen i repoet.
 
+- **Sitet virkede ikke på en telefon (rettet 3.11.).** Brugeren sendte et
+  skærmbillede af GeoGebra-siden, hvor de tre knapper i toppen lå oven i
+  hinanden og løb ud over skærmkanten.
+  **Årsagen var én manglende linje:** `.btn` havde ingen `display`, så et
+  `<a class="btn">` blev `inline` — og en inline-kasses polstring fylder
+  ikke lodret. Knapperne lå derfor oven på hinanden og stak 519 px ud på en
+  390 px bred skærm. `.btn` er nu `inline-flex`, og i hero stables knapperne
+  under 600 px.
+  **Målingen afslørede en større fejl:** 22 af 43 sider scrollede sidelæns
+  på en telefon. Altid brede tabeller — årsplaner, kildelister, tabeller i
+  lektiearkene — plus én figur i en `.graphwrap`, der ikke kunne krympe
+  (`flex:0 0 auto`). Alle 43 sider har nu
+  `@media(max-width:600px){table{display:block;overflow-x:auto}}`, så en
+  bred tabel ruller for sig selv i stedet for at trække i dokumentet.
+  Vurderingstabellen på dansk-siderne er undtaget: den skal læses, ikke
+  rulles, så den tvinges til `table-layout:fixed` og ombryder i stedet.
+  **Mål det i en rigtig browser.** Playwright-opskriften er
+  `newPage({viewport:{width:390,height:844}})` — ikke `viewportSize`, som
+  bliver ignoreret, så man måler på 1280 og tror, alt er i orden.
+
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar

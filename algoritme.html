@@ -113,6 +113,11 @@
 
   button:focus-visible{outline:2px solid var(--interesse); outline-offset:2px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Telefon: en bred tabel ruller selv i stedet for at skubbe hele
+   siden sidelaens, og en figur i en graphwrap kan krympe. */
+@media(max-width:600px){table{display:block;overflow-x:auto}
+.graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
 </style>
 </head>
 <body>

@@ -54,6 +54,11 @@ footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);
 font-size:.85rem;text-align:center}
 @media print{header.top,a.btnlink{display:none!important}
 .hero,section.k{box-shadow:none;break-inside:avoid}}
+
+/* Telefon: en bred tabel ruller selv i stedet for at skubbe hele
+   siden sidelaens, og en figur i en graphwrap kan krympe. */
+@media(max-width:600px){table{display:block;overflow-x:auto}
+.graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
 </style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="active" href="matematik.html">Matematik</a><a href="samfundsfag.html">Samfundsfag</a><a href="tysk.html">Tysk</a></nav></div></header><main><section class="hero"><span class="pill">Matematik · Store tal</span>
 <h1>Million, milliard, billion</h1>
 <p>Hvert trin i tabellen er <b>1.000 gange</b> større end trinnet før — ikke ti

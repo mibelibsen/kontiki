@@ -634,6 +634,16 @@ gap:6px;font-size:.77rem;font-family:"Consolas",monospace;color:var(--accent)}
 padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;
 color:var(--ink);font-family:inherit;margin:6px 8px 0 0}
 .printbtn:hover{border-color:var(--accent);color:var(--accent)}
+/* Paa en telefon ruller brede tabeller normalt sidelaens. Netop de to her
+   skal laeses, ikke rulles, saa de tvinges til at ombryde i stedet. */
+@media(max-width:600px){
+table.krit,table.liste{display:table;table-layout:fixed;width:100%;
+font-size:.85rem}
+table.krit th,table.krit td,table.liste th,table.liste td{padding:7px 8px;
+overflow-wrap:break-word;hyphens:auto}
+table.krit td.dim{width:22%}
+table.krit td.omr{width:30%}
+table.liste th{width:34%}}
 @media print{header.top,.printbtn,.vaelg{display:none!important}
 .opg,.afsnit,.figur,.boks{box-shadow:none;break-inside:avoid;
 page-break-inside:avoid}
