@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
-"""Bygger geometri-klip.html - én flise til alle klippearkene.
+"""Bygger matematik-klip.html - én flise til alle klippearkene.
 
 Arkene laa som fire kort paa matematik.html og fyldte halvdelen af siden.
 De hoerer sammen: samme greb, samme format, samme saks. Derfor ét kort,
-der hedder **Geometri klip**, og en side bagved med dem alle fire.
+der hedder **Matematik klip**, og en side bagved med dem alle.
+Den hed foerst Geometri klip; da ligningsarket kom til, passede
+navnet ikke laengere. /geometri-klip.html sender videre hertil i
+vercel.json, saa et delt link ikke gaar i stykker.
 
 Miniaturerne er **de rigtige figurer** fra byggescripterne, ikke tegninger
 lavet til lejligheden. Modulerne importeres, figuren hentes, og mm-maalene
 i <svg>-taggen fjernes, saa den kan skalere paa en skaerm. Aendrer et ark
 sig, aendrer billedet sig med - de kan ikke komme til at vise hver sit.
 
-    python3 claude/byg_geometri_klip.py
+    python3 claude/byg_matematik_klip.py
 """
 import html
 import importlib.util
@@ -19,7 +22,7 @@ import re
 
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HER = os.path.dirname(os.path.abspath(__file__))
-UD = os.path.join(ROD, 'geometri-klip.html')
+UD = os.path.join(ROD, 'matematik-klip.html')
 
 
 def _hent(navn):
@@ -148,7 +151,7 @@ margin:18px 0}
 
 KROP = f'''<section class="hero">
 <span class="pill">Matematik · klip og fold</span>
-<h1>Geometri klip</h1>
+<h1>Matematik klip</h1>
 <p>Seks ark, hvor svaret ikke står nogen steder. Det bliver klippet,
 foldet, hældt eller målt frem, og først bagefter skrevet ned — med
 ungernes egne ord. Arkene kan tages hver for sig, men de bygger på
@@ -163,7 +166,7 @@ eller tal.</p></div>
 
 DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<meta name="viewport" content="width=device-width,initial-scale=1">'
-       '<title>Geometri klip · 9. klasse</title><style>' + CSS
+       '<title>Matematik klip · 9. klasse</title><style>' + CSS
        + '</style></head><body><header class="top"><div class="top-inner">'
        '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span>'
        '</a><nav class="tabs"><a class="active" href="matematik.html">'
@@ -173,5 +176,5 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        'Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>')
 
 open(UD, 'w', encoding='utf-8').write(DOK)
-print(f'skrevet:  geometri-klip.html  ·  {len(ARK)} ark, '
+print(f'skrevet:  matematik-klip.html  ·  {len(ARK)} ark, '
       f'{len(ARK)} figurer hentet fra byggescripterne')

@@ -304,10 +304,9 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   184, der er plads til). De tegnes nu som ÉN figur med regnede afstande,
   og brikkerne i dem har ingen bogstaver — farven skiller dem ad, så
   figuren slipper for tekst i 2 punkt.
-  **Navnet på flisen passer ikke længere.** Den hedder «Geometri klip»,
-  og ligninger er algebra. Arket ligger der alligevel, fordi det er samme
-  format og samme praksis — men brugeren skal spørges, om flisen skal
-  hedde noget andet.
+  **Navnet på flisen passede ikke længere**, og brugeren omdøbte den til
+  **Matematik klip**. Ligninger er algebra, ikke geometri, men arket hører
+  til: samme format, samme praksis.
 
 - **Klip trigonometrien fri (3.11.).** `materiale/klip-trigonometri-fri.pdf`,
   bygget af `claude/byg_klip_trigonometri.py`. Femte ark, og det første
@@ -332,8 +331,12 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
   lagde 60°-tallet oven i buen.
 
-- **Geometri klip — én flise (3.11.).** `geometri-klip.html`, bygget af
-  `claude/byg_geometri_klip.py`, linket fra `matematik.html`. De fire
+- **Matematik klip — én flise (3.11.).** `matematik-klip.html`, bygget af
+  `claude/byg_matematik_klip.py`, linket fra `matematik.html`. Hed først
+  **Geometri klip**; da ligningsarket kom til, passede navnet ikke
+  længere, og brugeren valgte **Matematik klip**. Den gamle adresse
+  `/geometri-klip.html` sender videre i `vercel.json`, så et delt link
+  ikke går i stykker. De fire
   klippeark fyldte fire kort på matematiksiden; nu er der ét kort,
   **Geometri klip**, og en side bagved med dem alle.
   **Miniaturerne er de rigtige figurer.** Scriptet importerer de fire

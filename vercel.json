@@ -51,6 +51,11 @@
   ],
   "redirects": [
     {
+      "source": "/geometri-klip.html",
+      "destination": "/matematik-klip.html",
+      "permanent": true
+    },
+    {
       "source": "/u/eksempel",
       "destination": "https://www.mibelibsen.space/tysk-spoergeskema.html",
       "permanent": false
