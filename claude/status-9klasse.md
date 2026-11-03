@@ -60,8 +60,6 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
    PDF-format: `facitark-funktioner-og-ligninger.html`, `facitark-manipulation.pdf`,
    `facit-lektier-manipulation.pdf`, `facit-statistik-hjemmeopgaver.pdf`,
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
-3. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
-   `matematik.html`.
 
 ## Lavet 6. oktober 2026 · samfundsfag
 
@@ -347,6 +345,19 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   ikke kommer en. Forsidens tysk-kort sagde *Årsplan for tysk* og
   indledningen lovede *årsplaner til samfundsfag og tysk* — begge dele er
   rettet, så de beskriver det, faget faktisk har. Spørg ikke efter den igen.
+
+- **Vejen hjem fra matematiksiderne (3.11.).** Punktet på listen sagde, at
+  `statistik.html` manglede et link til forsiden. **Det var forældet** —
+  linket var der, men det stod umarkeret midt mellem anker-linkene, og
+  *Matematik* lå helt forrest i menuen i stedet for sammen med de andre
+  sidelinks. Nu står alle tre til sidst med `class="side"`, som på
+  `manipulation.html` og `test-statistik.html`.
+  **Den rigtige fejl lå et andet sted:** `funktioner-og-ligninger.html`
+  havde **ingen vej ud overhovedet** — kun ankre til sine egne afsnit.
+  Ingen forside, ingen matematik. Den har nu Forside, Matematik og
+  GeoGebra. Det er også den side, GeoGebra-vejledningen linker tilbage til,
+  så de to sider peger nu på hinanden begge veje.
+  **Tjek listen mod virkeligheden, før du retter efter den.**
 
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
