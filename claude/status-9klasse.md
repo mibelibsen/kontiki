@@ -193,30 +193,34 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   lister i dokumentet, så anden liste begyndte ved 5. Numrene skrives som
   tekst med hængende indrykning.
 
-- **Dansk: `mibelibsen.space/dansk` (3.11.) — UDGIVET, men ULINKET.**
-  `dansk.html` i roden, bygget af `claude/byg_dansk.py`, med en omskrivning
-  i `vercel.json` fra `/dansk`. **Ingen side linker til den**, og den står
-  ikke i menuen eller på forsiden. **Ulistet er ikke privat** — har man
-  adressen, kan man læse den.
-  **Brugeren havde en dansk-side med Sæt 1 og Sæt 2, som ikke findes her.**
-  Den var hverken i repoet, på det live site, i hendes 69 artifacts eller i
-  nogen af hendes seks repoer. Første forsøg antog derfor, at der ingen
-  dansk-side fandtes, og byggede en ny med fane og forsidekort — forkert på
-  begge punkter. **Sæt 1 og Sæt 2 på den nye side er skrevet herfra**, ikke
-  hendes egne; de kan byttes ud, når hun finder originalerne.
-  Siden har tre sæt a tre opgaver i tre genrer (novelle, debatindlæg,
-  reportage, tale, essay) og et selvstændigt menupunkt **Essay** med
-  genrevejledningen. Menupunkterne er `.jump`-pillerne fra
-  `funktioner-og-ligninger.html`, ikke `.tabs`.
-  Tre nye funktioner i `figurer.py`: **`konkret_abstrakt`** (stilen bliver
-  nede, kronikken oppe, essayet går op og ned), **`afsaet`** (tre konkrete
-  indgange, der peger op mod ét spørgsmål — etiketten øverst kan sættes, så
-  samme figur kan hedde "påstanden" i et debatindlæg) og etiketten som
-  parameter.
-  **Sitet var ikke nede (3.11.)** — brugeren meldte, at intet åbnede. Alle
-  adresser svarede 200 herfra, certifikatet var gyldigt, og forsiden
-  rendererede i Chromium. Det var hendes eget netværk. Mål udefra, før du
-  leder efter fejlen i repoet.
+- **Dansk på `/dansk` (3.11.) — UDGIVET, men ULINKET.** Fem sider i roden,
+  bygget af `claude/byg_dansk.py`, med omskrivninger i `vercel.json`:
+  `/dansk`, `/dansk/saet-1`, `/dansk/saet-2`, `/dansk/saet-3` og
+  `/dansk/essay`. **Ingen side på sitet linker til dem**, de har `noindex`,
+  og de står hverken i menuen eller på forsiden. **Ulistet er ikke privat.**
+  **Sæt 1 og 2 er brugerens egne.** De lå på et andet Vercel-projekt,
+  `mibelib-space.vercel.app/dansk`, som ikke er et repo, vi har. Indholdet
+  er hentet derfra ord for ord — fire opgaver pr. sæt, forlæg,
+  dr.dk-kilder, vurderingskriterier. **Alle seks dr.dk-links er tjekket og
+  svarer 200.** Den gamle side henter `/style.css` fra roden; her står
+  CSS'en inline, som reglen siger.
+  **Sæt 3 er skrevet herfra** over brugerens tre emner — drømme om fremtid
+  og uddannelse (essay), sociale medier og forventningspres (debatindlæg),
+  fremtidens arbejdsmarked med AI (mundtligt oplæg) og året efter
+  (fortælling). Samme form som de to andre: forlæg, situation, rolle,
+  forberedelse og fire krav med udsagnsord.
+  **To blindgyder først.** Første forsøg antog, at der ingen dansk-side
+  fandtes, og byggede en ny med fane i menuen og kort på forsiden. Andet
+  forsøg opfandt Sæt 1 og 2. Begge dele er rullet tilbage. **Spørg efter
+  adressen, når brugeren taler om en side, der ikke er i repoet** — den kan
+  ligge på et andet Vercel-projekt.
+  Tre figurfunktioner i `figurer.py`: `konkret_abstrakt` (stilen nede,
+  kronikken oppe, essayet op og ned), `afsaet` (tre konkrete indgange mod ét
+  spørgsmål, etiketten kan sættes) — `afsaet` bruges også til de tre
+  vurderingsdimensioner, der giver én karakter.
+  **Sitet var ikke nede (3.11.)** — alle adresser svarede 200 herfra,
+  certifikatet var gyldigt, og forsiden rendererede i Chromium. Det var
+  brugerens eget netværk. Mål udefra, før du leder efter fejlen i repoet.
 
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —

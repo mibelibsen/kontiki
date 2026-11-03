@@ -1,6 +1,22 @@
 {
   "rewrites": [
     {
+      "source": "/dansk/saet-1",
+      "destination": "/dansk-saet-1.html"
+    },
+    {
+      "source": "/dansk/saet-2",
+      "destination": "/dansk-saet-2.html"
+    },
+    {
+      "source": "/dansk/saet-3",
+      "destination": "/dansk-saet-3.html"
+    },
+    {
+      "source": "/dansk/essay",
+      "destination": "/dansk-essay.html"
+    },
+    {
       "source": "/dansk",
       "destination": "/dansk.html"
     },

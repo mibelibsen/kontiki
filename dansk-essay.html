@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Essay · skriftlig fremstilling · 9. klasse</title><style>
+  :root{
+    --bg:#ffffff;
+    --panel:#ffffff;
+    --panel2:#f4f6fb;
+    --ink:#1a2233;
+    --muted:#586074;
+    --line:#d3dae7;
+    --accent:#1f6fd6;
+    --accent-soft:#eaf2fd;
+    --good:#1a8f5e;
+    --good-soft:#eaf7f0;
+    --bad:#c23b4b;
+    --bad-soft:#fdeef0;
+    --warn:#b5710a;
+    --shadow:0 1px 3px rgba(20,30,60,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  header.top{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(8px);
+    background:rgba(255,255,255,.9);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1000px;margin:0 auto;padding:12px 20px;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}
+  .brand span{color:var(--accent)}
+  nav.jump{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  nav.jump a{
+    color:var(--muted);text-decoration:none;font-size:.86rem;
+    padding:6px 11px;border-radius:999px;border:1px solid transparent;
+    transition:.15s;
+  }
+  nav.jump a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+
+  main{max-width:1000px;margin:0 auto;padding:28px 20px 90px}
+
+  .hero{
+    background:var(--panel2);
+    border:1px solid var(--line);border-radius:20px;
+    padding:34px 32px;box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  .hero h1{margin:0 0 10px;font-size:2.1rem;line-height:1.15}
+  .hero p{margin:0;color:var(--muted);font-size:1.06rem;max-width:72ch}
+  .pill{
+    display:inline-block;font-size:.76rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--line);border-radius:999px;
+    padding:4px 12px;margin-bottom:14px;background:#fff;font-weight:700;
+  }
+
+  .progress-wrap{margin:22px 0 4px}
+  .progress-bar{height:10px;border-radius:999px;background:#e4e9f2;overflow:hidden;border:1px solid var(--line)}
+  .progress-fill{height:100%;width:0;background:var(--accent);transition:width .5s ease}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+  section.lesson{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:28px 30px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  section.lesson h2{
+    font-size:1.5rem;margin:0 0 6px;display:flex;align-items:center;gap:12px;
+  }
+  .num{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    display:grid;place-items:center;font-weight:800;font-size:1rem;
+    background:var(--accent);color:#fff;
+  }
+  section.lesson .sub{color:var(--muted);margin:0 0 18px;font-size:1rem}
+  section.lesson h3{font-size:1.15rem;margin:26px 0 8px;color:#243149}
+  p{margin:12px 0}
+
+  .box{
+    background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;margin:16px 0;
+  }
+  .box.tip{border-left:4px solid var(--good)}
+  .box.note{border-left:4px solid var(--warn)}
+  .box.rule{border-left:4px solid var(--accent);background:var(--accent-soft)}
+  .box.hverdag{border-left:4px solid var(--good);background:var(--good-soft)}
+  .box.hverdag p{margin:10px 0}
+  .opg h5{font-size:1rem;margin:20px 0 6px;color:#243149;border-bottom:1px solid var(--line);padding-bottom:4px}
+  .box.hverdag .figur{margin:14px 0 2px}
+  .box.hverdag .figur svg{max-width:460px;background:#fff}
+  .box.hverdag .hlabel{
+    display:inline-block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--good);font-weight:800;margin-bottom:2px;
+  }
+  .box b{color:#111}
+  .box .rlabel{
+    display:inline-block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);font-weight:800;margin-bottom:2px;
+  }
+
+  .formula{
+    font-family:"Cambria Math","Times New Roman",Georgia,serif;
+    background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0;text-align:center;
+    font-size:1.3rem;letter-spacing:.4px;color:#111;
+  }
+  .formula small{display:block;font-size:.8rem;color:var(--muted);margin-top:6px;font-family:inherit;letter-spacing:0}
+  code.inl{
+    font-family:"Cambria Math",Georgia,serif;background:var(--panel2);
+    padding:2px 8px;border-radius:6px;border:1px solid var(--line);font-size:1.05em;color:#111;
+  }
+
+  .steps{margin:16px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .steps .row{display:flex;gap:0;border-top:1px solid var(--line)}
+  .steps .row:first-child{border-top:none}
+  .steps .calc{
+    flex:1;padding:11px 18px;font-family:"Cambria Math",Georgia,serif;font-size:1.12rem;
+    background:#fff;color:#111;display:flex;align-items:center;
+  }
+  .steps .why{
+    flex:1;padding:11px 18px;color:var(--muted);font-size:.92rem;background:var(--panel2);
+    display:flex;align-items:center;
+  }
+  @media(max-width:620px){.steps .row{flex-direction:column}}
+
+  .graphwrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin:18px 0}
+  .graphwrap svg{background:#fff;border:1px solid var(--line);border-radius:12px;flex:0 0 auto}
+  .graphwrap .caption{flex:1;min-width:220px;color:var(--muted);font-size:.95rem}
+
+  /* QUIZ */
+  .quiz{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:18px;padding:24px 28px;margin:24px 0;box-shadow:var(--shadow);
+  }
+  .quiz .qhead{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+  .quiz .qtag{
+    font-size:.72rem;letter-spacing:.7px;text-transform:uppercase;color:#fff;
+    background:var(--accent);padding:4px 11px;border-radius:999px;font-weight:800;
+  }
+  .quiz h3{margin:0;font-size:1.22rem}
+  .quiz .qsub{color:var(--muted);margin:6px 0 16px;font-size:.95rem}
+  .q{margin:18px 0;padding-top:18px;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:none;padding-top:0}
+  .q .qtext{font-weight:600;margin-bottom:12px;font-size:1.04rem}
+  .q .qtext .qn{color:var(--accent);font-weight:800;margin-right:6px}
+  .lvl{
+    display:inline-block;font-size:.68rem;letter-spacing:.5px;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:8px;
+    color:var(--muted);font-weight:700;vertical-align:middle;background:#fff;
+  }
+  .opts{display:grid;gap:9px}
+  .opt{
+    text-align:left;width:100%;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);color:var(--ink);
+    padding:11px 15px;border-radius:10px;font-size:1rem;font-family:inherit;
+    transition:.15s;display:flex;align-items:center;gap:10px;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .mk{
+    flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);
+    display:grid;place-items:center;font-weight:800;font-size:.85rem;color:var(--muted);background:#fff;
+  }
+  .opt.correct{border-color:var(--good);background:var(--good-soft)}
+  .opt.correct .mk{background:var(--good);color:#fff;border-color:var(--good)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.wrong .mk{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt:disabled{cursor:default}
+  .fb{
+    margin-top:12px;padding:11px 15px;border-radius:10px;font-size:.95rem;display:none;
+  }
+  .fb.show{display:block}
+  .fb.ok{background:var(--good-soft);border:1px solid var(--good);color:#12633f}
+  .fb.no{background:var(--bad-soft);border:1px solid var(--bad);color:#8f2733}
+  .fb b{color:#111}
+  .fb .igen{
+    margin-left:8px;background:#fff;border:1px solid var(--bad);border-radius:8px;
+    padding:4px 11px;font:inherit;font-size:.88rem;font-weight:700;
+    color:#8f2733;cursor:pointer;
+  }
+  .fb .igen:hover{background:var(--bad);color:#fff}
+
+  .scorebar{
+    margin-top:16px;font-size:.95rem;color:var(--muted);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .scorebar .badge{
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:5px 14px;font-weight:700;color:var(--ink);
+  }
+  .final-note{text-align:center;color:var(--muted);margin-top:16px;font-size:.95rem}
+
+  footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  @media(max-width:620px){.cheat{grid-template-columns:1fr}}
+  .cheat .card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .cheat .card h4{margin:0 0 6px;font-size:1rem;color:#243149}
+  .cheat .card p{margin:0;font-size:.92rem;color:var(--muted)}
+
+  .printbtn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:#fff;border:1px solid var(--line);color:var(--ink);
+    padding:9px 16px;border-radius:10px;font-size:.92rem;font-family:inherit;cursor:pointer;
+    font-weight:600;
+  }
+  .printbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .btn{background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+  .btn:hover{background:#195cb5}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* start overlay */
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(26,34,51,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}
+  .overlay.hidden{display:none}
+  .overlay .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 32px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(20,30,60,.25)}
+  .overlay h2{margin:0 0 6px;font-size:1.5rem}
+  .overlay p{margin:0 0 18px;color:var(--muted)}
+  .overlay input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:1.05rem;font-family:inherit;margin-bottom:14px}
+  .overlay input:focus{outline:none;border-color:var(--accent)}
+  .overlay .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* welcome bar */
+  .welcome{display:none;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .welcome.show{display:flex}
+  .welcome .hi{font-weight:800;font-size:1.05rem}
+  .welcome .live{color:var(--muted);font-size:.95rem}
+  .welcome .spacer{margin-left:auto}
+  .welcome .btn{padding:8px 14px;font-size:.9rem}
+
+  /* results */
+  #results .rtable{width:100%;border-collapse:collapse;margin-top:10px}
+  #results .rtable th,#results .rtable td{border:1px solid var(--line);padding:9px 12px;text-align:left;font-size:.98rem}
+  #results .rtable th{background:var(--panel2);font-weight:700}
+  #results .rtable tr.total td{font-weight:800;background:var(--accent-soft)}
+  #results .grade{font-size:1.08rem;margin-top:16px;font-weight:600}
+
+
+.opg{background:#fdf8f0;border:1px solid var(--line);border-left:4px solid #b5710a;border-radius:10px;padding:14px 18px;margin:18px 0 4px}
+.opg h4{margin:0 0 6px;font-size:1.02rem}
+.opg h4 em{font-style:normal;color:#b5710a;font-weight:800;margin-right:8px}
+ol.abc{list-style:lower-alpha;padding-left:26px;margin:8px 0 4px}
+ol.abc li{margin:5px 0}
+.figur{margin:14px 0}
+.figur svg{display:block;width:100%;max-width:520px;margin:0 auto;height:auto;background:#fff;border:1px solid var(--line);border-radius:10px}
+.figur .caption{color:var(--muted);font-size:.92rem;margin-top:6px}
+@media print{.opg{background:#fff !important;border:1px solid #999;border-left:3px solid #000}.opg h4 em{color:#000}
+.figur,.opg{break-inside:avoid;page-break-inside:avoid}
+.figur svg{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  /* ---------- PRINT ---------- */
+  @media print{
+    @page{size:A4;margin:16mm}
+    body{background:#fff;color:#000;font-size:11.5pt;line-height:1.45}
+    header.top,nav.jump,.progress-wrap,.printbtn,.overlay,.welcome .btn{display:none !important}
+    .welcome{border:1px solid #999;background:#fff !important}
+    main{max-width:none;padding:0}
+    .hero,section.lesson,.quiz,.box,.steps,.cheat .card,.formula,.graphwrap svg{
+      box-shadow:none !important;
+    }
+    .hero,section.lesson,.quiz{
+      border:1px solid #999;background:#fff !important;border-radius:0;
+      padding:14px 16px;margin:10px 0;break-inside:avoid;page-break-inside:avoid;
+    }
+    section.lesson h2,.quiz h3,section.lesson h3{break-after:avoid}
+    .num{background:#fff !important;color:#000;border:1.5px solid #000}
+    .pill,.qtag{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .box,.box.rule,.box.hverdag{background:#fff !important;border:1px solid #bbb;border-left:3px solid #000}
+    .hlabel{color:#000 !important}
+    .rlabel{color:#000 !important}
+    .formula,.steps .calc,.opt,.opt .mk,.cheat .card{background:#fff !important}
+    .steps .why{background:#fff !important;color:#333}
+    .opt{border:1px solid #888}
+    .opt .mk{border:1px solid #000;color:#000}
+    /* keep quizzes usable as a paper worksheet: neutral options, hide screen-only feedback state */
+    .opt.correct,.opt.wrong{background:#fff !important;border:1px solid #888 !important}
+    .opt.correct .mk,.opt.wrong .mk{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .fb{display:none !important}
+    .q{break-inside:avoid;page-break-inside:avoid}
+    a{color:#000;text-decoration:none}
+    svg line[stroke="#1f6fd6"],svg line[stroke="#4f9dff"]{stroke:#000 !important}
+    svg circle{fill:#000 !important}
+    .caption{color:#333}
+  }
+
+  /* Brøker med vandret brøkstreg */
+  .frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.16;font-size:.88em;margin:0 .16em}
+  .frac>span{display:block;padding:0 .3em;white-space:nowrap}
+  .frac>span:first-child{border-bottom:1.6px solid currentColor;padding-bottom:.05em}
+  .frac>span:last-child{padding-top:.05em}
+
+.jump a.aktiv{color:var(--accent);background:var(--accent-soft);
+border-color:var(--accent-soft);font-weight:700}
+.figur{background:var(--panel2);border:1px solid var(--line);border-radius:14px;
+padding:18px;margin:16px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.figtekst{color:var(--muted);font-size:.9rem;margin-top:10px;text-align:left;
+max-width:68ch;margin-left:auto;margin-right:auto}
+h2.sec{font-size:1.4rem;margin:34px 0 6px;scroll-margin-top:72px}
+p.sec{color:var(--muted);max-width:74ch;margin:0 0 12px;font-size:.97rem}
+.boks{background:var(--panel2);border:1px solid var(--line);
+border-left:4px solid var(--accent);border-radius:12px;padding:16px 20px;
+margin:16px 0}
+.boks h3{font-size:1.05rem;margin:0 0 4px}
+.boks p,.boks li{color:var(--muted);font-size:.95rem;max-width:74ch}
+.boks ul{margin:6px 0 0;padding-left:20px}
+.boks li{margin:4px 0}
+table.krit{width:100%;border-collapse:collapse;margin:10px 0;font-size:.92rem}
+table.krit th,table.krit td{border:1px solid var(--line);padding:9px 11px;
+text-align:left;vertical-align:top}
+table.krit thead th{background:var(--panel2);font-size:.8rem;
+text-transform:uppercase;letter-spacing:.4px;color:var(--muted)}
+table.krit td.dim{font-weight:800;background:var(--panel2);width:14%}
+table.krit td.omr{width:24%;font-weight:600}
+.vaelg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:10px;margin:10px 0 0}
+.vaelg a{display:block;text-decoration:none;background:var(--panel);
+border:1px solid var(--line);border-radius:12px;padding:12px 14px;
+color:var(--ink);font-weight:700;font-size:.97rem}
+.vaelg a:hover{border-color:var(--accent)}
+.vaelg span{display:block;color:var(--muted);font-weight:400;font-size:.84rem;
+margin-top:3px}
+.opg{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+padding:22px 26px;margin:18px 0;box-shadow:var(--shadow);
+scroll-margin-top:72px}
+.opg > h3{font-size:1.35rem;margin:0;display:flex;align-items:baseline;gap:12px}
+.opg > h3 .nr{flex:0 0 auto;width:30px;height:30px;border-radius:9px;
+background:var(--accent);color:#fff;display:grid;place-items:center;
+font-size:.95rem;font-weight:800;align-self:center}
+.opg .genre{color:var(--muted);font-weight:600;font-size:.95rem;
+margin:2px 0 14px 42px}
+.opg h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.5px;
+color:var(--muted);margin:18px 0 6px}
+.opg p{color:var(--muted);font-size:.97rem;max-width:74ch;margin:8px 0}
+.opg p b{color:var(--ink)}
+.kilder{list-style:none;padding:0;margin:0}
+.kilder li{margin:8px 0;padding-left:16px;border-left:3px solid var(--line)}
+.kilder a{font-weight:700;color:var(--accent);text-decoration:none}
+.kilder a:hover{text-decoration:underline}
+.kilder span{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
+.kildenavn{color:var(--muted);font-size:.84rem;margin-top:8px}
+.forlaeg{background:var(--panel2);border:1px solid var(--line);
+border-radius:12px;padding:16px 20px;margin:6px 0 0}
+.forlaeg-ind{margin:0 0 10px!important;color:var(--ink)!important;
+font-weight:600}
+.cit{display:grid;gap:10px}
+.forlaeg blockquote{margin:0;padding:10px 14px;background:#fff;
+border:1px solid var(--line);border-radius:10px;font-size:.96rem;
+color:var(--ink)}
+.forlaeg cite{display:block;font-style:normal;color:var(--muted);
+font-size:.85rem;margin-top:6px}
+.remse{font-family:"Consolas",monospace;font-size:.92rem;color:var(--ink)!important;
+background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:12px 14px;margin:0!important;line-height:1.9}
+.opslag{background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:14px 16px}
+.opslag h5{margin:0 0 6px;font-size:1.02rem}
+.opslag p{margin:0!important;font-size:.96rem}
+ul.prog{list-style:none;margin:0;padding:0;background:#fff;
+border:1px solid var(--line);border-radius:10px;padding:12px 16px}
+ul.prog li{display:flex;gap:14px;padding:4px 0;font-size:.95rem;
+color:var(--muted)}
+ul.prog .tid{font-family:"Consolas",monospace;color:var(--accent);
+flex:0 0 52px}
+ul.prog b{color:var(--ink)}
+.konstrueret{font-size:.84rem!important;font-style:italic;margin:10px 0 0!important}
+ol.krav{margin:4px 0 0;padding-left:20px}
+ol.krav li{color:var(--muted);font-size:.97rem;margin:7px 0;max-width:72ch}
+ol.krav b{color:var(--accent);font-weight:800}
+.afsnit{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:18px 22px;
+margin:14px 0;box-shadow:var(--shadow)}
+.afsnit h2{font-size:1.2rem;margin:0 0 10px;display:flex;align-items:center;
+gap:12px;border:0;padding:0}
+.afsnit .num{width:30px;height:30px;border-radius:9px;display:grid;
+place-items:center;font-weight:800;font-size:.95rem;background:var(--accent);
+color:#fff;flex:0 0 auto}
+.afsnit p{margin:8px 0;color:var(--muted);font-size:.97rem;max-width:74ch}
+.afsnit p b{color:var(--ink)}
+table.liste{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
+table.liste th,table.liste td{border:1px solid var(--line);padding:10px 12px;
+text-align:left;vertical-align:top}
+table.liste th{background:var(--panel2);width:26%}
+.kortnet{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+gap:18px;margin:14px 0 0}
+.kort{display:block;text-decoration:none;color:inherit;background:var(--panel);
+border:1px solid var(--line);border-radius:16px;padding:22px 24px;
+box-shadow:var(--shadow);transition:.15s}
+.kort:hover{border-color:var(--accent);transform:translateY(-2px)}
+.kort .uge{font-family:"Consolas",monospace;font-size:.74rem;
+letter-spacing:.6px;text-transform:uppercase;color:var(--accent);
+font-weight:700}
+.kort h2{font-size:1.3rem;margin:6px 0 8px;border:0;padding:0}
+.kort p{color:var(--muted);margin:0 0 14px;font-size:.96rem}
+.kort ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;
+gap:6px;font-size:.77rem;font-family:"Consolas",monospace;color:var(--accent)}
+.kort li{background:var(--accent-soft);padding:4px 9px;border-radius:20px}
+.printbtn{background:#fff;border:1px solid var(--line);border-radius:10px;
+padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;
+color:var(--ink);font-family:inherit;margin:6px 8px 0 0}
+.printbtn:hover{border-color:var(--accent);color:var(--accent)}
+@media print{header.top,.printbtn,.vaelg{display:none!important}
+.opg,.afsnit,.figur,.boks{box-shadow:none;break-inside:avoid;
+page-break-inside:avoid}
+body{font-size:10.5pt}main{padding:0}@page{size:A4;margin:14mm}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="/dansk" style="text-decoration:none;color:inherit">Dansk · <span>9. klasse</span></a><nav class="jump"><a class="" href="/dansk/saet-1">Sæt 1</a><a class="" href="/dansk/saet-2">Sæt 2</a><a class="" href="/dansk/saet-3">Sæt 3</a><a class="aktiv" href="/dansk/essay">Essay</a></nav></div></header><main><section class="hero"><span class="pill">Skriftlig fremstilling · genre</span><h1>Essay</h1><p>Essayet er den frieste af genrerne, og det er derfor, den er svær. Her er, hvad den kræver, og hvordan du kommer igennem skriveprocessen. Opgave 1 i <a href="/dansk/saet-3">Sæt 3</a> er et essay.</p><button class="printbtn" onclick="window.print()">Print siden</button></section><h2 class="sec">Hvad kendetegner et essay?</h2><table class="liste"><tbody><tr><th>Fri genre</th><td>Du blander egne oplevelser, tanker, følelser og observationer med generelle betragtninger.</td></tr><tr><th>Undersøgende tone</th><td>Du starter ofte et sted i det helt konkrete — en hændelse, en genstand eller en situation — og "zoomer ud" for at reflektere over det store spørgsmål.</td></tr><tr><th>Skrivetænkning</th><td>Teksten skal virke som en igangværende tankeproces, hvor du betragter emnet fra flere forskellige vinkler.</td></tr><tr><th>Levende sprog</th><td>Brug billedsprog — metaforer, sammenligninger — sansninger og et personligt, men stadig præcist sprog.</td></tr></tbody></table><h2 class="sec">Trin for trin gennem skriveprocessen</h2><section class="afsnit"><h2><span class="num">1</span>Læs opgaveformuleringen grundigt</h2><p>Hvad er kernen i emnet? Hvilke tekster eller billeder følger med som afsæt, og hvordan kan du bruge dem som springbrættet til dine egne tanker?</p></section><section class="afsnit"><h2><span class="num">2</span>Brainstorm og find dit personlige vink</h2><p>Spørg dig selv: Hvad betyder det her emne for mig? Hvornår har jeg oplevet noget lignende?</p><p><b>Undgå at skrive en kedelig stil eller en belærende kronik.</b></p></section><section class="afsnit"><h2><span class="num">3</span>Byg essayet op</h2><p><b>Indledning.</b> Fang læseren med en skarp observation, en lille historie eller en undren. Undgå "I dette essay vil jeg …".</p><p><b>Hoveddel.</b> Bevæg dig frem og tilbage mellem det konkrete — en episode fra dit liv eller en detalje — og det abstrakte: tanker, filosofi, samfundet. Lad tankerne udvikle sig undervejs.</p><p><b>Afslutning.</b> Konkludér ikke med et tungt og kedeligt punktum, men lad tanken hænge i luften eller perspektivér til noget større.</p><div class="figur"><svg viewBox="0 0 640 300" width="100%" style="max-width:640px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stil; Kronik; Essay tegnet som kurver mellem det konkrete og det abstrakte." font-family="Consolas, monospace" font-size="11"><rect x="150" y="26" width="374.0" height="110.0" fill="#f4f6fb"/><line x1="150" y1="26" x2="524.0" y2="26" stroke="#c9d2e0"/><line x1="150" y1="246.0" x2="524.0" y2="246.0" stroke="#1a2233"/><text x="140" y="30" text-anchor="end" fill="#586074" font-weight="700">ABSTRAKT</text><text x="140" y="44" text-anchor="end" fill="#586074" font-size="9.5">det store spørgsmål</text><text x="140" y="246.0" text-anchor="end" fill="#586074" font-weight="700">KONKRET</text><text x="140" y="260.0" text-anchor="end" fill="#586074" font-size="9.5">det, du så og mærkede</text><text x="187.4" y="276.0" text-anchor="middle" fill="#1a2233" font-weight="700">Indledning</text><line x1="224.8" y1="26" x2="224.8" y2="252.0" stroke="#c9d2e0" stroke-dasharray="3 3"/><text x="337.0" y="276.0" text-anchor="middle" fill="#1a2233" font-weight="700">Hoveddel</text><line x1="449.2" y1="26" x2="449.2" y2="252.0" stroke="#c9d2e0" stroke-dasharray="3 3"/><text x="486.6" y="276.0" text-anchor="middle" fill="#1a2233" font-weight="700">Afslutning</text><polyline points="150.0,213.0 224.8,202.0 299.6,215.2 374.4,197.6 449.2,206.4 524.0,213.0" fill="none" stroke="#586074" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/><text x="534.0" y="217.0" fill="#586074" font-weight="400">Stil</text><polyline points="150.0,70.0 224.8,61.2 299.6,70.0 374.4,52.4 449.2,61.2 524.0,52.4" fill="none" stroke="#586074" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="6 4"/><text x="534.0" y="56.4" fill="#586074" font-weight="400">Kronik</text><polyline points="150.0,197.6 224.8,83.2 299.6,180.0 374.4,56.8 449.2,171.2 524.0,70.0" fill="none" stroke="#1f6fd6" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><circle cx="150.0" cy="197.6" r="3.5" fill="#1f6fd6"/><circle cx="224.8" cy="83.2" r="3.5" fill="#1f6fd6"/><circle cx="299.6" cy="180.0" r="3.5" fill="#1f6fd6"/><circle cx="374.4" cy="56.8" r="3.5" fill="#1f6fd6"/><circle cx="449.2" cy="171.2" r="3.5" fill="#1f6fd6"/><circle cx="524.0" cy="70.0" r="3.5" fill="#1f6fd6"/><text x="534.0" y="74.0" fill="#1f6fd6" font-weight="700">Essay</text></svg><div class="figtekst">Det er bevægelsen, der gør et essay til et essay. Stilen bliver nede i det konkrete, og kronikken bliver oppe i det abstrakte — essayet går op og ned mellem dem hele vejen igennem. Læg mærke til, at det ender oppe: tanken skal hænge i luften, ikke lukkes.</div></div></section><section class="afsnit"><h2><span class="num">4</span>Gennemlæs og spil sproget op</h2><p>Er der for mange gentagelser? Kan du gøre et udsagnsord eller et tillægsord mere præcist? Tjek for basale retstavnings- og kommafejl.</p><div class="figur"><svg viewBox="0 0 560 360" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kredsløb med 4 trin, der gentager sig." font-family="Consolas, monospace" font-size="11"><defs><marker id="pilr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1f6fd6"/></marker></defs><path d="M 345.3 46.1 A 149.0 149.0 0 0 1 413.9 114.7" fill="none" stroke="#1f6fd6" stroke-width="1.6" marker-end="url(#pilr)"/><path d="M 413.9 245.3 A 149.0 149.0 0 0 1 345.3 313.9" fill="none" stroke="#1f6fd6" stroke-width="1.6" marker-end="url(#pilr)"/><path d="M 214.7 313.9 A 149.0 149.0 0 0 1 146.1 245.3" fill="none" stroke="#1f6fd6" stroke-width="1.6" marker-end="url(#pilr)"/><path d="M 146.1 114.7 A 149.0 149.0 0 0 1 214.7 46.1" fill="none" stroke="#1f6fd6" stroke-width="1.6" marker-end="url(#pilr)"/><rect x="205.0" y="6.0" width="150" height="50" rx="9" fill="#fff" stroke="#1f6fd6" stroke-width="1.4"/><text x="280.0" y="27.0" text-anchor="middle" fill="#1a2233" font-size="11.5" font-weight="700">Gentagelser</text><text x="280.0" y="43.0" text-anchor="middle" fill="#586074" font-size="9.9">står det samme to gange?</text><rect x="354.0" y="155.0" width="150" height="50" rx="9" fill="#fff" stroke="#1f6fd6" stroke-width="1.4"/><text x="429.0" y="176.0" text-anchor="middle" fill="#1a2233" font-size="11.5" font-weight="700">Udsagnsord</text><text x="429.0" y="192.0" text-anchor="middle" fill="#586074" font-size="8.8">kan det blive mere præcist?</text><rect x="205.0" y="304.0" width="150" height="50" rx="9" fill="#fff" stroke="#1f6fd6" stroke-width="1.4"/><text x="280.0" y="325.0" text-anchor="middle" fill="#1a2233" font-size="11.5" font-weight="700">Tillægsord</text><text x="280.0" y="341.0" text-anchor="middle" fill="#586074" font-size="10.0">fylder det bare?</text><rect x="56.0" y="155.0" width="150" height="50" rx="9" fill="#fff" stroke="#1f6fd6" stroke-width="1.4"/><text x="131.0" y="176.0" text-anchor="middle" fill="#1a2233" font-size="11.5" font-weight="700">Stavning</text><text x="131.0" y="192.0" text-anchor="middle" fill="#586074" font-size="10.0">og kommaer</text><text x="280.0" y="178.0" text-anchor="middle" fill="#1a2233" font-size="12.5" font-weight="700">Læs højt</text><text x="280.0" y="194.0" text-anchor="middle" fill="#586074" font-size="10">en gang til</text></svg><div class="figtekst">De fire spørgsmål, du stiller til din egen tekst. Læs højt — det er der, gentagelserne høres.</div></div></section><button class="printbtn" onclick="window.print()">Print siden</button></main><footer>Øvelsessæt til undervisningsbrug · dansk, skriftlig fremstilling · Mibelibsen.</footer></body></html>
