@@ -54,19 +54,13 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 
 ## Næste skridt
 
-1. **Quizzerne på `manipulation.html` og `funktioner-og-ligninger.html` er
-   stadig ikke verificeret** — 51 spørgsmål. `statistik.html` er gennemgået
-   11. september: alle 30 svar er rigtige, og de 16, der kan regnes, er
-   efterregnet programmatisk.
-2. **Lektier fra uge 37.** Der er lavet til og med uge 36. Aftalt at indholdet
+1. **Lektier fra uge 37.** Der er lavet til og med uge 36. Aftalt at indholdet
    skal gennemgås, før der laves mere.
-3. **Årsplan til tysk.** Afventer at brugeren sender den. Samfundsfag er lagt op
-   15. september.
-4. **Fire gamle facit-filer** i `facit/` er ikke omskrevet til det nye
+2. **Fire gamle facit-filer** i `facit/` er ikke omskrevet til det nye
    PDF-format: `facitark-funktioner-og-ligninger.html`, `facitark-manipulation.pdf`,
    `facit-lektier-manipulation.pdf`, `facit-statistik-hjemmeopgaver.pdf`,
    `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
-5. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
+3. **`statistik.html` mangler "tilbage til forsiden"** — den linker kun til
    `matematik.html`.
 
 ## Lavet 6. oktober 2026 · samfundsfag
@@ -350,7 +344,10 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   klassens eget dokument, hvor en voksen er til stede. Udeladelsen står som
   `UDE` i scriptet med begrundelsen, så den er til at se og til at fortryde
   — tallene for, hvor mange der svarede, er uændrede.
-  **Stadig åbent i tysk:** årsplanen mangler, og den skal brugeren sende.
+  **Årsplanen i tysk er droppet (3.11.).** Brugeren har besluttet, at der
+  ikke kommer en. Forsidens tysk-kort sagde *Årsplan for tysk* og
+  indledningen lovede *årsplaner til samfundsfag og tysk* — begge dele er
+  rettet, så de beskriver det, faget faktisk har. Spørg ikke efter den igen.
 
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
