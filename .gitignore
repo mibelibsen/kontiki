@@ -39,3 +39,6 @@ vejledning/klip-rumfanget-fri-svar.pdf
 
 # Svararket til overfladeøvelsen bygges af claude/byg_klip_overflade.py.
 vejledning/klip-overfladen-fri-svar.pdf
+
+# Svararket til Pythagoras-øvelsen bygges af claude/byg_klip_pythagoras.py.
+vejledning/klip-pythagoras-fri-svar.pdf

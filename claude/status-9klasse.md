@@ -282,6 +282,43 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   dashboardet. Brug læsningen til at finde det rigtige id og give et
   præcist link — gæt aldrig på en projektadresse.
 
+- **Geometri klip — én flise (3.11.).** `geometri-klip.html`, bygget af
+  `claude/byg_geometri_klip.py`, linket fra `matematik.html`. De fire
+  klippeark fyldte fire kort på matematiksiden; nu er der ét kort,
+  **Geometri klip**, og en side bagved med dem alle.
+  **Miniaturerne er de rigtige figurer.** Scriptet importerer de fire
+  byggescripts og henter figuren derfra — mm-målene i `<svg>`-taggen
+  fjernes, så den kan skalere på en skærm, men `viewBox` bliver stående.
+  Ændrer et ark sig, ændrer billedet sig med; de kan ikke komme til at
+  vise hver sit. Siden har også den praktiske besked, der manglede alle
+  fire steder: **print i 100 %, ikke «tilpas til side»**.
+  Knapperne hedder `.btnlink` på matematiksiden, ikke `.btn` — CSS'en
+  arves derfra, så klassenavnet skal passe til kilden.
+
+- **Klip Pythagoras fri (3.11.).** `materiale/klip-pythagoras-fri.pdf`,
+  bygget af `claude/byg_klip_pythagoras.py`. Fjerde ark. Her er saksen
+  ikke bare et greb, den er den eneste udvej: **kvadratet på den lange
+  side ligger skævt og kan ikke tælles.**
+  **A** tre kvadrater på en 3-4-5-trekant — 9 og 16 kan tælles, det skrå
+  skal klippes ud og lægges på ternkvadratet: 25. **B** fire ens trekanter
+  i en (a+b)-ramme, lagt på to måder: samme ramme, samme trekanter, altså
+  lige store huller — 3×3 + 4×4 i den ene, 5×5 i den anden. **Det er
+  beviset**, og det bruger ingen steder, at siderne er 3, 4 og 5. **C**
+  Perigals opdeling: fire stykker af 4×4-kvadratet plus 3×3-kvadratet
+  fylder 5×5-kvadratet præcis.
+  **Perigal er regnet efter, ikke tegnet.** Snittene går gennem midten,
+  parallelt med og vinkelret på den lange side; enderne lander præcis på
+  kanten, fordi hver halvdel er c/2 lang. Og arealer, der stemmer, er ikke
+  nok — brikkerne kunne overlappe. Scriptet lægger derfor de fem stykker
+  på plads og tjekker 14 400 punkter: hvert punkt skal være dækket præcis
+  én gang. Gør det ikke det, bliver arket ikke bygget.
+  Svararket viser begge opstillinger i rammen og de fem stykker på plads —
+  facit skal vise det, opgaven beder om.
+  **Mellemrum mellem to inline-block'e tæller med i bredden.** Rammen og
+  trekanterne var 179 mm tilsammen og burde kunne stå side om side på de
+  184 mm, men mellemrummet i HTML'en skubbede dem fra hinanden, så de
+  havnede på hver sin side. `.rad{font-size:0}` løste det.
+
 - **Klip overfladen fri (3.11.).** `materiale/klip-overfladen-fri.pdf`,
   bygget af `claude/byg_klip_overflade.py`, linket fra `matematik.html`.
   Tredje ark i rækken. Her er saksen ikke et hjælpemiddel, den er hele
@@ -323,6 +360,18 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   **Kassen blev sænket fra 5 til 4 cm**, fordi nettet ellers ikke kunne dele
   side med grundfladen, og arket blev fem sider med en næsten tom
   førsteside. Tallene er stadig eksakte: 96 / 3 = 32.
+
+- **GeoGebra: «vælg Graf» findes ikke (3.11.).** Brugeren faldt over
+  trin 1 i `geogebra-lineaere-funktioner.html`: der er ingen knap, der
+  hedder Graf. Prøvet efter i Chromium på dansk —
+  **geogebra.org/classic åbner selv i Graf-visningen**, med algebravinduet
+  til venstre og grafikvinduet til højre. Ordet «Graf» står kun ét sted: i
+  app-listen under de tre streger øverst til højre. Trinnet siger nu, at
+  man ikke skal vælge noget, og har en lille boks med **begge ikoner**
+  tegnet som inline-SVG — hamburgeren og Grafs bølgede kurve, hvis punkter
+  er regnet med en sinus, ikke tegnet på øjemål. Lær af det: en vejledning
+  til en webgrænseflade skal prøves af i grænsefladen, ikke skrives af
+  hukommelsen.
 
 - **Klip arealet fri (3.11.).** `materiale/klip-arealet-fri.pdf`, bygget af
   `claude/byg_klip_areal.py`, linket fra `matematik.html`. Tre arealformler,

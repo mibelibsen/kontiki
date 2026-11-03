@@ -18,11 +18,40 @@ algebravinduet. "Nulpunkt" findes ikke - den hedder Rod.
     python3 claude/byg_geogebra.py
 """
 import html
+import math
 import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import figurer as FG
+
+
+# --------------------------------------------------------------------- ikoner
+# Brugeren loeb panden mod "vaelg Graf": der er ingen knap med det navn.
+# geogebra.org/classic aabner SELV i Graf-visningen (proevet efter i
+# Chromium paa dansk, 3.11.2026) - Graf staar kun i app-listen under
+# menuen oeverst til hoejre. Derfor viser trin 1 nu begge ikoner, saa de
+# kan genkendes, hvis man er landet et forkert sted.
+def _ikon_graf():
+    """GeoGebras Graf-ikon: en bølget kurve. Punkterne regnes."""
+    pkt = [(3 + 16 * i / 48, 11 - 5.5 * math.sin(2 * math.pi * i / 48))
+           for i in range(49)]
+    d = 'M' + ' L'.join(f'{x:.2f},{y:.2f}' for x, y in pkt)
+    return ('<svg class="ikon" viewBox="0 0 22 22" aria-hidden="true">'
+            f'<path d="{d}" fill="none" stroke="#6557d6" stroke-width="1.7" '
+            'stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
+
+def _ikon_menu():
+    """De tre streger øverst til højre."""
+    linjer = ''.join(f'<line x1="4" y1="{y}" x2="18" y2="{y}"/>'
+                     for y in (6.5, 11, 15.5))
+    return ('<svg class="ikon" viewBox="0 0 22 22" aria-hidden="true">'
+            f'<g stroke="#1a2233" stroke-width="1.8" stroke-linecap="round">'
+            f'{linjer}</g></svg>')
+
+
+IKON_GRAF, IKON_MENU = _ikon_graf(), _ikon_menu()
 
 # Siden ligger i roden og bliver udgivet - men der linkes ikke til den fra
 # nogen anden side. Den kan kun findes, hvis man kender adressen:
@@ -58,11 +87,17 @@ FIG_SKAER = FG.koordinatsystem(
 # (overskrift, [afsnit], [(hvad du skriver, hvad der sker)], figur, figurtekst)
 TRIN = [
  ('Åbn GeoGebra',
-  ['Gå ind på <b>geogebra.org/classic</b> og vælg <b>Graf</b>. Du skal ikke '
-   'logge ind, og du skal ikke hente noget.',
+  ['Gå ind på <b>geogebra.org/classic</b>. Du skal ikke logge ind, du skal '
+   'ikke hente noget — og du skal ikke vælge noget. Siden åbner selv i den '
+   'visning, der hedder <b>Graf</b>.',
    'Til venstre er <b>algebravinduet</b> med feltet, der hedder '
    '<i>Input…</i> — det er dér, du skriver. Til højre er '
-   '<b>grafikvinduet</b>, hvor tingene bliver tegnet.',
+   '<b>grafikvinduet</b> med akserne, hvor tingene bliver tegnet. Kan du se '
+   'de to ting, er du det rigtige sted.',
+   f'<div class="ikonboks">{IKON_MENU}<p>Er du alligevel landet i noget '
+   f'andet — Geometri, 3D Grafik, Regneark — så klik på de tre streger '
+   f'øverst til højre, og vælg {IKON_GRAF} <b>Graf</b> i listen. Det er '
+   f'det eneste sted, ordet «Graf» står.</p></div>',
    'Alt, hvad du skriver i Input-feltet, afsluttes med <b>Enter</b>.'],
   [], None, None),
 
@@ -199,7 +234,9 @@ trin_html = ''
 for i, (o, stykker, skriv, figur, figtekst) in enumerate(TRIN, 1):
     trin_html += (f'<section class="trin"><h2><span class="num">{i}</span>'
                   f'{html.escape(o)}</h2>')
-    trin_html += ''.join(f'<p>{t}</p>' for t in stykker)
+    trin_html += ''.join(
+        t if t.startswith('<div') else f'<p>{t}</p>'
+        for t in stykker)
     if skriv:
         trin_html += '<table class="skriv"><tbody>' + ''.join(
             f'<tr><td class="kmd"><code>{html.escape(k)}</code></td>'
@@ -243,6 +280,12 @@ table.falder{width:100%;border-collapse:collapse;margin:12px 0;font-size:.95rem}
 table.falder th,table.falder td{border:1px solid var(--line);padding:10px 12px;
 text-align:left;vertical-align:top}
 table.falder th{background:var(--panel2);width:30%}
+.ikon{width:1.3em;height:1.3em;vertical-align:-.3em;margin:0 1px}
+.ikonboks{display:flex;gap:12px;align-items:flex-start;
+background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+padding:12px 16px;margin:12px 0}
+.ikonboks>.ikon{width:26px;height:26px;flex:0 0 auto;margin:2px 0 0}
+.ikonboks p{margin:0;color:var(--muted);font-size:.95rem;max-width:66ch}
 .figtekst{color:var(--muted);font-size:.9rem;margin-top:10px;text-align:left;
 max-width:66ch;margin-left:auto;margin-right:auto}
 h2.sec{font-size:1.4rem;margin:30px 0 6px}
