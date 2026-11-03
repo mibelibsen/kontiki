@@ -209,7 +209,7 @@ def side(titel, pill, krop, aktiv='matematik', fane=True):
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{titel}</title><style>' + GRUND + EKSTRA +
             '</style></head><body><header class="top"><div class="top-inner">'
-            '<a class="brand" href="index.html">9. klasse</a>'
+            '<a class="brand" href="index.html">321flyv · <span>9. klasse</span></a>'
             + nav + '</div></header><main>' + krop + '</main><footer>'
             'Undervisningsmateriale · Naturfagsuge 2026.'
             '</footer></body></html>')
