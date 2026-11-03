@@ -22,6 +22,12 @@ import os
 import subprocess
 from fractions import Fraction as F
 
+
+def kom(x, n=1):
+    """Dansk decimalkomma. Facit skrives, som ungerne skal skrive det."""
+    return f'{x:.{n}f}'.replace('.', ',')
+
+
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 L, B, H = 60, 40, 40            # kassen: laengde, bredde, hoejde i mm
@@ -306,9 +312,9 @@ VEJL = (f'<h1>Klip rumfanget fri · forventede svar</h1>'
         f'<div class="boks"><b>Det, der driller.</b> Højden i pyramiden er '
         f'<b>ikke</b> sidekanten og heller ikke sidehøjden — den går lodret '
         f'fra spidsen ned til grundfladen. På denne pyramide er højden '
-        f'{H // TERN} cm, sidehøjderne {S_L / 10:.1f} og {S_B / 10:.1f} cm, '
+        f'{H // TERN} cm, sidehøjderne {kom(S_L / 10)} og {kom(S_B / 10)} cm, '
         f'og sidekanten '
-        f'{math.sqrt((L/2)**2 + (B/2)**2 + H**2) / 10:.1f} cm. Tre '
+        f'{kom(math.sqrt((L/2)**2 + (B/2)**2 + H**2) / 10)} cm. Tre '
         f'forskellige tal, og det er det midterste, de kommer til at måle. '
         f'Spørg, hvilket af dem der står i formlen.</div>'
         f'<footer>Grundflade {L // TERN} × {B // TERN} = {G // 100} cm² · '

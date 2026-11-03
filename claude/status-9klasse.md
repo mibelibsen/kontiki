@@ -282,6 +282,30 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   dashboardet. Brug læsningen til at finde det rigtige id og give et
   præcist link — gæt aldrig på en projektadresse.
 
+- **Klip overfladen fri (3.11.).** `materiale/klip-overfladen-fri.pdf`,
+  bygget af `claude/byg_klip_overflade.py`, linket fra `matematik.html`.
+  Tredje ark i rækken. Her er saksen ikke et hjælpemiddel, den er hele
+  pointen: **overfladen er præcis det, der ligger fladt, når legemet
+  klippes op.** Et legeme har ikke en overflade, man kan måle på; en
+  udfoldning har et areal, man kan måle. **A** kassen (seks flader, tre
+  par, 128 cm²), **B** cylinderen (88,0 cm²), **C** pyramiden (70,8 cm²).
+  **Cylinderen er den vigtigste.** At den krumme side er et rektangel, og
+  at dets bredde *er* omkredsen, kan ikke ses — kun vises. Derfor har
+  rektanglet en limflap, så det kan rulles til et rør, og cirklen prøves af
+  i åbningen. Rektanglets bredde er 125,7 mm, og 2 · π · 20 er det samme
+  tal; det er ikke et tilfælde, og det er det, de selv skal opdage.
+  **Kassen og pyramiden er de samme legemer som på rumfangsarket**, og
+  målene hentes med `importlib` fra `byg_klip_rumfang.py`, så de to ark
+  ikke kan komme til at sige hver sit. Klippearket indeholder derfor kun
+  cylinderen, med en boks øverst om at finde de to andre frem og klippe dem
+  op igen. Det holdt arket på tre sider i stedet for fem.
+  **Sidehøjden mod den korte side er præcis 50 mm** — en 3-4-5-trekant — og
+  en assert vogter det. Fælden er, at de regner trekanternes areal med
+  pyramidens højde i stedet for trekantens egen; den står i svararket.
+  **Decimalkomma.** Alle tre klippeark fik en `kom()`-funktion, så facit
+  skriver 70,8 cm² og ikke 70.8 — dansk notation, også i de ark der kun
+  læses af en voksen. De to ældre ark blev bygget om samtidig.
+
 - **Klip rumfanget fri (3.11.).** `materiale/klip-rumfanget-fri.pdf`,
   bygget af `claude/byg_klip_rumfang.py`, linket fra `matematik.html`.
   Efterfølgeren til arealarket, samme greb: **A** grundfladen som

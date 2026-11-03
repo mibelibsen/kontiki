@@ -36,3 +36,6 @@ tekster/hamborg-segmenter.docx
 
 # Svararket til rumfangsøvelsen bygges af claude/byg_klip_rumfang.py.
 vejledning/klip-rumfanget-fri-svar.pdf
+
+# Svararket til overfladeøvelsen bygges af claude/byg_klip_overflade.py.
+vejledning/klip-overfladen-fri-svar.pdf

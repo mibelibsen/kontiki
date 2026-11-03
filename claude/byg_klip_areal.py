@@ -19,6 +19,12 @@ import os
 import subprocess
 from fractions import Fraction as F
 
+
+def kom(x, n=1):
+    """Dansk decimalkomma. Facit skrives, som ungerne skal skrive det."""
+    return f'{x:.{n}f}'.replace('.', ',')
+
+
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ---- maalene paa papiret, i mm -------------------------------------------
@@ -154,14 +160,14 @@ SVAR = [
  ('C', f'Et <b>næsten-rektangel</b>. Længden er den halve omkreds, '
        f'{C_OMKREDS/2:.0f} mm, og højden er radius, {C_R} mm. '
        f'{C_OMKREDS/2:.0f} · {C_R} = {C_AREAL:.0f} mm² = '
-       f'{C_AREAL/100:.1f} cm². Den halve omkreds er π · r, så arealet er '
+       f'{kom(C_AREAL/100)} cm². Den halve omkreds er π · r, så arealet er '
        '<b>π · r · r</b>. Jo flere udsnit, jo mere lige bliver kanten — '
        'det er hele idéen bag formlen.'),
 ]
 
-SVAR_REGN = ['84 cm²', '27 cm²', f'{math.pi*25:.1f} cm²',
+SVAR_REGN = ['84 cm²', '27 cm²', f'{kom(math.pi*25)} cm²',
              '6 cm — højden er 2 · areal ÷ grundlinje',
-             f'r = 31,4 ÷ (2 · π) = 5 cm, så arealet er {math.pi*25:.1f} cm²']
+             f'r = 31,4 ÷ (2 · π) = 5 cm, så arealet er {kom(math.pi*25)} cm²']
 
 CSS = '''
 *{box-sizing:border-box}
@@ -269,7 +275,7 @@ VEJL = (f'<h1>Klip arealet fri · forventede svar</h1>'
         f'<footer>Mål på papiret: parallelogrammet {P_G}×{P_H} mm '
         f'({F(P_AREAL,100)} cm²) · trekanten {T_G}×{T_H} mm '
         f'({F(T_AREAL,100)} cm²) · cirklen r = {C_R} mm '
-        f'({C_AREAL/100:.1f} cm²). Måler de 1-2 mm forkert, er det '
+        f'({kom(C_AREAL/100)} cm²). Måler de 1-2 mm forkert, er det '
         f'målingen, ikke matematikken.</footer>')
 
 
