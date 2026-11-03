@@ -331,6 +331,27 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
   lagde 60°-tallet oven i buen.
 
+- **Nyt domæne: 321flyv.com (3.11.).** Skolens webfilter blokerede
+  `mibelibsen.space`. `.space` er en billig endelse, der bruges meget til
+  spam, og mange filtre blokerer hele endelsen uden at se på indholdet.
+  Domænet blev købt gennem Vercel og koblet på `kontiki-9klasse` — købt
+  dér betyder, at DNS sættes op automatisk, så der skulle ingen poster
+  ind nogen steder. `www` sender videre til apex med 308. Bagefter
+  besluttede brugeren at bruge `mibelibsen.space` til noget andet, så
+  hele sitet flyttede med.
+  **Koden skulle næsten ikke rettes.** Alle sider linker relativt. Der var
+  tre absolutte steder: viderestillingen `/u/eksempel` i `vercel.json`
+  (nu relativ, og `byg_spoergeskema.py` skriver den også relativt, så den
+  ikke kommer igen), `site` i `spoergeskema/opsaetning.json`, og `BASE` i
+  `byg_sturmflut.py`. **En absolut adresse til sitets eget domæne er
+  altid en fejl** — den virker, lige indtil domænet skifter, og så virker
+  den i stilhed forkert.
+  **En viderestilling redder ikke de printede QR-plakater.** De peger på
+  `mibelibsen.space/u/<kode>`, og filteret blokerer forespørgslen, *før*
+  viderestillingen bliver sendt. Skal de bruges igen, skal de printes
+  forfra; scriptet laver dem med den nye adresse. Undersøgelsen var
+  afsluttet, da domænet skiftede.
+
 - **Matematik klip — én flise (3.11.).** `matematik-klip.html`, bygget af
   `claude/byg_matematik_klip.py`, linket fra `matematik.html`. Hed først
   **Geometri klip**; da ligningsarket kom til, passede navnet ikke

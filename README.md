@@ -1,7 +1,7 @@
 # kontiki · undervisningssite til 9. klasse
 
 Statisk undervisningssite til matematik i 9. klasse. Live på
-**https://www.mibelibsen.space**
+**https://321flyv.com**
 
 Dette er den samlede dokumentation. Læs den før du ændrer noget.
 
@@ -41,7 +41,7 @@ Eleverne omtales **"unger"**.
 ## Deploy
 
 ```
-Claude → GitHub (mibelibsen/kontiki, main) → Vercel (kontiki-9klasse) → mibelibsen.space
+Claude → GitHub (mibelibsen/kontiki, main) → Vercel (kontiki-9klasse) → 321flyv.com
 ```
 
 **`main` er sandheden.** Det der ligger på `main`, ligger på sitet. Vercel bygger

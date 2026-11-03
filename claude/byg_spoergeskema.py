@@ -2,7 +2,7 @@
 """Bygger spørgeskema-projektet "Ung i Tyskland".
 
 Ét spørgeskema (Google Forms), ens for alle unger. Hver ung får sin egen
-adresse på sitet, www.mibelibsen.space/u/<kode>, som sender videre til
+adresse på sitet, 321flyv.com/u/<kode>, som sender videre til
 spørgeskemaet med ungens navn forudfyldt i et skjult felt. Så tæller hvert
 svar på den ung, hvis QR-kode blev scannet — og alle svar lander i det samme
 regneark.
@@ -96,7 +96,8 @@ def formular_adresse(navn):
 def skriv_redirects(unger):
     v = json.load(open('vercel.json', encoding='utf-8'))
     andre = [r for r in v.get('redirects', []) if not r['source'].startswith('/u/')]
-    nye = [{'source': f'/u/{EKSEMPEL[1]}', 'destination': f'{SITE}/{SIDE}',
+    # Relativ destination: den foelger med, hvis sitet skifter domaene.
+    nye = [{'source': f'/u/{EKSEMPEL[1]}', 'destination': f'/{SIDE}',
             'permanent': False}]
     for navn, k in unger:
         nye.append({'source': f'/u/{k}', 'destination': formular_adresse(navn),

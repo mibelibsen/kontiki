@@ -8,7 +8,7 @@ og alle fire fejlniveauer. Det raekker rigeligt til en webadresse.
 Brug:
     import sys; sys.path.insert(0, 'claude')
     import qr
-    svg = qr.svg('https://www.mibelibsen.space/u/anna', ec='M', mm=60)
+    svg = qr.svg('https://321flyv.com/u/anna', ec='M', mm=60)
     m, version, maske = qr.matrix('tekst', ec='Q')   # liste af lister, 1 = moerk
 
 Koderen er krydstjekket mod biblioteket segno (ISO 18004): hver kombination
@@ -385,7 +385,7 @@ def _selvtest():
         buff.extend([0] * ((8 - length % 8) % 8))
     encoder.write_padding_bits = standard_padding
 
-    tekster = ['https://www.mibelibsen.space/u/anna', 'Kontiki 9. klasse · æøå',
+    tekster = ['https://321flyv.com/u/anna', 'Kontiki 9. klasse · æøå',
                'a' * 20, 'abc', 'https://docs.google.com/forms/d/e/1FAIpQLSdX9x_'
                'abcdefghijklmnopqrstuvwxyz0123456789/viewform?usp=pp_url&'
                'entry.1234567890=S%C3%B8ren+%C3%98stergaard']

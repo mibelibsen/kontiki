@@ -26,6 +26,11 @@ Faste adresser i dette projekt:
 - Vercel-dashboard: https://vercel.com/mibelibsens-projects
 - Vercel-domæner: https://vercel.com/mibelibsens-projects/~/domains
 - GitHub-repo: https://github.com/mibelibsen/kontiki
+- Sitet: https://321flyv.com
+- Vercel-projekt: `kontiki-9klasse` — https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/domains
+
+Sitet lå før på `mibelibsen.space`. Det domæne skal bruges til noget
+andet, så brug det ikke nogen steder.
 
 ## Sitet
 
@@ -72,7 +77,7 @@ spørgsmålet faktisk har et svar. Se testafsnittet i `README.md`.
 
 ## Deploy
 
-`main` er sandheden: det der ligger på `main`, ligger på mibelibsen.space.
+`main` er sandheden: det der ligger på `main`, ligger på 321flyv.com.
 Vercel deployer selv ved push. Brug ikke Vercels API — adgangen virker ikke og
 skal ikke bruges. Se `claude/opsaetning.md`.
 

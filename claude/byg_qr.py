@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """QR-kode til en adresse — som SVG, PNG og et A4-ark til print.
 
-    python3 claude/byg_qr.py https://www.mibelibsen.space/algoritme materiale/qr-algoritme "Reklame-algoritmen"
+    python3 claude/byg_qr.py https://321flyv.com/algoritme materiale/qr-algoritme "Reklame-algoritmen"
 
 skriver materiale/qr-algoritme.svg, .png og .pdf. PNG'en kraever Pillow
 (pip install pillow); findes det ikke, springes den over. Koden laeses

@@ -8,7 +8,7 @@ kvarter. Resten — koder, plakater, redirects og siden — bygger Claude med
 
 - **Ét spørgeskema** i Google Forms, ens for alle unger. Første spørgsmål
   hedder `Code` og bliver udfyldt automatisk af linket.
-- **Hver ung har sin egen adresse** på sitet: `www.mibelibsen.space/u/anna-k`.
+- **Hver ung har sin egen adresse** på sitet: `321flyv.com/u/anna-k`.
   Den sender videre til spørgeskemaet med ungens navn forudfyldt i `Code`.
   Den, der svarer, ser bare spørgeskemaet.
 - **Alle svar lander i ét ark** — Google Forms' eget svar-ark. Kolonnen
@@ -19,7 +19,7 @@ kvarter. Resten — koder, plakater, redirects og siden — bygger Claude med
   Man kan derfor godt trykke plakaterne, før spørgeskemaet er færdigt.
 - **Forslag fra ungerne** kommer ind via en lille Google Form, som sender til
   det samme regneark (fanen `Forslag`). Den er linket fra
-  https://www.mibelibsen.space/tysk-spoergeskema.html.
+  https://321flyv.com/tysk-spoergeskema.html.
 
 ## Det Claude allerede har oprettet i dit Google Drev (22. september)
 
@@ -131,7 +131,7 @@ Et søjlediagram over optællingen: markér `A1:A24`, hold Ctrl nede og markér
 
 ## 6. Prøv det, før I tager af sted
 
-1. Scan eksemplet på https://www.mibelibsen.space/tysk-spoergeskema.html —
+1. Scan eksemplet på https://321flyv.com/tysk-spoergeskema.html —
    det fører tilbage til siden. Så virker sitet og redirects.
 2. Scan én af de rigtige plakater og send et prøvesvar. Se, at rækken lander
    i `Svar` med det rigtige navn i kolonne B, og at *Antal svar* i fanen

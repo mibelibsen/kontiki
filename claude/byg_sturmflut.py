@@ -361,7 +361,7 @@ import('/opt/node22/lib/node_modules/playwright/index.mjs').then(async (m) => {{
 }});"""], check=True)
 assert os.path.getsize(DELEBILLEDE) > 10000, 'delebilledet blev ikke gengivet'
 
-BASE = 'https://www.mibelibsen.space'
+BASE = 'https://321flyv.com'
 
 
 def delekort(titel, beskrivelse, sti):
@@ -704,7 +704,7 @@ rutetabel = ''.join(
 hold_html = ''.join(
     f'<a href="/sturmflut/{i}"><span class="nr">Gruppe {i}</span>'
     f'<b>{esc(de)}</b><span class="da">{esc(da)}</span>'
-    f'<code>mibelibsen.space/sturmflut/{i}</code></a>'
+    f'<code>321flyv.com/sturmflut/{i}</code></a>'
     for i, (de, da, *_ ) in enumerate(GRUPPER, 1))
 
 stop_html = ''.join(
@@ -841,7 +841,7 @@ td.de{background:#fbfcfe}
 dok = ['<h1>Sturmflut i HafenCity · dansk udgave</h1>',
        '<p class="und">Opgaverne, ungerne får, står på tysk. Her står de med '
        'dansk oversættelse ved siden af. Siderne: '
-       'mibelibsen.space/sturmflut og /sturmflut/1 til /sturmflut/5.</p>',
+       '321flyv.com/sturmflut og /sturmflut/1 til /sturmflut/5.</p>',
        f'<p class="und"><b>{AFGANG}</b> fælles afgang fra hotellet · '
        f'<b>{OPSAMLING}</b> alle mødes ved {MOEDESTED}. De fem grupper går '
        'hver for sig og bestemmer selv rækkefølgen. Frokosten sørger de selv '

@@ -1,13 +1,16 @@
-# Opsætning af mibelibsen.space
+# Opsætning af sitet
 
-Sidst opdateret: 2026-08-17
+Sidst opdateret: 2026-11-03
 
 ## ✅ Opsætningen er færdig
 
-`kontiki-9klasse` er koblet til `mibelibsen/kontiki` og har begge domæner med
-*Valid Configuration*. Apex redirecter til www.
+**Sitet ligger på https://321flyv.com.** `kontiki-9klasse` er koblet til
+`mibelibsen/kontiki`, og `www.321flyv.com` sender videre til apex med 308.
 
-**Flowet er: push til `main` → Vercel bygger → live på mibelibsen.space.**
+**Flowet er: push til `main` → Vercel bygger → live på 321flyv.com.**
+
+Sitet lå før på `mibelibsen.space`. Det domæne skal bruges til noget andet —
+se afsnittet om domæneskiftet nederst. Brug det ikke nogen steder.
 
 Resten af filen er baggrund og oprydning.
 
@@ -157,3 +160,37 @@ en version der virkede → `...`-menuen til højre → **Promote to Production**
   det bør ikke kunne ske.
 - **Intet sker ved et push.** Tjek Production Branch på
   **https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/git**
+
+
+## Domæneskiftet, 3.11.2026
+
+Skolens webfilter blokerede `mibelibsen.space`. `.space` er en billig endelse,
+der bruges meget til spam, og mange filtre blokerer hele endelsen uden at se
+på indholdet. Derfor blev `321flyv.com` købt gennem Vercel og koblet på
+`kontiki-9klasse`. Købt gennem Vercel betyder, at DNS er sat op automatisk —
+der skulle ingen poster sættes ind nogen steder.
+
+Bagefter besluttede brugeren at bruge `mibelibsen.space` til noget andet, så
+hele sitet flyttede med over.
+
+**Det, der skulle rettes i koden, var næsten ingenting.** Alle sider linker
+relativt. Der var tre absolutte steder:
+
+1. Viderestillingen `/u/eksempel` i `vercel.json` pegede på en fuld adresse.
+   Den er nu relativ — og `claude/byg_spoergeskema.py` skriver den også
+   relativt, så den ikke kommer igen.
+2. `spoergeskema/opsaetning.json` → `site`. Den er spørgeskemaets eneste
+   kilde til adressen; alt andet derinde bygges af den.
+3. `BASE` i `claude/byg_sturmflut.py`.
+
+**Lær af det:** en absolut adresse til sitets eget domæne er altid en fejl.
+Den virker, lige indtil domænet skifter, og så virker den i stilhed forkert.
+
+**De printede QR-plakater pegede på `mibelibsen.space/u/<kode>`.** En
+viderestilling redder dem ikke på skolens net: filteret blokerer forespørgslen,
+før viderestillingen overhovedet bliver sendt. Skal de bruges igen, skal de
+printes forfra — `python3 claude/byg_spoergeskema.py` laver dem med den nye
+adresse. Undersøgelsen var afsluttet, da domænet skiftede.
+
+**Bed skolens it om at kategorisere det nye domæne.** Et nyt domæne er
+ukendt for filteret, og nogle filtre blokerer ukendte domæner som standard.
