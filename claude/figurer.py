@@ -2338,3 +2338,160 @@ def tidsplan(blokke, W=620, farver=None, tal=True):
                  f'{_dk(i_alt)}</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+def konkret_abstrakt(kurver, afsnit, W=640, H=300, farver=None):
+    """Hvor hoejt over jorden en tekst bevaeger sig, fra start til slut.
+
+    kurver  [(navn, [vaerdier 0-1])] - 0 er helt konkret, 1 helt abstrakt.
+            Alle kurver skal have lige mange punkter, ellers staar de ikke
+            over hinanden, og sammenligningen holder ikke.
+    afsnit  [(navn, antal afstande)] - felterne under kurven. De deler
+            kurvens n-1 afstande mellem sig, saa en overskrift kan staa midt
+            i sit eget felt og ikke over et enkelt punkt.
+
+    Figuren findes for at vise forskellen paa et essay og de to genrer, det
+    tit bliver forvekslet med: stilen bliver nede i det konkrete, kronikken
+    bliver oppe i det abstrakte, og essayet bevaeger sig mellem dem.
+    """
+    F = farver or [MUT, MUT, BLA]
+    n = len(kurver[0][1])
+    assert n >= 2, 'en kurve skal have mindst to punkter'
+    for navn, v in kurver:
+        assert len(v) == n, f'{navn} har {len(v)} punkter, de andre har {n}'
+        assert all(0 <= y <= 1 for y in v), f'{navn} ligger uden for 0-1'
+    assert sum(a for _, a in afsnit) == n - 1, (
+        f'afsnittene dækker {sum(a for _, a in afsnit)} afstande, '
+        f'kurven har {n - 1}')
+
+    VEN, HOEJ, TOP, BUND = 150, 116, 26, 54
+    X0, X1 = VEN, W - HOEJ
+    YT, YB = TOP, H - BUND
+    assert X1 > X0 and YB > YT, 'der er ikke plads til selve feltet'
+    dx = (X1 - X0) / (n - 1)
+
+    def x(i):
+        return X0 + i * dx
+
+    def y(v):
+        return YB - v * (YB - YT)
+
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'
+         + '; '.join(f'{navn}' for navn, _ in kurver)
+         + f' tegnet som kurver mellem det konkrete og det abstrakte." {FONT}>']
+
+    # de to yderpunkter: baand foroven og forneden, saa aksen har en betydning
+    s.append(f'<rect x="{X0}" y="{YT}" width="{X1 - X0:.1f}" '
+             f'height="{(YB - YT) / 2:.1f}" fill="{TRAE_LYS}"/>')
+    s.append(f'<line x1="{X0}" y1="{YT}" x2="{X1:.1f}" y2="{YT}" '
+             f'stroke="{LIN}"/>')
+    s.append(f'<line x1="{X0}" y1="{YB:.1f}" x2="{X1:.1f}" y2="{YB:.1f}" '
+             f'stroke="{INK}"/>')
+    s.append(f'<text x="{X0 - 10}" y="{YT + 4}" text-anchor="end" '
+             f'fill="{MUT}" font-weight="700">ABSTRAKT</text>')
+    s.append(f'<text x="{X0 - 10}" y="{YT + 18}" text-anchor="end" '
+             f'fill="{MUT}" font-size="9.5">det store spørgsmål</text>')
+    s.append(f'<text x="{X0 - 10}" y="{YB:.1f}" text-anchor="end" '
+             f'fill="{MUT}" font-weight="700">KONKRET</text>')
+    s.append(f'<text x="{X0 - 10}" y="{YB + 14:.1f}" text-anchor="end" '
+             f'fill="{MUT}" font-size="9.5">det, du så og mærkede</text>')
+
+    # afsnitsfelterne under kurven
+    i = 0
+    for navn, antal in afsnit:
+        a, b = x(i), x(i + antal)
+        if i:
+            s.append(f'<line x1="{a:.1f}" y1="{YT}" x2="{a:.1f}" '
+                     f'y2="{YB + 6:.1f}" stroke="{LIN}" '
+                     f'stroke-dasharray="3 3"/>')
+        s.append(f'<text x="{(a + b) / 2:.1f}" y="{YB + 30:.1f}" '
+                 f'text-anchor="middle" fill="{INK}" font-weight="700">'
+                 f'{navn}</text>')
+        i += antal
+
+    for k, (navn, v) in enumerate(kurver):
+        farve = F[k % len(F)]
+        sidst = k == len(kurver) - 1
+        punkter = ' '.join(f'{x(i):.1f},{y(val):.1f}' for i, val in enumerate(v))
+        s.append(f'<polyline points="{punkter}" fill="none" stroke="{farve}" '
+                 f'stroke-width="{3 if sidst else 1.8}" '
+                 f'stroke-linejoin="round" stroke-linecap="round"'
+                 + ('' if sidst else ' stroke-dasharray="6 4"') + '/>')
+        if sidst:
+            for i, val in enumerate(v):
+                s.append(f'<circle cx="{x(i):.1f}" cy="{y(val):.1f}" r="3.5" '
+                         f'fill="{farve}"/>')
+        s.append(f'<text x="{X1 + 10:.1f}" y="{y(v[-1]) + 4:.1f}" '
+                 f'fill="{farve}" font-weight="{"700" if sidst else "400"}">'
+                 f'{navn}</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+def afsaet(spoergsmaal, konkrete, W=640, H=215, farve=None):
+    """Afsaettet til et essay: tre konkrete steder at begynde, og det store
+    spoergsmaal, de alle sammen peger op mod.
+
+    spoergsmaal  det abstrakte, oeverst
+    konkrete     [tekst] - de konkrete indgange forneden, to til fire
+
+    Figuren er genrens form sat op som en tegning: man begynder nede i noget,
+    man selv har set, og zoomer ud. Kasserne er lige brede, for ingen af
+    indgangene er finere end de andre.
+    """
+    A = farve or BLA
+    n = len(konkrete)
+    assert 2 <= n <= 4, 'to til fire indgange'
+    M, GAB = 14, 12
+    kb = (W - 2 * M - (n - 1) * GAB) / n
+    TOPH, BUNDH = 46, 58
+    y_top, y_bund = 8, H - BUNDH - 22
+    assert y_bund > y_top + TOPH + 24, 'der er ikke plads til pilene'
+
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'
+         f'{spoergsmaal} — med {n} konkrete indgange." {FONT}>']
+
+    s.append(f'<rect x="{M}" y="{y_top}" width="{W - 2 * M}" height="{TOPH}" '
+             f'rx="10" fill="{A}"/>')
+    st = _skrift(spoergsmaal, W - 2 * M, loft=14, gulv=9, luft=24)
+    s.append(f'<text x="{W / 2:.1f}" y="{y_top + 20}" text-anchor="middle" '
+             f'fill="#fff" fill-opacity="0.75" font-size="9.5" '
+             f'letter-spacing="1">DET STORE SPØRGSMÅL</text>')
+    s.append(f'<text x="{W / 2:.1f}" y="{y_top + 38}" text-anchor="middle" '
+             f'fill="#fff" font-weight="700" font-size="{st:.1f}">'
+             f'{spoergsmaal}</text>')
+
+    for i, tekst in enumerate(konkrete):
+        x = M + i * (kb + GAB)
+        cx = x + kb / 2
+        s.append(f'<rect x="{x:.1f}" y="{y_bund}" width="{kb:.1f}" '
+                 f'height="{BUNDH}" rx="10" fill="{TRAE_LYS}" '
+                 f'stroke="{LIN}"/>')
+        # teksten brydes paa ord, saa den kan staa i en smal kasse
+        ord_, linjer, linje = tekst.split(), [], ''
+        maks = int((kb - 16) / (0.6 * 10.5))
+        for o in ord_:
+            if linje and len(linje) + 1 + len(o) > maks:
+                linjer.append(linje)
+                linje = o
+            else:
+                linje = f'{linje} {o}'.strip()
+        linjer.append(linje)
+        assert len(linjer) <= 4, f'"{tekst}" fylder {len(linjer)} linjer'
+        y0 = y_bund + BUNDH / 2 - (len(linjer) - 1) * 6.5 + 4
+        for j, l in enumerate(linjer):
+            s.append(f'<text x="{cx:.1f}" y="{y0 + j * 13:.1f}" '
+                     f'text-anchor="middle" fill="{INK}" font-size="10.5">'
+                     f'{l}</text>')
+        s.append(f'<line x1="{cx:.1f}" y1="{y_bund - 6}" x2="{cx:.1f}" '
+                 f'y2="{y_top + TOPH + 14}" stroke="{A}" stroke-width="1.6"/>')
+        s.append(f'<path d="M{cx:.1f},{y_top + TOPH + 6} '
+                 f'l-5,8 h10 z" fill="{A}"/>')
+
+    s.append(f'<text x="{W / 2:.1f}" y="{H - 6}" text-anchor="middle" '
+             f'fill="{MUT}" font-size="10">Begynd nede i ét af dem. '
+             f'Zoom ud undervejs.</text>')
+    s.append('</svg>')
+    return ''.join(s)

@@ -284,6 +284,7 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<nav class="tabs"><a class="" href="matematik.html">Matematik</a>'
        '<a class="active" href="samfundsfag.html">Samfundsfag</a>'
        '<a class="" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a>'
+       '<a class="" href="dansk.html">Dansk</a>'
        '</nav></div></header><main>' + KROP + '</main><footer>'
        'Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>')
 
