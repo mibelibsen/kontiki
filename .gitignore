@@ -24,3 +24,6 @@ vejledning/grupper-fredag.docx
 # Vejledningen om videoens format bygges af claude/byg_videoformat.py.
 vejledning/staaende-til-liggende-video.pdf
 vejledning/staaende-til-liggende-video.docx
+
+# Svararket til klippeøvelsen bygges af claude/byg_klip_areal.py.
+vejledning/klip-arealet-fri-svar.pdf
