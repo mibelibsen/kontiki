@@ -34,6 +34,7 @@ AREAL = _hent('byg_klip_areal')
 RUMFANG = _hent('byg_klip_rumfang')
 OVERFLADE = _hent('byg_klip_overflade')
 PYTHAGORAS = _hent('byg_klip_pythagoras')
+TRIGONOMETRI = _hent('byg_klip_trigonometri')
 
 
 def mini(s, h=150):
@@ -80,6 +81,16 @@ ARK = [
   ['De tre kvadrater', 'Hvorfor det gælder', 'De to bliver til ét'],
   ['Saks'],
   PYTHAGORAS.tre_kvadrater()),
+
+ ('materiale/klip-trigonometri-fri.pdf', 'Klip trigonometrien fri',
+  'Her er der ingen formel at klippe frem — der er en påstand: forholdet '
+  'mellem siderne afhænger kun af vinklen, ikke af hvor stor trekanten er. '
+  'Fem trekanter, fire med samme vinkel og én uden, afgør sagen. Til sidst '
+  'bliver trekanten et sigteinstrument.',
+  ['At forholdet følger vinklen', 'Hvad sin, cos og tan er',
+   'En højde, du ikke kan nå'],
+  ['Saks', 'Lineal med mm', 'Lommeregner', 'Målebånd'],
+  TRIGONOMETRI.pak(TRIGONOMETRI.A_TREKANTER)),
 ]
 
 for _sti, _t, *_ in ARK:
@@ -128,10 +139,10 @@ margin:18px 0}
 KROP = f'''<section class="hero">
 <span class="pill">Matematik · klip og fold</span>
 <h1>Geometri klip</h1>
-<p>Fire ark, hvor formlen ikke står nogen steder. Den bliver klippet,
-foldet eller hældt frem, og først bagefter skrevet ned — med ungernes egne
-ord. Arkene kan tages hver for sig, men de bygger på hinanden i den
-rækkefølge, de står her.</p>
+<p>Fem ark, hvor svaret ikke står nogen steder. Det bliver klippet,
+foldet, hældt eller målt frem, og først bagefter skrevet ned — med
+ungernes egne ord. Arkene kan tages hver for sig, men de bygger på
+hinanden i den rækkefølge, de står her.</p>
 <a class="btnlink ghost" href="matematik.html">Tilbage til matematik</a>
 </section>
 <div class="vigtigt"><p><b>Print i rigtig størrelse.</b> Vælg 100 % i

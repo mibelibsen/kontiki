@@ -282,6 +282,29 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   dashboardet. Brug læsningen til at finde det rigtige id og give et
   præcist link — gæt aldrig på en projektadresse.
 
+- **Klip trigonometrien fri (3.11.).** `materiale/klip-trigonometri-fri.pdf`,
+  bygget af `claude/byg_klip_trigonometri.py`. Femte ark, og det første
+  uden en formel at klippe frem. I stedet en påstand, som saks og lineal
+  kan afgøre: **forholdet mellem siderne afhænger kun af vinklen.**
+  **A** fem trekanter — fire med 35°, én med 42°. De klippes ud, stakkes
+  og måles; fire giver 0,574 i sidste søjle, den femte giver 0,669.
+  **B** de samme målinger på 25°, 45° og 60°, sammenlignet med det
+  lommeregneren kalder sin, cos og tan. Det er de samme tal. **C** en stor
+  35°-trekant bliver et sigteinstrument: højde = øjenhøjde + 0,70 · afstand,
+  og 0,70 er tallet, de selv målte i A.
+  **Måleusikkerheden er regnet, ikke håbet.** Scriptet regner for hver
+  trekant, hvad forholdet kan blive med ±0,5 mm på hver måling, og har
+  tre asserts: de fires spand må ikke røre den falskes (ellers kan den
+  ikke afsløres), det rigtige tal skal ligge i alle fire spand, og
+  spandet skal blive smallere, jo større trekanten er. Det sidste er en
+  pointe i sig selv og står som spørgsmål på arket: hvilken trekant gav
+  det mest nøjagtige tal, og hvorfor?
+  Trekanterne er drejet og spejlet, så de ikke ligner skalerede kopier —
+  det er netop stakken, der skal afsløre, hvilke der hører sammen.
+  Hyldepakningen regner selv, hvor de kan ligge, og vinkeltallet er lagt
+  på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
+  lagde 60°-tallet oven i buen.
+
 - **Geometri klip — én flise (3.11.).** `geometri-klip.html`, bygget af
   `claude/byg_geometri_klip.py`, linket fra `matematik.html`. De fire
   klippeark fyldte fire kort på matematiksiden; nu er der ét kort,
