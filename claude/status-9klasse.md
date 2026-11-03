@@ -384,17 +384,45 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   side med grundfladen, og arket blev fem sider med en næsten tom
   førsteside. Tallene er stadig eksakte: 96 / 3 = 32.
 
-- **GeoGebra: «vælg Graf» findes ikke (3.11.).** Brugeren faldt over
-  trin 1 i `geogebra-lineaere-funktioner.html`: der er ingen knap, der
-  hedder Graf. Prøvet efter i Chromium på dansk —
-  **geogebra.org/classic åbner selv i Graf-visningen**, med algebravinduet
-  til venstre og grafikvinduet til højre. Ordet «Graf» står kun ét sted: i
-  app-listen under de tre streger øverst til højre. Trinnet siger nu, at
-  man ikke skal vælge noget, og har en lille boks med **begge ikoner**
-  tegnet som inline-SVG — hamburgeren og Grafs bølgede kurve, hvis punkter
-  er regnet med en sinus, ikke tegnet på øjemål. Lær af det: en vejledning
-  til en webgrænseflade skal prøves af i grænsefladen, ikke skrives af
-  hukommelsen.
+- **Intro til GeoGebra, skrevet om med skærmbilleder (3.11.).**
+  `geogebra-lineaere-funktioner.html`, bygget af `claude/byg_geogebra.py`.
+  Hed før «GeoGebra på ti minutter»; brugeren bad om bare **Intro til
+  GeoGebra**.
+  **Jeg tog fejl to gange om trin 1.** Først skrev jeg «vælg Graf» af
+  hukommelsen. Så målte jeg efter og skrev, at man ikke skal vælge noget —
+  men jeg målte på et *andet* besøg. **Ved første besøg kommer app-listen
+  frem af sig selv**, og dér skal man vælge Graf. Brugeren havde ret begge
+  gange. Lær af det: når noget afhænger af, om det er første besøg, skal
+  der måles i en frisk browserkontekst, ikke i den, der allerede har klikket.
+  **Elleve skærmbilleder, hentet fra den rigtige app.** `claude/
+  hent_geogebra_billeder.mjs` åbner geogebra.org/classic i Chromium på
+  dansk, bygger hver tilstand med appens eget `ggbApplet`-API og
+  fotograferer vinduet; `claude/beskaer_geogebra_billeder.py` beskærer
+  værktøjslinjen væk og komprimerer. **Billederne må ikke tegnes i
+  hånden** — så holder de op med at ligne det, ungen ser. Ændrer GeoGebra
+  udseende, køres de to scripts igen. 213 kB i alt for elleve billeder.
+  **Kvantisering kan spise farver.** `quantize` med 96 farver og MEDIANCUT
+  gjorde de blå punkter og den orange trappe grå. FASTOCTREE med 256
+  farver holder på de få mættede farver og giver næsten samme filstørrelse.
+  Og: beskæringen blev lavet *på stedet*, så de oprindelige filer var væk,
+  da fejlen blev opdaget — billederne måtte hentes forfra.
+  **API'et taler engelsk, algebravinduet dansk.** `evalCommand('Line(A,B)')`
+  virker; `Linje(A,B)` gør ikke. Men algebravinduet skriver `Linje(A, B)`
+  og `Hældning(f)`, så de danske navne på siden er bekræftet af
+  skærmbillederne selv.
+  **Trin 4 er nyt og handler kun om omskrivningen.** GeoGebra skriver
+  `-2x + y = 1`; den gamle side sagde bare «flyt leddet over» og gik
+  videre. Nu er det tre nummererede skridt, en huskeregel og en tegning,
+  hvor leddet flytter over med en pil og skifter fortegn. Figurens
+  koordinater er regnet: i en monospace-skrift er et tegn 0,6 gange
+  skriftstørrelsen bredt, så rammen om leddet kan lægges præcist.
+  **Trin 5 siger nu, hvad kommandoen hedder.** Før stod der «det her er
+  den vigtigste kommando på siden» uden at nævne den. Den hedder
+  **Hældning**, og grunden står der nu: den tegner trappetrinnet, så tallet
+  kan ses, ikke bare læses.
+  **Punkt for punkt.** Ny sektion med ti afkrydsningspunkter — ét
+  håndgreb hvert. Det tiende er det vigtigste: *arbejd videre med den
+  funktion, du nu har lavet.* Den er værktøjet, ikke målet.
 
 - **Klip arealet fri (3.11.).** `materiale/klip-arealet-fri.pdf`, bygget af
   `claude/byg_klip_areal.py`, linket fra `matematik.html`. Tre arealformler,
