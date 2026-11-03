@@ -30,7 +30,8 @@ Faste adresser i dette projekt:
 - Vercel-projekt: `kontiki-9klasse` — https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/domains
 
 Sitet lå før på `mibelibsen.space`. Det domæne skal bruges til noget
-andet, så brug det ikke nogen steder.
+andet, så brug det ikke nogen steder. Det viderestiller midlertidigt (307)
+til 321flyv.com året ud og fjernes fra projektet efter 31.12.2026.
 
 ## Sitet
 

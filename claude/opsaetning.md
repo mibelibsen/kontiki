@@ -12,6 +12,14 @@ Sidst opdateret: 2026-11-03
 Sitet lå før på `mibelibsen.space`. Det domæne skal bruges til noget andet —
 se afsnittet om domæneskiftet nederst. Brug det ikke nogen steder.
 
+**Overgangsperiode til 31.12.2026:** `mibelibsen.space` og
+`www.mibelibsen.space` bliver på `kontiki-9klasse` som **307-viderestilling**
+(midlertidig) til `321flyv.com`, så gamle links virker året ud. **307 og ikke
+308 med vilje:** en permanent viderestilling bliver cachet hårdt i browseren,
+og så kan domænet ikke genbruges bagefter uden at genere alle, der har besøgt
+det. Efter nytår fjernes de to adresser fra projektet —
+https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/domains
+
 Resten af filen er baggrund og oprydning.
 
 ## Om links i denne fil

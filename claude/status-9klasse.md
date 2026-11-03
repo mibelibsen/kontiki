@@ -351,6 +351,12 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   viderestillingen bliver sendt. Skal de bruges igen, skal de printes
   forfra; scriptet laver dem med den nye adresse. Undersøgelsen var
   afsluttet, da domænet skiftede.
+  **Overgangsperiode til 31.12.2026.** `mibelibsen.space` bliver på
+  projektet som **307**-viderestilling til 321flyv.com, så gamle links
+  virker året ud. 307 og ikke 308 med vilje: en permanent viderestilling
+  bliver cachet hårdt i browseren, og så kan domænet ikke genbruges
+  bagefter uden at genere alle, der har besøgt det. Efter nytår fjernes de
+  to adresser fra `kontiki-9klasse`.
 
 - **Matematik klip — én flise (3.11.).** `matematik-klip.html`, bygget af
   `claude/byg_matematik_klip.py`, linket fra `matematik.html`. Hed først
