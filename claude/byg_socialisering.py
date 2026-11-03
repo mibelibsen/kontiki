@@ -287,9 +287,9 @@ def side(titel, krop):
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{titel}</title><style>' + GRUND + EKSTRA +
             '</style></head><body><header class="top"><div class="top-inner">'
-            '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>'
+            '<a class="brand" href="index.html">9. klasse</a>'
             '</div></header><main>' + krop + '</main><footer>'
-            'ART · vredeshåndtering · Mibelibsen.'
+            'ART · vredeshåndtering.'
             '</footer></body></html>')
 
 

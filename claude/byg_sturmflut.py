@@ -806,10 +806,10 @@ def side(titel, krop):
                      '/sturmflut') +
             '<style>' + GRUND + EKSTRA +
             '</style></head><body><header class="top"><div class="top-inner">'
-            '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>'
+            '<a class="brand" href="index.html">9. klasse</a>'
             '<nav class="tabs"><a class="" href="tysk.html">Tysk</a></nav>'
             '</div></header><main>' + krop + '</main><footer>'
-            'Studietur Hamborg · 9. klasse · Mibelibsen.'
+            'Studietur Hamborg · 9. klasse.'
             '</footer></body></html>')
 
 

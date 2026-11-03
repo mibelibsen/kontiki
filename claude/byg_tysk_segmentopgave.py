@@ -155,14 +155,13 @@ details{display:block}summary{display:none}@page{size:A4;margin:14mm}}
             '<title>Svarene fra Hamborg · gruppeopgave · 9. klasse</title>'
             '<style>' + css + '</style></head><body>'
             '<header class="top"><div class="top-inner">'
-            '<a class="brand" href="index.html">Mibelibsen '
-            '<span>9. klasse</span></a><nav class="tabs">'
+            '<a class="brand" href="index.html">9. klasse</a><nav class="tabs">'
             '<a class="" href="matematik.html">Matematik</a>'
             '<a class="" href="samfundsfag.html">Samfundsfag</a>'
             '<a class="active" href="tysk.html">Tysk</a>'
             '<a class="" href="fysik.html">Fysik</a></nav></div></header>'
             '<main>' + krop + '</main><footer>'
-            'Undervisningsmateriale · 9. klasse · Mibelibsen.'
+            'Undervisningsmateriale · 9. klasse.'
             '</footer></body></html>')
 
 

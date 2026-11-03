@@ -331,6 +331,28 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
   lagde 60°-tallet oven i buen.
 
+- **Navnet «Mibelibsen» er væk fra sitet (3.11.).** 64 forekomster på 39
+  sider: sidehovedet («Mibelibsen · 9. klasse») og sidefoden. **Fjern
+  betyder fjern** — der blev ikke sat et nyt navn ind, hverken domænets
+  eller skolens. Sidehovedet hedder nu bare **9. klasse**, og sidefoden
+  slutter dér, hvor den stod før navnet: *Undervisningsmateriale ·
+  9. klasse.*
+  **De 24 byggescripts blev rettet med**, ellers ville navnet være kommet
+  tilbage, næste gang en side blev bygget. Fire steder stod strengen delt
+  over to linjer i Python og blev ikke fanget af den brede erstatning —
+  de blev rettet hver for sig, efter at scriptet havde rapporteret dem.
+  **Det, der IKKE blev rørt:** `mibelibsen/kontiki` (GitHub-repoet),
+  `mibelibsens-projects` (Vercel-teamet) og projektnavnene i
+  `claude/opsaetning.md`. De er adresser, ikke navne på sitet, og de ville
+  gå i stykker.
+
+- **mibelibsen.space viderestiller nu (3.11.).** 307 til 321flyv.com, sti
+  for sti: `/matematik-klip.html` og `/u/anna` lander samme sted på det
+  nye domæne. Svaret har `cache-control: max-age=0, must-revalidate`, så
+  browseren gemmer den ikke — det var hele pointen med 307 frem for 308.
+  Der ligger en påmindelse til 4.1.2027 om at fjerne domænet fra
+  projektet.
+
 - **Nyt domæne: 321flyv.com (3.11.).** Skolens webfilter blokerede
   `mibelibsen.space`. `.space` er en billig endelse, der bruges meget til
   spam, og mange filtre blokerer hele endelsen uden at se på indholdet.

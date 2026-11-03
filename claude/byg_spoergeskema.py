@@ -457,7 +457,7 @@ def skriv_side(unger):
     status = ('<ul class="plan">' + ''.join(
         f'<li><b>{html.escape(t)}</b> {html.escape(h)}</li>' for t, h in PLAN)
         + '</ul>')
-    krop = f'''<header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header>
+    krop = f'''<header class="top"><div class="top-inner"><a class="brand" href="index.html">9. klasse</a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header>
 <main>
 <section class="hero"><span class="pill">Tysk · 9. klasse</span>
 <h1>Ung i Tyskland</h1>
@@ -517,7 +517,7 @@ kan se, hvem der har skaffet hvor mange.</p>
 <p>Svarene fra Tyskland og jeres egne svar fra Danmark er to datasæt. Dem sammenligner vi med det, I kan fra statistik: frekvenser, cirkeldiagrammer og søjlediagrammer — og vi kigger på, om stikprøven er stor nok til at sige noget.</p>
 <a class="btnlink ghost" href="statistik.html">Genopfrisk statistik</a></div>
 </main>
-<footer>Undervisningsmateriale · 9. klasse · Mibelibsen.</footer>'''
+<footer>Undervisningsmateriale · 9. klasse.</footer>'''
     dok = (f'<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
            f'<meta name="viewport" content="width=device-width,initial-scale=1">'
            f'<title>Ung i Tyskland · Tysk · 9. klasse</title>'

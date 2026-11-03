@@ -504,7 +504,7 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<a href="#opgaver">I opgaverne</a><a href="#falder">Det der driller</a>'
        '<a href="funktioner-og-ligninger.html">Opgaverne</a>'
        '</nav></div></header><main>' + KROP + '</main><footer>'
-       'Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>')
+       'Undervisningsmateriale · 9. klasse.</footer></body></html>')
 
 open(UD, 'w', encoding='utf-8').write(DOK)
 print(f'skrevet:  {UD}  ·  {len(TRIN)} trin, '

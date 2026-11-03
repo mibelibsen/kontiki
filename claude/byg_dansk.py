@@ -668,7 +668,7 @@ def side(noegle, titel, krop):
             'color:inherit">Dansk · <span>9. klasse</span></a>'
             f'<nav class="jump">{menu}</nav></div></header><main>' + krop
             + '</main><footer>Øvelsessæt til undervisningsbrug · dansk, '
-              'skriftlig fremstilling · Mibelibsen.</footer></body></html>')
+              'skriftlig fremstilling.</footer></body></html>')
 
 
 def kriterier_html():

@@ -127,7 +127,7 @@ def side(titel, meta, hoerer, blokke):
             f'<p class="meta">{meta}</p>\n<p class="hoerer">{hoerer}</p>\n'
             + '\n'.join(krop)
             + '\n<footer>Facitliste · må ikke udgives på sitet · '
-              '9. klasse matematik · Mibelibsen</footer>\n</div>\n</body>\n</html>\n')
+              '9. klasse matematik</footer>\n</div>\n</body>\n</html>\n')
 
 
 
@@ -180,10 +180,10 @@ def dok(navn, serie, dato, emne, hoerer, blokke):
     titel = (f'Facitliste{" lektier" if serie == "lektier" else ""} Matematik '
              f'{dansk_dato(dato)} {emne} facitliste')
     if serie == 'lektier':
-        meta = f'Lektien er givet {dansk_dato(dato)} · 9. klasse · Mibelibsen'
+        meta = f'Lektien er givet {dansk_dato(dato)} · 9. klasse'
     else:
         meta = (f'Modulets opgaver · gennemgås {dansk_dato(dato)} · '
-                f'9. klasse · Mibelibsen')
+                f'9. klasse')
     DOKUMENTER.append((navn, side(titel, meta, f'Hører til: {hoerer}', blokke)))
 
 

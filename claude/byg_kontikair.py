@@ -474,13 +474,13 @@ def side(titel, krop):
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{titel}</title><style>' + GRUND + EKSTRA +
             '</style></head><body><header class="top"><div class="top-inner">'
-            '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>'
+            '<a class="brand" href="index.html">9. klasse</a>'
             '<nav class="tabs"><a class="" href="matematik.html">Matematik</a>'
             '<a class="" href="samfundsfag.html">Samfundsfag</a>'
             '<a class="" href="tysk.html">Tysk</a>'
             '<a class="" href="fysik.html">Fysik</a></nav>'
             '</div></header><main>' + krop + '</main><footer>'
-            'KontikAir · Mibelibsen · 9. klasse.'
+            'KontikAir · 9. klasse.'
             '</footer></body></html>')
 
 

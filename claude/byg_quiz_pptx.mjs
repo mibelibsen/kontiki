@@ -7,7 +7,7 @@ const FORM   = ['triangle','diamond','circle','rectangle'];
 
 const p = new pptxgen();
 p.layout = 'LAYOUT_16x9';                                // 10 x 5.625 tommer
-p.author = 'Mibelibsen · 9. klasse';
+p.author = '9. klasse';
 p.title  = 'Statistik · 30 spørgsmål';
 
 // forside

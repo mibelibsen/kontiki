@@ -191,14 +191,13 @@ border-radius:12px;padding:14px 16px}
             '<title>Det svarede de · Ung i Tyskland · 9. klasse</title>'
             '<style>' + css + '</style></head><body>'
             '<header class="top"><div class="top-inner">'
-            '<a class="brand" href="index.html">Mibelibsen '
-            '<span>9. klasse</span></a><nav class="tabs">'
+            '<a class="brand" href="index.html">9. klasse</a><nav class="tabs">'
             '<a class="" href="matematik.html">Matematik</a>'
             '<a class="" href="samfundsfag.html">Samfundsfag</a>'
             '<a class="active" href="tysk.html">Tysk</a>'
             '<a class="" href="fysik.html">Fysik</a></nav></div></header>'
             '<main>' + hero + krop + '</main><footer>'
-            'Undervisningsmateriale · 9. klasse · Mibelibsen.'
+            'Undervisningsmateriale · 9. klasse.'
             '</footer></body></html>')
 
 

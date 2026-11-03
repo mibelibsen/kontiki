@@ -136,12 +136,12 @@ DOK = ('<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
        '<meta name="viewport" content="width=device-width,initial-scale=1">'
        '<title>Tekster · samfundsfag · 9. klasse</title><style>' + CSS +
        '</style></head><body><header class="top"><div class="top-inner">'
-       '<a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a>'
+       '<a class="brand" href="index.html">9. klasse</a>'
        '<nav class="tabs"><a class="" href="matematik.html">Matematik</a>'
        '<a class="active" href="samfundsfag.html">Samfundsfag</a>'
        '<a class="" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a>'
        '</nav></div></header><main>' + KROP + '</main><footer>'
-       'Undervisningsmateriale · 9. klasse · Mibelibsen. Tekster med begrænset '
+       'Undervisningsmateriale · 9. klasse. Tekster med begrænset '
        'rettighed deles kun med klassen i Teams.'
        '</footer></body></html>')
 open(UD, 'w').write(DOK)

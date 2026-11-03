@@ -16,7 +16,7 @@ if (!UD) throw new Error('mangler filnavn som argument');
 
 const p = new pptxgen();
 p.layout = 'LAYOUT_16x9';                       // 10 x 5.625 tommer
-p.author = 'Mibelibsen · 9. klasse';
+p.author = '9. klasse';
 p.title = 'Pecha Kucha · skabelon';
 p.subject = `${SLIDES} slides a ${SEKUNDER} sekunder`;
 
