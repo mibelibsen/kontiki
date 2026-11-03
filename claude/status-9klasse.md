@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-10-21
+Sidst opdateret: 2026-11-03
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -289,6 +289,24 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   `requires_user_action`. Vercel kræver, at et menneske bekræfter i
   dashboardet. Brug læsningen til at finde det rigtige id og give et
   præcist link — gæt aldrig på en projektadresse.
+
+- **Klip arealet fri (3.11.).** `materiale/klip-arealet-fri.pdf`, bygget af
+  `claude/byg_klip_areal.py`, linket fra `matematik.html`. Tre arealformler,
+  som ungerne klipper sig frem til: parallelogram → rektangel, to trekanter →
+  parallelogram, cirkel i 16 udsnit → næsten-rektangel. **Formlerne står
+  ikke på arket.** Uden saks kan ingen af delene lade sig gøre.
+  **Figurerne er i millimeter, ikke pixels** — de skal printes i rigtig
+  størrelse, for der måles på papiret bagefter: parallelogram 80 × 50 mm,
+  trekant 70 × 40 mm, cirkel r = 40 mm. Derfor ligger de i byggescriptet og
+  ikke i `figurer.py`, som tegner til skærm. Scriptet har en assert på, at
+  halv omkreds · radius giver præcis cirklens areal; holder den ikke, er
+  øvelsens pointe forkert, og arket bliver ikke bygget.
+  **Niveauet nævnes ingen steder.** Brugeren bad udtrykkeligt om, at der
+  ikke står klassetrin — hverken på arket eller på kortet.
+  Svararket ligger i `vejledning/` og er ikke i git. Det har også de to
+  ting, der driller: at højden ikke er den skrå side, og spørgsmålet om,
+  hvad der sker ved 32 eller 64 udsnit — grænseovergangen, som kan mærkes
+  med en saks, længe før den kan skrives.
 
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
