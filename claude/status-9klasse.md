@@ -334,6 +334,24 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   liggende for nu.** Rejs det ikke igen af dig selv. At fjerne dem helt
   kræver en omskrivning af historikken.
 
+- **Tysk gjort færdig: resultatsiden (3.11.).** `tysk-resultater.html`,
+  bygget af `claude/byg_tysk_resultater.py`, linket fra `tysk.html` og
+  forsiden. Projektet havde kun sin første halvdel på sitet — ungerne lavede
+  spørgsmålene og spurgte i Hamborg, men svarene stod ingen steder. Siden
+  viser 18 resultater i seks afsnit med rigtige figurer fra `figurer.py`.
+  **Kun optællinger, aldrig et enkeltsvar.** Sitet er offentligt, og
+  besvarelserne er skrevet af unge på andre skoler. De frie svar vises kun,
+  hvis mere end én har givet dem — et svar, kun én har skrevet, er ikke et
+  resultat, det er en persons udsagn. De fulde svar ligger i
+  `tekster/hamborg-segmenter.docx`, som ikke udgives.
+  **Ét svar er taget ud af den offentlige liste:** *Herbertstraße* lå
+  øverst over steder, de unge ville anbefale os at se. Det er bordelgaden
+  på St. Pauli, lukket for kvinder og for alle under 18. Den står stadig i
+  klassens eget dokument, hvor en voksen er til stede. Udeladelsen står som
+  `UDE` i scriptet med begrundelsen, så den er til at se og til at fortryde
+  — tallene for, hvor mange der svarede, er uændrede.
+  **Stadig åbent i tysk:** årsplanen mangler, og den skal brugeren sende.
+
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
   Vercel-indstillinger, GitHub, et kontrolpanel. Den gælder ikke, når et svar
