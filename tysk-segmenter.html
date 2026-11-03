@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Svarene fra Hamborg · gruppeopgave · 9. klasse</title><style>
+:root{--bg:#fff;--panel:#fff;--panel2:#f4f6fb;--ink:#1a2233;--muted:#586074;--line:#d3dae7;--accent:#1f6fd6;--accent-soft:#eaf2fd;--good:#1a8f5e;--warn:#b5710a;--shadow:0 1px 3px rgba(20,30,60,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+header.top{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-inner{max-width:1040px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:1.05rem;text-decoration:none;color:var(--ink)}
+.brand span{color:var(--accent)}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs a,nav.tabs span{font-size:.86rem;padding:6px 12px;border-radius:999px;border:1px solid transparent;text-decoration:none;color:var(--muted)}
+nav.tabs a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+nav.tabs a.active{background:var(--accent);color:#fff}
+nav.tabs span.soon{color:#9aa6ba;cursor:default}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 90px}
+.hero{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:32px;box-shadow:var(--shadow);margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:2rem}
+.hero p{margin:0;color:var(--muted);max-width:70ch}
+.pill{display:inline-block;font-size:.74rem;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;background:#fff;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);transition:.15s}
+a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card h3{margin:0 0 6px;font-size:1.2rem}
+.card p{margin:0;color:var(--muted);font-size:.94rem}
+.card.soon{opacity:.6}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:12px}
+.tag.klar{background:#eaf7f0;color:var(--good);border:1px solid #bfe6d2}
+.tag.kommer{background:#f4f6fb;color:var(--muted);border:1px solid var(--line)}
+h2.sec{font-size:1.5rem;margin:28px 0 6px;display:flex;align-items:center;gap:12px}
+.num{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-weight:800;background:var(--accent);color:#fff;flex:0 0 auto}
+.note{background:var(--panel2);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;text-decoration:none;padding:10px 18px;border-radius:10px;font-weight:700;font-size:.95rem;margin:6px 0}
+.btnlink.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btnlink.ghost:hover{border-color:var(--accent);color:var(--accent)}
+footer{max-width:1040px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+.plan{width:100%;border-collapse:collapse;margin:14px 0;font-size:.94rem}
+.plan th,.plan td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+.plan th{background:var(--panel2);font-weight:700;position:sticky;top:60px}
+.plan tr.block td{background:var(--accent);color:#fff;font-weight:800;font-size:1rem}
+.plan tr.break td{background:#fff7e9;color:var(--warn);font-weight:600;font-style:italic}
+.plan td.uge{white-space:nowrap;font-weight:700;color:var(--accent);width:52px}
+.plan td.per{white-space:nowrap;color:var(--muted);width:110px}
+.plan ul{margin:0;padding-left:18px}.plan li{margin:2px 0}
+.mat{color:var(--muted);font-size:.9rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+@media(max-width:720px){.two{grid-template-columns:1fr}}
+.mini{width:100%;border-collapse:collapse;font-size:.92rem}
+.mini th,.mini td{border:1px solid var(--line);padding:7px 10px;text-align:left}.mini th{background:var(--panel2)}
+@media print{header.top,nav.tabs,.btnlink{display:none!important}.hero,.card,.note{box-shadow:none}.plan th{position:static}.plan tr.block td{background:#fff!important;color:#000;border:1px solid #000}body{color:#000}}
+
+/* Telefon: en bred tabel ruller selv i stedet for at skubbe hele
+   siden sidelaens, og en figur i en graphwrap kan krympe. */
+@media(max-width:600px){table{display:block;overflow-x:auto}
+.graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
+
+/* Knapper. Tre ting, maalt paa 360-1280 px:
+   1. En raekke knapper stod 6-7 px forskudt. De er inline-flex med hver sin
+      polstring og staar derfor paa hver sin tekstlinje. vertical-align
+      stiller dem paa samme linje, og samme margen giver samme mellemrum.
+   2. En finger skal kunne ramme. 44 px er det maal, baade Apple og Google
+      bruger; flere knapper var 37.
+   3. Menuen i toppen braekkede over to linjer paa en telefon, og den faste
+      header aad 150 px af skaermen hele tiden. Den ruller nu vandret paa
+      én linje i stedet. */
+@media(min-width:601px){
+/* Samme kasse til alle tre, saa de staar paa linje: .btn var 46 px, den med
+   ramme 48, og printbtn 44 - derfor stod de forskudt. */
+.hero .btn,.hero .btnlink,.hero .printbtn{vertical-align:top;height:48px;
+padding:0 20px;box-sizing:border-box;display:inline-flex;align-items:center;
+justify-content:center;margin:12px 8px 0 0}}
+.btn,.btnlink,.printbtn,.vaelg a{min-height:44px}
+.jump a{display:inline-flex;align-items:center;min-height:40px}
+@media(max-width:600px){
+.top-inner{gap:10px;padding:10px 16px}
+header.top .jump{width:100%;margin-left:0;gap:4px}
+header.top .jump a{padding:5px 9px;font-size:.8rem;min-height:40px}}
+
+.sec{font-size:1.45rem;margin:32px 0 6px}
+.lead{color:var(--muted);max-width:74ch;margin:0 0 4px}
+.boks{background:var(--panel);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:14px;padding:16px 22px;
+margin:16px 0;box-shadow:var(--shadow)}
+.boks h3{margin:0 0 6px;font-size:1.05rem}
+.boks ol{margin:6px 0 0;padding-left:20px}
+.boks li{margin:6px 0;color:var(--muted)}
+.boks li b{color:var(--ink)}
+.advarsel{border-left-color:#b5710a}
+.advarsel p{color:var(--muted);margin:0;max-width:74ch}
+.seg{display:flex;gap:16px;background:var(--panel);border:1px solid var(--line);
+border-radius:14px;padding:18px 22px;margin:12px 0;box-shadow:var(--shadow)}
+.seg .nr{flex:0 0 38px;height:38px;border-radius:11px;background:var(--accent);
+color:#fff;font-weight:800;font-size:1.1rem;display:grid;place-items:center}
+.seg .krop{flex:1}
+.seg h3{margin:0 0 4px;font-size:1.12rem}
+.seg p{margin:0;color:var(--muted);font-size:.97rem;max-width:70ch}
+.seg .maal{margin:8px 0 0;font-size:.9rem}
+.seg .maal b{color:var(--accent)}
+.seg details{margin:10px 0 0}
+.seg summary{cursor:pointer;color:var(--accent);font-size:.9rem;
+font-weight:600}
+ul.spm{margin:8px 0 0;padding-left:20px}
+ul.spm li{color:var(--muted);font-size:.92rem;margin:3px 0}
+table.afl{width:100%;border-collapse:collapse;margin:10px 0;font-size:.95rem}
+table.afl th,table.afl td{border:1px solid var(--line);padding:10px 12px;
+text-align:left;vertical-align:top}
+table.afl th{background:var(--panel2);width:26%}
+.figur{background:var(--panel2);border:1px solid var(--line);
+border-radius:14px;padding:18px;margin:14px 0;text-align:center}
+.figur svg{max-width:100%;height:auto}
+.figtekst{color:var(--muted);font-size:.9rem;margin-top:10px;text-align:left;
+max-width:68ch;margin-left:auto;margin-right:auto}
+@media print{header.top,.btnlink{display:none!important}
+.seg,.boks{box-shadow:none;break-inside:avoid}
+details{display:block}summary{display:none}@page{size:A4;margin:14mm}}
+</style></head><body><header class="top"><div class="top-inner"><a class="brand" href="index.html">Mibelibsen <span>9. klasse</span></a><nav class="tabs"><a class="" href="matematik.html">Matematik</a><a class="" href="samfundsfag.html">Samfundsfag</a><a class="active" href="tysk.html">Tysk</a><a class="" href="fysik.html">Fysik</a></nav></div></header><main><section class="hero"><span class="pill">Tysk · Ung i Tyskland</span><h1>Svarene fra Hamborg</h1><p>170 unge svarede på jeres egne spørgsmål. Svarene er delt i fem segmenter — ét til hver gruppe. I skal gennemgå jeres eget, oversætte det og sammenfatte, hvad det fortæller. Vi går i gang <b>tirsdag den 10. november</b>.</p><a class="btnlink ghost" href="tysk.html">Tilbage til tysk</a><a class="btnlink ghost" href="tysk-spoergeskema.html">Om projektet</a></section><div class="boks"><h3>Sådan arbejder I</h3><ol><li>Oversæt jeres spørgsmål til dansk. Skriv oversættelsen ind over hvert spørgsmål.</li><li>Oversæt svarene. De står med antal: <b>Hafen (12)</b> betyder, at tolv har svaret "Hafen". Begynd med dem, der er svaret flest gange.</li><li>Find mønstrene. Hvad svarer mange? Hvad svarer kun én? Er der noget, der overrasker jer?</li><li>Skriv en sammenfatning på en halv side: <b>hvad fortæller jeres segment om at være ung i Hamborg?</b> Brug tal, hvor I kan — "69 ud af 169" siger mere end "mange".</li></ol><p style="color:var(--muted);font-size:.92rem;margin:10px 0 0">Dokumentet med alle svarene får I af jeres lærer. Det ligger ikke her på siden: besvarelserne er skrevet af unge på andre skoler, og siden er åben for alle.</p></div><div class="boks advarsel"><h3>Læg mærke til det her, før I går i gang</h3><p><b>82 af de 170</b> svarer <i>nein</i> til spørgsmålet, om de bor i Hamborg. Derfor står der <i>keine Ahnung, bin nicht von hier</i> i en del af svarene om byen. Det er ikke en fejl i jeres skema — det er et resultat, og det hører med i jeres sammenfatning. Et svar fra en, der ikke bor i byen, fortæller noget andet end et svar fra en, der gør.</p></div><h2 class="sec">De fem segmenter</h2><p class="lead">Én gruppe pr. segment. Tallene viser, hvor meget der skal oversættes — de er talt op i de rigtige svar.</p><div class="figur"><svg viewBox="0 0 560 300" width="100%" style="max-width:560px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Søjlediagram med 5 søjler." font-family="Consolas, monospace" font-size="11"><rect x="0" y="0" width="560" height="300" fill="#fff" stroke="#c9d2e0"/><line x1="44" y1="260.0" x2="546" y2="260.0" stroke="#c9d2e0" stroke-dasharray="2 3"/><text x="38" y="264.0" text-anchor="end" fill="#586074">0</text><line x1="44" y1="232.0" x2="546" y2="232.0" stroke="#c9d2e0" stroke-dasharray="2 3"/><text x="38" y="236.0" text-anchor="end" fill="#586074">50</text><line x1="44" y1="204.0" x2="546" y2="204.0" stroke="#c9d2e0" stroke-dasharray="2 3"/><text x="38" y="208.0" text-anchor="end" fill="#586074">100</text><line x1="44" y1="176.0" x2="546" y2="176.0" stroke="#c9d2e0" stroke-dasharray="2 3"/><text x="38" y="180.0" text-anchor="end" fill="#586074">150</text><line x1="44" y1="148.0" x2="546" y2="148.0" stroke="#c9d2e0" stroke-dasharray="2 3"/><text x="38" y="152.0" text-anchor="end" fill="#586074">200</text><line x1="44" y1="120.0" x2="546" y2="120.0" stroke="#c9d2e0" stroke-dasharray="2 3"/><text x="38" y="124.0" text-anchor="end" fill="#586074">250</text><line x1="44" y1="92.0" x2="546" y2="92.0" stroke="#c9d2e0" stroke-dasharray="2 3"/><text x="38" y="96.0" text-anchor="end" fill="#586074">300</text><line x1="44" y1="64.0" x2="546" y2="64.0" stroke="#c9d2e0" stroke-dasharray="2 3"/><text x="38" y="68.0" text-anchor="end" fill="#586074">350</text><line x1="44" y1="36.0" x2="546" y2="36.0" stroke="#c9d2e0" stroke-dasharray="2 3"/><text x="38" y="40.0" text-anchor="end" fill="#586074">400</text><rect x="63.1" y="62.9" width="62.2" height="197.1" rx="2" fill="#1f6fd6"/><text x="94.2" y="57.9" text-anchor="middle" fill="#1a2233" font-weight="700">352</text><text x="94.2" y="276" text-anchor="middle" fill="#586074">1 Hamborg</text><rect x="163.5" y="92.6" width="62.2" height="167.4" rx="2" fill="#1f6fd6"/><text x="194.6" y="87.6" text-anchor="middle" fill="#1a2233" font-weight="700">299</text><text x="194.6" y="276" text-anchor="middle" fill="#586074">2 Skole</text><rect x="263.9" y="143.5" width="62.2" height="116.5" rx="2" fill="#1f6fd6"/><text x="295.0" y="138.5" text-anchor="middle" fill="#1a2233" font-weight="700">208</text><text x="295.0" y="276" text-anchor="middle" fill="#586074">3 Fritid</text><rect x="364.3" y="141.8" width="62.2" height="118.2" rx="2" fill="#1f6fd6"/><text x="395.4" y="136.8" text-anchor="middle" fill="#1a2233" font-weight="700">211</text><text x="395.4" y="276" text-anchor="middle" fill="#586074">4 Mobil</text><rect x="464.7" y="89.8" width="62.2" height="170.2" rx="2" fill="#1f6fd6"/><text x="495.8" y="84.8" text-anchor="middle" fill="#1a2233" font-weight="700">304</text><text x="495.8" y="276" text-anchor="middle" fill="#586074">5 Mad</text><line x1="44" y1="260" x2="546" y2="260" stroke="#1a2233"/><line x1="44" y1="36" x2="44" y2="260" stroke="#1a2233"/><text x="12" y="148.0" text-anchor="middle" fill="#586074" transform="rotate(-90 12 148.0)">svar at oversætte</text></svg><div class="figtekst">Ingen gruppe har fået dobbelt så meget som en anden. Første opdeling gav segment 5 over 400 svar, og spørgsmålet om rejser flyttede derfor til segment 1, hvor det også hører bedre hjemme.</div></div><section class="seg"><div class="nr">1</div><div class="krop"><h3>Hamborg, hjemmet og at rejse væk</h3><p>Hvem bor i byen, hvem gør ikke, hvad holder de af — og hvor ville de tage hen, hvis de kunne vælge frit.</p><p class="maal"><b>7</b> spørgsmål · <b>3</b> med frie svar · <b>352</b> forskellige svar at oversætte</p><details><summary>Se spørgsmålene</summary><ul class="spm"><li>Wohnst du in Hamburg?</li><li>Wie lange wohnst du schon in Hamburg?</li><li>Mit wem wohnst du zusammen?</li><li>Was gefällt dir am besten an Hamburg?</li><li>Welchen Ort in Hamburg würdest du uns für einen Besuch empfehlen?</li><li>Möchtest du auch später in Hamburg leben?</li><li>Wenn du überall hinreisen könntest, wohin würdest du reisen?</li></ul></details></div></section><section class="seg"><div class="nr">2</div><div class="krop"><h3>Skole, job og drømmejob</h3><p>Går de i skole, arbejder de ved siden af, og hvad vil de gerne være.</p><p class="maal"><b>5</b> spørgsmål · <b>3</b> med frie svar · <b>299</b> forskellige svar at oversætte</p><details><summary>Se spørgsmålene</summary><ul class="spm"><li>Gehst du zur Schule?</li><li>Was ist dein Lieblingsfach in der Schule?</li><li>Hast du einen Nebenjob?</li><li>Welche Jobs kann man als junger Mensch in Hamburg machen?</li><li>Was ist dein Traumjob?</li></ul></details></div></section><section class="seg"><div class="nr">3</div><div class="krop"><h3>Fritid, sport og venner</h3><p>Hvad laver de, når de har fri, hvor ofte ses de med vennerne, og hvor mødes unge i Hamborg.</p><p class="maal"><b>8</b> spørgsmål · <b>2</b> med frie svar · <b>208</b> forskellige svar at oversætte</p><details><summary>Se spørgsmålene</summary><ul class="spm"><li>Was machst du am liebsten in deiner Freizeit?</li><li>Treibst du Sport?</li><li>Machst du in deiner Freizeit Musik?</li><li>Hast du ein Haustier?</li><li>Gehst du oft ins Kino?</li><li>Wie oft triffst du dich mit Freunden?</li><li>Wohnen deine Freunde in Hamburg?</li><li>Wo treffen sich Jugendliche in Hamburg?</li></ul></details></div></section><section class="seg"><div class="nr">4</div><div class="krop"><h3>Mobil, medier og film</h3><p>Hvor mange timer på telefonen, hvad bruger de den til, og hvad ser de.</p><p class="maal"><b>6</b> spørgsmål · <b>2</b> med frie svar · <b>211</b> forskellige svar at oversætte</p><details><summary>Se spørgsmålene</summary><ul class="spm"><li>Wie viele Stunden am Tag bist du am Handy?</li><li>Was machst du am liebsten mit deinem Handy?</li><li>Wie viele soziale Medien benutzt du?</li><li>Postest du gerne Fotos?</li><li>Verfolgst du Trends im Internet?</li><li>Was ist dein Lieblingsfilm?</li></ul></details></div></section><section class="seg"><div class="nr">5</div><div class="krop"><h3>Mad, vaner og værdier</h3><p>Yndlingsret, slik og øl — og de to store: hvad er vigtigt i livet, og hvad vil de nå at opleve.</p><p class="maal"><b>5</b> spørgsmål · <b>3</b> med frie svar · <b>304</b> forskellige svar at oversætte</p><details><summary>Se spørgsmålene</summary><ul class="spm"><li>Was ist dein deutsches Lieblingsgericht?</li><li>Wie oft pro Woche kaufst du Süßigkeiten?</li><li>Magst du Bier?</li><li>Was ist dir im Leben wichtig?</li><li>Was möchtest du im Leben unbedingt erleben?</li></ul></details></div></section><h2 class="sec">Det afleverer I</h2><table class="afl"><tbody><tr><th>Oversættelsen</th><td>Alle svar i jeres segment skrevet på dansk. Den skriver I direkte ind i dokumentet.</td></tr><tr><th>Sammenfatningen</th><td>En halv side: hvad fortæller jeres segment om at være ung i Hamborg? Brug tal — &quot;69 ud af 169&quot; siger mere end &quot;mange&quot;.</td></tr><tr><th>Tre fund</th><td>De tre ting, I selv synes er mest værd at vide. Dem fremlægger I for de andre grupper, så alle får hele billedet.</td></tr></tbody></table></main><footer>Undervisningsmateriale · 9. klasse · Mibelibsen.</footer></body></html>

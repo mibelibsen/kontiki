@@ -326,38 +326,23 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   liggende for nu.** Rejs det ikke igen af dig selv. At fjerne dem helt
   kræver en omskrivning af historikken.
 
-- **Tysk gjort færdig: resultatsiden (3.11.).** `tysk-resultater.html`,
-  bygget af `claude/byg_tysk_resultater.py`, linket fra `tysk.html` og
-  forsiden. Projektet havde kun sin første halvdel på sitet — ungerne lavede
-  spørgsmålene og spurgte i Hamborg, men svarene stod ingen steder. Siden
-  viser 18 resultater i seks afsnit med rigtige figurer fra `figurer.py`.
-  **Kun optællinger, aldrig et enkeltsvar.** Sitet er offentligt, og
-  besvarelserne er skrevet af unge på andre skoler. De frie svar vises kun,
-  hvis mere end én har givet dem — et svar, kun én har skrevet, er ikke et
-  resultat, det er en persons udsagn. De fulde svar ligger i
-  `tekster/hamborg-segmenter.docx`, som ikke udgives.
-  **Ingen svar sorteres fra.** *Herbertstraße* — bordelgaden på St. Pauli,
-  lukket for alle under 18 — lå øverst over steder, de unge ville anbefale
-  os at se. Første udgave holdt den ude af den offentlige liste, og
-  brugeren blev spurgt. **Afgjort 3.11.: svarene står, som de er.** Det er
-  hendes klasse og hendes data. Tag dem ikke ud igen af dig selv.
-  **Årsplanen i tysk er droppet (3.11.).** Brugeren har besluttet, at der
-  ikke kommer en. Forsidens tysk-kort sagde *Årsplan for tysk* og
-  indledningen lovede *årsplaner til samfundsfag og tysk* — begge dele er
-  rettet, så de beskriver det, faget faktisk har. Spørg ikke efter den igen.
-
-- **Vejen hjem fra matematiksiderne (3.11.).** Punktet på listen sagde, at
-  `statistik.html` manglede et link til forsiden. **Det var forældet** —
-  linket var der, men det stod umarkeret midt mellem anker-linkene, og
-  *Matematik* lå helt forrest i menuen i stedet for sammen med de andre
-  sidelinks. Nu står alle tre til sidst med `class="side"`, som på
-  `manipulation.html` og `test-statistik.html`.
-  **Den rigtige fejl lå et andet sted:** `funktioner-og-ligninger.html`
-  havde **ingen vej ud overhovedet** — kun ankre til sine egne afsnit.
-  Ingen forside, ingen matematik. Den har nu Forside, Matematik og
-  GeoGebra. Det er også den side, GeoGebra-vejledningen linker tilbage til,
-  så de to sider peger nu på hinanden begge veje.
-  **Tjek listen mod virkeligheden, før du retter efter den.**
+- **Tysk: resultatsiden taget ned igen, opgavesiden sat op (3.11.).**
+  `tysk-resultater.html` blev bygget og udgivet om formiddagen og **slettet
+  igen samme dag** — brugeren ville have den som PDF i hånden i stedet, og
+  sitet skal i stedet bære selve opgaven. PDF'en er sendt. Scriptet
+  `claude/byg_tysk_resultater.py` ligger der stadig; kør det, hvis siden
+  skal op igen.
+  `tysk-segmenter.html`, bygget af `claude/byg_tysk_segmentopgave.py`,
+  er gruppeopgaven: fem segmenter, fem grupper, hvad de skal oversætte og
+  sammenfatte, og hvad de afleverer. Start **tirsdag 10. november**, så
+  Peter og Peter kan tage fat.
+  **Segmenterne importeres fra `byg_hamborg_segmenter.py`** — side og
+  dokument kan ikke komme til at sige hver sit. Figuren viser, hvor meget
+  hver gruppe skal oversætte, fordi det første spørgsmål fra en gruppe
+  altid er, om de har fået mere end de andre.
+  **Dokumentet med de 170 besvarelser ligger ikke på sitet og linkes ikke
+  derfra.** Brugeren blev spurgt 3.11. og valgte, at hun selv sender filen
+  til lærerne. Siden siger, at dokumentet fås af læreren.
 
 - **Dybe links kun når de skal bruges (afgjort 20.10.).** Reglen i
   CLAUDE.md gælder, når brugeren skal **gøre** noget i en grænseflade —
