@@ -282,6 +282,24 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   dashboardet. Brug læsningen til at finde det rigtige id og give et
   præcist link — gæt aldrig på en projektadresse.
 
+- **Klip rumfanget fri (3.11.).** `materiale/klip-rumfanget-fri.pdf`,
+  bygget af `claude/byg_klip_rumfang.py`, linket fra `matematik.html`.
+  Efterfølgeren til arealarket, samme greb: **A** grundfladen som
+  centimetertern (24 cm²), **B** kassens udfoldning (6 × 4 × 4 cm = 96 cm³,
+  fire lag), **C** pyramiden med *samme* grundflade og højde — den fylder
+  præcis en tredjedel, 32 cm³.
+  **Tredjedelen er hele pointen.** Rumfanget af en kasse kan forklares;
+  tredjedelen kan ikke på dette trin. Den kan kun vises, og den vises ved
+  at hælde. Derfor skal der ris eller sand på bordet.
+  **Limflapperne regnes, ikke tegnes på øjemål:** `_flap()` finder den
+  udadvendte normal ud af trekantens tredje hjørne, så en flap på en skrå
+  kant vender rigtigt. Og **rammen om figuren regnes af de punkter, den
+  faktisk bruger** — et gæt gav et pyramidenet på 206 mm, og A4 har 184.
+  `svg()` har nu en assert på begge mål.
+  **Kassen blev sænket fra 5 til 4 cm**, fordi nettet ellers ikke kunne dele
+  side med grundfladen, og arket blev fem sider med en næsten tom
+  førsteside. Tallene er stadig eksakte: 96 / 3 = 32.
+
 - **Klip arealet fri (3.11.).** `materiale/klip-arealet-fri.pdf`, bygget af
   `claude/byg_klip_areal.py`, linket fra `matematik.html`. Tre arealformler,
   som ungerne klipper sig frem til: parallelogram → rektangel, to trekanter →

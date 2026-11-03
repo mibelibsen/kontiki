@@ -33,3 +33,6 @@ vejledning/klip-arealet-fri-svar.pdf
 # henter dataene fra regnearket, når der er brug for dem.
 tekster/hamborg-segmenter.pdf
 tekster/hamborg-segmenter.docx
+
+# Svararket til rumfangsøvelsen bygges af claude/byg_klip_rumfang.py.
+vejledning/klip-rumfanget-fri-svar.pdf
