@@ -59,6 +59,21 @@ def _ikon_menu():
 IKON_GRAF, IKON_MENU = _ikon_graf(), _ikon_menu()
 
 
+def _ikon_advarsel():
+    """En trekant med et udråbstegn. Punkterne regnes, så den er ligesidet."""
+    h = 17 * math.sqrt(3) / 2
+    pkt = f'11,{11 - h/2:.2f} {11 - 8.5:.2f},{11 + h/2:.2f} {11 + 8.5:.2f},{11 + h/2:.2f}'
+    return ('<svg class="ikon" viewBox="0 0 22 22" aria-hidden="true">'
+            f'<polygon points="{pkt}" fill="#ffe9d6" stroke="#d98324" '
+            'stroke-width="1.6" stroke-linejoin="round"/>'
+            '<line x1="11" y1="8.5" x2="11" y2="13.5" stroke="#d98324" '
+            'stroke-width="1.8" stroke-linecap="round"/>'
+            '<circle cx="11" cy="16.2" r="1.1" fill="#d98324"/></svg>')
+
+
+IKON_ADVARSEL = _ikon_advarsel()
+
+
 # ------------------------------------------------- figuren til ligningsflytten
 def fig_flyt(venstre='-2x + y = 1', hojre='y = 2x + 1',
              fra=(0, 3), til=(4, 6)):
@@ -144,6 +159,31 @@ FIG_SKAER = FG.koordinatsystem(
     punkter=[(SKAER[0], SKAER[1], FG.ROD, 'S')],
     xmin=-1, xmax=6, ymin=-1, ymax=11)
 
+# Fire billeder af den SAMME ting, fordi hældningen er det, flest falder
+# over: ét trin, fem trin, et trin nedad, og den anden vej rundt — at
+# tegne linjen ud fra a og b. Koordinaterne regnes af figurer.py.
+FIG_TRIN1 = FG.koordinatsystem(
+    linjer=[(EKS_A, EKS_B, FG.BLA, 'f')],
+    xmin=-1, xmax=6, ymin=-1, ymax=11, trappe=(EKS_A, EKS_B, 1))
+
+FIG_TRIN5 = FG.koordinatsystem(
+    linjer=[(EKS_A, EKS_B, FG.BLA, 'f')],
+    xmin=-1, xmax=6, ymin=-1, ymax=11, trappe=(EKS_A, EKS_B, 0, 5))
+
+NED_A, NED_B = -2, 9
+FIG_TRINNED = FG.koordinatsystem(
+    linjer=[(NED_A, NED_B, FG.GRO, 'h')],
+    xmin=-1, xmax=6, ymin=-1, ymax=11, trappe=(NED_A, NED_B, 1))
+
+FIG_TEGN = FG.koordinatsystem(
+    linjer=[(EKS_A, EKS_B, FG.BLA, 'f')],
+    punkter=[(0, EKS_B, FG.ROD, 'b'), (1, EKS_A + EKS_B, FG.ROD, '')],
+    xmin=-1, xmax=6, ymin=-1, ymax=11, trappe=(EKS_A, EKS_B, 0))
+
+assert NED_A * 1 + NED_B == 7 and NED_A * 2 + NED_B == 5, 'trinnet nedad'
+assert EKS_A * 5 == 10, 'fem til højre skal give ti op'
+
+
 
 # (overskrift, [afsnit], [(skriv, sker)], figur, figurtekst, [(billede, tekst)])
 TRIN = [
@@ -193,7 +233,14 @@ TRIN = [
     'ligningen -2x + y = 1.')]),
 
  ('Skriv ligningen om, så den bliver til y = ax + b',
-  ['Du vil have <code class="inl">y</code> til at stå <b>alene</b> på '
+  [f'<div class="advarsel">{IKON_ADVARSEL}<p><b>Ret ikke i den linje, der '
+   f'allerede står i GeoGebra.</b> Omskrivningen her laver du på papiret '
+   f'eller i hovedet — ikke i programmet. Og alt, hvad du senere skriver i '
+   f'GeoGebra, skriver du på en <b>ny linje</b> i feltet <i>Input…</i> '
+   f'nederst i algebravinduet. Klikker du op i en linje, der står der i '
+   f'forvejen, laver du den om i stedet for at lave en ny — og så flytter '
+   f'linjen sig.</p></div>',
+   'Du vil have <code class="inl">y</code> til at stå <b>alene</b> på '
    'venstre side. Lige nu står der <code class="inl">-2x</code> i vejen.',
    '<b>1.</b> Læg <code class="inl">2x</code> til på <b>begge</b> sider af '
    'lighedstegnet. Det må man altid, så længe man gør det samme på begge '
@@ -212,23 +259,57 @@ TRIN = [
   'Leddet -2x flytter over på den anden side og skifter fortegn. Alt '
   'andet står, hvor det stod.', []),
 
- ('Få hældningen a med kommandoen Hældning',
-  ['Kommandoen hedder <b>Hældning</b>, og den er den vigtigste på hele '
-   'siden. Du skriver <code class="inl">Hældning(f)</code> — altså '
-   'navnet på den linje, du vil kende hældningen af.',
-   '<b>Hvorfor er den vigtigst?</b> Fordi den ikke bare giver dig tallet. '
-   'Den <b>tegner trappetrinnet</b> ude på linjen, så du kan se, hvor '
-   'tallet kommer fra: gå <b>1 til højre</b>, og se hvor meget linjen '
-   'går <b>op</b>. Det tal er a.',
-   'Det er præcis det trappetrin, opgaven beder dig om at aflæse. '
-   'GeoGebra tegner ét trin til højre; i opgaven går du fem til højre og '
-   'deler med fem bagefter — det er det samme tal.',
-   'Begynd bare at skrive <b>Hæld</b>, så foreslår GeoGebra resten. '
-   'Husk den danske stavemåde med æ.'],
+ ('Hældningen a — og hvordan du tegner den',
+  ['Kommandoen hedder <b>Hældning</b>. Skriv '
+   '<code class="inl">Hældning(f)</code> på en <b>ny linje</b>. GeoGebra '
+   'svarer med et tal — og tegner samtidig en lille orange figur ude på '
+   'linjen. <b>Figuren er det vigtigste, ikke tallet.</b>',
+   'Den hedder et <b>trappetrin</b>, og den viser, hvad hældningen '
+   '<i>er</i>: hvor meget linjen går op, hver gang du går <b>én til '
+   'højre</b>. Ikke andet.',
+   '<b>Sådan tegner du trappetrinnet selv, på papir:</b>',
+   '<b>1.</b> Sæt blyanten på et sted, hvor linjen rammer et hjørne i '
+   'ternene. Det er lettere at tælle fra.',
+   '<b>2.</b> Gå <b>1 tern til højre</b>, og tegn den vandrette streg.',
+   '<b>3.</b> Gå <b>lodret</b> op, til du rammer linjen igen. Tegn den '
+   'lodrette streg.',
+   '<b>4.</b> Tæl, hvor mange tern du gik op. Det tal er '
+   '<code class="inl">a</code>.',
+   f'<div class="figur">{FIG_TRIN1}<div class="figtekst">Her er der gået '
+   f'1 til højre og {EKS_A} op, så a = {EKS_A}. Den stiplede vinkel er '
+   f'præcis den, GeoGebra tegner for dig.</div></div>',
+   '<b>Når 1 til højre ikke rammer et hjørne,</b> så gå længere. Gå '
+   '<b>5 til højre</b>, tæl hvor mange du går op, og <b>divider med '
+   '5</b> til sidst. Det giver det samme tal — og det er præcis den '
+   'fremgangsmåde, opgaven beder om.',
+   f'<div class="figur">{FIG_TRIN5}<div class="figtekst">5 til højre og '
+   f'{EKS_A * 5} op. {EKS_A * 5} ÷ 5 = {EKS_A}. Samme hældning, bare '
+   f'talt over et længere stykke — og nemmere at aflæse rigtigt.'
+   f'</div></div>',
+   '<b>Når linjen falder,</b> går du <b>ned</b> i stedet for op, og så '
+   'er <code class="inl">a</code> <b>negativ</b>. Trappetrinnet vender '
+   'nedad. Det sker i batteridelen af opgave C: batteriet bliver mindre, '
+   'ikke større.',
+   f'<div class="figur">{FIG_TRINNED}<div class="figtekst">1 til højre og '
+   f'{abs(NED_A)} ned giver a = {NED_A}. Minusset er ikke en fejl — det '
+   f'er hele oplysningen om, at linjen går nedad.</div></div>',
+   '<b>Og den anden vej rundt: tegn linjen ud fra a og b.</b> Det er her, '
+   'hældningen holder op med at være et tal, du slår op, og bliver noget, '
+   'du kan bruge:',
+   '<b>1.</b> Sæt et punkt på y-aksen i højden <code class="inl">b</code>.',
+   '<b>2.</b> Gå 1 til højre og <code class="inl">a</code> op. Sæt et '
+   'punkt mere.',
+   '<b>3.</b> Træk linjen gennem de to punkter — og forlæng den til begge '
+   'sider.',
+   f'<div class="figur">{FIG_TEGN}<div class="figtekst">Fra b på y-aksen: '
+   f'1 til højre, {EKS_A} op, og der er det næste punkt. '
+   f'<b>Hældningen er en opskrift på at komme fra ét punkt på linjen til '
+   f'det næste</b> — ikke bare et tal.</div></div>',
+   '<b>Tjek dig selv:</b> skriv <code class="inl">Hældning(g)</code> på '
+   'din egen funktion, når du har lavet den i næste trin. Får du det '
+   'samme tal, er den rigtig.'],
   [('Hældning(f)', 'Tallet a kommer frem, og trappetrinnet tegnes på linjen')],
-  FIG_LINJE,
-  'Sådan ser trappetrinnet ud. Her er der gået 1 til højre og 2 op, så '
-  'a = 2.',
+  None, None,
   [('5-haeldning.png',
     'I algebravinduet står a = Hældning(f) og nedenunder = 2. Ude på '
     'linjen er trappetrinnet tegnet med 1 til højre og 2 op.')]),
@@ -316,9 +397,11 @@ TJEKLISTE = [
  'Skriv dit andet punkt, fx <code class="inl">B=(4,9)</code>, og tryk Enter.',
  'Skriv <code class="inl">Linje(A,B)</code>. Nu er linjen tegnet.',
  'Skriv ligningen om, så der står <code class="inl">y = ax + b</code>. '
- 'Flyt leddet over, og skift fortegn.',
- 'Skriv <code class="inl">Hældning(f)</code>, og skriv tallet '
- '<code class="inl">a</code> ned.',
+ 'Flyt leddet over, og skift fortegn. Det gør du på papiret — du retter '
+ '<b>ikke</b> i den linje, der står i GeoGebra.',
+ 'Skriv <code class="inl">Hældning(f)</code> på en ny linje, og skriv '
+ 'tallet <code class="inl">a</code> ned. Kig på trappetrinnet, og tæl '
+ 'efter: 1 til højre, hvor mange op?',
  'Aflæs <code class="inl">b</code> dér, hvor linjen krydser y-aksen, og '
  'skriv tallet ned.',
  'Skriv din egen forskrift: <code class="inl">g(x)=</code> og så dit a og '
@@ -432,6 +515,12 @@ background:var(--panel2);border:1px solid var(--line);border-radius:12px;
 padding:12px 16px;margin:12px 0}
 .ikonboks>.ikon{width:26px;height:26px;flex:0 0 auto;margin:2px 0 0}
 .ikonboks p{margin:0;color:var(--muted);font-size:.95rem;max-width:66ch}
+.advarsel{display:flex;gap:12px;align-items:flex-start;background:#fff7ef;
+border:1px solid #f0d9c0;border-left:5px solid #d98324;border-radius:12px;
+padding:13px 17px;margin:4px 0 14px}
+.advarsel>.ikon{width:26px;height:26px;flex:0 0 auto;margin:1px 0 0}
+.advarsel p{margin:0;color:var(--muted);font-size:.97rem;max-width:66ch}
+.advarsel b{color:var(--ink)}
 figure.skaerm{margin:14px 0;border:1px solid var(--line);border-radius:12px;
 overflow:hidden;background:#fff}
 /* Et hoejt, smalt skaermbillede (app-listen) maa ikke fylde en

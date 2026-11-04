@@ -331,6 +331,25 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
   lagde 60°-tallet oven i buen.
 
+- **GeoGebra: hældningen forklaret ordentligt (4.11.).** Brugeren så det
+  i klassen. To ting gik galt.
+  **Ungerne rettede i den linje, der allerede stod i GeoGebra.** Trin 4
+  beder dem skrive `-2x + y = 1` om til `y = 2x + 1`, og de troede, det
+  skulle gøres *i programmet*. Så flyttede linjen sig. Der står nu en
+  advarselsboks **som det første efter overskriften**: omskrivningen
+  laves på papiret, og alt, hvad man skriver i GeoGebra, skrives på en
+  **ny linje** i Input-feltet.
+  **Hældningen var forklaret for hurtigt.** Trin 5 hed før «Få hældningen
+  a» og sagde, at kommandoen tegner et trappetrin — uden at sige, hvordan
+  man tegner et selv. Nu er der fire regnede figurer og fire tilfælde:
+  ét trin (1 til højre, a op), fem trin (5 til højre, divider med 5 —
+  præcis det, opgaven beder om), et trin **nedad** (negativ a, som i
+  batteridelen af opgave C), og den anden vej rundt: **tegn linjen ud fra
+  a og b**. Den sidste er pointen — hældningen er ikke et tal, man slår
+  op, men en opskrift på at komme fra ét punkt på linjen til det næste.
+  Figurerne bruger `figurer.py`'s `trappe`-parameter, der selv skriver
+  «5 til højre» og «10 op» ud fra tallene.
+
 - **Navnet «Mibelibsen» er væk fra sitet (3.11.).** 64 forekomster på 39
   sider: sidehovedet («Mibelibsen · 9. klasse») og sidefoden. **Fjern
   betyder fjern** — der blev ikke sat et nyt navn ind, hverken domænets
