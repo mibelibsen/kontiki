@@ -175,7 +175,7 @@ SIDE = f'''<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">
 <div class="btnrow"><button class="btn" id="startBtn">Start</button>
 <button class="btn ghost" id="skipBtn">Fortsæt uden navn</button></div></div></div>
 <header class="top"><div class="top-inner">
-<div class="brand">Matematik · <span>Test i statistik</span></div>
+<div class="brand">321flyv · <span>Test i statistik</span></div>
 <nav class="jump">{nav}<a href="#results">Resultater</a>
 <a class="side" href="index.html">Forside</a>
 <a class="side" href="matematik.html">Matematik</a>
@@ -280,7 +280,7 @@ LAERER = f'''<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">
 <title>Resultater · Test i statistik</title><style>{CSS}{EKSTRA_CSS}</style></head>
 <body data-store-key="test9_laerer_v1">
 <header class="top"><div class="top-inner">
-<div class="brand">Matematik · <span>Resultater</span></div>
+<div class="brand">321flyv · <span>Resultater</span></div>
 <nav class="jump"><a class="side" href="test-statistik.html">Testen</a>
 <a class="side" href="matematik.html">Matematik</a></nav></div></header>
 <main><section class="hero"><span class="pill">Til læreren</span>

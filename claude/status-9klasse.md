@@ -337,7 +337,10 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   eller skolens. Sidehovedet hed først bare **9. klasse**; brugeren valgte
   bagefter **321flyv · 9. klasse**, sat i husets eget mønster med navnet i
   sort og resten i accentfarven, præcis som fagsiderne gør det
-  («Matematik · Statistik»). Sidefoden slutter dér, hvor den stod før
+  («Matematik · Statistik»). De seks dybe matematiksider havde selv det
+  mønster og hedder nu **321flyv · Statistik**, *· Manipulation*, *· Test
+  i statistik* og så videre: navnet står der, og faget fremgår af
+  spring-menuen nedenunder. Sidefoden slutter dér, hvor den stod før
   navnet: *Undervisningsmateriale · 9. klasse.*
   **De 24 byggescripts blev rettet med**, ellers ville navnet være kommet
   tilbage, næste gang en side blev bygget. Fire steder stod strengen delt
