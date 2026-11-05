@@ -26,6 +26,7 @@ import html
 import math
 import os
 import sys
+from fractions import Fraction as F
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import figurer as FG
@@ -143,7 +144,7 @@ EKS2_A, EKS2_B = 1, 4
 SKAER = (3, 7)
 VAERDI_X = 7
 VAERDI_Y = EKS_A * VAERDI_X + EKS_B
-NULPUNKT = -EKS_B / EKS_A
+NULPUNKT = F(-EKS_B, EKS_A)
 assert EKS_A * P1[0] + EKS_B == P1[1] and EKS_A * P2[0] + EKS_B == P2[1]
 assert EKS_A * SKAER[0] + EKS_B == SKAER[1] == EKS2_A * SKAER[0] + EKS2_B
 assert VAERDI_Y == 15, 'skærmbilledet 11-vaerdi.png viser g(7) = 15'
@@ -182,6 +183,25 @@ FIG_TEGN = FG.koordinatsystem(
 
 assert NED_A * 1 + NED_B == 7 and NED_A * 2 + NED_B == 5, 'trinnet nedad'
 assert EKS_A * 5 == 10, 'fem til højre skal give ti op'
+
+# Nulpunktet tegnet begge veje: den stigende linje fra eksemplet, og den
+# faldende, som er den, der tæller i opgave C. Punkterne regnes af
+# forskriften - de bliver ikke sat efter øjemål.
+NED_ROD = F(-NED_B, NED_A)
+assert NED_A * NED_ROD + NED_B == 0 and EKS_A * NULPUNKT + EKS_B == 0
+
+ROD_VINDUE = dict(xmin=-3, xmax=8, ymin=-5, ymax=6)
+for _r in (NULPUNKT, NED_ROD):
+    assert ROD_VINDUE['xmin'] < _r < ROD_VINDUE['xmax'], 'nulpunktet er uden for vinduet'
+
+FIG_ROD_OP = FG.koordinatsystem(
+    linjer=[(EKS_A, EKS_B, FG.BLA, 'f')],
+    punkter=[(NULPUNKT, 0, FG.ROD, 'nulpunkt')], **ROD_VINDUE)
+
+FIG_ROD_NED = FG.koordinatsystem(
+    linjer=[(NED_A, NED_B, FG.GRO, 'h')],
+    punkter=[(NED_ROD, 0, FG.ROD, 'nulpunkt')], **ROD_VINDUE)
+
 
 
 
@@ -343,14 +363,52 @@ TRIN = [
     f'Nederst i algebravinduet står svaret: {VAERDI_Y}. Det er den '
     f'y-værdi, grafen har ved x = {VAERDI_X}.')]),
 
- ('Find nulpunktet med kommandoen Rod',
-  ['Nulpunktet er dér, hvor grafen rammer <b>x-aksen</b> — hvor y er nul. '
-   'Det er fx dér, hvor telefonen er løbet tør for strøm.',
-   'Kommandoen hedder <b>Rod</b>. Ikke «Nulpunkt» — det findes ikke i '
-   'GeoGebra, selv om det er det, vi kalder det i timen.',
-   '<b>Den virker kun på en funktion.</b> Har du kun linjen '
-   '<code class="inl">f</code> fra Linje-kommandoen, får du ingenting. '
-   'Brug din egen <code class="inl">g</code> fra trin 6.'],
+ ('Nulpunktet — hvor grafen rammer x-aksen',
+  [f'<div class="advarsel">{IKON_ADVARSEL}<p><b>Rod virker kun på en '
+   f'funktion.</b> Skriver du <code class="inl">Rod(f)</code> på linjen '
+   f'fra trin 3, sker der ingenting — <code class="inl">f</code> er en '
+   f'<i>linje</i>, ikke en funktion. Brug din egen '
+   f'<code class="inl">g</code> fra trin 6. Og skriv kommandoen på en '
+   f'<b>ny linje</b> i Input-feltet.</p></div>',
+   'Nulpunktet er dér, hvor grafen rammer <b>x-aksen</b> — den vandrette. '
+   'Og x-aksen er netop de steder, hvor <b>y er nul</b>. Det er hele '
+   'definitionen: nulpunktet er det x, der giver y = 0.',
+   'I virkeligheden er det dér, hvor noget <b>løber ud</b>: telefonen er '
+   'tom for strøm, pengene er brugt, vandet er væk.',
+   'Kommandoen hedder <b>Rod</b>. Ikke «Nulpunkt» — det ord findes ikke i '
+   'GeoGebra, selv om det er det, vi kalder det i timen. Begynd bare at '
+   'skrive <b>Rod</b>, så foreslår GeoGebra resten.',
+   '<b>Sådan aflæser du det på grafen:</b> følg linjen, til den krydser '
+   'den vandrette akse, og se hvilket tal der står under krydset. Det er '
+   'nulpunktet.',
+   f'<div class="figur">{FIG_ROD_OP}<div class="figtekst">Linjen krydser '
+   f'x-aksen ved x = {FG._dk(NULPUNKT)}. Læg mærke til, at punktet ligger '
+   f'<i>på</i> aksen: y er nul dér.</div></div>',
+   '<b>Sådan regner du det ud i hånden.</b> Du leder efter det x, der '
+   'giver y = 0, så du sætter nul ind i stedet for y og løser ligningen — '
+   'præcis som i trin 4:',
+   f'<b>1.</b> Skriv <code class="inl">0 = {EKS_A}x + {EKS_B}</code>.',
+   f'<b>2.</b> Flyt <code class="inl">{EKS_B}</code> over på den anden '
+   f'side. Den skifter fortegn: <code class="inl">-{EKS_B} = '
+   f'{EKS_A}x</code>.',
+   f'<b>3.</b> Divider med <code class="inl">{EKS_A}</code> på begge '
+   f'sider: <code class="inl">x = {FG._dk(NULPUNKT)}</code>. Samme tal '
+   f'som på grafen.',
+   '<b>Den, der tæller i opgaven, er den faldende linje.</b> I '
+   'batteridelen af opgave C går grafen nedad, og nulpunktet er det '
+   'sted, hvor batteriet er tomt. Her er a negativ, men fremgangsmåden er '
+   'den samme.',
+   f'<div class="figur">{FIG_ROD_NED}<div class="figtekst">'
+   f'h(x) = {NED_A}x + {NED_B} rammer x-aksen ved x = '
+   f'{FG._dk(NED_ROD)}. Ved regning: 0 = {NED_A}x + {NED_B}, så '
+   f'{abs(NED_A)}x = {NED_B}, og x = {FG._dk(NED_ROD)}.</div></div>',
+   f'<b>Tjek dig selv:</b> sæt dit nulpunkt ind i forskriften. '
+   f'<code class="inl">g({FG._dk(NULPUNKT)})</code> skal give '
+   f'<b>0</b>. Gør den ikke det, er nulpunktet forkert.',
+   f'<b>Pas på det, der bliver spurgt om.</b> GeoGebra svarer med et '
+   f'<i>punkt</i> — ({FG._dk(NULPUNKT)}, 0). Opgaven vil som regel kun '
+   f'have <b>x-værdien</b>, og den vil have den med enhed: timer, dage, '
+   f'kroner. Et tal uden enhed svarer ikke på spørgsmålet.'],
   [('Rod(g)', 'Punktet, hvor grafen krydser x-aksen')],
   None, None,
   [('7-rod.png',
@@ -412,7 +470,8 @@ TJEKLISTE = [
  'mål i sig selv — den er værktøjet. Brug den til at svare på det, '
  'opgaven spørger om: regn en værdi ud med '
  '<code class="inl">g(tal)</code>, find nulpunktet med '
- '<code class="inl">Rod(g)</code>, og læg den anden linje ind, hvis '
+ '<code class="inl">Rod(g)</code> på en ny linje, og læg den anden '
+ 'linje ind, hvis '
  'opgaven har to. Skriv hver gang med ord, hvad tallet betyder i '
  'virkeligheden.',
 ]

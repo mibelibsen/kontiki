@@ -349,6 +349,17 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   op, men en opskrift på at komme fra ét punkt på linjen til det næste.
   Figurerne bruger `figurer.py`'s `trappe`-parameter, der selv skriver
   «5 til højre» og «10 op» ud fra tallene.
+  **Trin 8 om Rod fik samme behandling (5.11.).** Advarslen øverst:
+  `Rod(f)` gør ingenting, fordi `f` er en *linje* og ikke en funktion —
+  brug din egen `g`, og skriv på en ny linje. Derefter hvad et nulpunkt
+  *er* (det x, der giver y = 0), hvordan man aflæser det på grafen, og
+  hvordan man regner det ud i hånden i tre skridt, der bruger
+  omskrivningen fra trin 4. To figurer: den stigende linje med nulpunkt i
+  −0,5 og den faldende med nulpunkt i 4,5 — den sidste er batteridelen af
+  opgave C. Til sidst: GeoGebra svarer med et *punkt*, men opgaven vil
+  som regel kun have x-værdien, og den vil have en enhed på.
+  Nulpunkterne regnes som `Fraction(-b, a)`, så −0,5 er eksakt, og en
+  assert tjekker, at begge ligger inde i det tegnede vindue.
 
 - **Navnet «Mibelibsen» er væk fra sitet (3.11.).** 64 forekomster på 39
   sider: sidehovedet («Mibelibsen · 9. klasse») og sidefoden. **Fjern
