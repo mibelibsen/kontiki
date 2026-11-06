@@ -331,6 +331,17 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
   lagde 60°-tallet oven i buen.
 
+- **Lektien om lineære funktioner flyttet til uge 44 (6.11.).** Første
+  afsnit på arket hedder nu *«Svarer til opgave C og D, bare kun med tal,
+  uden situation og eksempel.»* — brugerens egen formulering. Etiketten
+  øverst siger **Uge 44 · 26.10 – 30.10**; ugens datoer er regnet med
+  `date.fromisocalendar`, ikke slået op.
+  Filnavnene med dato fulgte med: `lektieark/lektier-2026-10-26-…` og
+  `facit/facit-lektier-2026-10-26-…`, så de passer til `tjek.py`'s
+  mønster. **HTML-filen hedder stadig `lektier-uge41-funktioner-grafer.html`**
+  — det er en offentlig adresse, der er linket fra matematiksiden, og den
+  bliver ikke omdøbt for et ugenummer. Kortet og lektieplanen er rettet.
+
 - **Facitlisterne er bygget om uden navnet (6.11.).** 18 PDF'er i
   `facit/` havde stadig «· Mibelibsen» i sidehovedet. `byg_facit.py` og
   `byg_facit_statistik.py` var allerede rettet, så de skulle bare køres

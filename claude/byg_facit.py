@@ -352,9 +352,9 @@ dok('facit-lektier-2026-09-21-parenteser-og-broeker', 'lektier', '2026-09-21',
 ])
 
 # --- 7. Uge 41 - Lineaere funktioner og grafer -----------------------------
-dok('facit-lektier-2026-10-05-funktioner-og-grafer', 'lektier', '2026-10-05',
+dok('facit-lektier-2026-10-26-funktioner-og-grafer', 'lektier', '2026-10-26',
     'Lineære funktioner og grafer',
-    'Uge 41 · lektier-uge41-funktioner-grafer.html', [
+    'Uge 44 · lektier-uge41-funktioner-grafer.html', [
     ('h2', 'Opgave A · Find forskriften'),
     ('tabel', [
         ('a) Hældning gennem <code>(1, 4)</code> og <code>(5, 16)</code>', 'a = 3',

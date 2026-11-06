@@ -1,6 +1,6 @@
 # Lektieplan · hvornår hvad udgives
 
-Sidst opdateret: 2026-09-16
+Sidst opdateret: 2026-11-06
 
 ## Reglerne
 
@@ -44,7 +44,7 @@ dokumenteres bedre først.
 | 37 | 07.09 – 11.09 | Sandsynligheder i verden | — | ikke lavet, afventer |
 | 38 | 14.09 – 18.09 | Ligninger | `lektier-uge38-ligninger.html` | ✅ udgivet 16.09 |
 | 39 | 21.09 – 25.09 | Ligninger (fortsat) | `lektier-uge39-ligninger-fortsat.html` | ✅ udgivet 06.10 |
-| 41 | 05.10 – 09.10 | Lineære funktioner og grafer | `lektier-uge41-funktioner-grafer.html` | ✅ udgivet 06.10 |
+| 44 | 26.10 – 30.10 | Lineære funktioner og grafer | `lektier-uge41-funktioner-grafer.html` | ✅ udgivet 06.10, flyttet til uge 44 den 06.11 |
 
 Uge 33 og 34 er udgivet samtidig, fordi uge 33 allerede var passeret, da lektierne
 blev lavet.
