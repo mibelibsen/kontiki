@@ -331,6 +331,18 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
   lagde 60°-tallet oven i buen.
 
+- **Facitlisterne er bygget om uden navnet (6.11.).** 18 PDF'er i
+  `facit/` havde stadig «· Mibelibsen» i sidehovedet. `byg_facit.py` og
+  `byg_facit_statistik.py` var allerede rettet, så de skulle bare køres
+  igen. Indholdet er efterregnet ord for ord mod den gamle udgave af
+  funktioner-facitten: identisk, kun sidehovedet er kortere. To gamle
+  filer uden byggescript — `facit-statistik-hjemmeopgaver.pdf` og
+  `facit-statistik-online.pdf` — har navnet endnu; de er to af de fire,
+  `tjek.py` også brokker sig over navngivningen af.
+  **Lektien om lineære funktioner var allerede udgivet** (uge 41, den
+  6.10.). Siden svarer 200, kortet står på matematiksiden, og facitten
+  svarer 404 på sitet, som den skal.
+
 - **GeoGebra: hældningen forklaret ordentligt (4.11.).** Brugeren så det
   i klassen. To ting gik galt.
   **Ungerne rettede i den linje, der allerede stod i GeoGebra.** Trin 4
