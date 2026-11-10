@@ -331,6 +331,23 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
   lagde 60°-tallet oven i buen.
 
+- **Kalenderfil til FP9-prøverne (10.11.).**
+  `vejledning/fp9-proever-januar-2027.ics`, bygget af
+  `claude/byg_proevekalender.py`. Fem prøver, 18.–22. januar 2027,
+  skrevet af fra et udtræk fra booking.testogprøver.dk.
+  **Bookinglisten giver kun starttidspunktet.** Varighederne er slået op
+  i UVM's retningslinjer, ikke husket: matematik 4 timer i alt (1 uden +
+  3 med hjælpemidler, uden pause), dansk skriftlig fremstilling 3½ time,
+  dansk læsning og retskrivning 1½ time (60 min retskrivning, så 30 min
+  læsning). Kilden står i hver begivenheds beskrivelse, så den, der
+  åbner kalenderen om to måneder, kan se, hvor tiderne kommer fra.
+  **Outlook er kræsen med formatet:** CRLF, folding på 75 *oktetter* og
+  ikke tegn, og tidszonen skrevet ind i filen som en VTIMEZONE, så
+  tiderne ikke flytter sig. Foldningen bryder på tegngrænser, så et
+  dansk bogstav ikke bliver hugget midt over. Scriptet har asserts på
+  alle fire ting, og filen er efterprøvet med `icalendar`: fem
+  begivenheder, alle 08:00 lokal tid, UTC+1 i januar.
+
 - **Lektien om lineære funktioner flyttet til uge 44 (6.11.).** Første
   afsnit på arket hedder nu *«Svarer til opgave C og D, bare kun med tal,
   uden situation og eksempel.»* — brugerens egen formulering. Etiketten

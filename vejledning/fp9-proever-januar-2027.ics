@@ -1,0 +1,96 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//9. klasse//FP9-proever januar 2027//DA
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:FP9-prøver januar 2027
+X-WR-TIMEZONE:Europe/Copenhagen
+BEGIN:VTIMEZONE
+TZID:Europe/Copenhagen
+BEGIN:STANDARD
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:9534b3ecc79253c1@fp9-2027
+DTSTAMP:20261110T154617Z
+DTSTART;TZID=Europe/Copenhagen:20270118T080000
+DTEND;TZID=Europe/Copenhagen:20270118T120000
+SUMMARY:FP9 Matematik · 8. klasse
+DESCRIPTION:To prøver i forlængelse af hinanden\, uden pause imellem:\n08
+ :00–09:00  uden hjælpemidler (1 time)\n09:00–12:00  med hjælpemidler
+  (3 timer)\n\nBooking: Matematik 8.kl\nSkrevet af fra bookinglisten på bo
+ oking.testogprøver.dk. Listen giver kun starttidspunktet\; varigheden er 
+ UVM’s officielle prøvetid.
+CATEGORIES:FP9,Prøve
+TRANSP:OPAQUE
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+END:VEVENT
+BEGIN:VEVENT
+UID:2ea76e77d26b25ef@fp9-2027
+DTSTAMP:20261110T154617Z
+DTSTART;TZID=Europe/Copenhagen:20270119T080000
+DTEND;TZID=Europe/Copenhagen:20270119T113000
+SUMMARY:FP9 Dansk\, skriftlig fremstilling · 8. klasse
+DESCRIPTION:Samlet prøvetid 3½ time.\n08:00–11:30\n\nBooking: Dansk 8.k
+ l\nSkrevet af fra bookinglisten på booking.testogprøver.dk. Listen giver
+  kun starttidspunktet\; varigheden er UVM’s officielle prøvetid.
+CATEGORIES:FP9,Prøve
+TRANSP:OPAQUE
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+END:VEVENT
+BEGIN:VEVENT
+UID:ecfdcd4f82090657@fp9-2027
+DTSTAMP:20261110T154617Z
+DTSTART;TZID=Europe/Copenhagen:20270120T080000
+DTEND;TZID=Europe/Copenhagen:20270120T120000
+SUMMARY:FP9 Matematik · 9. klasse
+DESCRIPTION:To prøver i forlængelse af hinanden\, uden pause imellem:\n08
+ :00–09:00  uden hjælpemidler (1 time)\n09:00–12:00  med hjælpemidler
+  (3 timer)\n\nBooking: Matematik 9.kl\nSkrevet af fra bookinglisten på bo
+ oking.testogprøver.dk. Listen giver kun starttidspunktet\; varigheden er 
+ UVM’s officielle prøvetid.
+CATEGORIES:FP9,Prøve
+TRANSP:OPAQUE
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+END:VEVENT
+BEGIN:VEVENT
+UID:165bd1b7591a6447@fp9-2027
+DTSTAMP:20261110T154617Z
+DTSTART;TZID=Europe/Copenhagen:20270121T080000
+DTEND;TZID=Europe/Copenhagen:20270121T113000
+SUMMARY:FP9 Dansk\, skriftlig fremstilling · 9. klasse
+DESCRIPTION:Samlet prøvetid 3½ time.\n08:00–11:30\n\nBooking: Dansk 9.k
+ l\nSkrevet af fra bookinglisten på booking.testogprøver.dk. Listen giver
+  kun starttidspunktet\; varigheden er UVM’s officielle prøvetid.
+CATEGORIES:FP9,Prøve
+TRANSP:OPAQUE
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+END:VEVENT
+BEGIN:VEVENT
+UID:f586b2af057b9a17@fp9-2027
+DTSTAMP:20261110T154617Z
+DTSTART;TZID=Europe/Copenhagen:20270122T080000
+DTEND;TZID=Europe/Copenhagen:20270122T093000
+SUMMARY:FP9 Dansk\, læsning og retskrivning · 9. klasse
+DESCRIPTION:Samlet prøvetid 1½ time\, digital selvrettende prøve:\n08:00
+ –09:00  retskrivning (60 min)\n09:00–09:30  læsning (30 min)\n\nBooki
+ ng: Dansk 9.kl\nSkrevet af fra bookinglisten på booking.testogprøver.dk.
+  Listen giver kun starttidspunktet\; varigheden er UVM’s officielle prø
+ vetid.
+CATEGORIES:FP9,Prøve
+TRANSP:OPAQUE
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+END:VEVENT
+END:VCALENDAR
