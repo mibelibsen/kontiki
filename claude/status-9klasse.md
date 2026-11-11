@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-11-03
+Sidst opdateret: 2026-11-11
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -13,53 +13,73 @@ næste skridt, og hvad er lært.
 
 ## Tilstand
 
-**Sitet er live** på https://www.mibelibsen.space og udgives automatisk ved push
-til `main`. Deploy-kæden virker; Claudes Vercel-adgang bruges ikke.
+**Sitet er live på https://321flyv.com** og udgives automatisk ved push til
+`main`. Deploy-kæden virker; Claudes Vercel-adgang bruges ikke til ændringer.
 
-**Matematik** har indhold: tre interaktive sider, lektier til uge 33 og 34 udgivet,
-uge 35 og 36 klar i `kommende/` med planlagte Routines. Facitlister til alle
-moduler og lektier ligger i `facit/` som PDF.
+**Domænet skiftede 3.11.**, fordi skolens webfilter blokerede
+`mibelibsen.space`. Det gamle domæne viderestiller midlertidigt (307) året ud
+og **skal fjernes fra projektet efter 31.12.2026**, så brugeren kan bruge det
+til noget andet. Der ligger en påmindelse til 4.1.2027. Sidehovedet hedder
+**321flyv · 9. klasse**; navnet «Mibelibsen» er væk fra sitet.
 
-**Samfundsfag** har årsplan og en tekstside. **Tysk** har projektet *Ung i
-Tyskland* (`tysk-spoergeskema.html`) men ingen årsplan. **Fysik** findes ikke endnu.
+**Matematik** har mest indhold: tre interaktive sider (statistik, manipulation,
+funktioner og ligninger), **Matematik klip** med seks klippeark (areal,
+rumfang, overflade, Pythagoras, trigonometri, ligninger), **Intro til
+GeoGebra** med elleve skærmbilleder fra den rigtige app, opslagssider,
+Undervisningsministeriets *Matematiske formler og fagord*, og lektier til og
+med uge 44. Facit til alle moduler og lektier ligger i `facit/` som PDF og
+kommer aldrig på sitet.
 
-**Spørgeskemaet til Tyskland virker fra ende til anden (22.9.)**: 23 unger
-har koder og kort (`spoergeskema/qr-kort-a6.pdf`, A4-plakaterne findes også).
-`/u/<kode>` sender videre til det fælles Google Form med navnet i feltet
-`Code` (24 redirects i `vercel.json`, tjekket live). Skemaet er udgivet, uden
-e-mail-indsamling, og svarene lander i fanen `Svar` i regnearket. Siden
-`tysk-spoergeskema.html` viser ungernes spørgsmål fra arket live og siger nu,
-at koden kommer som et kort (A6).
-**Google-siden af sagen:**
+**Dansk** har `/dansk` med tre øvelsessæt i skriftlig fremstilling og en
+essayvejledning. **Ingen side linker dertil** — det var med vilje. Dertil
+spillet **Fyrtøjet** på `/fyrtoejet`, som har et kort på forsiden.
+
+**Samfundsfag** har årsplan og en tekstside. **Tysk**: *Ung i Tyskland* er
+afsluttet med 170 besvarelser; resultaterne blev til en PDF, og
+segmentopgaven (`tysk-segmenter.html`) ligger klar til de to Peter'e. Der er
+ingen årsplan i tysk — den er droppet. **Fysik** har naturfagsugens materiale.
+
+**FP9-prøverne 18.-22. januar 2027** ligger som kalenderfil i
+`vejledning/fp9-proever-januar-2027.ics`.
+
+### Spørgeskemaet til Tyskland · afsluttet
+
+23 unger fik koder og kort; `/u/<kode>` sender videre til det fælles Google
+Form med navnet i feltet `Code` (24 redirects i `vercel.json`). De printede
+plakater peger på det **gamle** domæne — en viderestilling redder dem ikke på
+skolens net, for filteret blokerer forespørgslen, før viderestillingen sendes.
+Skal de bruges igen, printes de forfra med
+`python3 claude/byg_spoergeskema.py`, som nu bygger dem med 321flyv.com.
+
 - regneark med fanen Unger og optælling:
   https://docs.google.com/spreadsheets/d/1QwwgmHeMVc-lsMEtmXtT4BobkF0HGyjVr9Twi1tCWbY/edit
-- ungernes spørgsmål skrives i et fælles ark (delt med alle med linket), som
-  siden læser via gviz-CSV: https://docs.google.com/spreadsheets/d/1tV_rBMFwAtc8jQUXqP32TBOSEg52ZBQ05T-MIrfAK-Y/edit
-  Kolonnerne til svarmuligheder er lavet (22.9. stod der Antwort 1, 2, 4, 5 —
-  Antwort 3 manglede, og de to Auswahl-linjer havde ingen muligheder endnu).
-  Forslagsformularen (1DfEjbE50…) er droppet og kan slettes.
-- `spoergeskema/byg_formular.gs` bygger skemaet af arket (Apps Script i arket,
-  funktionen bygSkema). Brugeren kører det igen, når klassen har skrevet sine
-  spørgsmål; det beholder feltet Code, så linkene og koderne holder.
-- Test af et rigtigt svar er brugerens: send aldrig prøvesvar til skemaet.
-- **Plan:** klassen lukker for nye spørgsmål fredag 25.9., og skemaet bygges
-  fredag eftermiddag. En engangs-Routine tjekker arket fredag kl. 12 (Auswahl
-  uden muligheder, kolonnenavne, tysken) og melder tilbage i denne session.
-- spørgeskemaet (tomt): https://docs.google.com/forms/d/1_zEW7e1bvwL46TeywzPD9S3f8NzQ8CwDco62mWMWUgc/edit
-- teksterne til formularerne: https://docs.google.com/document/d/1h96ppA_vi6fnoye0KmNs5RWzKT5Zoh-YOCsrhBMM4TQ/edit
-Brugerens eget, tomme ark *Tysk spørgeskema* (18Ns9i35…) kan slettes.
-Når linkene kommer: sæt dem i `spoergeskema/opsaetning.json`, kør
-`python3 claude/byg_spoergeskema.py`, push. Plakaterne behøver ikke trykkes om.
-Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
+- ungernes spørgsmål:
+  https://docs.google.com/spreadsheets/d/1tV_rBMFwAtc8jQUXqP32TBOSEg52ZBQ05T-MIrfAK-Y/edit
+- spørgeskemaet: https://docs.google.com/forms/d/1_zEW7e1bvwL46TeywzPD9S3f8NzQ8CwDco62mWMWUgc/edit
+- `spoergeskema/byg_formular.gs` bygger skemaet af arket (Apps Script, funktionen
+  bygSkema). Test af et rigtigt svar er brugerens: send aldrig prøvesvar.
+- Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
 
 ## Næste skridt
 
-1. **Lektier fra uge 37.** Der er lavet til og med uge 36. Aftalt at indholdet
-   skal gennemgås, før der laves mere.
-2. **Fire gamle facit-filer** i `facit/` er ikke omskrevet til det nye
-   PDF-format: `facitark-funktioner-og-ligninger.html`, `facitark-manipulation.pdf`,
-   `facit-lektier-manipulation.pdf`, `facit-statistik-hjemmeopgaver.pdf`,
-   `facit-statistik-online.pdf`. De hører til materiale, der er erstattet.
+1. **Fjern `mibelibsen.space` fra `kontiki-9klasse` efter 31.12.2026.**
+   Ikke slette domænet fra kontoen — kun tage det af projektet, så det kan
+   bruges til noget andet. Påmindelsen fyrer 4.1.2027.
+   https://vercel.com/mibelibsens-projects/kontiki-9klasse/settings/domains
+2. **Lektier fra uge 37.** Der er lavet til og med uge 36 plus uge 38, 39 og
+   44. Aftalt, at indholdet skal gennemgås, før der laves mere.
+3. **Fire gamle facit-filer** i `facit/` er ikke omskrevet til det nye
+   PDF-format: `facitark-funktioner-og-ligninger.html`,
+   `facitark-manipulation.pdf`, `facit-lektier-manipulation.pdf`,
+   `facit-statistik-hjemmeopgaver.pdf` og `facit-statistik-online.pdf`. De to
+   sidste bærer stadig navnet «Mibelibsen», fordi de ingen byggescript har.
+   De hører til materiale, der er erstattet.
+4. **Vercel-oprydning er parkeret af brugeren** (20.10.): `mibelib-space` og
+   ti andre tomme projekter. Sletning kan kun ske i dashboardet —
+   `get_project_deletion_link` svarer `requires_user_action`.
+5. **Fyrtøjet linker ikke til `/dansk`.** Spillet står for sig selv med et
+   kort på forsiden. Hører det til dansksiden, skal den side have et sted til
+   litteratur — den er i dag ren skriftlig fremstilling.
 
 ## Lavet 6. oktober 2026 · samfundsfag
 
@@ -1520,3 +1540,14 @@ Tre vaner kom ud af det, og de står som regler i `README.md`:
 5. **Vis det, i stedet for kun at skrive det.** Der skal være en figur til hver
    opgave og hver forklaring — også i facit. Brug `claude/figurer.py`, og beregn
    koordinaterne.
+6. **En absolut adresse til sitets eget domæne er altid en fejl.** Den virker,
+   lige indtil domænet skifter, og så virker den i stilhed forkert. Skriv
+   relativt, eller læg adressen ét sted, alt andet læser fra. Lært ved
+   domæneskiftet 3.11.
+7. **Mål i den rigtige grænseflade, ikke i hukommelsen.** Trin 1 i
+   GeoGebra-vejledningen blev forkert to gange: først skrevet af hukommelsen,
+   så målt på et besøg, hvor der allerede var klikket. Afhænger noget af, om
+   det er første besøg, skal der måles i en frisk browserkontekst.
+8. **Slå op i dokumentet, før det får et kort.** Den første formelsamling, der
+   blev lagt op, var til gymnasiet. Filnavnet sagde «formelsamling»; niveauet
+   stod kun på side 1.
