@@ -331,6 +331,31 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
   lagde 60°-tallet oven i buen.
 
+- **Fyrtøjet som spil (11.11.).** `fyrtoejet.html`, også på
+  **/fyrtoejet**. Hentet fra brugerens artefakt og sat op som en side:
+  tre kamre med hver sin hund, et valg ved rebet (dræbe heksen som i
+  eventyret, eller binde hende), galgebakken med fyrtøjet, og fem
+  samtalespørgsmål til klassen til sidst.
+  **Siden står for sig selv**, ligesom `algoritme.html`. Den er mørk, og
+  sitets lyse sidehoved ville brække rummet, så der er kun en diskret vej
+  hjem i spillets egne farver. Skrifterne hentes fra Google Fonts, men
+  faldet tilbage til Georgia er bygget ind, så et webfilter ikke kan
+  ødelægge den.
+  **`tjek.py` fik en undtagelse mere.** Reglen om en figur på hver side
+  leder efter `<svg>`, og hele spillet tegnes på et `<canvas>`. Begrundelsen
+  står i listen, som den gør for `algoritme.html`. Spillet er prøvet
+  igennem i Chromium: ingen JS-fejl, intet vandret overløb på 420 px, og
+  hunden lader sig løfte.
+
+- **Matematisk formelsamling lagt op (11.11.).**
+  `materiale/formelsamling-stx-a-niveau-2018.pdf`, kort på
+  `matematik.html`. **Det er Undervisningsministeriets formelsamling til
+  stx på A-niveau, maj 2018** — ikke en folkeskoleudgave. Kortteksten
+  siger det ligeud, så ingen ung tror, det er pensum. 56 sider, 6,8 MB,
+  printet til PDF uden tekstlag, så der kan ikke søges i den. Originalen
+  fra 2018 er taget af uvm.dk; den nuværende udgave (oktober 2025, efter
+  2024-læreplanen) er en anden og kortere bog på 20 sider.
+
 - **Kalenderfil til FP9-prøverne (10.11.).**
   `vejledning/fp9-proever-januar-2027.ics`, bygget af
   `claude/byg_proevekalender.py`. Fem prøver, 18.–22. januar 2027,

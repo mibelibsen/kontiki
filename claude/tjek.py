@@ -188,7 +188,10 @@ UDEN_KRAV = {'index.html', 'matematik.html', 'samfundsfag.html', 'tysk.html', 'f
              # af sitet; pointstakken tegnes med div'er, ikke svg
              'algoritme.html',
              # kun videoen med Peter Hoffmann, paa /video
-             'video.html'}
+             'video.html',
+             # spillet over Fyrtoejet: hele scenen tegnes paa et <canvas>,
+             # billede for billede, saa figuren er der - den er bare ikke svg
+             'fyrtoejet.html'}
 
 
 def tjek_figurer():

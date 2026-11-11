@@ -47,6 +47,10 @@
     {
       "source": "/kvalitativ-analyse",
       "destination": "/kvalitativ-analyse.html"
+    },
+    {
+      "source": "/fyrtoejet",
+      "destination": "/fyrtoejet.html"
     }
   ],
   "redirects": [

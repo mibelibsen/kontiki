@@ -1,0 +1,399 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fyrtøjet · 9. klasse</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almendra:wght@400;700&family=Spectral:wght@400;500&display=swap">
+<style>
+/* Layout: ét portrætstykke scene med fortælling oven på, handlingsknap under. Natteblåt med ildskær. */
+:root{
+  --bg:#0d1020; --panel:#171b32; --ink:#f0e7d2; --mute:#a9a190; --fire:#f2a43a; --ember:#d9532b;
+  --copper:#b8693a; --silver:#c9d1dc; --gold:#f0c53c; --line:#2d3354;
+  --display:"Almendra",Georgia,serif; --body:"Spectral",Georgia,serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;margin:0;
+  padding-block:16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+img{max-width:100%}
+[hidden]:not([hidden=until-found i]){display:none!important}
+.wrap{max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-family:var(--display);font-size:2rem;margin:0;color:var(--fire);letter-spacing:.02em;line-height:1.1}
+.hud{display:flex;gap:16px;align-items:center;font-variant-numeric:tabular-nums;color:var(--mute);font-size:.95rem}
+.hud .hearts{color:var(--ember);letter-spacing:.15em;font-size:1.2rem}
+.stage{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#000}
+canvas{display:block;width:100%;height:auto;touch-action:manipulation}
+.ov{position:absolute;inset:0;background:rgba(10,12,24,.9);display:flex;flex-direction:column;justify-content:center;gap:14px;padding:24px;overflow:auto}
+.ov h2{font-family:var(--display);font-weight:400;font-size:1.7rem;margin:0;color:var(--fire);text-wrap:balance;line-height:1.15}
+.ov p{margin:0;max-width:60ch}
+.ov em{color:var(--mute)}
+button{font:inherit;cursor:pointer;border:0;border-radius:4px;padding:12px 20px;min-height:48px;background:var(--fire);color:#1a1106;font-weight:500;align-self:flex-start}
+button:hover{background:#ffb74f}
+button:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.act{width:100%;align-self:stretch;font-family:var(--display);font-size:1.4rem;min-height:60px}
+.foot{font-size:.85rem;color:var(--mute);margin:0}
+.valg{display:flex;flex-direction:column;gap:10px}
+.valg button{align-self:stretch;text-align:left}
+.ov ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:10px}
+.ov li{max-width:60ch}
+/* Vejen tilbage til resten af sitet. Holdt i spillets egne farver, saa den
+   lyse sidehoved-stribe fra de oevrige sider ikke braekker det moerke rum. */
+.ud{display:flex;gap:18px;flex-wrap:wrap;margin:0;font-size:.85rem}
+.ud a{color:var(--mute);text-decoration:none;border-bottom:1px solid var(--line);
+  padding:6px 0;min-height:44px;display:inline-flex;align-items:center}
+.ud a:hover{color:var(--fire);border-bottom-color:var(--fire)}
+</style>
+</head><body>
+
+<div class="wrap">
+  <header>
+    <h1>Fyrtøjet</h1>
+    <div class="hud"><span class="hearts" id="hearts" aria-label="Liv">♥♥♥</span><span id="pocket">Lommer: tomme</span></div>
+  </header>
+  <div class="stage">
+    <canvas id="c" width="480" height="560" aria-label="Spilscene"></canvas>
+    <div class="ov" id="ov"></div>
+  </div>
+  <button class="act" id="act" hidden>Løft hunden</button>
+  <p class="foot">Efter H.C. Andersens eventyr "Fyrtøiet" (1835). Tryk på knappen, eller på mønterne, i takt med spillet.</p>
+  <p class="ud"><a href="index.html">Til forsiden</a></p>
+</div>
+
+<script>
+const cv=document.getElementById('c'),g=cv.getContext('2d'),W=480,H=560;
+const $=id=>document.getElementById(id);
+const ov=$('ov'),act=$('act');
+const rnd=([a,b])=>a+Math.random()*(b-a);
+const S={hearts:3,pocket:0,metal:'',shake:0,end:false,checkpoint:null};
+let scene=null,last=performance.now(),T=0;
+const sparks=[];
+
+const DOGS=[
+ {eye:'tekopper',r:34,metal:'kobber',col:'#b8693a',val:1,open:[1.0,1.6],shut:[.65,.95],life:1.1},
+ {eye:'møllehjul',r:50,metal:'sølv',col:'#c9d1dc',val:5,open:[.8,1.3],shut:[.5,.75],life:.9},
+ {eye:'Rundetårnet',r:68,metal:'guld',col:'#f0c53c',val:20,open:[.65,1.0],shut:[.4,.6],life:.75}
+];
+
+/* ---------- HUD og fortælling ---------- */
+function hud(){
+  $('hearts').textContent='♥'.repeat(Math.max(0,S.hearts))+'♡'.repeat(Math.max(0,3-S.hearts));
+  $('pocket').textContent=S.metal?`Lommer: ${S.pocket} ${S.metal}`:'Lommer: tomme';
+}
+function story(title,html,btn,fn){
+  scene=null;act.hidden=true;
+  ov.innerHTML=`<h2>${title}</h2>${html}<button id="go">${btn}</button>`;
+  ov.hidden=false;
+  const b=$('go');b.onclick=()=>{ov.hidden=true;fn()};b.focus({preventScroll:true});
+}
+function choice(title,html,opts){
+  scene=null;act.hidden=true;
+  ov.innerHTML=`<h2>${title}</h2>${html}<div class="valg">${opts.map((o,k)=>`<button data-k="${k}">${o[0]}</button>`).join('')}</div>`;
+  ov.hidden=false;
+  ov.querySelectorAll('button').forEach(b=>b.onclick=()=>{ov.hidden=true;opts[b.dataset.k][1]()});
+  ov.querySelector('button').focus({preventScroll:true});
+}
+function play(sc,label){
+  scene=sc;act.textContent=label;act.hidden=false;act.focus({preventScroll:true});
+}
+function lose(title,text){
+  S.hearts=3;S.pocket=0;S.metal='';hud();
+  story(title,`<p>${text}</p><p><em>Du prøver igen med fulde kræfter.</em></p>`,'Prøv igen',S.checkpoint);
+}
+function hit(){
+  S.hearts--;S.shake=.35;hud();
+}
+
+/* ---------- tegning ---------- */
+function bg(glow){
+  const gr=g.createLinearGradient(0,0,0,H);
+  gr.addColorStop(0,'#0b0e1d');gr.addColorStop(1,'#1b1730');
+  g.fillStyle=gr;g.fillRect(0,0,W,H);
+  g.fillStyle='rgba(255,255,255,.5)';
+  for(let i=0;i<30;i++){g.fillRect((i*97)%W,(i*53)%200,1.5,1.5)}
+  if(glow){
+    const rg=g.createRadialGradient(W/2,400,10,W/2,400,260);
+    rg.addColorStop(0,glow+'55');rg.addColorStop(1,'transparent');
+    g.fillStyle=rg;g.fillRect(0,0,W,H);
+  }
+  g.fillStyle='#14111f';g.fillRect(0,470,W,H-470);
+}
+function dog(x,y,r,col,eyesOpen,sc=1,happy=false){
+  r*=sc;
+  g.fillStyle=col;
+  g.beginPath();g.ellipse(x,y+r*.2,r*1.15,r*.95,0,0,7);g.fill();
+  g.beginPath();g.arc(x,y-r*.7,r*.8,0,7);g.fill();
+  g.beginPath();g.moveTo(x-r*.7,y-r*1.2);g.lineTo(x-r*.95,y-r*1.75);g.lineTo(x-r*.3,y-r*1.4);g.fill();
+  g.beginPath();g.moveTo(x+r*.7,y-r*1.2);g.lineTo(x+r*.95,y-r*1.75);g.lineTo(x+r*.3,y-r*1.4);g.fill();
+  const er=r*.34;
+  for(const s of[-1,1]){
+    const ex=x+s*r*.36,ey=y-r*.78;
+    if(eyesOpen){
+      g.fillStyle='#fff';g.beginPath();g.arc(ex,ey,er,0,7);g.fill();
+      g.fillStyle='#111';g.beginPath();g.arc(ex,ey,er*.45,0,7);g.fill();
+    }else{
+      g.strokeStyle='#111';g.lineWidth=Math.max(2,r*.06);g.beginPath();
+      g.arc(ex,ey,er*.8,.15*Math.PI,.85*Math.PI);g.stroke();
+    }
+  }
+  g.fillStyle='#111';g.beginPath();g.ellipse(x,y-r*.45,r*.18,r*.12,0,0,7);g.fill();
+  if(happy){g.strokeStyle='#111';g.lineWidth=2;g.beginPath();g.arc(x,y-r*.4,r*.28,.1*Math.PI,.9*Math.PI);g.stroke()}
+}
+function chest(x,y,col,openLid){
+  g.fillStyle='#4a2f1c';g.fillRect(x-70,y,140,80);
+  g.fillStyle='#2e1c10';g.fillRect(x-70,y+30,140,6);
+  g.fillStyle=col;g.fillRect(x-10,y+22,20,24);
+  if(openLid){
+    g.fillStyle='#5b3a22';g.beginPath();g.moveTo(x-70,y);g.lineTo(x-56,y-44);g.lineTo(x+56,y-44);g.lineTo(x+70,y);g.fill();
+    g.fillStyle=col;
+    for(let i=0;i<18;i++){g.beginPath();g.arc(x-56+(i*37)%112,y-6-((i*13)%18),9,0,7);g.fill()}
+  }else{
+    g.fillStyle='#5b3a22';g.fillRect(x-74,y-30,148,34);
+  }
+}
+function apron(x,y,s){
+  const n=6,c=s/n;
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){
+    g.fillStyle=(i+j)%2?'#e8edf8':'#3b5bb0';g.fillRect(x+i*c,y+j*c,c,c);
+  }
+}
+function soldier(x,y,pipe){
+  g.fillStyle='#7a2a2a';g.fillRect(x-12,y-34,24,44);
+  g.fillStyle='#e8c8a0';g.beginPath();g.arc(x,y-44,11,0,7);g.fill();
+  g.fillStyle='#222';g.fillRect(x-13,y-58,26,9);
+  g.fillStyle='#333';g.fillRect(x-14,y+10,10,18);g.fillRect(x+4,y+10,10,18);
+  if(pipe){g.strokeStyle='#6b4423';g.lineWidth=3;g.beginPath();g.moveTo(x+4,y-40);g.lineTo(x+18,y-38);g.stroke()}
+}
+function drawSparks(dt){
+  for(let i=sparks.length-1;i>=0;i--){
+    const p=sparks[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=380*dt;p.l-=dt;
+    if(p.l<=0){sparks.splice(i,1);continue}
+    g.fillStyle=p.c;g.globalAlpha=Math.min(1,p.l*2);g.fillRect(p.x,p.y,3,3);g.globalAlpha=1;
+  }
+}
+function burst(x,y,col,n=14){
+  for(let i=0;i<n;i++){const a=Math.random()*6.28,v=60+Math.random()*180;
+    sparks.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-120,l:.5+Math.random()*.5,c:col})}
+}
+function frame(draw){
+  g.save();
+  if(S.shake>0){g.translate((Math.random()-.5)*10,(Math.random()-.5)*10)}
+  draw();g.restore();
+}
+
+/* ---------- første akt: kamrene ---------- */
+function chamber(i){
+  const D=DOGS[i];
+  const sc={phase:'sleep',open:true,t:1.1,pen:0,lift:0,coins:[],spawn:0,time:7,got:0};
+  sc.update=dt=>{
+    if(sc.phase==='sleep'){
+      sc.t-=dt;
+      if(sc.t<=0){sc.open=!sc.open;sc.t=rnd(sc.open?D.open:D.shut)}
+      if(sc.pen>0)sc.pen-=dt;
+    }else if(sc.phase==='lift'){
+      sc.lift+=dt/.8;
+      if(sc.lift>=1){sc.phase='coins';act.hidden=true}
+    }else if(sc.phase==='coins'){
+      sc.time-=dt;sc.spawn-=dt;
+      if(sc.spawn<=0){
+        sc.spawn=.34;
+        sc.coins.push({x:130+Math.random()*260,y:200+Math.random()*200,l:D.life});
+      }
+      sc.coins.forEach(c=>c.l-=dt);
+      sc.coins=sc.coins.filter(c=>c.l>0);
+      if(sc.time<=0)done();
+    }
+  };
+  sc.draw=()=>frame(()=>{
+    bg(D.col);
+    const lifted=sc.phase==='lift'||sc.phase==='coins';
+    apron(20,410,110);
+    chest(W/2,360,D.col,lifted);
+    if(sc.phase==='sleep'){
+      dog(W/2,310,D.r,D.col,sc.open);
+      g.fillStyle=sc.open?'#d9532b':'#5fbf7a';g.font='20px Almendra';g.textAlign='center';
+      g.fillText(sc.open?'Hunden vogter dig':'Øjnene er lukkede',W/2,70);
+    }else if(sc.phase==='lift'){
+      const k=sc.lift,e=k*k*(3-2*k);
+      dog(W/2+(75-W/2)*e,310+(430-310)*e-Math.sin(k*Math.PI)*80,D.r,D.col,false,1-.35*e);
+    }else{
+      dog(75,440,D.r,D.col,false,.65);
+      sc.coins.forEach(c=>{
+        const a=Math.min(1,c.l*3);g.globalAlpha=a;
+        g.fillStyle=D.col;g.beginPath();g.arc(c.x,c.y,22,0,7);g.fill();
+        g.strokeStyle='#fff8';g.lineWidth=3;g.beginPath();g.arc(c.x,c.y,15,0,7);g.stroke();
+        g.globalAlpha=1;
+      });
+      g.fillStyle='#2d3354';g.fillRect(40,30,W-80,10);
+      g.fillStyle=D.col;g.fillRect(40,30,(W-80)*Math.max(0,sc.time/7),10);
+      g.fillStyle='#f0e7d2';g.font='20px Almendra';g.textAlign='center';
+      g.fillText(`Tryk på mønterne: ${sc.got}`,W/2,70);
+    }
+    soldier(420,500,false);
+    drawSparks(0);
+  });
+  sc.tap=(x,y)=>{
+    if(sc.phase!=='coins')return;
+    for(const c of sc.coins){
+      if(Math.hypot(c.x-x,c.y-y)<34){c.l=0;sc.got++;burst(c.x,c.y,D.col,6);return}
+    }
+  };
+  sc.act=()=>{
+    if(sc.phase!=='sleep'||sc.pen>0)return;
+    if(!sc.open){sc.phase='lift';act.hidden=true;return}
+    hit();sc.pen=.7;sc.open=true;sc.t=1.2;
+    if(S.hearts<=0)lose('Hunden åd dig',`Hunden vågnede og bed efter dig. Øjnene var store som ${D.eye}.`);
+  };
+  function done(){
+    S.pocket=sc.got*D.val;S.metal=D.metal;hud();
+    next();
+  }
+  function next(){
+    const n=sc.got;
+    if(i===0)story('Kobber i lommerne',
+      `<p>Du fylder lommer, støvler og kasket med ${n} kobbermønter. Så sætter du hunden tilbage og lukker kisten.</p><p>Der er et kammer mere. Måske ligger der sølv derinde?</p>`,
+      'Ned til næste kammer',()=>start(1));
+    else if(i===1)story('Sølv i stedet for kobber',
+      `<p>Du smider alt kobberet og fylder lommerne med ${n} sølvmønter, hver værd fem af de gamle.</p><p>Det tredje kammer er det sidste. Hunden dér har øjne så store som Rundetårnet.</p>`,
+      'Ned til tredje kammer',()=>start(2));
+    else{
+      S.gold=n;
+      choice('Guld, så langt øjet rækker',
+        `<p>Du smider sølvet og fylder alt med ${n} guldmønter. Heksen står øverst ved rebet og kræver det gamle fyrtøj.</p><p>"Hvad skal du bruge det til?" spørger du. Hun vil ikke svare. Du kender hende ikke, og hun har allerede brugt dig til at hente det, hun selv ikke kunne.</p><p><em>Hvad gør du?</em></p>`,
+        [['Hug hovedet af hende, som soldaten gør i eventyret',()=>{S.valg='draeb';town()}],
+         ['Bind hende fast til træet og tag fyrtøjet med',()=>{S.valg='bind';town()}]]);
+    }
+  }
+  return sc;
+}
+function start(i){
+  S.checkpoint=()=>start(i);
+  const D=DOGS[i];
+  const t=[
+   'På en kiste sidder en hund med øjne så store som tekopper.',
+   'På en kiste sidder en hund med øjne så store som møllehjul.',
+   'På en kiste sidder en hund med øjne så store som Rundetårnet.'][i];
+  story(`Kammer ${i+1}: ${D.metal}`,
+    `<p>${t}</p><p>"Når hans øjne er lukkede, løfter du ham over på mit blå forklæde," havde heksen sagt. Tryk når øjnene er lukkede. Åbne øjne koster et liv.</p>`,
+    'Åbn døren',()=>play(chamber(i),'Løft hunden'));
+}
+
+/* ---------- anden akt: byen og galgebakken ---------- */
+function town(){
+  story('Livet i byen',
+   `<p>Du bor på det fineste hotel, går i silke og har mange venner. Pengene rinder ud, og snart sidder du på et loftskammer uden lys.</p><p>Så husker du fyrtøjet. Slår du én gang, kommer kobberhunden. To gange, sølvhunden. Tre gange, guldhunden. Hundene henter prinsessen, mens hun sover, og du kysser hende. Det kommer for en dag, og kongen dømmer dig til galgen.</p>`,
+   'Op på galgebakken',gallows);
+}
+function gallows(){
+  S.checkpoint=gallows;
+  story('Galgebakken',
+   `<p>Du får lov at ryge en sidste pibe. Du tager fyrtøjet frem og slår ild. Slå på det rigtige sted, mens ilden glimter hen over stålet. Slå tre gange, før rebet strammer.</p>`,
+   'Slå ild',()=>play(sparksScene(),'Slå ild'));
+}
+function sparksScene(){
+  const sc={strikes:0,time:16,tm:0,zone:.5,pen:0,flash:0,dogsAt:[]};
+  sc.zone=.2+Math.random()*.6;
+  const W_=.14;
+  const pos=()=>1-Math.abs(((sc.tm*(.9+sc.strikes*.4))%2)-1);
+  sc.update=dt=>{
+    sc.tm+=dt;sc.time-=dt;if(sc.pen>0)sc.pen-=dt;
+    if(sc.time<=0){
+      hit();
+      if(S.hearts<=0)lose('Rebet strammede','Rebet blev for stramt, før hundene nåede frem. Dommeren nikker tilfreds.');
+      else{S.shake=.35;scene=null;story('For langsomt','<p>Rebet nåede næsten halsen. Du får en ny chance.</p>','Prøv igen',gallows)}
+    }
+  };
+  sc.draw=()=>frame(()=>{
+    bg(sc.strikes?DOGS[sc.strikes-1].col:null);
+    g.fillStyle='#3a2b1d';g.fillRect(250,110,12,360);g.fillRect(150,110,112,12);
+    const rope=60+(1-sc.time/16)*190;
+    g.strokeStyle='#c9b27c';g.lineWidth=3;g.beginPath();g.moveTo(170,122);g.lineTo(170,122+rope*.6);g.stroke();
+    g.beginPath();g.arc(170,122+rope*.6+10,10,0,7);g.stroke();
+    soldier(170,430,true);
+    g.fillStyle='#8a1f2c';g.fillRect(360,380,90,12);
+    g.fillStyle=DOGS[2].col;g.fillRect(380,350,12,30);g.fillRect(414,350,12,30);
+    g.beginPath();g.moveTo(376,350);g.lineTo(384,334);g.lineTo(392,350);g.lineTo(399,334);g.lineTo(407,350);g.lineTo(415,334);g.lineTo(430,350);g.fill();
+    for(let k=0;k<sc.strikes;k++){dog(70+k*115,430,DOGS[k].r*.7,DOGS[k].col,true,1,true)}
+    g.fillStyle='#555';g.fillRect(W/2-30,310,60,34);
+    g.fillStyle='#bbb';g.fillRect(W/2-24,304,48,6);
+    const bx=60,bw=W-120,by=500;
+    g.fillStyle='#2d3354';g.fillRect(bx,by,bw,22);
+    g.fillStyle='#f2a43a99';g.fillRect(bx+(sc.zone-W_/2)*bw,by,W_*bw,22);
+    const mx=bx+pos()*bw;
+    g.fillStyle='#f0e7d2';g.beginPath();g.moveTo(mx,by-8);g.lineTo(mx-9,by-22);g.lineTo(mx+9,by-22);g.fill();g.fillRect(mx-1,by-8,2,38);
+    g.fillStyle='#f0e7d2';g.font='20px Almendra';g.textAlign='center';
+    g.fillText(`Gnister: ${sc.strikes} af 3`,W/2,50);
+    drawSparks(1/60);
+  });
+  sc.act=()=>{
+    if(sc.pen>0)return;
+    const p=pos();
+    if(Math.abs(p-sc.zone)<=W_/2){
+      sc.strikes++;burst(W/2,310,'#ffd25a',28);burst(W/2,310,'#ff8a3a',14);
+      sc.zone=.15+Math.random()*.7;sc.time=Math.min(16,sc.time+2);
+      if(sc.strikes>=3)win();
+    }else{
+      burst(W/2,310,'#888',6);sc.time-=2.5;sc.pen=.25;
+    }
+  };
+  sc.tap=()=>{};
+  return sc;
+}
+function win(){
+  setTimeout(()=>{
+    scene=null;act.hidden=true;
+    const n=S.gold;
+    const sum=n>=14?'Du bar guld nok til at købe hele slottet.':n>=8?'Du bar et pænt læs guld ud af kammeret.':'Du nåede kun lidt guld, men det er alligevel nok til en hel dronning.';
+    S.end=true;
+    story('Hundene kommer',
+     `<p>Kobberhunden, sølvhunden og guldhunden står foran dig. "Hjælp mig nu, så jeg ikke bliver hængt," siger du. De styrter mod dommerne og kongen og kaster dem højt op i luften, så de falder og går i stykker.</p>
+      <p>Folket råber: "Du skal være vores konge, og prinsessen skal være vores dronning!"</p>
+      <p>Bryllupsfesten varer otte dage, og hundene sidder med ved bordet og gør store øjne.</p>
+      <p><em>${sum} Guldmønter fra kammeret: ${n}. Liv tilbage: ${S.hearts} af 3.</em></p>`,
+     'Til klassen',reflect);
+  },700);
+}
+function reflect(){
+  const v=S.valg==='bind'?'Du valgte at binde heksen fast, mens soldaten i eventyret dræber hende. Hvad ændrer det ved, hvem du er som figur?':'Du valgte at dræbe heksen, ligesom soldaten i eventyret. Er han en helt, og hvad mener Andersen om det?';
+  story('Til samtale i klassen',
+   `<ol><li>${v}</li>
+    <li>Soldaten bliver rig, ødsler pengene væk og mister alle sine venner. Hvad siger fortællingen om penge og venskab?</li>
+    <li>Hundene gør alt, hvad soldaten befaler. Hvem har magten i fortællingen, og hvad sker der med dem, der står i vejen?</li>
+    <li>Fortælleren hverken dømmer eller undskylder soldaten. Hvordan kan du se det i teksten, og hvorfor tror du, Andersen valgte det?</li>
+    <li>Fyrtøjet er en genstand med magt. Find et nutidigt eksempel på noget, der giver sin ejer tilsvarende magt.</li></ol>`,
+   'Spil igen',()=>{S.end=false;S.hearts=3;S.pocket=0;S.metal='';S.gold=0;S.valg='';hud();intro()});
+}
+
+/* ---------- start ---------- */
+function intro(){
+  S.checkpoint=intro;
+  story('Fyrtøjet',
+   `<p>En soldat marcherer hjem fra krigen. På landevejen møder han en heks. "Du kan få mange penge," siger hun. "Der står et hult træ. Kravl ned, og du finder tre kamre med hver sin hund."</p>
+    <p>Du er soldaten. Løft hundene væk fra kisterne, fyld lommerne, og husk fyrtøjet.</p>`,
+   'Kravl ned i træet',()=>start(0));
+}
+act.addEventListener('click',()=>{if(scene&&scene.act)scene.act()});
+cv.addEventListener('pointerdown',e=>{
+  if(!scene||!scene.tap)return;
+  const r=cv.getBoundingClientRect();
+  scene.tap((e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height);
+});
+function idle(){
+  frame(()=>{
+    bg(S.end?'#f0c53c':null);
+    if(S.end){
+      DOGS.forEach((D,k)=>dog(110+k*130,400,D.r*.9,D.col,true,1,true));
+    }else{
+      dog(W/2,380,50,'#8a8a96',false);
+    }
+    drawSparks(1/60);
+  });
+}
+function loop(n){
+  const dt=Math.min(.05,(n-last)/1000);last=n;T+=dt;
+  if(S.shake>0)S.shake-=dt;
+  if(scene){scene.update(dt);scene.draw()}else idle();
+  requestAnimationFrame(loop);
+}
+hud();intro();requestAnimationFrame(loop);
+</script>
+
+</body></html>
