@@ -346,6 +346,8 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   står i listen, som den gør for `algoritme.html`. Spillet er prøvet
   igennem i Chromium: ingen JS-fejl, intet vandret overløb på 420 px, og
   hunden lader sig løfte.
+  **Kort på forsiden (11.11.)** med mærkatet *Dansk*, lagt før de fire
+  fagkort, så emnekortene bliver stående samlet.
 
 - **Matematisk formelsamling lagt op (11.11.).**
   `materiale/formelsamling-stx-a-niveau-2018.pdf`, kort på
