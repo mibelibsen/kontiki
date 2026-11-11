@@ -349,14 +349,16 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   **Kort på forsiden (11.11.)** med mærkatet *Dansk*, lagt før de fire
   fagkort, så emnekortene bliver stående samlet.
 
-- **Matematisk formelsamling lagt op (11.11.).**
-  `materiale/formelsamling-stx-a-niveau-2018.pdf`, kort på
-  `matematik.html`. **Det er Undervisningsministeriets formelsamling til
-  stx på A-niveau, maj 2018** — ikke en folkeskoleudgave. Kortteksten
-  siger det ligeud, så ingen ung tror, det er pensum. 56 sider, 6,8 MB,
-  printet til PDF uden tekstlag, så der kan ikke søges i den. Originalen
-  fra 2018 er taget af uvm.dk; den nuværende udgave (oktober 2025, efter
-  2024-læreplanen) er en anden og kortere bog på 20 sider.
+- **Matematiske formler og fagord lagt op (11.11.).**
+  `materiale/matematiske-formler-og-fagord-2017.pdf`, kort på
+  `matematik.html`. Undervisningsministeriets opslagsbog til 7.-10.
+  klasse og folkeskolens prøver, 2. udgave juni 2017. 74 sider, 2,9 MB,
+  med tekstlag, så der kan søges i den.
+  **Den afløste en forkert bog samme dag.** Først blev stx-formelsamlingen
+  på A-niveau lagt op; jeg skrev på kortet, at den rækker ud over 9.
+  klasse, og brugeren sendte den rigtige i stedet. Lær af det: slå op i
+  PDF'ens forside, før den får et kort — titlen i filnavnet var
+  «formelsamling», men niveauet stod kun på side 1.
 
 - **Kalenderfil til FP9-prøverne (10.11.).**
   `vejledning/fp9-proever-januar-2027.ics`, bygget af
