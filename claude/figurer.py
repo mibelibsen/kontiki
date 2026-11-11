@@ -133,6 +133,65 @@ def boksplot(mini, q1, med, q3, maks, titel='', vis_tal=True, vis_navne=True):
     return ''.join(s)
 
 
+
+def boksplot_par(a, b, navne=('A', 'B'), titel='', step=None):
+    """To boksplot paa ÉN faelles akse, saa de kan sammenlignes.
+
+    a og b er hver (min, Q1, median, Q3, maks). Aksen er faelles og har
+    jaevne streger - det er hele pointen: to boksplot tegnet paa hver sin
+    skala kan ikke sammenlignes, og det er den fejl, figuren skal forhindre.
+    """
+    assert len(a) == len(b) == 5, 'hver raekke er fem tal'
+    for r in (a, b):
+        assert list(r) == sorted(r), f'de fem tal skal staa i orden: {r}'
+    lo = min(F(a[0]), F(b[0]))
+    hi = max(F(a[4]), F(b[4]))
+    if step is None:
+        step = _skridt(hi - lo, 9)
+    v0 = F(math.floor(float(lo) / float(step))) * step
+    v1 = F(math.ceil(float(hi) / float(step))) * step
+    X0, X1, YB = 86, 502, 150
+
+    def X(v):
+        return float(X0 + (F(v) - v0) / (v1 - v0) * (X1 - X0))
+
+    s = [f'<svg viewBox="0 0 540 182" role="img" aria-label="To boksplot paa '
+         f'samme akse: {navne[0]} og {navne[1]}.">', f'<g {FONT}>']
+    if titel:
+        s.append(f'<text x="270" y="15" text-anchor="middle" fill="{MUT}" '
+                 f'font-size="11">{titel}</text>')
+    # jaevne streger, saa oejet kan maale
+    v = v0
+    while v <= v1:
+        x = X(v)
+        s.append(f'<line x1="{x:.1f}" y1="30" x2="{x:.1f}" y2="{YB}" '
+                 f'stroke="{LIN}" stroke-width="0.8"/>')
+        s.append(f'<text x="{x:.1f}" y="{YB+16}" text-anchor="middle" '
+                 f'fill="{INK}">{_dk(v)}</text>')
+        v += step
+    for i, (r, navn, farve) in enumerate(((a, navne[0], BLA), (b, navne[1], GRO))):
+        top = 38 + i * 56
+        bund, midt = top + 36, top + 18
+        mi, q1, med, q3, ma = r
+        s.append(f'<text x="{X0-10}" y="{midt+4:.0f}" text-anchor="end" '
+                 f'fill="{farve}" font-weight="700">{navn}</text>')
+        s.append(f'<line x1="{X(mi):.1f}" y1="{midt}" x2="{X(q1):.1f}" '
+                 f'y2="{midt}" stroke="{INK}" stroke-width="1.5"/>')
+        s.append(f'<line x1="{X(q3):.1f}" y1="{midt}" x2="{X(ma):.1f}" '
+                 f'y2="{midt}" stroke="{INK}" stroke-width="1.5"/>')
+        for x in (X(mi), X(ma)):
+            s.append(f'<line x1="{x:.1f}" y1="{top+6}" x2="{x:.1f}" '
+                     f'y2="{bund-6}" stroke="{INK}" stroke-width="1.5"/>')
+        s.append(f'<rect x="{X(q1):.1f}" y="{top}" '
+                 f'width="{X(q3)-X(q1):.1f}" height="{bund-top}" '
+                 f'fill="{farve}18" stroke="{farve}" stroke-width="1.5"/>')
+        s.append(f'<line x1="{X(med):.1f}" y1="{top}" x2="{X(med):.1f}" '
+                 f'y2="{bund}" stroke="{ROD}" stroke-width="2.5"/>')
+    s.append(f'<line x1="{X0}" y1="{YB}" x2="{X1}" y2="{YB}" stroke="{INK}"/>')
+    s.append('</g></svg>')
+    return ''.join(s)
+
+
 # ------------------------------------------------------------ cirkeldiagram
 def cirkeldiagram(dele, vis_grader=True, vis_procent=True):
     """dele: [(navn, antal)]. Vinkler beregnes eksakt."""

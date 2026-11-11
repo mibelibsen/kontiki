@@ -351,6 +351,33 @@ Skal de bruges igen, printes de forfra med
   på vinkelhalveringslinjen uden for buen; et fast punkt inde i trekanten
   lagde 60°-tallet oven i buen.
 
+- **Boksplot-siden (11.11.).** `boksplot.html`, bygget af
+  `claude/byg_boksplot.py`, kort på `matematik.html`. Tre
+  forklaringsafsnit og **20 spørgsmål med en figur til hvert**, delt i to
+  quizzer: aflæsning (10) og forståelse (10).
+  **Quizmotoren løftes ud af `statistik.html`** sammen med CSS'en og
+  rammen omkring — overlay, navnefelt, fremgangslinje, resultattabel — så
+  de to sider ikke kan komme til at opføre sig forskelligt. Kun
+  `STORAGE_KEY` og modulnavnene byttes; ellers ville siderne dele gemte
+  svar.
+  **Alle tal regnes af rådataene** med den danske skolemetode, og
+  metoden er prøvet af på et kendt eksempel, så den ikke kan skride
+  ubemærket. Hvert spørgsmål har en assert på, at de tre svarmuligheder
+  er forskellige, og sammenligningsspørgsmålene har asserts på selve
+  pointen (at B *faktisk* har den højeste median, at kassen *faktisk* er
+  smallest, at medianen ikke flytter sig, når den største værdi
+  fordobles).
+  **`figurer.py` fik `boksplot_par()`**: to boksplot på én fælles akse
+  med jævne streger. Det er hele pointen — to boksplot tegnet på hver sin
+  skala kan ikke sammenlignes.
+  **Fejl fundet i browseren:** mine markeringer i talrækken hed
+  `.tal.q`, og motoren tæller *alt* med klassen `q` som et spørgsmål.
+  Siden troede, der var 22 spørgsmål. Klasserne hedder nu `kv` og `md`.
+  Lær af det: når man låner en motor, arver man også dens selektorer.
+  Prøvet igennem i Chromium: 20 besvaret, 20 af 20 rigtige, begge moduler
+  10/10 i resultattabellen, forkert svar giver den rigtige rettelse, og
+  intet vandret overløb.
+
 - **Fyrtøjet som spil (11.11.).** `fyrtoejet.html`, også på
   **/fyrtoejet**. Hentet fra brugerens artefakt og sat op som en side:
   tre kamre med hver sin hund, et valg ved rebet (dræbe heksen som i

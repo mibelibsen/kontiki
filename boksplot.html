@@ -1,0 +1,537 @@
+<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Boksplot - 9. klasse</title><style>
+  :root{
+    --bg:#ffffff;
+    --panel:#ffffff;
+    --panel2:#f4f6fb;
+    --ink:#1a2233;
+    --muted:#586074;
+    --line:#d3dae7;
+    --accent:#1f6fd6;
+    --accent-soft:#eaf2fd;
+    --good:#1a8f5e;
+    --good-soft:#eaf7f0;
+    --bad:#c23b4b;
+    --bad-soft:#fdeef0;
+    --warn:#b5710a;
+    --shadow:0 1px 3px rgba(20,30,60,.08);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  header.top{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(8px);
+    background:rgba(255,255,255,.9);
+    border-bottom:1px solid var(--line);
+  }
+  .top-inner{
+    max-width:1000px;margin:0 auto;padding:12px 20px;
+    display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .brand{font-weight:800;letter-spacing:.2px;font-size:1.05rem}
+  .brand span{color:var(--accent)}
+  nav.jump{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  nav.jump a{
+    color:var(--muted);text-decoration:none;font-size:.86rem;
+    padding:6px 11px;border-radius:999px;border:1px solid transparent;
+    transition:.15s;
+  }
+  nav.jump a:hover{color:var(--ink);border-color:var(--line);background:var(--panel2)}
+
+  main{max-width:1000px;margin:0 auto;padding:28px 20px 90px}
+
+  .hero{
+    background:var(--panel2);
+    border:1px solid var(--line);border-radius:20px;
+    padding:34px 32px;box-shadow:var(--shadow);margin-bottom:14px;
+  }
+  .hero h1{margin:0 0 10px;font-size:2.1rem;line-height:1.15}
+  .hero p{margin:0;color:var(--muted);font-size:1.06rem;max-width:72ch}
+  .pill{
+    display:inline-block;font-size:.76rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);border:1px solid var(--line);border-radius:999px;
+    padding:4px 12px;margin-bottom:14px;background:#fff;font-weight:700;
+  }
+
+  .progress-wrap{margin:22px 0 4px}
+  .progress-bar{height:10px;border-radius:999px;background:#e4e9f2;overflow:hidden;border:1px solid var(--line)}
+  .progress-fill{height:100%;width:0;background:var(--accent);transition:width .5s ease}
+  .progress-label{font-size:.85rem;color:var(--muted);margin-top:8px}
+
+  section.lesson{
+    background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:28px 30px;margin:20px 0;box-shadow:var(--shadow);
+  }
+  section.lesson h2{
+    font-size:1.5rem;margin:0 0 6px;display:flex;align-items:center;gap:12px;
+  }
+  .num{
+    flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+    display:grid;place-items:center;font-weight:800;font-size:1rem;
+    background:var(--accent);color:#fff;
+  }
+  section.lesson .sub{color:var(--muted);margin:0 0 18px;font-size:1rem}
+  section.lesson h3{font-size:1.15rem;margin:26px 0 8px;color:#243149}
+  p{margin:12px 0}
+
+  .box{
+    background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;margin:16px 0;
+  }
+  .box.tip{border-left:4px solid var(--good)}
+  .box.note{border-left:4px solid var(--warn)}
+  .box.rule{border-left:4px solid var(--accent);background:var(--accent-soft)}
+  .box b{color:#111}
+  .box .rlabel{
+    display:inline-block;font-size:.72rem;letter-spacing:.6px;text-transform:uppercase;
+    color:var(--accent);font-weight:800;margin-bottom:2px;
+  }
+
+  .formula{
+    font-family:"Cambria Math","Times New Roman",Georgia,serif;
+    background:var(--panel2);border:1px solid var(--line);
+    border-radius:10px;padding:14px 18px;margin:14px 0;text-align:center;
+    font-size:1.3rem;letter-spacing:.4px;color:#111;
+  }
+  .formula small{display:block;font-size:.8rem;color:var(--muted);margin-top:6px;font-family:inherit;letter-spacing:0}
+  code.inl{
+    font-family:"Cambria Math",Georgia,serif;background:var(--panel2);
+    padding:2px 8px;border-radius:6px;border:1px solid var(--line);font-size:1.05em;color:#111;
+  }
+
+  .steps{margin:16px 0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .steps .row{display:flex;gap:0;border-top:1px solid var(--line)}
+  .steps .row:first-child{border-top:none}
+  .steps .calc{
+    flex:1;padding:11px 18px;font-family:"Cambria Math",Georgia,serif;font-size:1.12rem;
+    background:#fff;color:#111;display:flex;align-items:center;
+  }
+  .steps .why{
+    flex:1;padding:11px 18px;color:var(--muted);font-size:.92rem;background:var(--panel2);
+    display:flex;align-items:center;
+  }
+  @media(max-width:620px){.steps .row{flex-direction:column}}
+
+  .graphwrap{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin:18px 0}
+  .graphwrap svg{background:#fff;border:1px solid var(--line);border-radius:12px;flex:0 0 auto}
+  .graphwrap .caption{flex:1;min-width:220px;color:var(--muted);font-size:.95rem}
+
+  /* QUIZ */
+  .quiz{
+    background:var(--panel2);
+    border:1px solid var(--line);
+    border-radius:18px;padding:24px 28px;margin:24px 0;box-shadow:var(--shadow);
+  }
+  .quiz .qhead{display:flex;align-items:center;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+  .quiz .qtag{
+    font-size:.72rem;letter-spacing:.7px;text-transform:uppercase;color:#fff;
+    background:var(--accent);padding:4px 11px;border-radius:999px;font-weight:800;
+  }
+  .quiz h3{margin:0;font-size:1.22rem}
+  .quiz .qsub{color:var(--muted);margin:6px 0 16px;font-size:.95rem}
+  .q{margin:18px 0;padding-top:18px;border-top:1px dashed var(--line)}
+  .q:first-of-type{border-top:none;padding-top:0}
+  .q .qtext{font-weight:600;margin-bottom:12px;font-size:1.04rem}
+  .q .qtext .qn{color:var(--accent);font-weight:800;margin-right:6px}
+  .lvl{
+    display:inline-block;font-size:.68rem;letter-spacing:.5px;text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:2px 9px;margin-left:8px;
+    color:var(--muted);font-weight:700;vertical-align:middle;background:#fff;
+  }
+  .opts{display:grid;gap:9px}
+  .opt{
+    text-align:left;width:100%;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);color:var(--ink);
+    padding:11px 15px;border-radius:10px;font-size:1rem;font-family:inherit;
+    transition:.15s;display:flex;align-items:center;gap:10px;
+  }
+  .opt:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+  .opt .mk{
+    flex:0 0 auto;width:24px;height:24px;border-radius:7px;border:1.5px solid var(--line);
+    display:grid;place-items:center;font-weight:800;font-size:.85rem;color:var(--muted);background:#fff;
+  }
+  .opt.correct{border-color:var(--good);background:var(--good-soft)}
+  .opt.correct .mk{background:var(--good);color:#fff;border-color:var(--good)}
+  .opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+  .opt.wrong .mk{background:var(--bad);color:#fff;border-color:var(--bad)}
+  .opt:disabled{cursor:default}
+  .fb{
+    margin-top:12px;padding:11px 15px;border-radius:10px;font-size:.95rem;display:none;
+  }
+  .fb.show{display:block}
+  .fb.ok{background:var(--good-soft);border:1px solid var(--good);color:#12633f}
+  .fb.no{background:var(--bad-soft);border:1px solid var(--bad);color:#8f2733}
+  .fb b{color:#111}
+  .fb .igen{
+    margin-left:8px;background:#fff;border:1px solid var(--bad);border-radius:8px;
+    padding:4px 11px;font:inherit;font-size:.88rem;font-weight:700;
+    color:#8f2733;cursor:pointer;
+  }
+  .fb .igen:hover{background:var(--bad);color:#fff}
+
+  .scorebar{
+    margin-top:16px;font-size:.95rem;color:var(--muted);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .scorebar .badge{
+    background:#fff;border:1px solid var(--line);border-radius:999px;
+    padding:5px 14px;font-weight:700;color:var(--ink);
+  }
+  .final-note{text-align:center;color:var(--muted);margin-top:16px;font-size:.95rem}
+
+  footer{max-width:1000px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:.85rem;text-align:center}
+
+  .cheat{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  @media(max-width:620px){.cheat{grid-template-columns:1fr}}
+  .cheat .card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .cheat .card h4{margin:0 0 6px;font-size:1rem;color:#243149}
+  .cheat .card p{margin:0;font-size:.92rem;color:var(--muted)}
+
+  .printbtn{
+    display:inline-flex;align-items:center;gap:8px;margin-top:18px;
+    background:#fff;border:1px solid var(--line);color:var(--ink);
+    padding:9px 16px;border-radius:10px;font-size:.92rem;font-family:inherit;cursor:pointer;
+    font-weight:600;
+  }
+  .printbtn:hover{border-color:var(--accent);color:var(--accent)}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:var(--accent);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:.15s}
+/* Paa en telefon staar knapperne i hero oven paa hinanden i stedet for ved siden af. */
+@media(max-width:600px){.hero .btn,.hero .btnlink,.hero .printbtn{display:flex;width:100%;margin:8px 0 0;min-height:48px;padding:0 18px;box-sizing:border-box;align-items:center;justify-content:center}}
+  .btn:hover{background:#195cb5}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* start overlay */
+  .overlay{position:fixed;inset:0;z-index:100;background:rgba(26,34,51,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}
+  .overlay.hidden{display:none}
+  .overlay .card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:30px 32px;max-width:440px;width:100%;box-shadow:0 20px 50px rgba(20,30,60,.25)}
+  .overlay h2{margin:0 0 6px;font-size:1.5rem}
+  .overlay p{margin:0 0 18px;color:var(--muted)}
+  .overlay input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:1.05rem;font-family:inherit;margin-bottom:14px}
+  .overlay input:focus{outline:none;border-color:var(--accent)}
+  .overlay .btnrow{display:flex;gap:10px;flex-wrap:wrap}
+
+  /* welcome bar */
+  .welcome{display:none;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
+  .welcome.show{display:flex}
+  .welcome .hi{font-weight:800;font-size:1.05rem}
+  .welcome .live{color:var(--muted);font-size:.95rem}
+  .welcome .spacer{margin-left:auto}
+  .welcome .btn{padding:8px 14px;font-size:.9rem}
+
+  /* results */
+  #results .rtable{width:100%;border-collapse:collapse;margin-top:10px}
+  #results .rtable th,#results .rtable td{border:1px solid var(--line);padding:9px 12px;text-align:left;font-size:.98rem}
+  #results .rtable th{background:var(--panel2);font-weight:700}
+  #results .rtable tr.total td{font-weight:800;background:var(--accent-soft)}
+  #results .grade{font-size:1.08rem;margin-top:16px;font-weight:600}
+
+
+.minifig{background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px;margin-bottom:8px}
+.minifig svg{display:block;width:100%;max-width:118px;height:auto;margin:0 auto}
+.figur{margin:14px 0}
+.figur svg{display:block;width:100%;max-width:520px;margin:0 auto;height:auto;background:#fff;border:1px solid var(--line);border-radius:10px}
+.figur .caption{color:var(--muted);font-size:.92rem;margin-top:6px}
+@media print{.figur,.cheat .card{break-inside:avoid;page-break-inside:avoid}
+.figur svg,.minifig svg{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+  /* ---------- PRINT ---------- */
+  .opg{background:#fdf8f0;border:1px solid var(--line);border-left:4px solid #b5710a;border-radius:10px;padding:14px 18px;margin:18px 0 4px}.opg h4{margin:0 0 6px;font-size:1.02rem}.opg h4 em{font-style:normal;color:#b5710a;font-weight:800;margin-right:8px}.opg ol{margin:8px 0 2px;padding-left:24px}.opg ol li{margin:5px 0}.opg .opgtable{margin:10px 0 4px}
+ol.abc{list-style:lower-alpha;padding-left:28px;margin:8px 0 4px}ol.abc li{margin:5px 0}.opgtable{width:auto;min-width:60%;border-collapse:collapse;margin:8px 0}.opgtable th,.opgtable td{border:1px solid #cfd6e4;padding:5px 10px;font-size:.92rem;text-align:left}.opgtable th{background:#f4f6fb}
+  @media print{
+    @page{size:A4;margin:16mm}
+    body{background:#fff;color:#000;font-size:11.5pt;line-height:1.45}
+    header.top,nav.jump,.progress-wrap,.printbtn,.overlay,.welcome .btn{display:none !important}
+    .welcome{border:1px solid #999;background:#fff !important}
+    main{max-width:none;padding:0}
+    .hero,section.lesson,.quiz,.box,.steps,.cheat .card,.formula,.graphwrap svg{
+      box-shadow:none !important;
+    }
+    .hero,section.lesson,.quiz{
+      border:1px solid #999;background:#fff !important;border-radius:0;
+      padding:14px 16px;margin:10px 0;break-inside:avoid;page-break-inside:avoid;
+    }
+    section.lesson h2,.quiz h3,section.lesson h3{break-after:avoid}
+    .num{background:#fff !important;color:#000;border:1.5px solid #000}
+    .pill,.qtag{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .box,.box.rule{background:#fff !important;border:1px solid #bbb;border-left:3px solid #000}
+    .rlabel{color:#000 !important}
+    .formula,.steps .calc,.opt,.opt .mk,.cheat .card{background:#fff !important}
+    .steps .why{background:#fff !important;color:#333}
+    .opt{border:1px solid #888}
+    .opt .mk{border:1px solid #000;color:#000}
+    /* keep quizzes usable as a paper worksheet: neutral options, hide screen-only feedback state */
+    .opt.correct,.opt.wrong{background:#fff !important;border:1px solid #888 !important}
+    .opt.correct .mk,.opt.wrong .mk{background:#fff !important;color:#000 !important;border:1px solid #000}
+    .fb{display:none !important}
+    .q{break-inside:avoid;page-break-inside:avoid}
+    a{color:#000;text-decoration:none}
+    svg line[stroke="#1f6fd6"],svg line[stroke="#4f9dff"]{stroke:#000 !important}
+    svg circle{fill:#000 !important}
+    .caption{color:#333}
+  }
+
+  /* Brøker med vandret brøkstreg */
+  .frac{display:inline-block;vertical-align:middle;text-align:center;line-height:1.16;font-size:.88em;margin:0 .16em}
+  .frac>span{display:block;padding:0 .3em;white-space:nowrap}
+  .frac>span:first-child{border-bottom:1.6px solid currentColor;padding-bottom:.05em}
+  .frac>span:last-child{padding-top:.05em}
+
+/* Telefon: en bred tabel ruller selv i stedet for at skubbe hele
+   siden sidelaens, og en figur i en graphwrap kan krympe. */
+@media(max-width:600px){table{display:block;overflow-x:auto}
+.graphwrap svg{flex:1 1 auto;max-width:100%;height:auto}}
+
+/* Knapper. Tre ting, maalt paa 360-1280 px:
+   1. En raekke knapper stod 6-7 px forskudt. De er inline-flex med hver sin
+      polstring og staar derfor paa hver sin tekstlinje. vertical-align
+      stiller dem paa samme linje, og samme margen giver samme mellemrum.
+   2. En finger skal kunne ramme. 44 px er det maal, baade Apple og Google
+      bruger; flere knapper var 37.
+   3. Menuen i toppen braekkede over to linjer paa en telefon, og den faste
+      header aad 150 px af skaermen hele tiden. Den ruller nu vandret paa
+      én linje i stedet. */
+@media(min-width:601px){
+/* Samme kasse til alle tre, saa de staar paa linje: .btn var 46 px, den med
+   ramme 48, og printbtn 44 - derfor stod de forskudt. */
+.hero .btn,.hero .btnlink,.hero .printbtn{vertical-align:top;height:48px;
+padding:0 20px;box-sizing:border-box;display:inline-flex;align-items:center;
+justify-content:center;margin:12px 8px 0 0}}
+.btn,.btnlink,.printbtn,.vaelg a{min-height:44px}
+.jump a{display:inline-flex;align-items:center;min-height:40px}
+@media(max-width:600px){
+.top-inner{gap:10px;padding:10px 16px}
+header.top .jump{width:100%;margin-left:0;gap:4px}
+header.top .jump a{padding:5px 9px;font-size:.8rem;min-height:40px}}
+
+.jump a.side{border-color:var(--line);background:var(--panel2);color:var(--ink);font-weight:600}
+
+.qfig{margin:10px 0 12px}
+.qfig svg{width:100%;max-width:460px;height:auto;display:block}
+.talraekke{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.talraekke .tal{display:inline-flex;align-items:center;justify-content:center;min-width:38px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);font-variant-numeric:tabular-nums}
+.talraekke .tal.md{background:#fdeaec;border-color:#c23b4b;color:#c23b4b;font-weight:700}
+.talraekke .tal.kv{background:#eaf2fd;border-color:#1f6fd6;color:#1f6fd6;font-weight:700}
+</style></head><body><div class="overlay" id="startOverlay"><div class="card"><h2 id="ovTitle">Velkommen</h2><p id="ovText">Skriv dit fornavn, så gemmes dine svar og dit resultat i denne browser. Så kan du fortsætte, hvor du slap, næste gang.</p><input id="nameInput" type="text" placeholder="Dit fornavn" autocomplete="off" maxlength="30"><div class="btnrow"><button class="btn" id="startBtn">Start</button> <button class="btn ghost" id="skipBtn">Fortsæt uden navn</button></div></div></div><header class="top"><div class="top-inner"><div class="brand">321flyv · <span>Boksplot</span></div><nav class="jump"><a href="#hvad">Hvad det er</a> <a href="#find">Find de fem tal</a> <a href="#sammenlign">Sammenlign</a> <a href="#quiz1">Aflæs</a> <a href="#quiz2">Forstå</a> <a href="#results">Resultater</a> <a class="side" href="matematik.html">Matematik</a> <a class="side" href="index.html">Forside</a></nav></div></header><main><section class="hero" id="intro"><span class="pill">9. klasse · statistik</span><h1>Boksplot</h1><p>Et boksplot er fem tal tegnet. Siden her gennemgår hvilke fem, hvordan du finder dem, og hvad kassen og armene betyder — og bagefter er der <b>20 spørgsmål med en figur til hvert</b>. Svar og forklaring kommer med det samme.</p><button class="printbtn" onclick="window.print()">Print siden</button><div class="welcome" id="welcomeBar"><span class="hi" id="welcomeHi"></span> <span class="live" id="welcomeLive"></span> <span class="spacer"></span> <button class="btn ghost" id="resetBtn">Nulstil mine svar</button> <button class="btn ghost" id="switchBtn">Skift unge</button></div><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div><div class="progress-label" id="progressLabel">Quiz-fremgang: 0 af 0 spørgsmål besvaret</div></div></section><section class="lesson" id="hvad"><h2><span class="num">1</span> Hvad et boksplot er</h2><p class="sub">Et boksplot er <b>fem tal tegnet</b>. Ikke mere end det. Kan du de fem tal, kan du læse ethvert boksplot — og tegne dit eget.</p><div class="box rule"><span class="rlabel">De fem tal</span><br><b>Mindsteværdien</b> — enden af den venstre arm.<br><b>Q1 (første kvartil)</b> — kassens venstre kant. En fjerdedel af tallene ligger under.<br><b>Medianen</b> — stregen inde i kassen. Halvdelen ligger under, halvdelen over.<br><b>Q3 (tredje kvartil)</b> — kassens højre kant. Tre fjerdedele ligger under.<br><b>Størsteværdien</b> — enden af den højre arm.</div><div class="figur"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 10, Q1 20, median 35, Q3 60 og størsteværdi 120."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Minutter brugt på lektier · 15 unger</text><line x1="83.3" y1="54" x2="117.3" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="253.0" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="117.3" y="34" width="135.8" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="168.2" y1="34" x2="168.2" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">10</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="117.3" y1="88" x2="117.3" y2="96" stroke="#1a2233"/><text x="117.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">20</text><text x="117.3" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="168.2" y1="88" x2="168.2" y2="96" stroke="#1a2233"/><text x="168.2" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">35</text><text x="168.2" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="253.0" y1="88" x2="253.0" y2="96" stroke="#1a2233"/><text x="253.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">60</text><text x="253.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">120</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg><div class="figtekst">Sådan ser de fem tal ud, når de er tegnet. Læg mærke til, at der ikke står noget om <i>hvor mange</i> der er.</div></div><h3>Hvad de enkelte dele betyder</h3><div class="box"><b>Kassen er de midterste 50 %.</b> Den går fra Q1 til Q3. Halvdelen af alle tallene ligger inde i kassen, uanset hvor bred den er.<br><b>Hver arm er cirka 25 %.</b> En fjerdedel af tallene ligger ude i den venstre arm, en fjerdedel i den højre.<br><b>En lang arm betyder afstand — ikke antal.</b> Her går den højre arm fra 60 helt op til 120, fordi én enkelt ung brugte 120 minutter. Der er ikke <i>flere</i> deroppe; der er <i>længere</i> imellem dem.</div><h3>To mål for spredning</h3><div class="box rule"><span class="rlabel">Regneregel</span><br><b>Variationsbredde</b> = største − mindste = 120 − 10 = <b>110</b>. Hele armspændet.<br><b>Kvartilbredde</b> = Q3 − Q1 = 60 − 20 = <b>40</b>. Kun kassen.<br>Kvartilbredden er den sejeste af de to, fordi den ikke lader sig rive med af én enkelt yderlig værdi.</div></section><section class="lesson" id="find"><h2><span class="num">2</span> Sådan finder du de fem tal</h2><p class="sub">Der er tre skridt, og det første er det, flest glemmer.</p><div class="box rule"><span class="rlabel">Fremgangsmåde</span><br><b>1.</b> <b>Sortér tallene</b> fra mindst til størst. Uden det passer ingenting.<br><b>2.</b> Find <b>medianen</b>: det midterste tal. Er der et lige antal, er det gennemsnittet af de to midterste.<br><b>3.</b> Find <b>Q1</b> som medianen af den nederste halvdel og <b>Q3</b> som medianen af den øverste. Er antallet ulige, regnes det midterste tal <i>ikke</i> med i nogen af halvdelene.</div><p>De 15 tal fra før, sorteret. Medianen er det ottende tal, og halvdelene har syv tal hver:</p><p class="talraekke"><span class="tal">10</span><span class="tal">15</span><span class="tal">15</span><span class="tal kv">20</span><span class="tal">25</span><span class="tal">30</span><span class="tal">30</span><span class="tal md">35</span><span class="tal">40</span><span class="tal">45</span><span class="tal">50</span><span class="tal kv">60</span><span class="tal">70</span><span class="tal">75</span><span class="tal">120</span></p><p>Nederste halvdel er de syv første, og dens midterste tal er <b>20</b> — det er Q1. Øverste halvdel er de syv sidste, og dens midterste tal er <b>60</b> — det er Q3. Medianen er <b>35</b>.</p><div class="box"><b>Fælden:</b> husk at sortere, og husk at det midterste tal ikke tæller med i halvdelene. Begge fejl flytter kassen, og så passer tegningen ikke med tallene.</div></section><section class="lesson" id="sammenlign"><h2><span class="num">3</span> To boksplot ved siden af hinanden</h2><p class="sub">Det er her boksplottet for alvor er værd at bruge: to grupper, én figur, og forskellen kan ses med det samme.</p><div class="figur"><svg viewBox="0 0 540 182" role="img" aria-label="To boksplot paa samme akse: 8.A og 8.B."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="15" text-anchor="middle" fill="#586074" font-size="11">Minutter på lektier</text><line x1="86.0" y1="30" x2="86.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="86.0" y="166" text-anchor="middle" fill="#1a2233">10</text><line x1="145.4" y1="30" x2="145.4" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="145.4" y="166" text-anchor="middle" fill="#1a2233">15</text><line x1="204.9" y1="30" x2="204.9" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="204.9" y="166" text-anchor="middle" fill="#1a2233">20</text><line x1="264.3" y1="30" x2="264.3" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="264.3" y="166" text-anchor="middle" fill="#1a2233">25</text><line x1="323.7" y1="30" x2="323.7" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="323.7" y="166" text-anchor="middle" fill="#1a2233">30</text><line x1="383.1" y1="30" x2="383.1" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="383.1" y="166" text-anchor="middle" fill="#1a2233">35</text><line x1="442.6" y1="30" x2="442.6" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="442.6" y="166" text-anchor="middle" fill="#1a2233">40</text><line x1="502.0" y1="30" x2="502.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="502.0" y="166" text-anchor="middle" fill="#1a2233">45</text><text x="76" y="60" text-anchor="end" fill="#1f6fd6" font-weight="700">8.A</text><line x1="133.5" y1="56" x2="181.1" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="323.7" y1="56" x2="395.0" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="133.5" y1="44" x2="133.5" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="395.0" y1="44" x2="395.0" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="181.1" y="38" width="142.6" height="36" fill="#1f6fd618" stroke="#1f6fd6" stroke-width="1.5"/><line x1="252.4" y1="38" x2="252.4" y2="74" stroke="#c23b4b" stroke-width="2.5"/><text x="76" y="116" text-anchor="end" fill="#1a8f5e" font-weight="700">8.B</text><line x1="204.9" y1="112" x2="264.3" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="418.8" y1="112" x2="490.1" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="204.9" y1="100" x2="204.9" y2="124" stroke="#1a2233" stroke-width="1.5"/><line x1="490.1" y1="100" x2="490.1" y2="124" stroke="#1a2233" stroke-width="1.5"/><rect x="264.3" y="94" width="154.5" height="36" fill="#1a8f5e18" stroke="#1a8f5e" stroke-width="1.5"/><line x1="335.6" y1="94" x2="335.6" y2="130" stroke="#c23b4b" stroke-width="2.5"/><line x1="86" y1="150" x2="502" y2="150" stroke="#1a2233"/></g></svg><div class="figtekst">Samme akse for begge — ellers kan de ikke sammenlignes. 8.B har den højeste median, og 8.A har den bredeste kasse.</div></div><div class="box"><b>Kig efter tre ting:</b><br><b>1.</b> Hvor ligger den røde streg? Det er midten.<br><b>2.</b> Hvor bred er kassen? Det er spredningen i midten.<br><b>3.</b> Hvor lange er armene? Det er, hvor langt der er ud til yderne.</div><div class="box"><b>Og husk, hvad et boksplot <i>ikke</i> viser:</b> antallet af observationer, hvor mange der ligger på hvert enkelt tal, og om tallene klumper sig sammen inde i kassen. To vidt forskellige datasæt kan give præcis det samme boksplot.</div></section><section class="quiz" data-quiz id="quiz1"><div class="qhead"><span class="qtag">Quiz · aflæsning</span><h3>Aflæs boksplottet</h3></div><p class="qsub">Ti spørgsmål. Tallene står på figuren — opgaven er at vide, hvilket af dem der er svaret.</p><div class="q" data-answer="0" data-exp="Medianen er den røde streg inde i kassen. Den deler tallene i to lige store halvdele."><div class="qtext"><span class="qn">1.</span> Hvad er <b>medianen</b>? <span class="lvl">Let</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 3, Q1 6, median 11, Q3 16 og størsteværdi 21."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Point i en test</text><line x1="83.3" y1="54" x2="145.6" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="353.0" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="145.6" y="34" width="207.4" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="249.3" y1="34" x2="249.3" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">3</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="145.6" y1="88" x2="145.6" y2="96" stroke="#1a2233"/><text x="145.6" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">6</text><text x="145.6" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="249.3" y1="88" x2="249.3" y2="96" stroke="#1a2233"/><text x="249.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">11</text><text x="249.3" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="353.0" y1="88" x2="353.0" y2="96" stroke="#1a2233"/><text x="353.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">16</text><text x="353.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">21</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 11</button> <button class="opt"><span class="mk">B</span> 6</button> <button class="opt"><span class="mk">C</span> 16</button></div><div class="fb"></div></div><div class="q" data-answer="2" data-exp="Mindsteværdien er enden af den venstre arm — det mindste tal i hele datasættet."><div class="qtext"><span class="qn">2.</span> Hvad er <b>mindsteværdien</b>? <span class="lvl">Let</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 12, Q1 15, median 20, Q3 27 og størsteværdi 36."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Antal beskeder på en dag</text><line x1="83.3" y1="54" x2="130.0" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="316.7" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="130.0" y="34" width="186.7" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="207.8" y1="34" x2="207.8" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">12</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="130.0" y1="88" x2="130.0" y2="96" stroke="#1a2233"/><text x="130.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">15</text><text x="130.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="207.8" y1="88" x2="207.8" y2="96" stroke="#1a2233"/><text x="207.8" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">20</text><text x="207.8" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="316.7" y1="88" x2="316.7" y2="96" stroke="#1a2233"/><text x="316.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">27</text><text x="316.7" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">36</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 15</button> <button class="opt"><span class="mk">B</span> 20</button> <button class="opt"><span class="mk">C</span> 12</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Størsteværdien er enden af den højre arm."><div class="qtext"><span class="qn">3.</span> Hvad er <b>størsteværdien</b>? <span class="lvl">Let</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 1, Q1 4, median 7, Q3 12 og størsteværdi 19."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Antal bøger læst på et år</text><line x1="83.3" y1="54" x2="145.6" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="311.5" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="145.6" y="34" width="165.9" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="207.8" y1="34" x2="207.8" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">1</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="145.6" y1="88" x2="145.6" y2="96" stroke="#1a2233"/><text x="145.6" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">4</text><text x="145.6" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="207.8" y1="88" x2="207.8" y2="96" stroke="#1a2233"/><text x="207.8" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">7</text><text x="207.8" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="311.5" y1="88" x2="311.5" y2="96" stroke="#1a2233"/><text x="311.5" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">12</text><text x="311.5" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">19</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 12</button> <button class="opt"><span class="mk">B</span> 19</button> <button class="opt"><span class="mk">C</span> 7</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Q1 er kassens venstre kant. En fjerdedel af tallene ligger under den."><div class="qtext"><span class="qn">4.</span> Hvad er <b>første kvartil (Q1)</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 20, Q1 26, median 33, Q3 40 og størsteværdi 50."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Temperatur om eftermiddagen</text><line x1="83.3" y1="54" x2="158.0" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="332.2" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="158.0" y="34" width="174.2" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="245.1" y1="34" x2="245.1" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">20</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="158.0" y1="88" x2="158.0" y2="96" stroke="#1a2233"/><text x="158.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">26</text><text x="158.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="245.1" y1="88" x2="245.1" y2="96" stroke="#1a2233"/><text x="245.1" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">33</text><text x="245.1" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="332.2" y1="88" x2="332.2" y2="96" stroke="#1a2233"/><text x="332.2" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">40</text><text x="332.2" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">50</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 20</button> <button class="opt"><span class="mk">B</span> 26</button> <button class="opt"><span class="mk">C</span> 33</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Q3 er kassens højre kant. Tre fjerdedele af tallene ligger under den."><div class="qtext"><span class="qn">5.</span> Hvad er <b>tredje kvartil (Q3)</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 2, Q1 3, median 8, Q3 13 og størsteværdi 20."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Antal mål i en sæson</text><line x1="83.3" y1="54" x2="104.1" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="311.5" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="104.1" y="34" width="207.4" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="207.8" y1="34" x2="207.8" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">2</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="104.1" y1="88" x2="104.1" y2="96" stroke="#1a2233"/><text x="104.1" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">3</text><text x="104.1" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="207.8" y1="88" x2="207.8" y2="96" stroke="#1a2233"/><text x="207.8" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">8</text><text x="207.8" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="311.5" y1="88" x2="311.5" y2="96" stroke="#1a2233"/><text x="311.5" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">13</text><text x="311.5" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">20</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 13</button> <button class="opt"><span class="mk">B</span> 8</button> <button class="opt"><span class="mk">C</span> 20</button></div><div class="fb"></div></div><div class="q" data-answer="2" data-exp="Variationsbredden er største minus mindste værdi — hele armspændet fra ende til ende."><div class="qtext"><span class="qn">6.</span> Hvad er <b>variationsbredden</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 45, Q1 52, median 60, Q3 70 og størsteværdi 80."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Puls efter en gåtur</text><line x1="83.3" y1="54" x2="158.0" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="350.0" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="158.0" y="34" width="192.0" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="243.3" y1="34" x2="243.3" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">45</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="158.0" y1="88" x2="158.0" y2="96" stroke="#1a2233"/><text x="158.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">52</text><text x="158.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="243.3" y1="88" x2="243.3" y2="96" stroke="#1a2233"/><text x="243.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">60</text><text x="243.3" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="350.0" y1="88" x2="350.0" y2="96" stroke="#1a2233"/><text x="350.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">70</text><text x="350.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">80</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 18</button> <button class="opt"><span class="mk">B</span> 80</button> <button class="opt"><span class="mk">C</span> 35</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Kvartilbredden er Q3 minus Q1 — altså hvor bred selve kassen er."><div class="qtext"><span class="qn">7.</span> Hvad er <b>kvartilbredden</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 5, Q1 8, median 13, Q3 19 og størsteværdi 26."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Minutter i bad</text><line x1="83.3" y1="54" x2="136.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="332.2" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="136.7" y="34" width="195.6" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="225.6" y1="34" x2="225.6" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">5</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="136.7" y1="88" x2="136.7" y2="96" stroke="#1a2233"/><text x="136.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">8</text><text x="136.7" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="225.6" y1="88" x2="225.6" y2="96" stroke="#1a2233"/><text x="225.6" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">13</text><text x="225.6" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="332.2" y1="88" x2="332.2" y2="96" stroke="#1a2233"/><text x="332.2" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">19</text><text x="332.2" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">26</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 21</button> <button class="opt"><span class="mk">B</span> 11</button> <button class="opt"><span class="mk">C</span> 13</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Kassen går fra Q1 til Q3, og det er netop de midterste 50 % af tallene."><div class="qtext"><span class="qn">8.</span> Hvor stor en del af tallene ligger <b>inde i kassen</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 100, Q1 115, median 135, Q3 160 og størsteværdi 200."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Kroner brugt på en uge</text><line x1="83.3" y1="54" x2="139.3" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="307.3" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="139.3" y="34" width="168.0" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="214.0" y1="34" x2="214.0" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">100</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="139.3" y1="88" x2="139.3" y2="96" stroke="#1a2233"/><text x="139.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">115</text><text x="139.3" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="214.0" y1="88" x2="214.0" y2="96" stroke="#1a2233"/><text x="214.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">135</text><text x="214.0" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="307.3" y1="88" x2="307.3" y2="96" stroke="#1a2233"/><text x="307.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">160</text><text x="307.3" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">200</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 50 %</button> <button class="opt"><span class="mk">B</span> 25 %</button> <button class="opt"><span class="mk">C</span> 75 %</button></div><div class="fb"></div></div><div class="q" data-answer="2" data-exp="Medianen deler tallene midt over. Halvdelen ligger under, halvdelen over."><div class="qtext"><span class="qn">9.</span> Hvor stor en del af tallene ligger <b>over medianen</b>? <span class="lvl">Let</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 4, Q1 7, median 12, Q3 17 og størsteværdi 23."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Antal timer søvn</text><line x1="83.3" y1="54" x2="142.3" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="338.8" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="142.3" y="34" width="196.5" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="240.5" y1="34" x2="240.5" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">4</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="142.3" y1="88" x2="142.3" y2="96" stroke="#1a2233"/><text x="142.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">7</text><text x="142.3" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="240.5" y1="88" x2="240.5" y2="96" stroke="#1a2233"/><text x="240.5" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">12</text><text x="240.5" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="338.8" y1="88" x2="338.8" y2="96" stroke="#1a2233"/><text x="338.8" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">17</text><text x="338.8" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">23</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> En fjerdedel</button> <button class="opt"><span class="mk">B</span> Tre fjerdedele</button> <button class="opt"><span class="mk">C</span> Halvdelen</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="De midterste 50 % er netop kassen, altså fra Q1 til Q3."><div class="qtext"><span class="qn">10.</span> Hvilket interval rummer de <b>midterste 50 %</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 30, Q1 35, median 44, Q3 54 og størsteværdi 65."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Antal sider i en opgave</text><line x1="83.3" y1="54" x2="136.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="339.3" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="136.7" y="34" width="202.7" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="232.7" y1="34" x2="232.7" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">30</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="136.7" y1="88" x2="136.7" y2="96" stroke="#1a2233"/><text x="136.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">35</text><text x="136.7" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="232.7" y1="88" x2="232.7" y2="96" stroke="#1a2233"/><text x="232.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">44</text><text x="232.7" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="339.3" y1="88" x2="339.3" y2="96" stroke="#1a2233"/><text x="339.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">54</text><text x="339.3" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">65</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> Fra 30 til 65</button> <button class="opt"><span class="mk">B</span> Fra 35 til 54</button> <button class="opt"><span class="mk">C</span> Fra 44 til 65</button></div><div class="fb"></div></div><div class="scorebar"><span class="badge" data-score>0 / 10 rigtige</span> <span>Videre til de sværere: forstå og sammenlign.</span></div></section><section class="quiz" data-quiz id="quiz2"><div class="qhead"><span class="qtag">Quiz · forståelse</span><h3>Forstå og sammenlign</h3></div><p class="qsub">Ti spørgsmål, hvor tegningen skal tolkes. Her kan du ikke bare aflæse et tal.</p><div class="q" data-answer="2" data-exp="Den røde streg ligger længst til højre i 8.B: 31 mod 24."><div class="qtext"><span class="qn">11.</span> Hvilken klasse har den <b>højeste median</b>? <span class="lvl">Let</span></div><div class="qfig"><svg viewBox="0 0 540 182" role="img" aria-label="To boksplot paa samme akse: 8.A og 8.B."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="15" text-anchor="middle" fill="#586074" font-size="11">Minutter på lektier</text><line x1="86.0" y1="30" x2="86.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="86.0" y="166" text-anchor="middle" fill="#1a2233">10</text><line x1="145.4" y1="30" x2="145.4" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="145.4" y="166" text-anchor="middle" fill="#1a2233">15</text><line x1="204.9" y1="30" x2="204.9" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="204.9" y="166" text-anchor="middle" fill="#1a2233">20</text><line x1="264.3" y1="30" x2="264.3" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="264.3" y="166" text-anchor="middle" fill="#1a2233">25</text><line x1="323.7" y1="30" x2="323.7" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="323.7" y="166" text-anchor="middle" fill="#1a2233">30</text><line x1="383.1" y1="30" x2="383.1" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="383.1" y="166" text-anchor="middle" fill="#1a2233">35</text><line x1="442.6" y1="30" x2="442.6" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="442.6" y="166" text-anchor="middle" fill="#1a2233">40</text><line x1="502.0" y1="30" x2="502.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="502.0" y="166" text-anchor="middle" fill="#1a2233">45</text><text x="76" y="60" text-anchor="end" fill="#1f6fd6" font-weight="700">8.A</text><line x1="133.5" y1="56" x2="181.1" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="323.7" y1="56" x2="395.0" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="133.5" y1="44" x2="133.5" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="395.0" y1="44" x2="395.0" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="181.1" y="38" width="142.6" height="36" fill="#1f6fd618" stroke="#1f6fd6" stroke-width="1.5"/><line x1="252.4" y1="38" x2="252.4" y2="74" stroke="#c23b4b" stroke-width="2.5"/><text x="76" y="116" text-anchor="end" fill="#1a8f5e" font-weight="700">8.B</text><line x1="204.9" y1="112" x2="264.3" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="418.8" y1="112" x2="490.1" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="204.9" y1="100" x2="204.9" y2="124" stroke="#1a2233" stroke-width="1.5"/><line x1="490.1" y1="100" x2="490.1" y2="124" stroke="#1a2233" stroke-width="1.5"/><rect x="264.3" y="94" width="154.5" height="36" fill="#1a8f5e18" stroke="#1a8f5e" stroke-width="1.5"/><line x1="335.6" y1="94" x2="335.6" y2="130" stroke="#c23b4b" stroke-width="2.5"/><line x1="86" y1="150" x2="502" y2="150" stroke="#1a2233"/></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 8.A</button> <button class="opt"><span class="mk">B</span> De har samme median</button> <button class="opt"><span class="mk">C</span> 8.B</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Kassen er smallest hos Hold 2: kvartilbredden er 8 mod 24."><div class="qtext"><span class="qn">12.</span> Hvor ligger de midterste 50 % <b>tættest samlet</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 182" role="img" aria-label="To boksplot paa samme akse: Hold 1 og Hold 2."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="15" text-anchor="middle" fill="#586074" font-size="11">Antal point</text><line x1="86.0" y1="30" x2="86.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="86.0" y="166" text-anchor="middle" fill="#1a2233">10</text><line x1="138.0" y1="30" x2="138.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="138.0" y="166" text-anchor="middle" fill="#1a2233">15</text><line x1="190.0" y1="30" x2="190.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="190.0" y="166" text-anchor="middle" fill="#1a2233">20</text><line x1="242.0" y1="30" x2="242.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="242.0" y="166" text-anchor="middle" fill="#1a2233">25</text><line x1="294.0" y1="30" x2="294.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="294.0" y="166" text-anchor="middle" fill="#1a2233">30</text><line x1="346.0" y1="30" x2="346.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="346.0" y="166" text-anchor="middle" fill="#1a2233">35</text><line x1="398.0" y1="30" x2="398.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="398.0" y="166" text-anchor="middle" fill="#1a2233">40</text><line x1="450.0" y1="30" x2="450.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="450.0" y="166" text-anchor="middle" fill="#1a2233">45</text><line x1="502.0" y1="30" x2="502.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="502.0" y="166" text-anchor="middle" fill="#1a2233">50</text><text x="76" y="60" text-anchor="end" fill="#1f6fd6" font-weight="700">Hold 1</text><line x1="86.0" y1="56" x2="127.6" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="377.2" y1="56" x2="460.4" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="86.0" y1="44" x2="86.0" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="460.4" y1="44" x2="460.4" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="127.6" y="38" width="249.6" height="36" fill="#1f6fd618" stroke="#1f6fd6" stroke-width="1.5"/><line x1="252.4" y1="38" x2="252.4" y2="74" stroke="#c23b4b" stroke-width="2.5"/><text x="76" y="116" text-anchor="end" fill="#1a8f5e" font-weight="700">Hold 2</text><line x1="86.0" y1="112" x2="231.6" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="314.8" y1="112" x2="460.4" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="86.0" y1="100" x2="86.0" y2="124" stroke="#1a2233" stroke-width="1.5"/><line x1="460.4" y1="100" x2="460.4" y2="124" stroke="#1a2233" stroke-width="1.5"/><rect x="231.6" y="94" width="83.2" height="36" fill="#1a8f5e18" stroke="#1a8f5e" stroke-width="1.5"/><line x1="273.2" y1="94" x2="273.2" y2="130" stroke="#c23b4b" stroke-width="2.5"/><line x1="86" y1="150" x2="502" y2="150" stroke="#1a2233"/></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> Hold 2</button> <button class="opt"><span class="mk">B</span> Hold 1</button> <button class="opt"><span class="mk">C</span> Lige tæt</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Fra ende til ende er fredag bredest: 50 mod 16."><div class="qtext"><span class="qn">13.</span> Hvilken dag har den <b>største variationsbredde</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 182" role="img" aria-label="To boksplot paa samme akse: Mandag og Fredag."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="15" text-anchor="middle" fill="#586074" font-size="11">Antal kunder i timen</text><line x1="86.0" y1="30" x2="86.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="86.0" y="166" text-anchor="middle" fill="#1a2233">10</text><line x1="169.2" y1="30" x2="169.2" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="169.2" y="166" text-anchor="middle" fill="#1a2233">20</text><line x1="252.4" y1="30" x2="252.4" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="252.4" y="166" text-anchor="middle" fill="#1a2233">30</text><line x1="335.6" y1="30" x2="335.6" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="335.6" y="166" text-anchor="middle" fill="#1a2233">40</text><line x1="418.8" y1="30" x2="418.8" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="418.8" y="166" text-anchor="middle" fill="#1a2233">50</text><line x1="502.0" y1="30" x2="502.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="502.0" y="166" text-anchor="middle" fill="#1a2233">60</text><text x="76" y="60" text-anchor="end" fill="#1f6fd6" font-weight="700">Mandag</text><line x1="210.8" y1="56" x2="235.8" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="310.6" y1="56" x2="343.9" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="210.8" y1="44" x2="210.8" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="343.9" y1="44" x2="343.9" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="235.8" y="38" width="74.9" height="36" fill="#1f6fd618" stroke="#1f6fd6" stroke-width="1.5"/><line x1="277.4" y1="38" x2="277.4" y2="74" stroke="#c23b4b" stroke-width="2.5"/><text x="76" y="116" text-anchor="end" fill="#1a8f5e" font-weight="700">Fredag</text><line x1="86.0" y1="112" x2="169.2" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="418.8" y1="112" x2="502.0" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="86.0" y1="100" x2="86.0" y2="124" stroke="#1a2233" stroke-width="1.5"/><line x1="502.0" y1="100" x2="502.0" y2="124" stroke="#1a2233" stroke-width="1.5"/><rect x="169.2" y="94" width="249.6" height="36" fill="#1a8f5e18" stroke="#1a8f5e" stroke-width="1.5"/><line x1="302.3" y1="94" x2="302.3" y2="130" stroke="#c23b4b" stroke-width="2.5"/><line x1="86" y1="150" x2="502" y2="150" stroke="#1a2233"/></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> Mandag</button> <button class="opt"><span class="mk">B</span> Fredag</button> <button class="opt"><span class="mk">C</span> Den er ens</button></div><div class="fb"></div></div><div class="q" data-answer="2" data-exp="Når medianen ligger tæt på Q1, er den nederste fjerdedel af kassen smal: de tal ligger tæt. Den øverste del af kassen er bredere, så dér er der mere spredning."><div class="qtext"><span class="qn">14.</span> Medianen ligger tæt på kassens venstre kant. Hvad betyder det? <span class="lvl">Svær</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 8, Q1 9, median 11, Q3 20 og størsteværdi 30."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Antal træninger om måneden</text><line x1="83.3" y1="54" x2="100.3" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="287.0" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="100.3" y="34" width="186.7" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="134.2" y1="34" x2="134.2" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">8</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="100.3" y1="88" x2="100.3" y2="96" stroke="#1a2233"/><text x="100.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">9</text><text x="100.3" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="134.2" y1="88" x2="134.2" y2="96" stroke="#1a2233"/><text x="134.2" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">11</text><text x="134.2" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="287.0" y1="88" x2="287.0" y2="96" stroke="#1a2233"/><text x="287.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">20</text><text x="287.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">30</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> Der er flest høje tal</button> <button class="opt"><span class="mk">B</span> Halvdelen af tallene er ens</button> <button class="opt"><span class="mk">C</span> De laveste tal ligger tæt sammen</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="En lang arm viser afstand, ikke antal. Her er der mindst én meget høj værdi, men boksplottet siger ikke hvor mange."><div class="qtext"><span class="qn">15.</span> Den højre arm er meget lang. Hvad fortæller det? <span class="lvl">Svær</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 6, Q1 8, median 11, Q3 14 og størsteværdi 40."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Minutter i kø</text><line x1="83.3" y1="54" x2="105.3" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="171.2" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="105.3" y="34" width="65.9" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="138.2" y1="34" x2="138.2" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">6</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="105.3" y1="88" x2="105.3" y2="96" stroke="#1a2233"/><text x="105.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">8</text><text x="105.3" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="138.2" y1="88" x2="138.2" y2="96" stroke="#1a2233"/><text x="138.2" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">11</text><text x="138.2" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="171.2" y1="88" x2="171.2" y2="96" stroke="#1a2233"/><text x="171.2" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">14</text><text x="171.2" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">40</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> De højeste tal ligger spredt</button> <button class="opt"><span class="mk">B</span> Der er mange høje tal</button> <button class="opt"><span class="mk">C</span> Medianen er høj</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Kun den ene række giver min 2, Q1 5, median 12, Q3 18 og maks 24. De to andre har de samme yderpunkter, men kassen falder et andet sted."><div class="qtext"><span class="qn">16.</span> Hvilken af de tre talrækker passer til boksplottet? <span class="lvl">Svær</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 2, Q1 5, median 12, Q3 18 og størsteværdi 24."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Hvilken talrække er tegnet her?</text><line x1="83.3" y1="54" x2="134.2" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="354.8" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="134.2" y="34" width="220.6" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="253.0" y1="34" x2="253.0" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">2</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="134.2" y1="88" x2="134.2" y2="96" stroke="#1a2233"/><text x="134.2" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">5</text><text x="134.2" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="253.0" y1="88" x2="253.0" y2="96" stroke="#1a2233"/><text x="253.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">12</text><text x="253.0" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="354.8" y1="88" x2="354.8" y2="96" stroke="#1a2233"/><text x="354.8" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">18</text><text x="354.8" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">24</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> 2, 3, 4, 5, 9, 12, 14, 15, 18, 20, 24</button> <button class="opt"><span class="mk">B</span> 2, 4, 5, 7, 9, 12, 14, 15, 18, 20, 24</button> <button class="opt"><span class="mk">C</span> 2, 4, 5, 7, 9, 12, 16, 19, 22, 23, 24</button></div><div class="fb"></div></div><div class="q" data-answer="2" data-exp="Medianen er det midterste tal. Ét tal i toppen kan blive så stort det vil — det midterste bliver stående."><div class="qtext"><span class="qn">17.</span> Den <b>største</b> værdi fordobles. Hvad sker der med <b>medianen</b>? <span class="lvl">Svær</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 4, Q1 8, median 14, Q3 20 og størsteværdi 24."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Antal opgaver løst</text><line x1="83.3" y1="54" x2="158.0" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="382.0" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="158.0" y="34" width="224.0" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="270.0" y1="34" x2="270.0" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">4</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="158.0" y1="88" x2="158.0" y2="96" stroke="#1a2233"/><text x="158.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">8</text><text x="158.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="270.0" y1="88" x2="270.0" y2="96" stroke="#1a2233"/><text x="270.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">14</text><text x="270.0" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="382.0" y1="88" x2="382.0" y2="96" stroke="#1a2233"/><text x="382.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">20</text><text x="382.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">24</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> Den vokser</button> <button class="opt"><span class="mk">B</span> Den bliver dobbelt så stor</button> <button class="opt"><span class="mk">C</span> Den er uændret</button></div><div class="fb"></div></div><div class="q" data-answer="0" data-exp="Variationsbredden er største minus mindste. Den går fra 20 til 44."><div class="qtext"><span class="qn">18.</span> Og hvad sker der med <b>variationsbredden</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 4, Q1 8, median 14, Q3 20 og størsteværdi 24."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Samme data som før</text><line x1="83.3" y1="54" x2="158.0" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="382.0" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="158.0" y="34" width="224.0" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="270.0" y1="34" x2="270.0" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">4</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="158.0" y1="88" x2="158.0" y2="96" stroke="#1a2233"/><text x="158.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">8</text><text x="158.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="270.0" y1="88" x2="270.0" y2="96" stroke="#1a2233"/><text x="270.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">14</text><text x="270.0" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="382.0" y1="88" x2="382.0" y2="96" stroke="#1a2233"/><text x="382.0" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">20</text><text x="382.0" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">24</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> Den vokser</button> <button class="opt"><span class="mk">B</span> Den er uændret</button> <button class="opt"><span class="mk">C</span> Den bliver mindre</button></div><div class="fb"></div></div><div class="q" data-answer="1" data-exp="Samme median betyder kun, at midten ligger samme sted. Kassen og armene er bredere i 7.B, så dér er der længere mellem tallene."><div class="qtext"><span class="qn">19.</span> De to har samme median. Hvad kan du så sige? <span class="lvl">Svær</span></div><div class="qfig"><svg viewBox="0 0 540 182" role="img" aria-label="To boksplot paa samme akse: 7.A og 7.B."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="15" text-anchor="middle" fill="#586074" font-size="11">Antal rigtige i en prøve</text><line x1="86.0" y1="30" x2="86.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="86.0" y="166" text-anchor="middle" fill="#1a2233">0</text><line x1="155.3" y1="30" x2="155.3" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="155.3" y="166" text-anchor="middle" fill="#1a2233">10</text><line x1="224.7" y1="30" x2="224.7" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="224.7" y="166" text-anchor="middle" fill="#1a2233">20</text><line x1="294.0" y1="30" x2="294.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="294.0" y="166" text-anchor="middle" fill="#1a2233">30</text><line x1="363.3" y1="30" x2="363.3" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="363.3" y="166" text-anchor="middle" fill="#1a2233">40</text><line x1="432.7" y1="30" x2="432.7" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="432.7" y="166" text-anchor="middle" fill="#1a2233">50</text><line x1="502.0" y1="30" x2="502.0" y2="150" stroke="#c9d2e0" stroke-width="0.8"/><text x="502.0" y="166" text-anchor="middle" fill="#1a2233">60</text><text x="76" y="60" text-anchor="end" fill="#1f6fd6" font-weight="700">7.A</text><line x1="224.7" y1="56" x2="252.4" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="335.6" y1="56" x2="363.3" y2="56" stroke="#1a2233" stroke-width="1.5"/><line x1="224.7" y1="44" x2="224.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="363.3" y1="44" x2="363.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="252.4" y="38" width="83.2" height="36" fill="#1f6fd618" stroke="#1f6fd6" stroke-width="1.5"/><line x1="294.0" y1="38" x2="294.0" y2="74" stroke="#c23b4b" stroke-width="2.5"/><text x="76" y="116" text-anchor="end" fill="#1a8f5e" font-weight="700">7.B</text><line x1="113.7" y1="112" x2="196.9" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="391.1" y1="112" x2="474.3" y2="112" stroke="#1a2233" stroke-width="1.5"/><line x1="113.7" y1="100" x2="113.7" y2="124" stroke="#1a2233" stroke-width="1.5"/><line x1="474.3" y1="100" x2="474.3" y2="124" stroke="#1a2233" stroke-width="1.5"/><rect x="196.9" y="94" width="194.1" height="36" fill="#1a8f5e18" stroke="#1a8f5e" stroke-width="1.5"/><line x1="294.0" y1="94" x2="294.0" y2="130" stroke="#c23b4b" stroke-width="2.5"/><line x1="86" y1="150" x2="502" y2="150" stroke="#1a2233"/></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> Klasserne har klaret sig ens</button> <button class="opt"><span class="mk">B</span> Tallene i 7.B er mere spredt</button> <button class="opt"><span class="mk">C</span> 7.A har de bedste resultater</button></div><div class="fb"></div></div><div class="q" data-answer="2" data-exp="Q3 er tredje kvartil. Tre fjerdedele af tallene ligger under den, og den sidste fjerdedel ligger over."><div class="qtext"><span class="qn">20.</span> Hvor stor en del af tallene ligger <b>under Q3</b>? <span class="lvl">Middel</span></div><div class="qfig"><svg viewBox="0 0 540 130" role="img" aria-label="Boksplot med mindsteværdi 11, Q1 14, median 19, Q3 26 og størsteværdi 33."><g font-family="Consolas, monospace" font-size="11"><text x="270" y="16" text-anchor="middle" fill="#586074" font-size="11">Antal skridt i tusinder</text><line x1="83.3" y1="54" x2="134.2" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="337.9" y1="54" x2="456.7" y2="54" stroke="#1a2233" stroke-width="1.5"/><line x1="83.3" y1="40" x2="83.3" y2="68" stroke="#1a2233" stroke-width="1.5"/><line x1="456.7" y1="40" x2="456.7" y2="68" stroke="#1a2233" stroke-width="1.5"/><rect x="134.2" y="34" width="203.6" height="40" fill="#eaf2fd" stroke="#1f6fd6" stroke-width="1.5"/><line x1="219.1" y1="34" x2="219.1" y2="74" stroke="#c23b4b" stroke-width="2.5"/><line x1="46" y1="92" x2="494" y2="92" stroke="#1a2233"/><line x1="83.3" y1="88" x2="83.3" y2="96" stroke="#1a2233"/><text x="83.3" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">11</text><text x="83.3" y="123" text-anchor="middle" fill="#586074" font-size="9.5">min</text><line x1="134.2" y1="88" x2="134.2" y2="96" stroke="#1a2233"/><text x="134.2" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">14</text><text x="134.2" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q1</text><line x1="219.1" y1="88" x2="219.1" y2="96" stroke="#1a2233"/><text x="219.1" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">19</text><text x="219.1" y="123" text-anchor="middle" fill="#c23b4b" font-size="9.5">median</text><line x1="337.9" y1="88" x2="337.9" y2="96" stroke="#1a2233"/><text x="337.9" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">26</text><text x="337.9" y="123" text-anchor="middle" fill="#1f6fd6" font-size="9.5">Q3</text><line x1="456.7" y1="88" x2="456.7" y2="96" stroke="#1a2233"/><text x="456.7" y="110" text-anchor="middle" fill="#1a2233" font-weight="700">33</text><text x="456.7" y="123" text-anchor="middle" fill="#586074" font-size="9.5">max</text></g></svg></div><div class="opts"><button class="opt"><span class="mk">A</span> Halvdelen</button> <button class="opt"><span class="mk">B</span> En fjerdedel</button> <button class="opt"><span class="mk">C</span> Tre fjerdedele</button></div><div class="fb"></div></div><div class="scorebar"><span class="badge" data-score>0 / 10 rigtige</span> <span id="finalMsg"></span></div></section><section class="lesson" id="results"><h2><span class="num">R</span> Dine resultater</h2><p class="sub" id="resultsSub">Løs opgaverne, så udfyldes din oversigt her. Skriv dit fornavn øverst, hvis du vil have dit resultat gemt.</p><table class="rtable"><thead><tr><th>Modul</th><th>Rigtige</th><th>Besvaret</th></tr></thead><tbody id="resultsBody"></tbody></table><div class="grade" id="gradeMsg"></div><div style="margin-top:16px"><button class="printbtn" onclick="window.print()">Print siden</button></div></section></main><footer>Undervisningsmateriale til matematik i 9. klasse · Boksplot.</footer><script>
+(function(){
+  var STORAGE_KEY = 'boks9_state_v1';
+  var okChime = ["Rigtigt. Godt set.","Korrekt. Sådan.","Præcis rigtigt.","Ja, det er rigtigt.","Flot, det er rigtigt."];
+  var moduleNames = ['Aflæs boksplottet','Forstå og sammenlign'];
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  var allQuestions = Array.prototype.slice.call(document.querySelectorAll('.q'));
+  var total = allQuestions.length;
+
+  var state = load() || {name:'', chosen:{}};
+  if(!state.chosen) state.chosen = {};
+
+  function load(){
+    try{ var s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : null; }
+    catch(e){ return null; }
+  }
+  function save(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  function applyAnswer(q, chosenIdx){
+    if(q.dataset.done === '1') return;
+    q.dataset.done = '1';
+    var correct = parseInt(q.getAttribute('data-answer'),10);
+    var exp = q.getAttribute('data-exp') || '';
+    var idx = allQuestions.indexOf(q);
+    var opts = q.querySelectorAll('.opt');
+    var fb = q.querySelector('.fb');
+    opts.forEach(function(o,j){ o.disabled = true; if(j === correct) o.classList.add('correct'); });
+    if(chosenIdx === correct){
+      fb.className = 'fb show ok';
+      fb.innerHTML = '<b>' + okChime[idx % okChime.length] + '</b> ' + exp;
+    }else{
+      if(opts[chosenIdx]) opts[chosenIdx].classList.add('wrong');
+      fb.className = 'fb show no';
+      // Sig hvilken knap der var den rigtige. Uden bogstavet staar der bare
+      // "Ikke helt" og saa det rigtige regnestykke, og saa ser siden ud til
+      // at modsige sig selv: regnestykket giver jo 7, og 7 staar paa en knap.
+      var mkEl = opts[correct] ? opts[correct].querySelector('.mk') : null;
+      var mk = mkEl ? mkEl.textContent.trim() : '';
+      fb.innerHTML = '<b>Ikke helt.</b> ' + (mk ? 'Det rigtige er ' + mk + '. ' : '')
+        + exp + ' <button type="button" class="igen">Prøv igen</button>';
+      // Et fejlklik laaste foer spoergsmaalet for altid - den eneste vej ud
+      // var at nulstille hele siden og miste alle de andre svar.
+      var igen = fb.querySelector('.igen');
+      if(igen) igen.addEventListener('click', function(){
+        delete state.chosen[idx];
+        save();
+        resetQuestion(q);
+        refresh();
+      });
+    }
+  }
+
+  function resetQuestion(q){
+    q.dataset.done = '';
+    q.querySelectorAll('.opt').forEach(function(o){ o.disabled = false; o.classList.remove('correct','wrong'); });
+    var fb = q.querySelector('.fb'); fb.className = 'fb'; fb.innerHTML = '';
+  }
+
+  // wire up clicks
+  allQuestions.forEach(function(q){
+    q.querySelectorAll('.opt').forEach(function(opt, oi){
+      opt.addEventListener('click', function(){
+        if(q.dataset.done === '1') return;
+        var gi = allQuestions.indexOf(q);
+        state.chosen[gi] = oi;
+        save();
+        applyAnswer(q, oi);
+        refresh();
+      });
+    });
+  });
+
+  // restore previously saved answers
+  Object.keys(state.chosen).forEach(function(k){
+    var gi = parseInt(k,10); var q = allQuestions[gi];
+    if(q) applyAnswer(q, state.chosen[k]);
+  });
+
+  function stats(){
+    var perQuiz = quizzes.map(function(quiz){
+      var qs = quiz.querySelectorAll('.q'); var right=0, ans=0;
+      qs.forEach(function(q){
+        var gi = allQuestions.indexOf(q);
+        if(gi in state.chosen){ ans++; if(state.chosen[gi] === parseInt(q.getAttribute('data-answer'),10)) right++; }
+      });
+      return {total:qs.length, right:right, ans:ans};
+    });
+    var right=0, ans=0;
+    perQuiz.forEach(function(p){ right+=p.right; ans+=p.ans; });
+    return {perQuiz:perQuiz, right:right, ans:ans};
+  }
+
+  function refresh(){
+    var s = stats();
+    var pct = total ? Math.round(s.ans/total*100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent =
+      'Quiz-fremgang: ' + s.ans + ' af ' + total + ' spørgsmål besvaret';
+
+    quizzes.forEach(function(quiz,i){
+      var badge = quiz.querySelector('[data-score]');
+      if(badge) badge.textContent = s.perQuiz[i].right + ' / ' + s.perQuiz[i].total + ' rigtige';
+    });
+
+    if(state.name){
+      document.getElementById('welcomeLive').textContent =
+        'Du har svaret ' + s.ans + ' af ' + total + '. Rigtige indtil nu: ' + s.right + '.';
+    }
+
+    var body = document.getElementById('resultsBody'); body.innerHTML = '';
+    quizzes.forEach(function(quiz,i){
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>' + moduleNames[i] + '</td><td>' + s.perQuiz[i].right + ' / ' + s.perQuiz[i].total +
+        '</td><td>' + s.perQuiz[i].ans + ' / ' + s.perQuiz[i].total + '</td>';
+      body.appendChild(tr);
+    });
+    var trt = document.createElement('tr'); trt.className = 'total';
+    trt.innerHTML = '<td>I alt</td><td>' + s.right + ' / ' + total + '</td><td>' + s.ans + ' / ' + total + '</td>';
+    body.appendChild(trt);
+
+    var who = state.name ? state.name : 'Du';
+    var g = document.getElementById('gradeMsg');
+    if(s.ans === total){
+      var p = Math.round(s.right/total*100);
+      var msg;
+      if(p === 100) msg = 'Alt rigtigt. Fremragende arbejde.';
+      else if(p >= 80) msg = 'Rigtig flot resultat.';
+      else if(p >= 60) msg = 'Godt gået. Kig på de opgaver, du missede.';
+      else msg = 'God indsats. Læs afsnittene igen, og prøv de svære en gang til.';
+      g.textContent = who + ': ' + s.right + ' ud af ' + total + ' rigtige (' + p + ' %). ' + msg;
+    }else{
+      g.textContent = who + ': ' + s.right + ' rigtige indtil videre. Svar på alle ' + total + ' opgaver for at se dit samlede resultat.';
+    }
+
+    var fm = document.getElementById('finalMsg');
+    if(fm){
+      var last = s.perQuiz[quizzes.length-1];
+      if(last.ans === last.total){
+        if(last.right === last.total) fm.textContent = 'Flot — alt rigtigt i den blandede quiz.';
+        else if(last.right >= last.total-1) fm.textContent = 'Rigtig godt. Kig på det sidste, du missede.';
+        else fm.textContent = 'Se din samlede oversigt nederst under Resultater.';
+      }else{ fm.textContent = ''; }
+    }
+  }
+
+  // name / overlay
+  var overlay = document.getElementById('startOverlay');
+  var nameInput = document.getElementById('nameInput');
+
+  function showWelcome(){
+    var wb = document.getElementById('welcomeBar');
+    if(state.name){ wb.classList.add('show'); document.getElementById('welcomeHi').textContent = 'Hej, ' + state.name + '!'; }
+    else wb.classList.remove('show');
+  }
+
+  function openOverlay(returning){
+    if(returning && state.name){
+      document.getElementById('ovTitle').textContent = 'Velkommen tilbage, ' + state.name + '!';
+      document.getElementById('ovText').textContent = 'Dine tidligere svar er gemt i denne browser. Fortsæt hvor du slap, eller skriv et nyt navn for at starte forfra.';
+      nameInput.value = state.name;
+      document.getElementById('startBtn').textContent = 'Fortsæt';
+    }else{
+      document.getElementById('ovTitle').textContent = 'Velkommen';
+      document.getElementById('ovText').textContent = 'Skriv dit fornavn, så gemmes dine svar og dit resultat i denne browser. Så kan du fortsætte, hvor du slap, næste gang.';
+      nameInput.value = '';
+      document.getElementById('startBtn').textContent = 'Start';
+    }
+    overlay.classList.remove('hidden');
+    setTimeout(function(){ nameInput.focus(); }, 60);
+  }
+
+  document.getElementById('startBtn').addEventListener('click', function(){
+    var v = nameInput.value.trim();
+    if(v && v !== state.name){
+      state.name = v;
+      state.chosen = {};
+      allQuestions.forEach(resetQuestion);
+    }else if(v){
+      state.name = v;
+    }
+    save();
+    overlay.classList.add('hidden');
+    showWelcome(); refresh();
+  });
+
+  document.getElementById('skipBtn').addEventListener('click', function(){
+    overlay.classList.add('hidden');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    state.chosen = {};
+    save();
+    allQuestions.forEach(resetQuestion);
+    refresh();
+  });
+
+  document.getElementById('switchBtn').addEventListener('click', function(){
+    state = {name:'', chosen:{}};
+    save();
+    allQuestions.forEach(resetQuestion);
+    showWelcome(); refresh();
+    openOverlay(false);
+  });
+
+  nameInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') document.getElementById('startBtn').click();
+  });
+
+  // init
+  showWelcome();
+  refresh();
+  openOverlay(!!state.name);
+})();
+</script></body></html>
