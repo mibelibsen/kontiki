@@ -359,6 +359,8 @@ Vejledningen står i `vejledning/spoergeskema-tyskland.md`.
   klasse, og brugeren sendte den rigtige i stedet. Lær af det: slå op i
   PDF'ens forside, før den får et kort — titlen i filnavnet var
   «formelsamling», men niveauet stod kun på side 1.
+  Kort på forsiden også, med mærkatet *Matematik*, ved siden af
+  Fyrtøjet-kortet og før de fire fagkort.
 
 - **Kalenderfil til FP9-prøverne (10.11.).**
   `vejledning/fp9-proever-januar-2027.ics`, bygget af
