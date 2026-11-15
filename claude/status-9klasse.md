@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-11-11
+Sidst opdateret: 2026-11-15
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -42,6 +42,10 @@ ingen årsplan i tysk — den er droppet. **Fysik** har naturfagsugens materiale
 **FP9-prøverne 18.-22. januar 2027** ligger som kalenderfil i
 `vejledning/fp9-proever-januar-2027.ics`.
 
+**På tværs af fagene** ligger `ai-ordbog.html` med 44 ord om kunstig
+intelligens og de ti største aktører. Den har et kort på forsiden og hører
+ikke til ét fag — flyt den, hvis den skal ligge under samfundsfag.
+
 ### Spørgeskemaet til Tyskland · afsluttet
 
 23 unger fik koder og kort; `/u/<kode>` sender videre til det fælles Google
@@ -80,6 +84,51 @@ Skal de bruges igen, printes de forfra med
 5. **Fyrtøjet linker ikke til `/dansk`.** Spillet står for sig selv med et
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
+
+## Lavet 15. november 2026 · AI-ordbog
+
+- **`ai-ordbog.html`**, bygget af `claude/byg_ai_ordbog.py`, kort på
+  forsiden. 44 ord i seks temaer — det grundlæggende, sprogmodeller,
+  agentisk AI, IoT og edge, billeder og lyd, og det man bør vide om — plus
+  **de ti største aktører** med fire felter hver: hvem ejer dem, hvor mange
+  brugere, hvad de bruges mest til, og hvad der er særligt. Fem beregnede
+  figurer: to procesdiagrammer (hvordan en sprogmodel gætter; hvad en agent
+  gør anderledes), et søjlediagram over brugertal og to cirkeldiagrammer
+  (ejerandelene i OpenAI, markedet for AI-chips).
+
+- **Hvert tal har en kilde på siden, og kilden siger, hvor sikker den er.**
+  Det var det svære ved opgaven. Brugertal for AI findes i tre kvaliteter:
+  firmaets eget (Alphabets 950 mio. står i selskabets indberetning til det
+  amerikanske børstilsyn), pressens (Grok: 117 mio. fra SpaceX' prospekt),
+  og statistikbloggenes, som modsiger hinanden groft — for Meta AI fandt
+  jeg 640 mio., 1,2 mia. og 1,5 mia. for samme kvartal. Siden bruger kun de
+  to første slags og skriver ved hvert tal, hvor det kommer fra. De tal, der
+  kun findes hos aggregatorer, er nævnt **som** usikre, ikke udeladt — at de
+  cirkulerer, er i sig selv pointen.
+
+- **Enhederne er ikke ens, og det er gjort til lektionen.** OpenAI tæller
+  pr. uge, alle andre pr. måned, og de kinesiske tal dækker kun mobilbrug i
+  Kina. Søjlediagrammet viser derfor **kun de syv, der måles i måneder** —
+  ChatGPT, Claude og Nvidia er holdt ude, fordi de ikke kan stå på samme
+  akse. Det står i figurteksten, og afsnittet slutter med fire spørgsmål,
+  man skal stille til et brugertal. Det hænger sammen med
+  manipulationsmodulet.
+
+- **Nvidia er med som nr. 10, selv om de ikke laver en chatbot.** De har
+  80-90 % af markedet for AI-chips; alle de andre køber hos dem. Det er den
+  vigtigste aktør, ingen unge bruger direkte.
+
+- **`procesdiagram()` ombryder ikke.** En for lang undertekst løber ud over
+  kassens højre kant og bliver klippet — det skete for to af trinnene og sås
+  først på skærmbilledet. Byggescriptet har nu `trin()`, som regner pladsen
+  ud af kassebredden og tegnbredden (monospace, 0,6 em) og fejler, hvis
+  teksten er for lang. Samme fremgangsmåde som i `byg_geogebra.py`.
+
+- **`matematik.html` har ingen `nav.jump` i sit stylesheet** — kun i
+  mobil-mediequery'en, fordi siden selv bruger `nav.tabs`. CSS'en er løftet
+  derfra, så linkene i sidehovedet klistrede sammen på en bred skærm.
+  Reglerne er hentet fra `statistik.html`, hvor `nav.jump` faktisk bruges.
+  Opdaget på skærmbilledet, ikke i koden.
 
 ## Lavet 6. oktober 2026 · samfundsfag
 
