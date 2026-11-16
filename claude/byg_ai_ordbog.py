@@ -62,7 +62,7 @@ ORD = [
    'Det, modellen har læst eller set. For en sprogmodel typisk en meget '
    'stor del af det offentlige internet plus bøger og kode. Hvad der '
    'præcis er brugt, holder de fleste firmaer hemmeligt.',
-   'Det er her striden om OPHAVSRET står.'),
+   'Det er her striden om <b>ophavsret</b> står.'),
   ('Neuralt netværk',
    'Den slags matematisk model, det hele bygger på. Navnet kommer af '
    'hjernens nerveceller, men ligheden er løs — det er lag af tal, der '
