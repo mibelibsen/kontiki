@@ -55,13 +55,14 @@ ORD = [
    'computerkraft.', None),
   ('Parametre',
    'De tal inde i modellen, der bliver justeret under træningen. En stor '
-   'model har hundredvis af milliarder af dem. Flere parametre er ikke '
+   'model har hundredvis af milliarder parametre. Flere parametre er '
+   'ikke '
    'automatisk bedre.', None),
   ('Træningsdata',
    'Det, modellen har læst eller set. For en sprogmodel typisk en meget '
    'stor del af det offentlige internet plus bøger og kode. Hvad der '
    'præcis er brugt, holder de fleste firmaer hemmeligt.',
-   'Det er her striden om ophavsret står.'),
+   'Det er her striden om OPHAVSRET står.'),
   ('Neuralt netværk',
    'Den slags matematisk model, det hele bygger på. Navnet kommer af '
    'hjernens nerveceller, men ligheden er løs — det er lag af tal, der '
@@ -69,7 +70,7 @@ ORD = [
   ('GPU og computerkraft',
    'GPU er det grafikkort, træningen kører på. «Compute» er branchens ord '
    'for, hvor meget regnekraft man har. Det er den knappe ressource, alle '
-   'slås om.', None),
+   'slås om. GPU står for Graphics Processing Unit.', None),
  ]),
 
  ('Sprogmodeller', [
@@ -80,9 +81,11 @@ ORD = [
    'LLM er kort for <i>large language model</i>. ChatGPT, Gemini og Claude '
    'er alle sammen chatprogrammer oven på en LLM.'),
   ('Token',
-   'Det stykke, modellen regner i. Et token er typisk et kort ord eller en '
+   'Det stykke tekst som modellen regner i. Et token er typisk et kort '
+   'ord eller en '
    'orddel. «Fyrtøjet» kan blive til to-tre tokens.',
-   'Priser på AI opgøres i tokens, ikke i ord.'),
+   'Priser på AI opgøres i tokens, ikke i ord, og betales typisk efter '
+   'antal millioner forbrugte tokens.'),
   ('Kontekstvindue',
    'Hvor meget modellen kan have for øje på én gang — din besked, '
    'samtalen indtil nu og de filer, du har vedlagt. Er vinduet fyldt, '
@@ -125,7 +128,7 @@ ORD = [
    'modellen plus nogle værktøjer plus lov til at bruge dem.', None),
   ('Agentisk',
    'Tillægsordet. En agentisk opgave er en, hvor modellen selv vælger '
-   'skridtene: «find ud af hvorfor regnearket ikke summer, og ret det» '
+   'skridtene: «find ud af hvorfor regnearket ikke summerer, og ret det» '
    'i stedet for «hvad er 3 + 4?».',
    'Det er dét, der er nyt lige nu — og dét, der kan gå galt uden opsyn.'),
   ('Værktøjsbrug',
@@ -152,8 +155,8 @@ ORD = [
  ('AI i tingene omkring os', [
   ('IoT',
    'Internet of Things — tingenes internet. Alt det udstyr, der ikke er en '
-   'computer, men alligevel er på nettet: termostaten, højttaleren, '
-   'elmåleren, cyklens lås.', None),
+   'computer, men alligevel er på nettet: varmetermostaten, '
+   'højttaleren, elmåleren, e-cyklens lås.', None),
   ('IoT-AI',
    'AI, der kører i eller for den slags udstyr. Robotstøvsugeren, der '
    'genkender en sko. Varmepumpen, der lærer, hvornår I står op.', None),
@@ -167,7 +170,7 @@ ORD = [
    'IoT-AI er aldrig bedre end sine sensorer.', None),
   ('Indlejret system',
    'En lille computer, der sidder inde i en ting og kun laver dét ene. '
-   'Der er en i din mikroovn.', None),
+   'Der er ofte en i din mikroovn.', None),
  ]),
 
  ('Billeder, lyd og video', [
@@ -176,7 +179,7 @@ ORD = [
    '— frem for bare at sortere eller genkende.', None),
   ('Diffusionsmodel',
    'Den slags model, de fleste billedgeneratorer bruger. Den starter med '
-   'rent støj og fjerner støjen lidt efter lidt, til der står et billede.',
+   'ren støj og fjerner støjen lidt efter lidt, til der står et billede.',
    None),
   ('Deepfake',
    'En video eller lydoptagelse af en rigtig person, der siger eller gør '
@@ -187,7 +190,7 @@ ORD = [
    'At efterligne en bestemt persons stemme ud fra få sekunders lyd.',
    'Svindelnummeret «mor, jeg har mistet min telefon» findes nu med din '
    'rigtige stemme.'),
-  ('Vandmærke og herkomst',
+  ('Vandmærke og oprindelse',
    'Et skjult mærke eller en mærkat i filen, der fortæller, at den er '
    'lavet af en maskine, og hvilken. Det hjælper, men kan fjernes.',
    'Standarden hedder C2PA. Fravær af mærke beviser ingenting.'),
@@ -196,7 +199,7 @@ ORD = [
  ('Det, man bør vide om', [
   ('Bias (skævhed)',
    'Modellen arver skævhederne i sine data. Er lægerne på billederne '
-   'mest mænd, tegner den mænd.',
+   'mest gamle, tegner den gamle læger.',
    'Det er ikke en fejl i koden. Det er et spejl af materialet.'),
   ('Ophavsret',
    'Modellerne er trænet på tekst og billeder, nogen har lavet og ejer. '
@@ -204,8 +207,9 @@ ORD = [
    'steder.', None),
   ('Persondata og GDPR',
    'Skriver du personfølsomme oplysninger ind i en chatbot, forlader de '
-   'din computer. Skriv aldrig cpr-numre, karakterer eller andres navne '
-   'og sygdomme ind i et AI-program.', None),
+   'din computer. Skriv aldrig cpr-numre, karakterer eller andres '
+   'genkendelige navne og sygdomme ind i et AI-program. Du må gerne '
+   'bruge almindelige fornavne.', None),
   ('EU-forordningen om AI',
    'EU’s lov om kunstig intelligens. Den deler anvendelser op efter '
    'risiko: noget er forbudt, noget kræver tilladelse og mærkning, og '
@@ -214,12 +218,13 @@ ORD = [
    'Træning og brug af store modeller kræver meget strøm, og '
    'datacentrene køles med vand. Det er en reel omkostning, også når '
    'svaret kommer gratis på skærmen.', None),
-  ('Åben vægt mod lukket model',
+  ('Åben kilde mod lukket model',
    'Nogle firmaer udgiver modellens filer, så enhver kan køre den selv. '
    'Andre holder dem hemmelige og sælger adgang. Begge dele kaldes '
    'nogle gange «open source», og det er sjældent helt rigtigt.', None),
   ('Kildekritik',
-   'Et AI-svar er ikke en kilde. Det er et gæt, der lyder godt. Spørg: '
+   'Et AI-svar er ikke en kilde. Det er et gæt, der lyder godt. Spørg '
+   'altid: '
    'hvor ved den det fra, og kan jeg finde det samme et andet sted?',
    '<b>Den vane, der betyder mest.</b>'),
   ('AGI',
@@ -424,15 +429,17 @@ def trin(overskrift, under, gruppe, W=640):
 
 
 FIG_LLM = FG.procesdiagram([
- trin('Du skriver', 'Din tekst deles i tokens — små stykker ord.', 'ind'),
+ trin('Du skriver', 'Din tekst deles i tokens, dvs. små stykker ord.',
+      'ind'),
  trin('Modellen regner',
       'Den regner ud, hvilket token der er mest sandsynligt som det næste.',
       'kerne'),
  trin('Ét token ad gangen',
       'Den skriver det, lægger det til teksten og regner forfra.', 'kerne'),
  trin('Og igen', 'Token for token, til svaret er færdigt.', 'kerne'),
- trin('Du læser et svar', 'Det ser ud, som om nogen har tænkt. Der er regnet.',
-      'ud'),
+ trin('Du læser et svar',
+      'Det ser ud, som om nogen har tænkt. Men i virkeligheden er det '
+      'beregnet.', 'ud'),
 ], farver={'ind': FG.MUT, 'kerne': FG.BLA, 'ud': FG.GRO})
 
 FIG_AGENT = FG.procesdiagram([
@@ -498,10 +505,8 @@ def tabel_html():
 
 AKTOERER = f'''<section class="lesson" id="aktoerer">
 <h2><span class="num">{len(ORD) + 1}</span> De ti største aktører</h2>
-<p class="sub">Hvem der er «størst» afhænger af, hvad man måler: brugere,
-penge, eller hvor meget de andre er afhængige af dem. Her er de ti, der
-betyder mest lige nu — med de tal, der faktisk kan dokumenteres, og en
-note om, hvor hvert tal kommer fra. Slået op {OPDATERET}.</p>
+<p class="sub">Her er de ti, der betyder mest lige nu — med de tal, der
+faktisk kan dokumenteres, og en note om, hvor hvert tal kommer fra.</p>
 
 {tabel_html()}
 
@@ -533,7 +538,7 @@ kampen om brugerne.</p>
 <div class="figur cirk">{FIG_CHIP}<div class="figtekst">Markedet for AI-chips
 til datacentre. Vurderingerne går fra 75 % til 92 % til Nvidia alt efter,
 hvad man tæller med — her er IDC's tal for 2026. Et marked, hvor én
-sælger har fire femtedele, kaldes et monopol i alt andet end navn.
+sælger har fire femtedele, kaldes et monopol i alt andet end firmaets navn.
 </div></div>
 
 <h3>Hvem bestemmer i OpenAI?</h3>
@@ -641,7 +646,7 @@ body{font-size:11pt}main{padding:0}@page{size:A4;margin:14mm}}
             '<a class="side" href="index.html">Forside</a>'
             '</nav></div></header><main>'
             '<section class="hero"><span class="pill">9. klasse · '
-            'teknologiforståelse</span><h1>AI-ordbog</h1>'
+            'projektviden</span><h1>AI-ordbog</h1>'
             f'<p>{ANTAL_ORD} ord og begreber, man støder på, når der er tale '
             'om kunstig intelligens — fra <i>agentisk</i> over <i>LLM</i> til '
             '<i>IoT-AI</i>. Hvert ord er forklaret på dansk og uden '
@@ -651,8 +656,7 @@ body{font-size:11pt}main{padding:0}@page{size:A4;margin:14mm}}
             '</button></section>'
             f'<div class="box"><b>Tallene i sidste afsnit er slået op '
             f'{OPDATERET}.</b> Brugertal for AI ændrer sig hurtigt, og et tal '
-            'uden dato er ubrugeligt. Står der om et år stadig det samme her, '
-            'er siden forældet — ikke verden.</div>'
+            'uden dato er ubrugeligt.</div>'
             '<div class="figur">' + FIG_LLM + '<div class="figtekst">'
             'Sådan arbejder en sprogmodel. Den slår ikke op og den tænker '
             'ikke efter; den regner ud, hvad der er mest sandsynligt som det '
@@ -663,7 +667,7 @@ body{font-size:11pt}main{padding:0}@page{size:A4;margin:14mm}}
             'Forskellen på en chatbot og en agent: agenten får lov at handle, '
             'og den bliver ved, til opgaven er løst.</div></div>'
             + AKTOERER
-            + '</main><footer>Undervisningsmateriale · 9. klasse · '
+            + '</main><footer>Projektmateriale · 9. klasse · '
             f'AI-ordbog. Tallene er slået op {OPDATERET}.</footer>'
             '</body></html>')
 

@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-11-15
+Sidst opdateret: 2026-11-16
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -42,9 +42,9 @@ ingen årsplan i tysk — den er droppet. **Fysik** har naturfagsugens materiale
 **FP9-prøverne 18.-22. januar 2027** ligger som kalenderfil i
 `vejledning/fp9-proever-januar-2027.ics`.
 
-**På tværs af fagene** ligger `ai-ordbog.html` med 44 ord om kunstig
-intelligens og de ti største aktører. Den har et kort på forsiden og hører
-ikke til ét fag — flyt den, hvis den skal ligge under samfundsfag.
+**`ai-ordbog.html`** med 44 ord om kunstig intelligens og de ti største
+aktører ligger under **samfundsfag** og har også et kort på forsiden.
+Brugeren har selv rettet teksten igennem i et Claude-dokument.
 
 ### Spørgeskemaet til Tyskland · afsluttet
 
@@ -84,6 +84,36 @@ Skal de bruges igen, printes de forfra med
 5. **Fyrtøjet linker ikke til `/dansk`.** Spillet står for sig selv med et
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
+
+## Rettet 16. november 2026 · AI-ordbogen gennemrettet
+
+- **Brugeren rettede hele teksten selv** i et Claude-dokument på mobilen
+  ([rettedokumentet](https://claude.ai/artifact/PfyEwdg6Fi6XypcTA4fWgy)):
+  al tekst fra siden lagt ud afsnit for afsnit, med en vejledning i, at man
+  retter direkte i teksten og sætter tvivl i skarpe klammer. 87 ændringer
+  kom tilbage.
+  **Det, der gjorde det billigt at hente ind igen:** `read` med
+  `sinceRev` giver kun de blokke, der er ændret siden den revision, man
+  sidst skrev. Ikke hele dokumentet, ikke en eksport, der skal afkodes —
+  en liste med præcis de 21 steder, der var rørt ved. Brug den fremgang
+  næste gang et dokument skal rettes og lægges tilbage.
+  Rettelserne blev lagt ind med én `assert` pr. erstatning, så en
+  rettelse, der ikke rammer præcis ét sted, stopper scriptet i stedet for
+  stiltiende at blive sprunget over. To af dem ramte nul første gang, fordi
+  jeg gættede linjeombrydningen i kildefilen.
+
+- **Fagligt indhold brugeren rettede**, som jeg havde skrevet forkert eller
+  upræcist: *token* er et stykke **tekst**, ikke bare «et stykke»;
+  *bias*-eksemplet blev ændret fra køn til alder (gamle læger) — mindre
+  ladet og lige så klart; *åben vægt* blev til **åben kilde**;
+  *vandmærke og herkomst* til **oprindelse**; GDPR-afsnittet fik tilføjet,
+  at almindelige fornavne gerne må bruges, så reglen ikke lammer al brug;
+  og IoT-eksemplerne blev gjort konkrete (varmetermostat, e-cykel).
+
+- **Sidens ramme blev ændret:** mærkatet er nu «projektviden» og sidefoden
+  «Projektmateriale», og to steder, hvor jeg havde skrevet en pointe to
+  gange, er den korte version beholdt. Kortet flyttede fra forsiden alene
+  til **samfundsfag** (det ligger begge steder nu).
 
 ## Lavet 15. november 2026 · AI-ordbog
 
