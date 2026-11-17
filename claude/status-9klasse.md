@@ -34,10 +34,15 @@ kommer aldrig på sitet.
 essayvejledning. **Ingen side linker dertil** — det var med vilje. Dertil
 spillet **Fyrtøjet** på `/fyrtoejet`, som har et kort på forsiden.
 
-**Samfundsfag** har årsplan, en tekstside med syv tekster og
-**`samfundsfagstest.html`** med 60 multiple choice-spørgsmål på husets
-quizmotor. AI-ordbogen og dataarket om digital socialisering ligger nu
-under teksterne og har ikke længere egne kort på fagsiden. **Tysk**: *Ung i Tyskland* er
+**Samfundsfag** har årsplan og en tekstside med syv tekster. AI-ordbogen
+og dataarket om digital socialisering ligger nu under teksterne og har
+ikke længere egne kort på fagsiden.
+
+**Samfundsfagstesten er IKKE udgivet.** 60 multiple choice-spørgsmål,
+som resultatet skal bruges af, så de må ikke ligge frit. Øvelsessiden
+bygges til `kommende/samfundsfagstest.html`, Forms-pakken ligger i
+`vejledning/samfundsfagstest/`, og rettenøglen i `facit/`. Alle tre
+mapper er udelukket fra deploy. **Tysk**: *Ung i Tyskland* er
 afsluttet med 170 besvarelser; resultaterne blev til en PDF, og
 segmentopgaven (`tysk-segmenter.html`) ligger klar til de to Peter'e. Der er
 ingen årsplan i tysk — den er droppet. **Fysik** har naturfagsugens materiale.
@@ -90,6 +95,34 @@ Skal de bruges igen, printes de forfra med
 5. **Fyrtøjet linker ikke til `/dansk`.** Spillet står for sig selv med et
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
+
+## Rettet 17. november 2026 · testen tages ned igen og laves til Forms
+
+- **Testen må ikke være offentlig.** Brugeren skal bruge resultatet pr.
+  elev, og så kan spørgsmål og svar ikke stå på sitet. Siden blev lagt op
+  og taget ned igen samme dag: byggescriptet skriver nu til `kommende/`,
+  og kortet er væk fra `samfundsfag.html`. Kontrolleret, at
+  321flyv.com/samfundsfagstest.html svarer 404.
+  **Lektie: spørg om udgivelse, før noget med et facit lægges op.** Jeg
+  antog, at en side skulle på sitet, fordi alt andet skal.
+
+- **`claude/byg_forms_pakke.py`** skriver pakken til Microsoft Forms ud
+  af de samme spørgsmål: `forms-import.docx` til Forms' Quick Import,
+  `figurbilag.pdf` med de 19 figurer nummereret, de samme figurer
+  enkeltvis som PNG, og rettenøglen som PDF i `facit/`. Svarenes
+  rækkefølge genbruges fra testens ORDEN, så bogstaverne passer i
+  Forms, i rettenøglen og på øvelsessiden.
+
+- **Forms kan ikke importere figurer.** Quick Import tager kun tekst og
+  svarmuligheder, og Microsofts vejledning siger, at billeder og tabeller
+  skal fjernes først. Derfor henviser hvert spørgsmål til et figurnummer,
+  og figurerne leveres ved siden af — både samlet og enkeltvis, så de kan
+  vælges efter hvad der passer. Importen sætter heller ikke facit, så
+  rettenøglen begynder med en svarstrimmel: 60 bogstaver i rækkefølge, ét
+  gennemløb.
+
+- `tjek.py` kender nu `test` som facit-serie ved siden af online, lektier
+  og kahoot.
 
 ## Lavet 17. november 2026 · samfundsfagstest med 60 spørgsmål
 
