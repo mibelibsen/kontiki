@@ -247,8 +247,73 @@ def skriv_rettenoegle():
     return sti
 
 
+# ------------------------------------------------- 4) retteark til eleverne
+# Dette ark er til ungerne, ikke til laereren. Derfor staar svarene med
+# alle tre muligheder, saa man kan se, hvad man selv valgte — og hvorfor
+# det rigtige er rigtigt. Rettenoeglens svarstrimmel hoerer ikke hjemme
+# her; den er lavet til at rette hurtigt, ikke til at laere noget af.
+RETTEARK_CSS = BILAG_CSS + '''
+.spm{border:1px solid #c9d2e0;border-radius:10px;padding:11px 14px;
+margin:0 0 10px;break-inside:avoid}
+.spm .hd{font-weight:700;margin-bottom:7px}
+.spm .hd .nr{color:#1f6fd6;margin-right:6px}
+.sv{display:flex;gap:9px;align-items:flex-start;margin:3px 0;
+font-size:10pt;color:#586074}
+.sv .mk{flex:0 0 auto;width:19px;height:19px;border-radius:5px;
+display:grid;place-items:center;font-weight:800;font-size:8.5pt;
+background:#f3f6fb;border:1px solid #c9d2e0}
+.sv.rigtig{color:#13593d;font-weight:700}
+.sv.rigtig .mk{background:#1a8f5e;color:#fff;border-color:#1a8f5e}
+.hvorfor{margin:7px 0 0;padding-left:28px;font-size:9.5pt;color:#586074}
+.hvorfor b{color:#1a2233}
+.tael{background:#f3f6fb;border-left:4px solid #1f6fd6;padding:11px 15px;
+border-radius:8px;margin:14px 0}
+'''
+
+
+def skriv_retteark():
+    krop, nu = '', None
+    for nr, fignr, tekst, valg, plads, forkl, delnavn in SPM:
+        if delnavn != nu:
+            nu = delnavn
+            krop += f'<h2>{html.escape(delnavn)}</h2>'
+        svar = ''.join(
+            f'<div class="sv{" rigtig" if i == plads else ""}">'
+            f'<span class="mk">{BOGSTAV[i]}</span><span>{html.escape(v)}'
+            f'{" &nbsp;&#10003;" if i == plads else ""}</span></div>'
+            for i, v in enumerate(valg))
+        krop += (f'<div class="spm"><div class="hd"><span class="nr">{nr}.</span>'
+                 f'{html.escape(tekst)} <span style="color:#586074;'
+                 f'font-weight:400;font-size:9.5pt">(figur {fignr})</span></div>'
+                 f'{svar}<p class="hvorfor"><b>Hvorfor:</b> '
+                 f'{html.escape(forkl)}</p></div>')
+
+    doc = (f'<!DOCTYPE html><html lang="da"><head><meta charset="UTF-8">'
+           f'<title>Retteark · samfundsfagstest</title>'
+           f'<style>{RETTEARK_CSS}</style></head><body>'
+           f'<h1>Retteark · samfundsfagstest</h1>'
+           f'<p class="intro">Her er de {len(SPM)} spørgsmål med det rigtige '
+           f'svar markeret med grønt og et flueben — og en linje om, '
+           f'<b>hvorfor</b> det er det rigtige. Find dine egne svar, og '
+           f'læs begrundelsen ved dem, du ikke fik. Det er dér, der er '
+           f'noget at hente.</p>'
+           f'<div class="tael"><b>Tæl dine rigtige.</b> Du har '
+           f'{len(SPM)} spørgsmål i alt. Hvert rigtigt svar tæller ét. '
+           f'Vil du have det i procent, så del dit antal rigtige med '
+           f'{len(SPM)} og gang med 100 — det er præcis den slags '
+           f'procentregning, I har haft i matematik i denne uge.</div>'
+           f'<div class="note"><b>Figurerne</b> står i figurbilaget. '
+           f'Er du i tvivl om et spørgsmål, så kig på figuren igen, før '
+           f'du læser begrundelsen.</div>'
+           + krop + '</body></html>')
+    sti = os.path.join(UDMAPPE, 'retteark.html')
+    open(sti, 'w', encoding='utf-8').write(doc)
+    return sti
+
+
 if __name__ == '__main__':
     print('skrevet:', os.path.relpath(skriv_docx(), ROD))
     print('skrevet:', os.path.relpath(skriv_bilag(), ROD))
     print('skrevet:', os.path.relpath(skriv_rettenoegle(), ROD))
+    print('skrevet:', os.path.relpath(skriv_retteark(), ROD))
     print(f'  {len(SPM)} spørgsmål · {len(figurer)} figurer')
