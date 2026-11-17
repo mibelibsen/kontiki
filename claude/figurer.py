@@ -2558,3 +2558,179 @@ def afsaet(spoergsmaal, konkrete, W=640, H=215, farve=None,
              f'Zoom ud undervejs.</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+# ============================================================================
+#  SAMFUNDSFAG: Folketinget og det politiske landskab
+# ============================================================================
+
+def folketingssal(partier, titel='', W=640, raekker=5, flertal=None):
+    """Folketingssalen som en halvcirkel af sæder - ét sæde pr. mandat.
+
+    partier  [(navn, mandater, farve)] fra venstre mod højre i salen.
+    flertal  antal mandater, der udgør et flertal. Tegnes som en streg
+             gennem buen dér, hvor flertallet er nået talt fra venstre.
+
+    Alle sædepladser er **beregnet**, ikke sat i hånden: rækkerne får sæder
+    efter deres radius (den yderste række er længst og får flest), resten
+    fordeles med største rest, så summen passer præcis. Hvert sæde får en
+    vinkel, alle sæder sorteres efter vinkel, og partierne fyldes i den
+    raekkefoelge, de staar i listen. Sædets radius regnes ud af den mindste
+    afstand mellem to nabosæder, så de aldrig overlapper.
+    """
+    N = sum(m for _, m, _ in partier)
+    assert N > 0 and raekker >= 2
+    assert all(m > 0 for _, m, _ in partier), 'et parti med 0 mandater'
+
+    R_IND, R_UD = 0.40, 1.0
+    radier = [R_IND + (R_UD - R_IND) * i / (raekker - 1) for i in range(raekker)]
+
+    # saeder pr. raekke efter radius, med stoerste rest saa summen bliver N
+    raa = [N * r / sum(radier) for r in radier]
+    antal = [int(x) for x in raa]
+    rest = sorted(range(raekker), key=lambda i: -(raa[i] - antal[i]))
+    for i in range(N - sum(antal)):
+        antal[rest[i % raekker]] += 1
+    assert sum(antal) == N, (antal, N)
+
+    # én plads pr. mandat: (vinkel, radius)
+    pladser = []
+    for r, k in zip(radier, antal):
+        for j in range(k):
+            pladser.append((180.0 - (j + 0.5) * 180.0 / k, r))
+    pladser.sort(key=lambda p: -p[0])        # venstre side af salen foerst
+    assert len(pladser) == N
+
+    # sædets radius: halvdelen af den mindste afstand mellem to nabosæder
+    buespring = min(math.pi * r / k for r, k in zip(radier, antal))
+    raekkespring = (R_UD - R_IND) / (raekker - 1)
+    sr = 0.40 * min(buespring, raekkespring)
+
+    mg = 14
+    skala = (W - 2 * mg) / (2 * (R_UD + sr))
+    cx, cy = W / 2, mg + (R_UD + sr) * skala
+    LEGH = 22 * ((len(partier) + 2) // 3) + 10
+    H = cy + mg + LEGH + (22 if titel else 0)
+    ty = 20 if titel else 0
+
+    s = [f'<svg viewBox="0 0 {W} {H + ty}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Folketinget '
+         f'med {N} mandater fordelt på {len(partier)} partier." {FONT}>']
+    if titel:
+        s.append(f'<text x="{W / 2}" y="16" text-anchor="middle" fill="{INK}" '
+                 f'font-size="13" font-weight="bold">{titel}</text>')
+    g = f'<g transform="translate(0 {ty})">'
+    s.append(g)
+
+    i = 0
+    for navn, m, farve in partier:
+        for _ in range(m):
+            v, r = pladser[i]
+            a = math.radians(v)
+            x, y = cx + r * skala * math.cos(a), cy - r * skala * math.sin(a)
+            s.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{sr * skala:.2f}" '
+                     f'fill="{farve}"/>')
+            i += 1
+    assert i == N
+
+    if flertal:
+        # stregen laegges mellem sæde nr. flertal og nr. flertal+1, paa den
+        # vinkel der ligger midt imellem dem - saa den deler salen praecis dér
+        assert 0 < flertal < N
+        v = (pladser[flertal - 1][0] + pladser[flertal][0]) / 2
+        a = math.radians(v)
+        x0, y0 = cx + (R_IND - sr) * skala * math.cos(a), cy - (R_IND - sr) * skala * math.sin(a)
+        x1, y1 = cx + (R_UD + sr) * skala * math.cos(a), cy - (R_UD + sr) * skala * math.sin(a)
+        s.append(f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{x1:.1f}" y2="{y1:.1f}" '
+                 f'stroke="{INK}" stroke-width="2" stroke-dasharray="5 4"/>')
+        # maerkatet laegges i det tomme felt inde i buen. Over den ydre
+        # ende stoeder det ind i overskriften, naar stregen staar lodret.
+        s.append(f'<text x="{cx:.1f}" y="{cy - 34:.1f}" text-anchor="middle" '
+                 f'fill="{INK}" font-size="11" font-weight="700">'
+                 f'{flertal} mandater = flertal</text>')
+
+    ly = cy + 24
+    for n, (navn, m, farve) in enumerate(partier):
+        col, row = n % 3, n // 3
+        lx = mg + col * (W - 2 * mg) / 3
+        y = ly + row * 22
+        s.append(f'<rect x="{lx}" y="{y - 9}" width="11" height="11" rx="3" '
+                 f'fill="{farve}"/>')
+        s.append(f'<text x="{lx + 17}" y="{y}" fill="{MUT}" font-size="11">'
+                 f'{navn} {m}</text>')
+    s.append('</g></svg>')
+    return ''.join(s)
+
+
+def hoejre_venstre(partier, titel='', W=680, venstre='Venstrefløj',
+                   hoejre='Højrefløj'):
+    """Partier placeret paa en akse fra venstre til hoejre.
+
+    partier  [(navn, position, farve)] hvor position er -1 (laengst til
+             venstre) til +1 (laengst til hoejre).
+
+    Navnene kan ikke staa i samme hoejde, naar to partier ligger taet. Derfor
+    regnes der baner: et navn faar den foerste bane, hvor det ikke stoeder ind
+    i et navn, der allerede staar der. Tekstbredden regnes af tegnantallet,
+    ikke maalt paa oejemaal.
+    """
+    assert all(-1 <= p <= 1 for _, p, _ in partier), 'position skal være -1..1'
+    FS, TEGN = 11.5, 0.56           # skriftstoerrelse og tegnbredde i em
+    mg, AKSE_Y = 20, 0
+    x0, x1 = mg + 60, W - mg - 60
+
+    def X(p):
+        return x0 + (p + 1) / 2 * (x1 - x0)
+
+    # baner: sorteret efter position, foerste ledige bane uden overlap
+    baner = []                       # [(hoejre kant i px)] pr. bane
+    plads = []                       # (parti, bane)
+    for navn, p, farve in sorted(partier, key=lambda t: t[1]):
+        b = TEGN * FS * len(navn) + 14
+        v = X(p) - b / 2
+        for i, kant in enumerate(baner):
+            if v > kant:
+                baner[i] = v + b
+                plads.append((navn, p, farve, i))
+                break
+        else:
+            baner.append(v + b)
+            plads.append((navn, p, farve, len(baner) - 1))
+
+    BH = 24
+    TOP = 34 if titel else 10          # plads til overskriften over banerne
+    ay = TOP + len(baner) * BH + 8     # selve aksen
+    H = ay + 40
+
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'
+         f'{len(partier)} partier placeret på en akse fra venstre til højre." '
+         f'{FONT}>']
+    if titel:
+        s.append(f'<text x="{W / 2}" y="16" text-anchor="middle" fill="{INK}" '
+                 f'font-size="13" font-weight="bold">{titel}</text>')
+
+    s.append(f'<line x1="{mg}" y1="{ay}" x2="{W - mg}" y2="{ay}" '
+             f'stroke="{INK}" stroke-width="2"/>')
+    for x, pil in ((mg, 1), (W - mg, -1)):
+        s.append(f'<path d="M {x} {ay} l {10 * pil} -5 l 0 10 Z" fill="{INK}"/>')
+    s.append(f'<text x="{mg + 14}" y="{ay + 20}" fill="{MUT}" font-size="11">'
+             f'{venstre}</text>')
+    s.append(f'<text x="{W - mg - 14}" y="{ay + 20}" text-anchor="end" '
+             f'fill="{MUT}" font-size="11">{hoejre}</text>')
+    s.append(f'<line x1="{W / 2}" y1="{ay - 7}" x2="{W / 2}" y2="{ay + 7}" '
+             f'stroke="{LIN}" stroke-width="2"/>')
+    s.append(f'<text x="{W / 2}" y="{ay + 20}" text-anchor="middle" '
+             f'fill="{LIN}" font-size="10">midten</text>')
+
+    for navn, p, farve, bane in plads:
+        x = X(p)
+        y = TOP + bane * BH
+        s.append(f'<line x1="{x:.1f}" y1="{y + 4}" x2="{x:.1f}" y2="{ay - 4}" '
+                 f'stroke="{LIN}" stroke-dasharray="2 3"/>')
+        s.append(f'<circle cx="{x:.1f}" cy="{ay}" r="5.5" fill="{farve}" '
+                 f'stroke="#fff" stroke-width="1.5"/>')
+        s.append(f'<text x="{x:.1f}" y="{y:.1f}" text-anchor="middle" '
+                 f'fill="{INK}" font-size="{FS}" font-weight="600">{navn}</text>')
+    s.append('</svg>')
+    return ''.join(s)

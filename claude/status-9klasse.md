@@ -34,7 +34,10 @@ kommer aldrig på sitet.
 essayvejledning. **Ingen side linker dertil** — det var med vilje. Dertil
 spillet **Fyrtøjet** på `/fyrtoejet`, som har et kort på forsiden.
 
-**Samfundsfag** har årsplan og en tekstside. **Tysk**: *Ung i Tyskland* er
+**Samfundsfag** har årsplan, en tekstside med syv tekster og
+**`samfundsfagstest.html`** med 60 multiple choice-spørgsmål på husets
+quizmotor. AI-ordbogen og dataarket om digital socialisering ligger nu
+under teksterne og har ikke længere egne kort på fagsiden. **Tysk**: *Ung i Tyskland* er
 afsluttet med 170 besvarelser; resultaterne blev til en PDF, og
 segmentopgaven (`tysk-segmenter.html`) ligger klar til de to Peter'e. Der er
 ingen årsplan i tysk — den er droppet. **Fysik** har naturfagsugens materiale.
@@ -87,6 +90,61 @@ Skal de bruges igen, printes de forfra med
 5. **Fyrtøjet linker ikke til `/dansk`.** Spillet står for sig selv med et
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
+
+## Lavet 17. november 2026 · samfundsfagstest med 60 spørgsmål
+
+- **`samfundsfagstest.html`**, bygget af `claude/byg_samfundsfagstest.py`,
+  kort på `samfundsfag.html`. Seks quizzer à ti spørgsmål: teksterne
+  (lovprocessen og socialisering), dataarket om digital socialisering,
+  AI-ordbogen, partier og ideologi, paratviden om regeringen, og økonomi
+  med EU og OECD. Hvert spørgsmål har en figur, og svaret kommer med en
+  forklaring med det samme.
+
+- **Quizmotoren er løftet ud af `statistik.html`** på samme måde som i
+  `byg_boksplot.py` — kun `STORAGE_KEY` og modulnavnene byttes. Den klarer
+  seks moduler uden ændringer. To ting skulle rettes i halen: motorens
+  slutbesked talte om «den blandede quiz», som ikke findes her, og min
+  egen assert på `data-score` talte også forekomsten inde i `<script>`.
+  Den skal strippe scriptet først, ligesom `tjek.py` gør.
+
+- **Alle tal er slået op, ikke husket.** Det var hovedarbejdet.
+  Folketingsvalget lå 24. marts 2026, og regeringen Mette Frederiksen III
+  (S, SF, M, RV) tiltrådte 3. juni 2026 med 82 af 179 mandater — en
+  mindretalsregering. Inflationen var 2,2 % i oktober 2026 (kerne 1,7 %),
+  betalingsbalanceoverskuddet 441 mia. kr. i 2025 svarende til ca. 14 % af
+  BNP, EU har 27 lande og OECD 38. Mandatfordelingen kontrolleres af
+  asserts: summen skal give 179, regeringen 82, og flertal 90.
+
+- **Finanslovens størrelse har ikke ét svar.** Kilderne giver 949, 1.098,
+  1.563 og 1.800 mia. kr. for samme finanslov, fordi de tæller henholdsvis
+  §§1-36, med kapitalposter, med skatter og renter, og med afdrag på
+  statsgælden. Siden bruger ca. 950 mia. kr. (statens nettoudgifter) og
+  siger hvilken afgrænsning. **Et tal uden afgrænsning er ikke et tal.**
+
+- **`figurer.py` fik to nye figurer til samfundsfag.**
+  `folketingssal()` tegner en halvcirkel med ét punkt pr. mandat: rækkerne
+  får sæder efter deres radius, resten fordeles med største rest så summen
+  passer præcis, og sædets radius regnes af den mindste afstand mellem to
+  nabosæder, så de aldrig overlapper. `hoejre_venstre()` placerer partier
+  på en akse og lægger navnene i baner, så to navne ikke kan skrives oven
+  i hinanden — banebredden regnes af tegnantallet.
+
+- **To fejl, skærmbilledet fangede, og koden ikke kunne.** Flertalsmærkatet
+  stod oven i overskriften, når stregen var lodret (flyttet ind i buens
+  tomme midte), og akseoverskriften stod oven i partinavnene (banerne fik
+  plads under titlen). Begge dele så rigtige ud i tallene.
+
+- **En figurtekst, jeg selv skrev forkert:** at regeringens fire partier
+  «ligger til venstre for stregen» ved 90. Det gør Enhedslisten og
+  Alternativet også, uden at sidde i regeringen. Stregen viser, hvor
+  halvdelen af salen er nået talt fra venstre — ikke skellet mellem
+  regering og opposition. Rettet. De nordatlantiske mandater står sidst i
+  figuren, og det står nu i figurteksten hvorfor: de hører ikke hjemme på
+  en dansk højre-venstre-akse.
+
+- **Partiernes placering på ideologiaksen er et skøn**, og det står på
+  siden. Rækkefølgen i grove træk er det, ungerne skal kunne — ikke den
+  præcise afstand.
 
 ## Lavet 17. november 2026 · juleaktiviteter til kalenderen
 

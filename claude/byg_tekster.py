@@ -54,6 +54,22 @@ TEKSTER = [
   'skrevet til gymnasiet. Slutter med fem spørgsmål, I kan stille til jeres '
   'egne svar fra Hamborg. Siden kan printes.',
   '', 'hvad-er-socialisering.html'),
+ ('Unges brug af mobil og digitale medier',
+  'Lavet til klassen · dataark', '', 1, 'Socialisering · uge 40-43',
+  'Dataarket til forløbet: hvor længe danske unge er på skærmen, hvor '
+  'meget skærm der er i skoletiden, og hvordan problematisk brug har '
+  'udviklet sig. Hvert tal står med kilde, dato og stikprøve, og hver '
+  'figur har en tabel under sig med de samme tal. Brug den til tallene — '
+  'og Faktalink-teksten til begreberne. Siden kan printes.',
+  '', 'digital-socialisering.html'),
+ ('AI-ordbog',
+  'Lavet til klassen', '', 1, 'Teknologi og samfund',
+  '44 ord og begreber om kunstig intelligens — fra agentisk over LLM til '
+  'IoT-AI — og de ti største aktører med ejerskab, brugertal og brug. '
+  'Hvert tal har kilde og dato, og afsnittet om brugertal er samtidig en '
+  'øvelse i at læse et tal: de store firmaer opgør ikke brugere i samme '
+  'enhed. Siden kan printes.',
+  '', 'ai-ordbog.html'),
  ('Kom godt i gang med en alkoholpolitik',
   'Fra guiden "Få en alkoholpolitik" til ledelse og bestyrelse i foreninger',
   '', 1, 'Socialisering',
