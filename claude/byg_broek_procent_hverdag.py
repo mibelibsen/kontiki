@@ -247,6 +247,8 @@ assert F(5995) / F(125, 100) == 4796
 assert F(2, 3) * F(9, 6) == 1
 assert F(20) * F(55, 100) == 11
 assert F(29 - 25, 25) * 100 == 16
+assert 1 - F(60, 100) * F(90, 100) == F(46, 100)
+assert F(90, 100) * F(110, 100) == F(99, 100)
 
 OPGAVER = [
  _o(1, 'En cykel koster 2.400 kr. Der er 15 % rabat. Hvad koster den nu?',
@@ -284,19 +286,19 @@ OPGAVER = [
     '<b>gamle</b> pris, ikke den nye.',
     FG.soejler([25, 29], ['før', 'efter'], titel='Pris i kr', ynavn='kr',
                W=330, H=230, farve=[FG.MUT, FG.GRO])),
- _o(9, 'I en butik er der først 30 % rabat, og på udsalgets sidste dag '
-       'tages der 20 % mere af den nedsatte pris. Hvor stor er den '
+ _o(9, 'I en butik er der først 40 % rabat, og på udsalgets sidste dag '
+       'tages der 10 % mere af den nedsatte pris. Hvor stor er den '
        'samlede rabat?',
-    '44 %', '0,70 · 0,80 = 0,56. Du betaler 56 %, så rabatten er 44 % — '
-    'ikke 50 %.',
-    FG.broekbjaelke(30, 100, farve=FG.ROD, vis_dele=False,
-                     tekst='først tages 30 % af prisen')),
- _o(10, 'En vare falder 20 % i pris. Senere stiger den 20 %. '
+    '46 %', '0,60 · 0,90 = 0,54. Du betaler 54 %, så rabatten er 46 % — '
+    'ikke 50 %. Den anden rabat regnes af den allerede nedsatte pris.',
+    FG.broekbjaelke(40, 100, farve=FG.ROD, vis_dele=False,
+                     tekst='først tages 40 % af prisen')),
+ _o(10, 'En vare falder 10 % i pris. Senere stiger den 10 %. '
         'Koster den det samme som før? Forklar.',
-     'Nej — den er 4 % billigere end før',
-     '0,80 · 1,20 = 0,96. Faldet blev regnet af den høje pris, '
+     'Nej — den er 1 % billigere end før',
+     '0,90 · 1,10 = 0,99. Faldet blev regnet af den høje pris, '
      'stigningen af den lave. Derfor rammer de ikke samme sted.',
-     FG.soejler([100, 80], ['start', 'efter 20 % fald'],
+     FG.soejler([100, 90], ['start', 'efter 10 % fald'],
                 titel='Indeks', ynavn='indeks', W=340, H=230,
                 farve=[FG.MUT, FG.ROD])),
 ]
