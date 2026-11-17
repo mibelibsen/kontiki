@@ -32,9 +32,50 @@ def plus_eksempel():
     fig = (FG.broekbjaelke(4, 12, tekst='1/3 = 4/12') +
            FG.broekbjaelke(3, 12, farve=FG.ORA, tekst='1/4 = 3/12') +
            FG.broekbjaelke(7, 12, farve=FG.GRO, tekst='lagt sammen: 7/12'))
-    stykke = (f'{frac(1,3)} + {frac(1,4)} = {frac(4,12)} + {frac(3,12)} = '
-              f'{frac(7,12)}')
+    stykke = (f'{frac(1,3)} + {frac(1,4)} = {frac("1 · 4","3 · 4")} + '
+              f'{frac("1 · 3","4 · 3")} = {frac(4,12)} + {frac(3,12)} = '
+              f'{frac("4 + 3","12")} = {frac(7,12)}')
     return stykke, a + b, fig
+
+
+def faellesnaevner_eksempel():
+    """Forlaengning aendrer ikke maengden. Det er hele begrundelsen for,
+    at man overhovedet maa lave om til faellesnaevner, og den skal kunne
+    ses — derfor to bjaelker med praecis samme farvede laengde."""
+    assert F(1, 3) == F(4, 12) and F(1, 4) == F(3, 12)
+    fig = (FG.broekbjaelke(1, 3, tekst='1/3') +
+           FG.broekbjaelke(4, 12, farve=FG.GRO,
+                           tekst='1/3 forlænget med 4: 4/12 — samme længde'))
+    stykke = (f'{frac(1,3)} = {frac("1 · 4","3 · 4")} = {frac(4,12)}')
+    return stykke, F(1, 3), fig
+
+
+# (de to nævnere, fællesnævner, hvad hver ganges med, hvorfor)
+FAELLES = [
+ (2, 8, 8, (4, 1), 'Den ene går op i den anden: 2 går op i 8. '
+  'Så er den største af dem fællesnævneren, og den anden brøk står allerede rigtigt.'),
+ (3, 4, 12, (4, 3), 'Ingen af dem går op i den anden. Gang nævnerne: '
+  '3 · 4 = 12. Det virker altid.'),
+ (6, 4, 12, (2, 3), 'Nævnerne ganget giver 24, og det kan bruges — men 12 '
+  'er mindre og går også op i begge. Mindre tal gør resten lettere.'),
+]
+for a, b, f, (ga, gb), _ in FAELLES:
+    assert a * ga == f and b * gb == f, (a, b, f)
+    assert f % a == 0 and f % b == 0
+
+FAELLES_TABEL_RAEKKER = ''.join(
+    f'<tr><td>{frac(1,a)} + {frac(1,b)}</td><td class="ud"><b>{f}</b></td>'
+    f'<td>{a} · {ga} = {f}<br>{b} · {gb} = {f}</td><td>{hvorfor}</td></tr>'
+    for a, b, f, (ga, gb), hvorfor in FAELLES)
+
+FAELLES_TABEL = (
+    '<p class="naar">Sådan finder du den — tre tilfælde, og de dækker alt:</p>'
+    '<table class="om fn"><thead><tr><th>Stykket</th><th>Fællesnævner</th>'
+    '<th>Hvad ganges med hvad</th><th>Hvorfor</th></tr></thead>'
+    '<tbody>' + FAELLES_TABEL_RAEKKER + '</tbody></table>'
+    '<p class="naar"><b>Og så forlænger du:</b> spørg «hvad skal nævneren '
+    'ganges med for at blive fællesnævneren?» — og gang tælleren med '
+    'præcis det samme tal. Gør du kun det ene, har du ændret brøken.</p>')
 
 
 def gange_eksempel():
@@ -47,11 +88,18 @@ def gange_eksempel():
 
 
 def divider_eksempel():
+    """Division med en broek skal foerst betyde noget, foer reglen giver
+    mening. Derfor to eksempler: det lette, hvor svaret kan taelles, og
+    det almindelige, hvor det ikke kan."""
     a, b = F(3, 4), F(2, 5)
     assert a / b == F(15, 8) and a * F(5, 2) == F(15, 8)
+    assert F(3, 4) / F(1, 4) == 3, 'det lette eksempel skal gaa lige op'
+    # at dividere med et tal under 1 goer svaret stoerre — det er pointen
+    assert b < 1 and a / b > a
+    fig = (FG.gaar_op_i(3, 4, 1, 4) + FG.gaar_op_i(3, 4, 2, 5))
     stykke = (f'{frac(3,4)} : {frac(2,5)} = {frac(3,4)} · {frac(5,2)} = '
-              f'{frac(15,8)}')
-    return stykke, a / b, ''
+              f'{frac("3 · 5","4 · 2")} = {frac(15,8)} = 1{frac(7,8)}')
+    return stykke, a / b, fig
 
 
 def forkort_eksempel():
@@ -65,11 +113,31 @@ def forkort_eksempel():
 TRIN = [
  ('Forlæng og forkort', 'Gang eller dividér <b>begge</b> tal med det samme. '
   'Brøken ser anderledes ud, men er lige så stor.', *forkort_eksempel()),
- ('Plus og minus', 'Lav først om til <b>samme nævner</b>. Læg så tællerne '
-  'sammen — nævneren bliver stående.', *plus_eksempel()),
+ ('Find fællesnævneren',
+  '<b>Reglen:</b> du må gange tæller og nævner med det samme tal. Brøken '
+  'får nye tal, men er præcis lige så stor. Det er dét, der gør det '
+  'lovligt at skrive brøkerne om, før du lægger dem sammen.',
+  *faellesnaevner_eksempel(), FAELLES_TABEL),
+ ('Plus og minus', 'Når nævnerne er ens, lægger du <b>tællerne</b> sammen. '
+  'Nævneren bliver stående — den fortæller kun, hvor store delene er, og '
+  'den ændrer sig ikke, fordi du tager flere af dem.',
+  *plus_eksempel()),
  ('Gange', 'Tæller gange tæller, nævner gange nævner. Ingen fælles nævner '
   'nødvendig.', *gange_eksempel()),
- ('Dividere', 'Vend den bagerste brøk om, og gang i stedet.',
+ ('Dividere',
+  '<b>Hvad det betyder:</b> et divisionsstykke spørger, hvor mange gange '
+  'det bagerste tal går op i det forreste. {} : {} spørger altså: hvor '
+  'mange kvarte er der i tre kvarte? Svaret er 3, og det kan tælles på '
+  'den første figur.<br><br>'
+  '<b>Reglen:</b> vend den bagerste brøk om, og gang i stedet. Den '
+  'omvendte brøk hedder den <b>reciprokke</b> — tæller og nævner bytter '
+  'plads, så {} bliver til {}.<br><br>'
+  '<b>Hvorfor det virker:</b> at dividere med 2 er det samme som at gange '
+  'med {}. At dividere med {} er på samme måde det samme som at gange med '
+  '{}. Division og multiplikation er to sider af samme sag, og den '
+  'omvendte brøk er broen imellem dem.'.format(
+      frac(3, 4), frac(1, 4), frac(2, 5), frac(5, 2),
+      frac(1, 2), frac(2, 5), frac(5, 2)),
   *divider_eksempel()),
 ]
 
@@ -93,6 +161,12 @@ FAELDER = [
   f'{frac(3,4)} er det samme som 3 : 4 = 0,75. Det er tit den nemmeste vej, '
   'når du skal bruge en decimal.',
   F(3, 4) == F(3) / F(4)),
+ ('Dividerer du med noget under 1, bliver svaret større',
+  f'{frac(3,4)} : {frac(2,5)} = {frac(15,8)}, som er <b>større</b> end '
+  f'{frac(3,4)}. Det føles forkert, men er rigtigt: du spørger, hvor '
+  f'mange gange noget lille går op i noget større — og det gør det mere '
+  'end én gang. Samme sag som 10 : 0,5 = 20.',
+  F(3, 4) / F(2, 5) > F(3, 4) and F(10) / F(1, 2) == 20),
  ('En hel er en brøk med samme tal',
   f'{frac(5,5)} = 1 og {frac(12,12)} = 1. Og {frac(8,4)} = 2 — en uægte brøk '
   'er bare et tal større end 1.',
@@ -102,11 +176,13 @@ for navn, _, ok in FAELDER:
     assert ok, navn
 
 trin_html = ''
-for i, (titel, regel, stykke, facit, fig) in enumerate(TRIN, 1):
+for i, trin in enumerate(TRIN, 1):
+    titel, regel, stykke, facit, fig = trin[:5]
+    ekstra = trin[5] if len(trin) > 5 else ''      # tabel e.l. under figuren
     figur = f'<div class="figur">{fig}</div>' if fig else ''
     trin_html += (f'<section class="regel"><h3><span class="num">{i}</span>'
                   f'{html.escape(titel)}</h3><p>{regel}</p>'
-                  f'<div class="stykke">{stykke}</div>{figur}</section>')
+                  f'<div class="stykke">{stykke}</div>{figur}{ekstra}</section>')
 
 omregn_html = ''.join(
     f'<tr><td class="ud">{vis(f)}</td><td>{d}</td><td>{p}</td></tr>'
@@ -141,6 +217,16 @@ table.om{width:100%;border-collapse:collapse;margin:12px 0;font-size:1rem;max-wi
 table.om th,table.om td{border:1px solid var(--line);padding:9px 14px;text-align:left}
 table.om th{background:var(--panel2)}
 table.om td.ud{font-weight:700}
+table.om.fn{max-width:none;font-size:.95rem}
+table.om.fn td:last-child{color:var(--muted);font-size:.9rem}
+table.om.fn td{vertical-align:top}
+table.om.fn td:first-child{white-space:nowrap;min-width:7.5em}
+p.naar{color:var(--muted);max-width:74ch;margin:10px 0}
+.regel p.naar{margin:14px 0 6px}
+.note{background:var(--panel2);border:1px solid var(--line);
+border-left:5px solid var(--accent);border-radius:12px;padding:14px 18px;
+margin:14px 0;color:var(--muted);max-width:76ch}
+.note b{color:var(--ink)}
 .printbtn{background:#fff;border:1px solid var(--line);border-radius:10px;
 padding:10px 18px;font-weight:700;font-size:.95rem;cursor:pointer;color:var(--ink);
 font-family:inherit;margin:6px 8px 0 0}
@@ -152,18 +238,25 @@ main{padding:0}@page{size:A4;margin:14mm}}
 
 KROP = f'''<section class="hero"><span class="pill">Matematik · Regneregler</span>
 <h1>Brøkregning</h1>
-<p>De fire regnearter med brøker, én ad gangen, med en figur til hver. Nederst
+<p>Først hvad de to tal hedder, så fællesnævneren og reglen bag den, og
+derefter de fire regnearter — én ad gangen, med en figur til hver. Nederst
 står de fælder, der koster flest point ved prøven.</p>
 <button class="printbtn" onclick="window.print()">Print siden</button>
 <a class="btnlink ghost" href="regnepyramiden.html">Regnepyramiden</a>
 <a class="btnlink ghost" href="matematik.html">Tilbage til matematik</a></section>
 
-<div class="note"><b>Husk hvad de to tal hedder:</b> tallet over stregen er
-<b>tælleren</b> — den tæller, hvor mange dele du har. Tallet under er
-<b>nævneren</b> — den nævner, hvor mange dele det hele er delt i.</div>
-<div class="figur">{FG.broekbjaelke(3, 4, tekst='3/4 — tre dele ud af fire')}</div>
+<h2 class="sec">Hvad hedder de to tal?</h2>
+<p class="naar">Ordene bruges hele året, så de skal sidde fast. De er ikke
+tilfældige — begge ord siger, hvad tallet gør.</p>
+<div class="figur">{FG.broek_navne(3, 4)}</div>
+<div class="note"><b>Tælleren <i>tæller</i></b>, hvor mange dele du har.
+<b>Nævneren <i>nævner</i></b>, hvor mange dele det hele er delt i.<br><br>
+Derfor bliver en brøk <b>mindre</b>, når nævneren bliver større:
+{frac(1,8)} er mindre end {frac(1,3)}, fordi kagen er skåret i flere og
+dermed mindre stykker. Og derfor er {frac(5,5)} lig med 1 — du har alle
+de dele, der findes.</div>
 
-<h2 class="sec">De fire regnearter</h2>
+<h2 class="sec">Regnereglerne, én ad gangen</h2>
 {trin_html}
 
 <h2 class="sec">Brøk, decimaltal og procent</h2>

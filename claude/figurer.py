@@ -2752,3 +2752,126 @@ def hoejre_venstre(partier, titel='', W=680, venstre='Venstrefløj',
                  f'fill="{INK}" font-size="{FS}" font-weight="600">{navn}</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+def broek_navne(taeller, naevner, W=560):
+    """Brøken skrevet stort med pile til de to tals navne.
+
+    Ungerne bruger ordene taeller og naevner hele aaret uden at have faaet
+    dem vist én gang. Her staar de paa figuren med en pil til hvert tal og
+    en saetning om, hvad tallet betyder. Bjaelken under viser den samme
+    broek som maengde, saa ordene og billedet hoerer sammen.
+
+    Alle koordinater regnes ud af skriftstoerrelsen, saa pilene rammer
+    tallene, uanset hvor mange cifre de har.
+    """
+    FS = 56                                   # skriftstoerrelse paa tallene
+    bx = 96                                   # broekens midte
+    oy, uy = 62, 150                          # grundlinje for de to tal
+    sy = (oy + uy) / 2 - 4                    # broekstregen
+    halv = max(len(str(taeller)), len(str(naevner))) * FS * 0.42 + 12
+
+    s = [f'<svg viewBox="0 0 {W} 256" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Brøken '
+         f'{taeller} over {naevner} med tæller og nævner navngivet." {FONT}>']
+
+    s.append(f'<text x="{bx}" y="{oy}" text-anchor="middle" fill="{BLA}" '
+             f'font-size="{FS}" font-weight="700">{taeller}</text>')
+    s.append(f'<line x1="{bx - halv}" y1="{sy}" x2="{bx + halv}" y2="{sy}" '
+             f'stroke="{INK}" stroke-width="4" stroke-linecap="round"/>')
+    s.append(f'<text x="{bx}" y="{uy}" text-anchor="middle" fill="{ORA}" '
+             f'font-size="{FS}" font-weight="700">{naevner}</text>')
+
+    # pilene gaar fra teksten ind mod tallets hoejre kant
+    for y, farve, navn, hvad in (
+            (oy - FS * 0.3, BLA, 'TÆLLER', 'hvor mange dele du har'),
+            (uy - FS * 0.3, ORA, 'NÆVNER',
+             'hvor mange dele det hele er delt i')):
+        x0 = bx + halv + 12
+        x1 = x0 + 54
+        s.append(f'<path d="M {x1} {y:.0f} L {x0} {y:.0f}" stroke="{farve}" '
+                 f'stroke-width="2.5" fill="none"/>')
+        s.append(f'<path d="M {x0} {y:.0f} l 9 -5 l 0 10 Z" fill="{farve}"/>')
+        s.append(f'<text x="{x1 + 10}" y="{y - 4:.0f}" fill="{farve}" '
+                 f'font-size="14" font-weight="800" letter-spacing="1">'
+                 f'{navn}</text>')
+        s.append(f'<text x="{x1 + 10}" y="{y + 14:.0f}" fill="{MUT}" '
+                 f'font-size="12.5">{hvad}</text>')
+
+    # bjaelken: samme broek som maengde
+    by, bh = 192, 34
+    X0, X1 = 18, W - 18
+    b = (X1 - X0) / naevner
+    for i in range(naevner):
+        s.append(f'<rect x="{X0 + i * b:.2f}" y="{by}" width="{b:.2f}" '
+                 f'height="{bh}" fill="{BLA if i < taeller else "#fff"}" '
+                 f'stroke="{INK}" stroke-width="1"/>')
+    s.append(f'<text x="{X0}" y="{by + bh + 17}" fill="{MUT}" font-size="12">'
+             f'Det hele er delt i {naevner} dele, og du har '
+             f'{taeller} af dem.</text>')
+    s.append('</svg>')
+    return ''.join(s)
+
+
+def gaar_op_i(t1, n1, t2, n2, W=540):
+    """Hvor mange gange gaar den ene broek op i den anden?
+
+    Det er det, division med en broek betyder, og det er det, ingen faar
+    sagt. Bjaelken viser den foerste broek, og under den maales der af i
+    stykker paa stoerrelse med den anden — saa kan man taelle, hvor mange
+    der gaar i, og se resten.
+
+    Alt regnes i den faelles naevner, saa begge broeker falder paa hele
+    delestreger. Et stykke, der er tegnet paa oejemaal, beviser ingenting.
+    """
+    N = n1 * n2 // math.gcd(n1, n2)          # mindste faelles naevner
+    fyldt = t1 * N // n1                     # foerste broek i N-dele
+    stykke = t2 * N // n2                    # den anden broek i N-dele
+    assert stykke > 0 and fyldt > 0
+    assert F(fyldt, N) == F(t1, n1) and F(stykke, N) == F(t2, n2)
+    hele, rest = divmod(fyldt, stykke)
+    svar = F(fyldt, stykke)
+    assert svar == F(t1, n1) / F(t2, n2)
+
+    X0, X1 = 14, W - 14
+    b = (X1 - X0) / N
+    by, bh = 34, 40
+    H = by + bh + 76
+    s = [f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px" '
+         f'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hvor mange '
+         f'gange {t2}/{n2} går op i {t1}/{n1}." {FONT}>']
+    s.append(f'<text x="{X0}" y="18" fill="{MUT}" font-size="12">'
+             f'Hvor mange gange går {t2}/{n2} op i {t1}/{n1}?</text>')
+
+    for i in range(N):
+        s.append(f'<rect x="{X0 + i * b:.2f}" y="{by}" width="{b:.2f}" '
+                 f'height="{bh}" fill="{BLA if i < fyldt else "#fff"}" '
+                 f'stroke="{INK}" stroke-width="1"/>')
+    s.append(f'<text x="{X0 + fyldt * b / 2:.1f}" y="{by + bh / 2 + 5:.0f}" '
+             f'text-anchor="middle" fill="#fff" font-size="13" '
+             f'font-weight="700">{t1}/{n1}</text>')
+
+    # maalestykkerne under bjaelken
+    ky = by + bh + 10
+    for k in range(hele + (1 if rest else 0)):
+        x0 = X0 + k * stykke * b
+        bredde = (stykke if k < hele else rest) * b
+        helt = k < hele
+        f = GRO if helt else ORA
+        s.append(f'<path d="M {x0:.1f} {ky} l 0 7 M {x0:.1f} {ky + 3.5} '
+                 f'H {x0 + bredde:.1f} M {x0 + bredde:.1f} {ky} l 0 7" '
+                 f'stroke="{f}" stroke-width="2" fill="none"/>')
+        maerke = f'{k + 1}' if helt else f'{rest}/{stykke}'
+        s.append(f'<text x="{x0 + bredde / 2:.1f}" y="{ky + 24}" '
+                 f'text-anchor="middle" fill="{f}" font-size="12.5" '
+                 f'font-weight="700">{maerke}</text>')
+
+    hel_tekst = f'{hele}' if not rest else f'{hele} og {rest}/{stykke}'
+    # gaar det lige op, er 3/1 bare 3 — brøkstregen forvirrer
+    som_tal = (str(svar.numerator) if svar.denominator == 1 else
+               f'{svar.numerator}/{svar.denominator} = {_dk(float(svar))}')
+    s.append(f'<text x="{X0}" y="{H - 8}" fill="{INK}" font-size="13" '
+             f'font-weight="700">Svar: {hel_tekst} gange — altså '
+             f'{som_tal}</text>')
+    s.append('</svg>')
+    return ''.join(s)
