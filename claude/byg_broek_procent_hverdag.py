@@ -251,31 +251,33 @@ assert F(29 - 25, 25) * 100 == 16
 OPGAVER = [
  _o(1, 'En cykel koster 2.400 kr. Der er 15 % rabat. Hvad koster den nu?',
     '2.040 kr', '2400 · 0,85 = 2040. Du betaler de 85 %, du ikke får rabat på.',
-    FG.broekbjaelke(85, 100, tekst='du betaler 85 %', vis_dele=False)),
+    FG.broekbjaelke(15, 100, farve=FG.ROD, vis_dele=False,
+                    tekst='15 % rabat af de 2.400 kr')),
  _o(2, 'Du har svaret rigtigt på 34 ud af 40 spørgsmål. Hvor mange procent?',
     '85 %', '34 ÷ 40 = 0,85 → 85 %. Del med det hele, gang med 100.',
-    FG.svarprocent(40, 34, tekst='34 rigtige af 40')),
+    FG.broekbjaelke(34, 40, vis_dele=False, tekst='34 rigtige af 40')),
  _o(3, 'En bluse koster 480 kr <b>efter</b> 20 % rabat. '
        'Hvad kostede den før?',
     '600 kr', '480 ÷ 0,80 = 600. De 480 kr er 80 % af den gamle pris, '
     'så der divideres.',
-    FG.broekbjaelke(80, 100, farve=FG.ORA,
-                     tekst='480 kr er 80 % af prisen før', vis_dele=False)),
+    FG.broekbjaelke(20, 100, farve=FG.ROD, vis_dele=False,
+                     tekst='20 % blev taget af — 480 kr er det, der er tilbage')),
  _o(4, f'{frac(3, 8)} af en klasse på 24 spiller fodbold. Hvor mange er det?',
     '9 elever', '24 ÷ 8 = 3, og 3 · 3 = 9. Del med nævneren, gang med tælleren.',
     FG.broekbjaelke(3, 8, tekst='3/8 af klassen')),
  _o(5, 'En computer koster 5.995 kr med moms. Momsen er 25 %. '
        'Hvad er prisen uden moms?',
     '4.796 kr', '5995 ÷ 1,25 = 4796. Prisen med moms er 125 % af prisen uden.',
-    FG.broekbjaelke(4, 5, farve=FG.GRO,
-                     tekst='uden moms = 100 af 125 dele = 4 af 5')),
+    FG.broekbjaelke(25, 125, farve=FG.ORA, vis_dele=False,
+                     tekst='momsen er 25 % oven på prisen uden moms')),
  _o(6, f'En opskrift til 6 personer bruger {frac(2, 3)} dl olie. '
        'Hvor meget skal der bruges til 9 personer?',
     '1 dl', '2/3 · 9/6 = 2/3 · 3/2 = 1. Gang med forholdet mellem antallene.',
-    FG.broekgitter(2, 3, 9, 6)),
+    FG.broekbjaelke(2, 3, tekst='opskriften: 2/3 dl olie til 6 personer')),
  _o(7, 'Du har 20 GB data og har brugt 45 %. Hvor mange GB har du tilbage?',
     '11 GB', '100 % − 45 % = 55 %, og 20 · 0,55 = 11. Find resten først.',
-    FG.svarprocent(20, 11, tekst='11 GB tilbage af 20 GB')),
+    FG.broekbjaelke(45, 100, farve=FG.ROD, vis_dele=False,
+                    tekst='45 % af de 20 GB er brugt')),
  _o(8, 'En biografbillet stiger fra 25 kr til 29 kr. '
        'Hvor mange procent er stigningen?',
     '16 %', 'Stigningen er 4 kr. 4 ÷ 25 = 0,16 → 16 %. Del med den '
@@ -287,19 +289,37 @@ OPGAVER = [
        'samlede rabat?',
     '44 %', '0,70 · 0,80 = 0,56. Du betaler 56 %, så rabatten er 44 % — '
     'ikke 50 %.',
-    FG.broekbjaelke(56, 100, farve=FG.ORA, tekst='du betaler 56 %',
-                     vis_dele=False)),
+    FG.broekbjaelke(30, 100, farve=FG.ROD, vis_dele=False,
+                     tekst='først tages 30 % af prisen')),
  _o(10, 'En vare falder 20 % i pris. Senere stiger den 20 %. '
         'Koster den det samme som før? Forklar.',
      'Nej — den er 4 % billigere end før',
      '0,80 · 1,20 = 0,96. Faldet blev regnet af den høje pris, '
      'stigningen af den lave. Derfor rammer de ikke samme sted.',
-     FG.soejler([100, 80, 96], ['start', 'efter fald', 'efter stigning'],
-                titel='Indeks', ynavn='indeks', W=400, H=230,
-                farve=[FG.MUT, FG.ROD, FG.ORA])),
+     FG.soejler([100, 80], ['start', 'efter 20 % fald'],
+                titel='Indeks', ynavn='indeks', W=340, H=230,
+                farve=[FG.MUT, FG.ROD])),
 ]
 assert len(OPGAVER) == 10
 assert all(fig.startswith('<svg') for *_, fig in OPGAVER)
+
+
+def _tal(s):
+    """Tallene i en tekst. Broeker som 2/3 taeller ikke med, og danske
+    tusindtalspunktummer fjernes, saa 2.040 bliver til 2040."""
+    import re as _re
+    s = _re.sub(r'\d+/\d+', ' ', s)
+    s = _re.sub(r'(?<=\d)\.(?=\d{3}\b)', '', s)
+    return {int(t) for t in _re.findall(r'\b\d+\b', s)}
+
+
+for _nr, _opg, _facit, _hvordan, _fig in OPGAVER:
+    import re as _re
+    _figtekst = ' '.join(_re.findall(r'>([^<>]*)</text>', _fig))
+    _laekket = _tal(_facit) & _tal(_figtekst)
+    assert not _laekket, (
+        f'opgave {_nr}: figuren røber facit — tallet {_laekket} står både i '
+        f'svaret «{_facit}» og i figuren «{_figtekst.strip()}»')
 
 
 # =================================================================== siden
