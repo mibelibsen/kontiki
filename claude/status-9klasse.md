@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-11-16
+Sidst opdateret: 2026-11-17
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -41,6 +41,9 @@ ingen årsplan i tysk — den er droppet. **Fysik** har naturfagsugens materiale
 
 **FP9-prøverne 18.-22. januar 2027** ligger som kalenderfil i
 `vejledning/fp9-proever-januar-2027.ics`.
+Skolens **juleaktiviteter 2026** ligger som CSV til kalenderimport i
+`vejledning/juleaktiviteter-2026-outlook.csv` og `...-google.csv`,
+bygget af `claude/byg_julekalender.py`.
 
 **`ai-ordbog.html`** med 44 ord om kunstig intelligens og de ti største
 aktører ligger under **samfundsfag** og har også et kort på forsiden.
@@ -84,6 +87,32 @@ Skal de bruges igen, printes de forfra med
 5. **Fyrtøjet linker ikke til `/dansk`.** Spillet står for sig selv med et
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
+
+## Lavet 17. november 2026 · juleaktiviteter til kalenderen
+
+- **`claude/byg_julekalender.py`** skriver de fire juleaktiviteter fra
+  skolens seddel ud som CSV: juleklippedag 30.11., KonTikis Venners
+  julearrangement 3.12., luciaoptog 11.12. kl. 8.30 og julegudstjeneste i
+  Slotskirken 18.12. kl. 9.00.
+
+- **Året stod ikke på sedlen.** Det er regnet frem af ugedagene: alle fire
+  datoer falder på den ugedag, sedlen skriver, i 2026 — og på ingen af dem
+  i 2025. En assert tjekker hver dato mod sin ugedag, så filen ikke kan
+  bygges med et forkert år. Samme fremgangsmåde som alle andre tal her:
+  regn efter, gæt ikke.
+
+- **To filer, fordi CSV-import læser datoer forskelligt.** Outlook bruger
+  Windows' danske format (dd-mm-åååå), Google Kalender kræver amerikansk
+  (mm/dd/åååå). Samme data, to datoformater — det er den fejl, der ellers
+  flytter en begivenhed fra 3. december til 12. marts uden at nogen
+  opdager det. Outlook-filen skrives som **utf-8-sig**: uden BOM viser
+  Outlook og Excel æ, ø og å forkert.
+
+- **To klokkeslæt stod ikke på sedlen:** hvor længe luciaoptoget og
+  gudstjenesten varer. Der er sat 30 og 60 minutter, og det står som en
+  antagelse i scriptet, ikke som en oplysning fra skolen. De to dage uden
+  klokkeslæt er lagt ind som heldagspunkter frem for at opfinde et
+  tidspunkt.
 
 ## Rettet 16. november 2026 · AI-ordbogen gennemrettet
 
