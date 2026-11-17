@@ -1369,11 +1369,29 @@ def broekbjaelke(taeller, naevner, W=420, H=54, farve=None, tekst='', vis_dele=T
          f'i {naevner} dele, hvor {taeller} er farvet." {FONT}>']
     if tekst:
         s.append(f'<text x="{X0}" y="12" fill="{MUT}" font-size="11">{tekst}</text>')
-    for i in range(naevner):
-        x = X0 + i * b
-        s.append(f'<rect x="{x:.2f}" y="{y}" width="{b:.2f}" height="{h}" '
-                 f'fill="{farve if i < taeller else "#fff"}" stroke="{INK}" '
-                 f'stroke-width="1"/>')
+    if naevner <= 25:
+        for i in range(naevner):
+            x = X0 + i * b
+            s.append(f'<rect x="{x:.2f}" y="{y}" width="{b:.2f}" height="{h}" '
+                     f'fill="{farve if i < taeller else "#fff"}" stroke="{INK}" '
+                     f'stroke-width="1"/>')
+    else:
+        # Over femogtyve dele kan stregerne ikke taelles — de bliver til en
+        # skravering, der skjuler selve pointen. Saa tegnes bjaelken som to
+        # felter med samme eksakte bredder, og tiendedelene markeres i
+        # stedet med fine hak, saa man stadig kan se, hvor langt der er.
+        xt = X0 + taeller * b
+        s.append(f'<rect x="{X0}" y="{y}" width="{xt - X0:.2f}" height="{h}" '
+                 f'fill="{farve}"/>')
+        s.append(f'<rect x="{xt:.2f}" y="{y}" width="{X1 - xt:.2f}" '
+                 f'height="{h}" fill="#fff"/>')
+        for i in range(1, 10):
+            x = X0 + (X1 - X0) * i / 10
+            s.append(f'<line x1="{x:.2f}" y1="{y + h - 7}" x2="{x:.2f}" '
+                     f'y2="{y + h}" stroke="{"#fff" if x < xt else LIN}" '
+                     f'stroke-width="1"/>')
+        s.append(f'<rect x="{X0}" y="{y}" width="{X1 - X0}" height="{h}" '
+                 f'fill="none" stroke="{INK}" stroke-width="1"/>')
     if vis_dele and naevner <= 12:
         for i in range(naevner):
             s.append(f'<text x="{X0 + (i + .5) * b:.2f}" y="{y + h / 2 + 4:.1f}" '

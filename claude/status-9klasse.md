@@ -1,6 +1,6 @@
 # Arbejdslog · 9. klasse-sitet
 
-Sidst opdateret: 2026-11-17
+Sidst opdateret: 2026-11-18
 
 Læs denne fil først i en ny session, og opdatér den til sidst.
 
@@ -95,6 +95,37 @@ Skal de bruges igen, printes de forfra med
 5. **Fyrtøjet linker ikke til `/dansk`.** Spillet står for sig selv med et
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
+
+## Lavet 18. november 2026 · brøker og procent i hverdagen
+
+- **`broek-procent-hverdag.html`**, bygget af
+  `claude/byg_broek_procent_hverdag.py`, kort på matematiksiden. Uge 47 i
+  årsplanen. Siden er bygget om ugens tre mål: regne procent i
+  virkelighedsnære opgaver, løse opgaver med brøker, og **forklare
+  beregninger** — det sidste har fået sit eget afsnit, fordi det er det,
+  der mangler til prøven.
+
+- **Opbygningen er «de tre spørgsmål» frem for regler.** Al
+  procentregning er ét af tre: hvor mange procent er delen af det hele,
+  hvad er X % af et tal, og hvad var det hele. Den tredje er den svære,
+  fordi man skal dividere dér, hvor man plejer at gange — moms baglæns er
+  netop den. Alle fem hverdagseksempler peger tilbage på hvilket af de
+  tre spørgsmål de er.
+
+- **Den supplerer `broekregning.html` i stedet for at gentage den.** Den
+  gamle side er mekanikken: forlæng, forkort, de fire regnearter. Den nye
+  er anvendelsen. 21 figurer, 10 opgaver, facit som PDF i `facit/`.
+
+- **`figurer.py`: `broekbjaelke()` kunne ikke tegne store nævnere.** Den
+  tegnede én kasse med streg om pr. del, så 70/100 blev til en
+  skravering, man ikke kunne tælle. Nu tegnes bjælker med over 25 dele
+  som to felter med samme eksakte bredder plus hak ved tiendedelene.
+  `vis_dele` var ikke løsningen — den styrer kun 1/n-teksterne, og kun op
+  til 12 dele. Fejlen var i biblioteket, ikke i kaldet, så den er rettet
+  dér og dækker alle fremtidige kald.
+
+- **Opdaget på skærmbilledet**, ikke i koden: tallene var rigtige hele
+  vejen igennem.
 
 ## Rettet 17. november 2026 · testen tages ned igen og laves til Forms
 
