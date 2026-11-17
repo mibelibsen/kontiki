@@ -22,7 +22,9 @@ ROD = os.path.dirname(HER)
 sys.path.insert(0, HER)
 import figurer as FG
 
-UD = os.path.join(ROD, 'samfundsfagstest.html')
+# Siden er ikke udgivet endnu. kommende/ er udelukket i .vercelignore,
+# saa testen kan bygges og ses lokalt uden at ligge paa 321flyv.com.
+UD = os.path.join(ROD, 'kommende', 'samfundsfagstest.html')
 SKABELON = os.path.join(ROD, 'statistik.html')
 OPDATERET = '17. november 2026'
 
