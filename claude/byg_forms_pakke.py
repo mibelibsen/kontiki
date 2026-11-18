@@ -270,11 +270,16 @@ display:grid;place-items:center;font-weight:800;font-size:8.5pt;
 background:#f3f6fb;border:1px solid #c9d2e0}
 .sv.rigtig{color:#13593d;font-weight:700}
 .sv.rigtig .mk{background:#1a8f5e;color:#fff;border-color:#1a8f5e}
+.spm .figur{margin:8px 0 10px;text-align:center}
+.spm .figur svg{max-width:100%;width:auto;height:auto;max-height:210px}
 .hvorfor{margin:7px 0 0;padding-left:28px;font-size:9.5pt;color:#586074}
 .hvorfor b{color:#1a2233}
 .tael{background:#f3f6fb;border-left:4px solid #1f6fd6;padding:11px 15px;
 border-radius:8px;margin:14px 0}
 '''
+
+
+FIGUR = {nr: svg for nr, svg, _ in figurer}
 
 
 def skriv_retteark():
@@ -288,10 +293,11 @@ def skriv_retteark():
             f'<span class="mk">{BOGSTAV[i]}</span><span>{html.escape(v)}'
             f'{" &nbsp;&#10003;" if i == plads else ""}</span></div>'
             for i, v in enumerate(valg))
+        svg = FIGUR.get(fignr) or T.RETTEARK_FIGUR.get(nr)
+        svg = T.FULD_UDGAVE.get(svg, svg)      # forklaringen med igen
+        figur = f'<div class="figur">{svg}</div>' if svg else ''
         krop += (f'<div class="spm"><div class="hd"><span class="nr">{nr}.</span>'
-                 f'{html.escape(tekst)}' + (f' <span style="color:#586074;'
-                 f'font-weight:400;font-size:9.5pt">(figur {fignr})</span>'
-                 if fignr else '') + '</div>'
+                 f'{html.escape(tekst)}</div>{figur}'
                  f'{svar}<p class="hvorfor"><b>Hvorfor:</b> '
                  f'{html.escape(forkl)}</p></div>')
 
@@ -309,9 +315,10 @@ def skriv_retteark():
            f'Vil du have det i procent, så del dit antal rigtige med '
            f'{len(SPM)} og gang med 100 — det er præcis den slags '
            f'procentregning, I har haft i matematik i denne uge.</div>'
-           f'<div class="note"><b>Figurerne</b> står i figurbilaget. '
-           f'Er du i tvivl om et spørgsmål, så kig på figuren igen, før '
-           f'du læser begrundelsen.</div>'
+           f'<div class="note"><b>Figurerne står her i arket.</b> '
+           f'De fleste af dem var ikke med i selve testen — dér skulle du '
+           f'svare uden. Her er de med, fordi de gør begrundelsen '
+           f'nemmere at se.</div>'
            + krop + '</body></html>')
     sti = os.path.join(UDMAPPE, 'retteark.html')
     open(sti, 'w', encoding='utf-8').write(doc)

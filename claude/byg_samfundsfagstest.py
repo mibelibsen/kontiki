@@ -522,6 +522,28 @@ for _b in range(3):
     assert ORDEN[:ANTAL].count(_b) >= ANTAL // 3 - 1, 'svarene er skæve'
 
 
+# ------------------------------------------------- figurer til rettearket
+# I testen er de fleste figurer taget ud, fordi de roebede svaret. I
+# rettearket er svaret allerede givet, og dér er tegningen netop det, der
+# goer forklaringen konkret. Her staar, hvilken figur hvert af de
+# figurloese spoergsmaal hoerer sammen med.
+RETTEARK_FIGUR = {
+    8: F_NORM_KORT, 9: F_SKAERM, 12: F_SKOLE, 13: F_SKOLE,
+    14: F_PROBLEM, 15: F_PROBLEM, 16: F_KOEN, 17: F_FORMEGET,
+    18: F_FORMEGET, 25: F_AGENT_KORT, 26: F_AIBRUG, 33: F_AKSE,
+    40: F_SAL, 41: F_SAL, 42: F_SAL, 45: F_REGERING,
+    46: F_REGERING, 47: F_REGERING, 48: F_REGERING, 49: F_OEKONOMI,
+    50: F_OEKONOMI, 51: F_OEKONOMI, 52: F_INFLATION, 53: F_INFLATION,
+    54: F_INFLATION, 55: F_OEKONOMI, 56: F_OEKONOMI, 57: F_KLUBBER,
+    58: F_KLUBBER,
+}
+# De korte procesdiagrammer mistede forklaringen i kasserne, da de skulle
+# bruges i en test. I rettearket vises den fulde udgave igen.
+FULD_UDGAVE = {F_LOV_KORT: F_LOV, F_NORM_KORT: F_NORM,
+               F_LLM_KORT: F_LLM, F_AGENT_KORT: F_AGENT}
+assert set(RETTEARK_FIGUR) <= set(range(1, ANTAL + 1))
+
+
 # =================================================================== siden
 def byg_spm(liste, start, orden):
     ud = []
