@@ -38,11 +38,15 @@ spillet **Fyrtøjet** på `/fyrtoejet`, som har et kort på forsiden.
 og dataarket om digital socialisering ligger nu under teksterne og har
 ikke længere egne kort på fagsiden.
 
-**Samfundsfagstesten er IKKE udgivet.** 60 multiple choice-spørgsmål,
-som resultatet skal bruges af, så de må ikke ligge frit. Øvelsessiden
+**Samfundsfagstesten linkes ikke fra nogen side.** 58 multiple
+choice-spørgsmål, som resultatet skal bruges af. Øvelsessiden med facit
 bygges til `kommende/samfundsfagstest.html`, Forms-pakken ligger i
-`vejledning/samfundsfagstest/`, og rettenøglen i `facit/`. Alle tre
-mapper er udelukket fra deploy. **Tysk**: *Ung i Tyskland* er
+`vejledning/samfundsfagstest/`, og rettenøglen i `facit/` — alle tre
+mapper er udelukket fra deploy. **To sider ligger på sitet** på adresser,
+der ikke kan gættes og ikke linkes fra noget: `t/samf-81e7bc5fe466.html`,
+hvor ungerne afleverer, og `t/resultat-26ec8aa4376a.html`, hvor læreren
+ser resultaterne live. Ingen af dem indeholder facit. Se afsnittet
+*Samfundsfagstesten online* nedenfor. **Tysk**: *Ung i Tyskland* er
 afsluttet med 170 besvarelser; resultaterne blev til en PDF, og
 segmentopgaven (`tysk-segmenter.html`) ligger klar til de to Peter'e. Der er
 ingen årsplan i tysk — den er droppet. **Fysik** har naturfagsugens materiale.
@@ -95,6 +99,56 @@ Skal de bruges igen, printes de forfra med
 5. **Fyrtøjet linker ikke til `/dansk`.** Spillet står for sig selv med et
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
+
+## Lavet 18. november 2026 · samfundsfagstesten online og resultatsiden
+
+Testen blev bøvlet at lægge i Teams, så den kører nu på sitet i stedet.
+To sider, begge på adresser der ikke kan gættes og ikke linkes fra noget:
+
+- **`t/samf-81e7bc5fe466.html`** — ungerne skriver fornavn og klasse,
+  svarer på 58 spørgsmål og trykker **Aflever**. Bygges af
+  `claude/byg_testside.py`. **Facit står ikke i kildekoden**: ingen
+  `data-answer`, ingen feedback, ingen point undervejs. Byggescriptet
+  stopper, hvis det alligevel sker. Kladden ligger i `localStorage`,
+  så en lukket fane ikke koster svarene.
+- **`t/resultat-26ec8aa4376a.html`** — lærerens side. Bygges af
+  `claude/byg_resultatside.py`. Spørger om lærerkoden, henter
+  besvarelserne og opdaterer sig selv hvert 20. sekund (står den stille,
+  når fanen er skjult). Viser fire nøgletal, emnerne svagest først,
+  ungerne i en sorterbar tabel og alle spørgsmål sværest først. Søjlerne
+  er én farve, fordi de måler én ting, og tallet står altid ved siden af.
+  Knapper: **Opdatér nu**, **Hent som CSV**, **Glem koden**.
+
+Rettelsen sker i databasen, ikke i browseren. Supabase-projektet er
+`pxdnszdukyjnbfmcpbvi`:
+
+- `skole_test_svar` — besvarelserne. Den offentlige nøgle må **kun**
+  indsætte, og kun med prøvenavn og afleveringskode, der passer. Den kan
+  ikke læse en eneste række.
+- `skole_test_facit` — de rigtige svar. Ingen politik, så nøglen kan
+  hverken læse eller skrive i den.
+- `skole_test_adgang` — lærerkoden.
+- `skole_test_resultater(kode, p)` og `skole_test_spoergsmaalstal(kode, p)`
+  — `security definer`-funktioner, der kræver lærerkoden og ellers svarer
+  *forkert kode*. Det er dem, resultatsiden kalder.
+
+**Lærerkoden står ingen steder i koden.** Den skrives ind på siden og
+gemmes kun i browserens `localStorage` på den telefon, der bruger den.
+Den står heller ikke i repoet — repoet er offentligt — så den er sendt i
+Code og står i Supabase-tabellen `skole_test_adgang`. Er den væk, kan den
+læses eller skiftes der:
+<https://supabase.com/dashboard/project/pxdnszdukyjnbfmcpbvi/editor>
+
+**De tre testrækker er slettet** (`Testelev`, `Proevekoersel`, `Mbtest`).
+De blev afleveret, mens prøven havde 60 spørgsmål, så deres tal passede
+ikke til facit længere. Databasen er tom og klar til klassen.
+
+**Det, der mangler:** låsen. Én aflevering pr. unge og en kontakt, læreren
+kan slå fra, når prøven er slut. SQL'en er skrevet (unikt indeks på
+`proeve` + navn + klasse, `lukket`-kolonne på `skole_test_adgang`, en
+`before insert`-trigger og `skole_test_saet_laas(kode, luk, p)`), men
+godkendelsesdialogen nåede ikke igennem. Indtil den er lagt ind, kan en
+unge aflevere to gange — og begge rækker tæller med.
 
 ## Lavet 18. november 2026 · brøker og procent i hverdagen
 
