@@ -70,6 +70,12 @@ assert len(ORDEN) == 60 and all(ORDEN.count(i) == 20 for i in range(3))
 # ================================================================= figurer
 F_SAL = FG.folketingssal(MANDATER, titel='Folketinget efter valget 24. marts 2026',
                          flertal=FLERTAL)
+F_TREDELING = FG.kassekolonner([
+    ('Lovgivende magt', 'Folketinget', 'Vedtager lovene'),
+    ('Udøvende magt', 'Regeringen', 'Fører lovene ud i livet'),
+    ('Dømmende magt', 'Domstolene', 'Afgør, om loven er overtrådt'),
+], titel='Magtens tredeling i Danmark')
+
 F_REGERING = FG.soejler(
     [38, 20, 14, 10], ['S', 'SF', 'M', 'RV'],
     titel=f'Regeringens fire partier · {REG_MANDATER} mandater i alt',
@@ -455,6 +461,21 @@ SPM_REGERING = [
   'Lars Løkke Rasmussen', ('Mette Frederiksen', 'Troels Lund Poulsen'),
   'Lars Løkke Rasmussen er formand for Moderaterne, som er et af de fire '
   'regeringspartier.'),
+ ('', 'Hvad hedder de tre magter i magtens tredeling?', 'Paratviden',
+  'Den lovgivende, den udøvende og den dømmende',
+  ('Den politiske, den juridiske og den økonomiske',
+   'Folketinget, regeringen og kongehuset'),
+  'Folketinget har den lovgivende magt, regeringen den udøvende og '
+  'domstolene den dømmende. Kongehuset har ingen af delene — dronningen '
+  'skriver under på lovene, men bestemmer ikke indholdet.'),
+ ('', 'Hvorfor er den dømmende magt skilt fra de to andre?', 'Forstå',
+  'For at domstolene kan dømme uafhængigt af, hvem der sidder i regeringen',
+  ('For at Folketinget kan omgøre de domme, det er uenigt i',
+   'For at regeringen kan udpege dommerne i de vigtigste sager'),
+  'En dommer skal kunne dømme staten selv, hvis staten har begået en '
+  'fejl. Det kan hen kun, hvis regeringen ikke kan fyre hen bagefter. '
+  'I Danmark er tredelingen dog ikke skarp: ministrene sidder som regel '
+  'også i Folketinget, så den lovgivende og den udøvende magt overlapper.'),
 ]
 
 SPM_OEKONOMI = [
@@ -514,8 +535,8 @@ SPM_OEKONOMI = [
 ALLE = [SPM_TEKST, SPM_DIGITAL, SPM_AI, SPM_IDEOLOGI, SPM_REGERING,
         SPM_OEKONOMI]
 ANTAL = sum(len(x) for x in ALLE)
-assert ANTAL == 58, f'der skal være 58 spørgsmål, der er {ANTAL}'
-assert all(6 <= len(x) <= 10 for x in ALLE)
+assert ANTAL == 60, f'der skal være 60 spørgsmål, der er {ANTAL}'
+assert all(6 <= len(x) <= 12 for x in ALLE)
 # svarene skal stadig fordele sig nogenlunde jaevnt over A, B og C, ogsaa
 # naar antallet ikke gaar op i tre
 for _b in range(3):
@@ -528,20 +549,50 @@ for _b in range(3):
 # goer forklaringen konkret. Her staar, hvilken figur hvert af de
 # figurloese spoergsmaal hoerer sammen med.
 RETTEARK_FIGUR = {
-    8: F_NORM_KORT, 9: F_SKAERM, 12: F_SKOLE, 13: F_SKOLE,
-    14: F_PROBLEM, 15: F_PROBLEM, 16: F_KOEN, 17: F_FORMEGET,
-    18: F_FORMEGET, 25: F_AGENT_KORT, 26: F_AIBRUG, 33: F_AKSE,
-    40: F_SAL, 41: F_SAL, 42: F_SAL, 45: F_REGERING,
-    46: F_REGERING, 47: F_REGERING, 48: F_REGERING, 49: F_OEKONOMI,
-    50: F_OEKONOMI, 51: F_OEKONOMI, 52: F_INFLATION, 53: F_INFLATION,
-    54: F_INFLATION, 55: F_OEKONOMI, 56: F_OEKONOMI, 57: F_KLUBBER,
-    58: F_KLUBBER,
+    'Hvad hedder de tre magter i magtens tredeling?': F_TREDELING,
+    'Hvorfor er den dømmende magt skilt fra de to andre?': F_TREDELING,
+    'Hvad er en social sanktion?': F_NORM_KORT,
+    'Hvor stor en andel af de 15–19-årige har over 6 timers skærm om dagen?': F_SKAERM,
+    'Hvor mange timer om dagen bruger danske 15-årige digitale redskaber i skoletiden?': F_SKOLE,
+    'Hvor stor en del af de danske elever bruger digitale redskaber i hver time eller næsten hver time?': F_SKOLE,
+    'Hvordan udviklede problematisk brug af sociale medier sig fra 2018 til 2022 i de 44 lande?': F_PROBLEM,
+    'Hvad betyder det i undersøgelsen, at brugen er problematisk?': F_PROBLEM,
+    'Hvad viser tallene for piger og drenge?': F_KOEN,
+    'Hvilken aldersgruppe synes selv, at flest af dem bruger for meget tid på sociale medier?': F_FORMEGET,
+    'Australien forbød sociale medier for børn under 16 i december 2025. Hvad viste målingen tre måneder efter?': F_FORMEGET,
+    'Hvad er edge AI?': F_AGENT_KORT,
+    'ChatGPTs og Geminis brugertal kan ikke sammenlignes direkte. Hvorfor ikke?': F_AIBRUG,
+    'Hvilket parti ligger længst til venstre i Folketinget?': F_AKSE,
+    'Hvor mange mandater skal der til for at have flertal?': F_SAL,
+    'Hvor mange mandater vælges der på Færøerne og i Grønland tilsammen?': F_SAL,
+    'Hvornår var der folketingsvalg sidst?': F_SAL,
+    'Hvor mange mandater har regeringspartierne tilsammen?': F_REGERING,
+    'Hvad vil det sige, at Danmark har negativ parlamentarisme?': F_REGERING,
+    'Hvem er finansminister?': F_REGERING,
+    'Hvem er udenrigsminister?': F_REGERING,
+    'Hvad er BNP?': F_OEKONOMI,
+    'Hvor stort er Danmarks BNP cirka?': F_OEKONOMI,
+    'Hvorfor er BNP ikke et mål for, hvor godt folk har det?': F_OEKONOMI,
+    'Hvad er inflation?': F_INFLATION,
+    'Hvor meget steg priserne i Danmark fra oktober 2025 til oktober 2026?': F_INFLATION,
+    'Hvad er kerneinflation?': F_INFLATION,
+    'Hvad måler betalingsbalancen?': F_OEKONOMI,
+    'Danmark havde i 2025 et overskud på betalingsbalancen på cirka 441 milliarder kroner. Hvad svarer det til?': F_OEKONOMI,
+    'Hvor mange lande er med i EU?': F_KLUBBER,
+    'Hvor mange lande er med i OECD?': F_KLUBBER,
 }
 # De korte procesdiagrammer mistede forklaringen i kasserne, da de skulle
 # bruges i en test. I rettearket vises den fulde udgave igen.
 FULD_UDGAVE = {F_LOV_KORT: F_LOV, F_NORM_KORT: F_NORM,
                F_LLM_KORT: F_LLM, F_AGENT_KORT: F_AGENT}
-assert set(RETTEARK_FIGUR) <= set(range(1, ANTAL + 1))
+# Noeglen er spoergsmaalsteksten, ikke nummeret: saa flytter figurerne
+# ikke rundt, naar der kommer et spoergsmaal ind midt i proeven.
+_TEKSTER = {t for _liste in ALLE for (_f, t, *_r) in _liste}
+_vild = set(RETTEARK_FIGUR) - _TEKSTER
+assert not _vild, f'rettearket peger paa spoergsmaal, der ikke findes: {_vild}'
+assert all(not f for _liste in ALLE for (f, t, *_r) in _liste
+           if t in RETTEARK_FIGUR), \
+    'et spoergsmaal har baade en figur i testen og en i rettearket'
 
 
 # =================================================================== siden

@@ -293,7 +293,7 @@ def skriv_retteark():
             f'<span class="mk">{BOGSTAV[i]}</span><span>{html.escape(v)}'
             f'{" &nbsp;&#10003;" if i == plads else ""}</span></div>'
             for i, v in enumerate(valg))
-        svg = FIGUR.get(fignr) or T.RETTEARK_FIGUR.get(nr)
+        svg = FIGUR.get(fignr) or T.RETTEARK_FIGUR.get(tekst)
         svg = T.FULD_UDGAVE.get(svg, svg)      # forklaringen med igen
         figur = f'<div class="figur">{svg}</div>' if svg else ''
         krop += (f'<div class="spm"><div class="hd"><span class="nr">{nr}.</span>'
@@ -325,9 +325,30 @@ def skriv_retteark():
     return sti
 
 
+def til_pdf(kilde, ud):
+    """Gengiver en af HTML-filerne som PDF med Chromium.
+
+    PDF'erne blev foer lavet i haanden bagefter, og saa laa der en gang
+    et retteark fra i gaar ved siden af et spoergeskema fra i dag. Nu
+    hoerer trinnet med til bygningen.
+    """
+    os.makedirs(os.path.dirname(ud), exist_ok=True)
+    subprocess.run(['node', os.path.join(HER, 'html_til_pdf.mjs'), kilde, ud],
+                   check=True, capture_output=True)
+    return ud
+
+
 if __name__ == '__main__':
-    print('skrevet:', os.path.relpath(skriv_docx(), ROD))
-    print('skrevet:', os.path.relpath(skriv_bilag(), ROD))
-    print('skrevet:', os.path.relpath(skriv_rettenoegle(), ROD))
-    print('skrevet:', os.path.relpath(skriv_retteark(), ROD))
+    docx = skriv_docx()
+    bilag = skriv_bilag()
+    noegle = skriv_rettenoegle()
+    ark = skriv_retteark()
+    for sti in (docx, bilag, noegle, ark):
+        print('skrevet:', os.path.relpath(sti, ROD))
+    for kilde, ud in ((bilag, os.path.join(UDMAPPE, 'figurbilag.pdf')),
+                      (noegle, FACIT),
+                      (ark, os.path.join(UDMAPPE, 'retteark.pdf'))):
+        print('skrevet:', os.path.relpath(til_pdf(kilde, ud), ROD))
+    subprocess.run(['node', os.path.join(HER, 'hent_testfigurer.mjs'),
+                    bilag, os.path.join(UDMAPPE, 'figurer')], check=True)
     print(f'  {len(SPM)} spørgsmål · {len(figurer)} figurer')

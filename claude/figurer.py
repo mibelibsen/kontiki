@@ -2875,3 +2875,83 @@ def gaar_op_i(t1, n1, t2, n2, W=540):
              f'{som_tal}</text>')
     s.append('</svg>')
     return ''.join(s)
+
+
+def _bryd(tekst, bredde, fs, tegn=0.55):
+    """Bryder tekst ved ordgraenser, saa den holder sig inden for `bredde`.
+
+    Tegnbredden er maalt paa den skrift, sitet bruger: et gennemsnitligt
+    tegn fylder ca. 0,55 af skriftstoerrelsen. Et enkelt ord, der er for
+    langt, faar sin egen linje i stedet for at blive skaaret over.
+    """
+    maks = max(6, int(bredde / (fs * tegn)))
+    linjer, nu = [], ''
+    for ord_ in str(tekst).split():
+        proev = (nu + ' ' + ord_).strip()
+        if len(proev) <= maks:
+            nu = proev
+        else:
+            if nu:
+                linjer.append(nu)
+            nu = ord_
+    if nu:
+        linjer.append(nu)
+    return linjer
+
+
+def kassekolonner(kolonner, titel='', W=640, farver=None):
+    """Kasser ved siden af hinanden — til ting, der staar sidestillet.
+
+    Et procesdiagram viser raekkefoelge. Det her viser det modsatte:
+    tre ting, der findes samtidig og ikke er over- eller underordnede.
+
+    kolonner  [(overskrift, hvem, hvad)] — overskriften i et farvet baand,
+              `hvem` med fed under det, `hvad` som broedtekst.
+
+    Bredden deles ligeligt, og hoejden beregnes af, hvor mange linjer den
+    laengste broedtekst fylder, naar den brydes ved ordgraenser.
+    """
+    n = len(kolonner)
+    if not n:
+        raise ValueError('kassekolonner: ingen kolonner')
+    M, G, BH = 10, 14, 30
+    b = (W - 2 * M - (n - 1) * G) / n
+    TOP = 26 if titel else 4
+    FS_HVEM, FS_HVAD, LH = 12.5, 10.5, 14
+    indre = b - 20
+    brudt = [_bryd(hvad, indre, FS_HVAD) if hvad else []
+             for _, _, hvad in kolonner]
+    linjer = max(len(l) for l in brudt)
+    boksh = BH + (40 + (linjer - 1) * LH + 10 if linjer else 20 + 12)
+    H = TOP + boksh + 6
+    fv = farver or [BLA, ORA, GRO, ROD, MUT]
+    navne = ', '.join(k[0] for k in kolonner)
+    s = [f'<svg viewBox="0 0 {W} {H:.0f}" width="100%" '
+         f'style="max-width:{W}px" xmlns="http://www.w3.org/2000/svg" '
+         f'role="img" aria-label="{titel or navne}: {navne}." {FONT}>']
+    if titel:
+        s.append(f'<text x="{W / 2:.1f}" y="16" text-anchor="middle" '
+                 f'fill="{INK}" font-weight="700" font-size="12.5">'
+                 f'{titel}</text>')
+    for i, (overskrift, hvem, _hvad) in enumerate(kolonner):
+        x = M + i * (b + G)
+        farve = fv[i % len(fv)]
+        s.append(f'<rect x="{x:.1f}" y="{TOP}" width="{b:.1f}" '
+                 f'height="{boksh:.0f}" rx="9" fill="#fff" '
+                 f'stroke="{LIN}" stroke-width="1"/>')
+        s.append(f'<path d="M {x:.1f} {TOP + 9} a 9 9 0 0 1 9 -9 '
+                 f'h {b - 18:.1f} a 9 9 0 0 1 9 9 v {BH - 9} h {-b:.1f} Z" '
+                 f'fill="{farve}"/>')
+        s.append(f'<text x="{x + b / 2:.1f}" y="{TOP + 19}" '
+                 f'text-anchor="middle" fill="#fff" font-weight="700" '
+                 f'font-size="11.5">{overskrift}</text>')
+        if hvem:
+            s.append(f'<text x="{x + b / 2:.1f}" y="{TOP + BH + 20}" '
+                     f'text-anchor="middle" fill="{INK}" font-weight="700" '
+                     f'font-size="{FS_HVEM}">{hvem}</text>')
+        for j, linje in enumerate(brudt[i]):
+            s.append(f'<text x="{x + b / 2:.1f}" '
+                     f'y="{TOP + BH + 40 + j * LH}" text-anchor="middle" '
+                     f'fill="{MUT}" font-size="{FS_HVAD}">{linje}</text>')
+    s.append('</svg>')
+    return ''.join(s)
