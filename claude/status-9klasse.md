@@ -38,7 +38,7 @@ spillet **Fyrtøjet** på `/fyrtoejet`, som har et kort på forsiden.
 og dataarket om digital socialisering ligger nu under teksterne og har
 ikke længere egne kort på fagsiden.
 
-**Samfundsfagstesten linkes ikke fra nogen side.** 58 multiple
+**Samfundsfagstesten linkes ikke fra nogen side.** 60 multiple
 choice-spørgsmål, som resultatet skal bruges af. Øvelsessiden med facit
 bygges til `kommende/samfundsfagstest.html`, Forms-pakken ligger i
 `vejledning/samfundsfagstest/`, og rettenøglen i `facit/` — alle tre
@@ -100,6 +100,54 @@ Skal de bruges igen, printes de forfra med
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
 
+## Lavet 18. november 2026 · magtens tredeling · testen har 60 spørgsmål
+
+To spørgsmål til sidst i quiz 5, hvor paratviden om Folketinget og
+regeringen hører hjemme:
+
+- *Hvad hedder de tre magter i magtens tredeling?* (paratviden)
+- *Hvorfor er den dømmende magt skilt fra de to andre?* (forstå)
+
+Forklaringen til den anden siger, at tredelingen i Danmark ikke er skarp:
+ministrene sidder som regel også i Folketinget, så den lovgivende og den
+udøvende magt overlapper.
+
+**Ingen figur i selve testen.** En tegning af de tre magter ville røbe
+svaret. Figuren står i rettearket, hvor svaret alligevel er givet. Den er
+bygget med en ny funktion i `figurer.py`:
+
+- **`kassekolonner(kolonner, titel, W)`** — kasser ved siden af hinanden
+  til ting, der står sidestillet. Et procesdiagram viser rækkefølge; det
+  her viser det modsatte. Teksten brydes ved ordgrænser med `_bryd()`,
+  og kassehøjden beregnes af, hvor mange linjer den længste tekst fylder.
+
+**Økonomispørgsmålene er flyttet fra nr. 49–58 til 51–60.** Facit i
+databasen er skrevet om, og betingelsen `antal_svar` går fra 58 til 60.
+Der var ingen besvarelser at tage hensyn til. Hele kæden er prøvet af på
+den rigtige side: aflevering af 60 svar, rettelse, resultatside og den
+enkelte besvarelse, hvor nr. 49 og 50 står med ✓ og ✗ det rigtige sted.
+
+### To fælder lukket
+
+- **`RETTEARK_FIGUR` slog op på spørgsmålets nummer.** Kommer der et
+  spørgsmål ind midt i prøven, flytter alle numre efter sig, og så ville
+  rettearket vise forkerte figurer uden at sige noget. Opslaget sker nu
+  på spørgsmålsteksten. Byggescriptet stopper også, hvis et spørgsmål har
+  både en figur i testen og en i rettearket.
+- **`byg_forms_pakke.py` skrev kun HTML.** PDF'erne blev lavet i hånden
+  bagefter, og derfor lå der et retteark fra formiddagen ved siden af et
+  spørgeskema fra eftermiddagen. PDF-trinnet hører nu med til bygningen,
+  sammen med figur-PNG'erne. Scriptet skal køres med `python3.13`, fordi
+  `python-docx` kun findes dér.
+
+**En kontrolrække ligger og venter.** `Kontrol60` fra afprøvningen.
+Sletningens godkendelsesdialog svarede ikke, så rækken er flyttet til
+`proeve = 'kontrol-slettes'` og er usynlig overalt. Ryd op:
+
+```sql
+delete from public.skole_test_svar where proeve = 'kontrol-slettes';
+```
+
 ## Lavet 18. november 2026 · samfundsfagstesten online og resultatsiden
 
 Testen blev bøvlet at lægge i Teams, så den kører nu på sitet i stedet.
@@ -120,7 +168,7 @@ To sider, begge på adresser der ikke kan gættes og ikke linkes fra noget:
   Knapper: **Opdatér nu**, **Hent som CSV**, **Glem koden**.
 
 **Den enkelte besvarelse kan læses.** Tryk på et navn i tabellen, og
-besvarelsen folder sig ud: alle 58 spørgsmål med det, ungen svarede, og
+besvarelsen folder sig ud: alle 60 spørgsmål med det, ungen svarede, og
 ✓ eller ✗ ud for hvert. *Forrige* og *Næste* går gennem klassen, *Alle
 besvarelser* lægger dem efter hinanden med én pr. side, og *Print / gem
 som PDF* printer kun besvarelsen — resten af siden forsvinder.
