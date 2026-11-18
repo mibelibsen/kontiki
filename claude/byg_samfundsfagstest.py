@@ -227,8 +227,13 @@ SPM_TEKST = [
  (F_LOV_KORT, 'Hvor stor en del af Folketingets medlemmer kan kræve en vedtaget '
   'lov sendt til folkeafstemning?', 'Lovprocessen', 'En tredjedel',
   ('Et flertal', 'To tredjedele'),
-  'Det står i grundlovens § 42. Nogle love er undtaget — blandt andet '
-  'finanslove og skattelove.'),
+  'Det står i grundlovens § 42: 60 af de 179 mandater er nok. Meningen '
+  'er netop, at et <b>mindretal</b> skal kunne tvinge en lov til '
+  'afstemning — krævede det to tredjedele, ville det være et flertal, '
+  'og så var beskyttelsen af mindretallet væk. Reglen kom ind i 1953 '
+  'som erstatning for Landstinget. Nogle love er undtaget, blandt andet '
+  'finanslove og skattelove. Bland den ikke sammen med de 5/6, der '
+  'skal til efter § 20, når Danmark afgiver suverænitet.'),
  (F_RINGE, 'Hvad betyder navnene primær, sekundær og tertiær socialisering?',
   'Socialisering', 'Rækkefølgen — hvad der kom først i ens liv',
   ('Hvor vigtig arenaen er', 'Hvor mange timer man bruger der'),
