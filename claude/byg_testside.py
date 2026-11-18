@@ -246,7 +246,7 @@ def byg():
             'placeholder="fx Sofie" maxlength="30">'
             '<label for="klasse">Klasse</label>'
             '<input type="text" id="klasse" autocomplete="off" '
-            'placeholder="fx 9.A" maxlength="10">'
+            'placeholder="fx 9. klasse" maxlength="10">'
             '<p class="hint">Kun fornavn og klasse. Din lærer skal kunne se, '
             'hvem der har afleveret.</p>'
             '<div id="besked" class="besked" style="display:none"></div></div>'
