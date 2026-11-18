@@ -104,6 +104,34 @@ button.send:disabled{background:var(--line);cursor:not-allowed}
 .besked{padding:10px 14px;border-radius:10px;margin:12px 0;font-size:.95rem}
 .besked.fejl{background:#fdeaec;border:1px solid #c23b4b;color:#8b1a2b}
 .besked.ok{background:#e6f5ee;border:1px solid var(--ok);color:#13593d}
+@media print{
+  @page{size:A4;margin:15mm}
+  header.top,.bund,#kvittering,#besked,.hint{display:none!important}
+  body{padding-bottom:0;font-size:11pt;background:#fff}
+  main{max-width:none;padding:0}
+  .hero{padding:0 0 6px}
+  .hero .pill{border:1px solid var(--line);background:transparent}
+  .hero p{display:none}
+  .kort{border:0;background:transparent;padding:0;margin:4px 0 10px}
+  .kort h2{display:none}
+  .kort label{display:inline-block;margin:0 10px 0 0}
+  .kort input{border:0;border-bottom:1px solid var(--ink);border-radius:0;
+    width:200px;background:transparent;padding:2px 0;margin:0 26px 0 0}
+  .kort input::placeholder{color:transparent}
+  .q{padding:12px 0 4px}
+  .qtext{break-after:avoid;page-break-after:avoid}
+  .opts{gap:2px;break-inside:avoid;page-break-inside:avoid}
+  .opt{break-inside:avoid;border:0;padding:3px 0;background:transparent}
+  .opt .mk{border:1.2px solid var(--ink);background:transparent;
+    color:var(--ink);border-radius:6px;width:22px;height:22px;
+    font-size:13px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .opt[aria-pressed=true]{background:transparent}
+  .opt[aria-pressed=true] .mk{background:var(--ink);color:#fff;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .qfig{break-inside:avoid}
+  .qfig svg{max-width:100%;height:auto}
+}
+
 #kvittering{display:none;text-align:center;padding:60px 20px}
 #kvittering h2{font-size:1.5rem}
 #kvittering .flueben{width:66px;height:66px;border-radius:50%;
@@ -269,7 +297,7 @@ def byg():
             'Din besvarelse er sendt til din lærer. Du kan lukke siden nu.</p>'
             '</section></main>'
             '<div class="bund"><div class="bund-inner">'
-            '<span class="taeller" id="taeller">0 af 60 besvaret</span>'
+            f'<span class="taeller" id="taeller">0 af {len(P.SPM)} besvaret</span>'
             '<span class="bar"><i></i></span>'
             '<button class="send" id="send" type="button">Aflever</button>'
             '</div></div>'

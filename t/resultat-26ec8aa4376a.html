@@ -43,7 +43,7 @@ border:1px solid var(--accent);border-radius:9px;background:var(--accent);
 color:#fff;cursor:pointer;margin-top:14px}
 button.stille{background:#fff;color:var(--accent);margin-top:0}
 button:hover{filter:brightness(1.07)}
-.fejl{color:var(--rod);font-weight:600;min-height:1.5em;margin:10px 0 0}
+#fejl{color:var(--rod);font-weight:600;min-height:1.5em;margin:10px 0 0}
 
 .laasrk{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
 border:1px solid var(--line);border-radius:12px;padding:12px 15px;
@@ -97,6 +97,36 @@ tr.lav td.navn{color:var(--rod)}
 .emnechip{display:inline-block;font-size:12px;color:var(--muted);
 border:1px solid var(--line);border-radius:999px;padding:1px 8px;
 margin-left:6px;white-space:nowrap}
+td.navn button{all:unset;cursor:pointer;font-weight:600;color:var(--accent);
+text-decoration:underline;text-underline-offset:2px}
+td.navn button:hover{filter:brightness(1.2)}
+tr.lav td.navn button{color:var(--rod)}
+
+#enkelt{margin:26px 0 0}
+.enkeltstyr{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+margin:0 0 14px}
+.enkeltstyr button{margin-top:0;padding:8px 13px;font-size:15px}
+.enkeltstyr .fyld{flex:1}
+.enkeltblok{border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+margin:0 0 16px}
+.enkelthoved h3{margin:0;font-size:20px}
+.enkelthoved .noegle{color:var(--muted);font-size:14px;margin:4px 0 0}
+ol.svarliste{list-style:none;margin:16px 0 0;padding:0}
+ol.svarliste li{display:grid;grid-template-columns:1fr 1fr;gap:14px;
+padding:9px 0;border-top:1px solid var(--line);align-items:start}
+ol.svarliste li:first-child{border-top:0}
+ol.svarliste .sp{font-size:15px}
+ol.svarliste .nr{color:var(--muted);font-variant-numeric:tabular-nums;
+margin-right:3px}
+ol.svarliste .sv{font-size:15px;display:flex;gap:9px;align-items:start}
+ol.svarliste .mark{flex:none;width:21px;height:21px;border-radius:50%;
+display:inline-flex;align-items:center;justify-content:center;
+font-size:13px;font-weight:700;color:#fff;background:var(--ok)}
+ol.svarliste li.fejl .mark{background:var(--rod)}
+ol.svarliste li.blank .mark{background:var(--muted)}
+ol.svarliste li.fejl .sv{color:var(--rod)}
+ol.svarliste li.blank .sv em{color:var(--muted)}
+ol.svarliste .bogstav{font-weight:700;margin-right:4px}
 .vaerktoej{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 0}
 .vaerktoej button{margin-top:0}
 .tom{color:var(--muted)}
@@ -110,11 +140,24 @@ margin-left:6px;white-space:nowrap}
   .skjul,.telefonskjul{display:none}
   td.tekst{min-width:0}
   td.spor{width:64px;min-width:64px}
+  ol.svarliste li{grid-template-columns:1fr;gap:5px}
+  .enkeltblok{padding:13px 14px}
 }
 @media print{
-  header.top,.vaerktoej,#laas{display:none}
+  @page{size:A4;margin:14mm}
+  header.top,.vaerktoej,#laas,.laasrk,.enkeltstyr{display:none}
   .svoeb{overflow:visible}
   th{position:static}
+  body{font-size:12pt}
+  .skjul,.telefonskjul{display:table-cell}
+  /* staar en besvarelse aaben, printes kun den */
+  body.kunenkelt #data > *:not(#enkelt){display:none}
+  #enkeltoverskrift{break-after:avoid;page-break-after:avoid}
+  .enkeltblok{break-inside:auto;page-break-after:always;border:0;padding:0}
+  .enkelthoved{break-after:avoid;page-break-after:avoid}
+  .enkeltblok:last-child{page-break-after:auto}
+  ol.svarliste li{break-inside:avoid;page-break-inside:avoid}
+  .tile{break-inside:avoid}
 }
 </style>
 </head>
@@ -179,6 +222,19 @@ margin-left:6px;white-space:nowrap}
   </table>
   </div>
 
+  <div id="enkelt" hidden>
+    <h2 id="enkeltoverskrift">Besvarelsen</h2>
+    <div class="enkeltstyr">
+      <button id="forrige" class="stille">◀ Forrige</button>
+      <button id="naeste" class="stille">Næste ▶</button>
+      <span class="fyld"></span>
+      <button id="alle" class="stille">Alle besvarelser</button>
+      <button id="printenkelt" class="stille">Print / gem som PDF</button>
+      <button id="lukenkelt" class="stille">Luk</button>
+    </div>
+    <div id="enkeltkrop"></div>
+  </div>
+
   <h2>Spørgsmålene <span class="lille">— sværeste først</span></h2>
   <div class="svoeb">
   <table>
@@ -199,9 +255,10 @@ margin-left:6px;white-space:nowrap}
 <script>
 (function(){
   var URL="https://pxdnszdukyjnbfmcpbvi.supabase.co", NOEGLE="sb_publishable_PvPfK3dFW7I2A0U-31Z5Qw_-uIOnzPe", PROEVE="samfundsfag-60";
-  var SPM=[[1, "Hvor mange gange skal et lovforslag behandles i Folketinget, før det kan vedtages?", "Teksterne"], [2, "Hvad er et høringssvar?", "Teksterne"], [3, "Hvad sker der ved 1. behandling?", "Teksterne"], [4, "Hvor i lovprocessen sker det meste af arbejdet?", "Teksterne"], [5, "Hvad er et L-nummer?", "Teksterne"], [6, "Hvor stor en del af Folketingets medlemmer kan kræve en vedtaget lov sendt til folkeafstemning?", "Teksterne"], [7, "Hvad betyder navnene primær, sekundær og tertiær socialisering?", "Teksterne"], [8, "Hvad er en social sanktion?", "Teksterne"], [9, "Hvor stor en andel af de 15–19-årige har over 6 timers skærm om dagen?", "Digital socialisering"], [10, "Hvilken gruppe på figuren har den højeste andel med over 6 timers skærm?", "Digital socialisering"], [11, "Hvorfor har den grå søjle sin egen farve?", "Digital socialisering"], [12, "Hvor mange timer om dagen bruger danske 15-årige digitale redskaber i skoletiden?", "Digital socialisering"], [13, "Hvor stor en del af de danske elever bruger digitale redskaber i hver time eller næsten hver time?", "Digital socialisering"], [14, "Hvordan udviklede problematisk brug af sociale medier sig fra 2018 til 2022 i de 44 lande?", "Digital socialisering"], [15, "Hvad betyder det i undersøgelsen, at brugen er problematisk?", "Digital socialisering"], [16, "Hvad viser tallene for piger og drenge?", "Digital socialisering"], [17, "Hvilken aldersgruppe synes selv, at flest af dem bruger for meget tid på sociale medier?", "Digital socialisering"], [18, "Australien forbød sociale medier for børn under 16 i december 2025. Hvad viste målingen tre måneder efter?", "Digital socialisering"], [19, "Hvad er en stor sprogmodel (LLM) trænet til at gøre?", "AI-ordbogen"], [20, "Hvad er et token?", "AI-ordbogen"], [21, "Hvad er en hallucination?", "AI-ordbogen"], [22, "Hvad er et kontekstvindue?", "AI-ordbogen"], [23, "Hvad er forskellen på en chatbot og en agent?", "AI-ordbogen"], [24, "Hvad betyder menneske i løkken?", "AI-ordbogen"], [25, "Hvad er edge AI?", "AI-ordbogen"], [26, "ChatGPTs og Geminis brugertal kan ikke sammenlignes direkte. Hvorfor ikke?", "AI-ordbogen"], [27, "Hvem har kontrollen over OpenAI?", "AI-ordbogen"], [28, "Hvorfor regnes Nvidia med blandt de største aktører inden for AI?", "AI-ordbogen"], [29, "Hvad er en ideologi?", "Partier og ideologi"], [30, "Hvad er kernen i liberalismen?", "Partier og ideologi"], [31, "Hvad er kernen i socialismen?", "Partier og ideologi"], [32, "Hvad er kernen i konservatismen?", "Partier og ideologi"], [33, "Hvilket parti ligger længst til venstre i Folketinget?", "Partier og ideologi"], [34, "Partiet Venstre ligger på højrefløjen. Hvorfor hedder det så Venstre?", "Partier og ideologi"], [35, "Hvad menes der med rød og blå blok?", "Partier og ideologi"], [36, "Et parti vil sænke skatten og samtidig skære i den offentlige sektor. Hvilken ideologi trækker det på?", "Partier og ideologi"], [37, "Hvad kendetegner den universelle velfærdsmodel, som Danmark bruger?", "Partier og ideologi"], [38, "Hvad er forskellen på en ideologi og et partiprogram?", "Partier og ideologi"], [39, "Hvor mange mandater er der i Folketinget?", "Regeringen og Folketinget"], [40, "Hvor mange mandater skal der til for at have flertal?", "Regeringen og Folketinget"], [41, "Hvor mange mandater vælges der på Færøerne og i Grønland tilsammen?", "Regeringen og Folketinget"], [42, "Hvornår var der folketingsvalg sidst?", "Regeringen og Folketinget"], [43, "Hvilke partier sidder i regeringen?", "Regeringen og Folketinget"], [44, "Hvem er statsminister?", "Regeringen og Folketinget"], [45, "Hvor mange mandater har regeringspartierne tilsammen?", "Regeringen og Folketinget"], [46, "Hvad vil det sige, at Danmark har negativ parlamentarisme?", "Regeringen og Folketinget"], [47, "Hvem er finansminister?", "Regeringen og Folketinget"], [48, "Hvem er udenrigsminister?", "Regeringen og Folketinget"], [49, "Hvad er BNP?", "Økonomi, EU og OECD"], [50, "Hvor stort er Danmarks BNP cirka?", "Økonomi, EU og OECD"], [51, "Hvorfor er BNP ikke et mål for, hvor godt folk har det?", "Økonomi, EU og OECD"], [52, "Hvad er inflation?", "Økonomi, EU og OECD"], [53, "Hvor meget steg priserne i Danmark fra oktober 2025 til oktober 2026?", "Økonomi, EU og OECD"], [54, "Hvad er kerneinflation?", "Økonomi, EU og OECD"], [55, "Hvad måler betalingsbalancen?", "Økonomi, EU og OECD"], [56, "Danmark havde i 2025 et overskud på betalingsbalancen på cirka 441 milliarder kroner. Hvad svarer det til?", "Økonomi, EU og OECD"], [57, "Hvor mange lande er med i EU?", "Økonomi, EU og OECD"], [58, "Hvor mange lande er med i OECD?", "Økonomi, EU og OECD"]], EMNER=["Teksterne", "Digital socialisering", "AI-ordbogen", "Partier og ideologi", "Regeringen og Folketinget", "Økonomi, EU og OECD"], ANTAL=SPM.length;
+  var SPM=[[1, "Hvor mange gange skal et lovforslag behandles i Folketinget, før det kan vedtages?", "Teksterne", ["Tre gange", "To gange", "Én gang"]], [2, "Hvad er et høringssvar?", "Teksterne", ["Ministerens svar på et spørgsmål fra et udvalg", "Den endelige afstemning om lovforslaget", "Det, en organisation eller kommune svarer, når den har læst udkastet"]], [3, "Hvad sker der ved 1. behandling?", "Teksterne", ["Der stemmes om hver enkelt paragraf", "Der debatteres om forslagets hovedidé, og så sendes det i udvalg", "Loven skrives under af monarken"]], [4, "Hvor i lovprocessen sker det meste af arbejdet?", "Teksterne", ["I folketingssalen ved 3. behandling", "Ved den kongelige stadfæstelse", "I udvalgsbehandlingen mellem 1. og 2. behandling"]], [5, "Hvad er et L-nummer?", "Teksterne", ["Lovforslagets nummer i Folketinget, fx L 42", "Nummeret på den lov, der bliver trykt i Lovtidende", "Nummeret på det udvalg, der behandler forslaget"]], [6, "Hvor stor en del af Folketingets medlemmer kan kræve en vedtaget lov sendt til folkeafstemning?", "Teksterne", ["Et flertal", "En tredjedel", "To tredjedele"]], [7, "Hvad betyder navnene primær, sekundær og tertiær socialisering?", "Teksterne", ["Hvor vigtig arenaen er", "Rækkefølgen — hvad der kom først i ens liv", "Hvor mange timer man bruger der"]], [8, "Hvad er en social sanktion?", "Teksterne", ["En skreven regel, der hænger på væggen", "En straf, der gives af en myndighed", "Den reaktion, der kommer, når nogen bryder en norm"]], [9, "Hvor stor en andel af de 15–19-årige har over 6 timers skærm om dagen?", "Digital socialisering", ["27 %", "16 %", "72 %"]], [10, "Hvilken gruppe på figuren har den højeste andel med over 6 timers skærm?", "Digital socialisering", ["De 20–29-årige", "De 15–19-årige", "Hele befolkningen"]], [11, "Hvorfor har den grå søjle sin egen farve?", "Digital socialisering", ["Fordi tallet er fra et andet år", "Fordi tallet er usikkert", "Fordi den ikke er en aldersgruppe, men alle danskere lagt sammen"]], [12, "Hvor mange timer om dagen bruger danske 15-årige digitale redskaber i skoletiden?", "Digital socialisering", ["2 timer", "3,8 timer", "6 timer"]], [13, "Hvor stor en del af de danske elever bruger digitale redskaber i hver time eller næsten hver time?", "Digital socialisering", ["16 %", "72 %", "38 %"]], [14, "Hvordan udviklede problematisk brug af sociale medier sig fra 2018 til 2022 i de 44 lande?", "Digital socialisering", ["Fra 7 % til 11 %", "Fra 11 % til 7 %", "Den var uændret"]], [15, "Hvad betyder det i undersøgelsen, at brugen er problematisk?", "Digital socialisering", ["At den unge bruger mere end 6 timer om dagen", "At forældrene synes, det er for meget", "At den unge har mistet kontrollen over den"]], [16, "Hvad viser tallene for piger og drenge?", "Digital socialisering", ["Piger ligger højest på begge dele", "Drenge ligger højest på begge dele", "Piger ligger højest på sociale medier, drenge højest på gaming"]], [17, "Hvilken aldersgruppe synes selv, at flest af dem bruger for meget tid på sociale medier?", "Digital socialisering", ["De 18–25-årige", "De 8–12-årige", "De 13–17-årige"]], [18, "Australien forbød sociale medier for børn under 16 i december 2025. Hvad viste målingen tre måneder efter?", "Digital socialisering", ["At næsten ingen brugte dem længere", "At 8 ud af 10 australske teenagere under 16 stadig brugte dem", "At brugen var steget efter forbuddet"]], [19, "Hvad er en stor sprogmodel (LLM) trænet til at gøre?", "AI-ordbogen", ["At gætte det næste stykke tekst", "At slå svar op i en database", "At oversætte mellem to sprog"]], [20, "Hvad er et token?", "AI-ordbogen", ["En adgangskode til en AI-tjeneste", "Et kort ord eller en orddel — det stykke tekst, modellen regner i", "Et helt afsnit tekst"]], [21, "Hvad er en hallucination?", "AI-ordbogen", ["Når modellen nægter at svare", "Når modellen laver et billede", "Når modellen finder på noget, der lyder rigtigt, men ikke er det"]], [22, "Hvad er et kontekstvindue?", "AI-ordbogen", ["Det vindue, chatten vises i", "Hvor mange brugere der kan være på", "Hvor meget modellen kan have for øje på én gang"]], [23, "Hvad er forskellen på en chatbot og en agent?", "AI-ordbogen", ["Agenten er hurtigere end en chatbot", "Agenten får lov at handle — søge, skrive filer, sende noget", "Agenten bruger ikke en sprogmodel"]], [24, "Hvad betyder menneske i løkken?", "AI-ordbogen", ["At et menneske skal godkende, før agenten gør noget, der ikke kan fortrydes", "At en person skriver svarene i stedet for modellen", "At modellen er trænet af mennesker"]], [25, "Hvad er edge AI?", "AI-ordbogen", ["AI, der kører på selve enheden i stedet for i et datacenter", "AI, der kun bruges af virksomheder", "Den nyeste version af en model"]], [26, "ChatGPTs og Geminis brugertal kan ikke sammenlignes direkte. Hvorfor ikke?", "AI-ordbogen", ["Fordi ChatGPT har for få brugere", "Fordi OpenAI opgør sine brugere pr. uge og Google pr. måned", "Fordi OpenAI ikke oplyser nogen tal"]], [27, "Hvem har kontrollen over OpenAI?", "AI-ordbogen", ["Microsoft, fordi de ejer den største andel", "De ansatte, fordi de tilsammen ejer mest", "OpenAI Foundation, fordi fonden udpeger bestyrelsen"]], [28, "Hvorfor regnes Nvidia med blandt de største aktører inden for AI?", "AI-ordbogen", ["Fordi Nvidia har den mest brugte chatbot", "Fordi alle de andre køber de chips, deres AI kører på", "Fordi Nvidia ejer en del af OpenAI"]], [29, "Hvad er en ideologi?", "Partier og ideologi", ["En plan for næste års statsbudget", "En aftale mellem to partier om en enkelt lov", "Et sammenhængende sæt idéer om, hvordan samfundet bør indrettes"]], [30, "Hvad er kernen i liberalismen?", "Partier og ideologi", ["Den enkeltes frihed og ansvar, og en stat der blander sig mindst muligt", "At staten ejer de vigtigste virksomheder", "At traditioner skal bevares uændret"]], [31, "Hvad er kernen i socialismen?", "Partier og ideologi", ["At markedet skal bestemme så meget som muligt", "Større økonomisk lighed, blandt andet gennem omfordeling", "At nationens historie er vigtigere end den enkelte"]], [32, "Hvad er kernen i konservatismen?", "Partier og ideologi", ["At alle afgørelser skal træffes ved folkeafstemning", "At staten skal eje jorden", "At forandring skal ske langsomt, og at det, der virker, skal bevares"]], [33, "Hvilket parti ligger længst til venstre i Folketinget?", "Partier og ideologi", ["Enhedslisten", "Socialdemokratiet", "Radikale Venstre"]], [34, "Partiet Venstre ligger på højrefløjen. Hvorfor hedder det så Venstre?", "Partier og ideologi", ["Fordi partiet stemmer med venstrefløjen i økonomiske spørgsmål", "Fordi navnet er historisk: partiet sad til venstre i salen i 1870erne", "Fordi partiet blev stiftet af en mand ved navn Venstre"]], [35, "Hvad menes der med rød og blå blok?", "Partier og ideologi", ["De partier, der sidder henholdsvis til venstre og højre i salen", "Regeringen over for alle de øvrige partier", "De partier, der normalt peger på hver sin kandidat som statsminister"]], [36, "Et parti vil sænke skatten og samtidig skære i den offentlige sektor. Hvilken ideologi trækker det på?", "Partier og ideologi", ["Liberalisme", "Socialisme", "Konservatisme"]], [37, "Hvad kendetegner den universelle velfærdsmodel, som Danmark bruger?", "Partier og ideologi", ["Man får kun hjælp, hvis man har en forsikring", "Ydelser betales af skatten og gælder alle, uanset indkomst", "Kun de fattigste får hjælp fra det offentlige"]], [38, "Hvad er forskellen på en ideologi og et partiprogram?", "Partier og ideologi", ["Ideologien er de grundlæggende idéer, programmet er de konkrete forslag", "Der er ingen forskel — det er to ord for det samme", "Et partiprogram gælder i flere år, en ideologi kun i én valgperiode"]], [39, "Hvor mange mandater er der i Folketinget?", "Regeringen og Folketinget", ["175", "180", "179"]], [40, "Hvor mange mandater skal der til for at have flertal?", "Regeringen og Folketinget", ["90", "89", "91"]], [41, "Hvor mange mandater vælges der på Færøerne og i Grønland tilsammen?", "Regeringen og Folketinget", ["2", "4", "6"]], [42, "Hvornår var der folketingsvalg sidst?", "Regeringen og Folketinget", ["1. november 2022", "5. juni 2025", "24. marts 2026"]], [43, "Hvilke partier sidder i regeringen?", "Regeringen og Folketinget", ["Socialdemokratiet, Venstre og Moderaterne", "Socialdemokratiet, SF, Moderaterne og Radikale Venstre", "Venstre, Konservative og Liberal Alliance"]], [44, "Hvem er statsminister?", "Regeringen og Folketinget", ["Mette Frederiksen", "Lars Løkke Rasmussen", "Peter Hummelgaard"]], [45, "Hvor mange mandater har regeringspartierne tilsammen?", "Regeringen og Folketinget", ["90", "101", "82"]], [46, "Hvad vil det sige, at Danmark har negativ parlamentarisme?", "Regeringen og Folketinget", ["En regering skal have et flertal bag sig for at kunne sidde", "Folketinget kan ikke vælte en regering", "En regering kan sidde, så længe der ikke er et flertal imod den"]], [47, "Hvem er finansminister?", "Regeringen og Folketinget", ["Peter Hummelgaard", "Nicolai Wammen", "Pia Olsen Dyhr"]], [48, "Hvem er udenrigsminister?", "Regeringen og Folketinget", ["Mette Frederiksen", "Lars Løkke Rasmussen", "Troels Lund Poulsen"]], [49, "Hvad er BNP?", "Økonomi, EU og OECD", ["Summen af alle danskeres løn efter skat", "Værdien af alt det, der produceres i et land på et år", "Statens samlede udgifter på finansloven"]], [50, "Hvor stort er Danmarks BNP cirka?", "Økonomi, EU og OECD", ["Omkring 3.000 milliarder kroner om året", "Omkring 300 milliarder kroner om året", "Omkring 30.000 milliarder kroner om året"]], [51, "Hvorfor er BNP ikke et mål for, hvor godt folk har det?", "Økonomi, EU og OECD", ["Fordi det kun opgøres hvert tiende år", "Fordi det ikke medregner virksomheder", "Fordi det kun måler produktionen og intet siger om fordelingen"]], [52, "Hvad er inflation?", "Økonomi, EU og OECD", ["At priserne generelt stiger, så pengene kan købe mindre", "At lønningerne stiger", "At der bliver trykt flere pengesedler"]], [53, "Hvor meget steg priserne i Danmark fra oktober 2025 til oktober 2026?", "Økonomi, EU og OECD", ["0,5 %", "2,2 %", "7,4 %"]], [54, "Hvad er kerneinflation?", "Økonomi, EU og OECD", ["Inflationen kun på fødevarer", "Inflationen målt over ti år", "Inflationen uden energi og uforarbejdede fødevarer"]], [55, "Hvad måler betalingsbalancen?", "Økonomi, EU og OECD", ["Forskellen mellem statens indtægter og udgifter", "Hvor mange penge danskerne har i banken", "Forskellen mellem det, Danmark tjener i udlandet, og det vi betaler dertil"]], [56, "Danmark havde i 2025 et overskud på betalingsbalancen på cirka 441 milliarder kroner. Hvad svarer det til?", "Økonomi, EU og OECD", ["Omkring 2 % af BNP", "Omkring 14 % af BNP", "Omkring 45 % af BNP"]], [57, "Hvor mange lande er med i EU?", "Økonomi, EU og OECD", ["27 lande", "25 lande", "31 lande"]], [58, "Hvor mange lande er med i OECD?", "Økonomi, EU og OECD", ["27 lande", "51 lande", "38 lande"]]], EMNER=["Teksterne", "Digital socialisering", "AI-ordbogen", "Partier og ideologi", "Regeringen og Folketinget", "Økonomi, EU og OECD"], ANTAL=SPM.length;
   var GEM='samf60_laererkode_v1', TIK=20000;
-  var elever=[], tal=[], kode='', timer=null, henter=false, lukket=false;
+  var elever=[], tal=[], svarene=[], kode='', timer=null, henter=false,
+      lukket=false, aaben=-1, alle=false;
   var sort={felt:'procent',ned:true};
 
   var E=function(id){return document.getElementById(id)};
@@ -254,6 +311,11 @@ margin-left:6px;white-space:nowrap}
         E('fejl').textContent='';
         E('live').hidden=false; E('live').className='live';
         E('livetxt').textContent='opdateret '+nu();
+        kald('skole_test_besvarelser',function(f4,r4){
+          if(!f4) svarene=r4||[];
+          tegn();
+          if(aaben>=0 || alle) tegnEnkelt();
+        });
         tegn();
         kald('skole_test_status',function(f3,r3){
           if(!f3 && r3 && r3[0]) visLaas(!!r3[0].lukket);
@@ -341,7 +403,8 @@ margin-left:6px;white-space:nowrap}
     for(k=0;k<liste.length;k++){
       var r=liste[k];
       ud+='<tr'+(r.procent<50?' class="lav"':'')+'>'+
-        '<td class="navn">'+esc(r.navn)+'</td>'+
+        '<td class="navn"><button type="button" data-navn="'+esc(r.navn)+
+          '" data-klasse="'+esc(r.klasse||'')+'">'+esc(r.navn)+'</button></td>'+
         '<td class="telefonskjul">'+esc(r.klasse||'')+'</td>'+
         '<td class="tal">'+r.rigtige+'</td>'+
         '<td class="tal skjul">'+r.forkerte+'</td>'+
@@ -385,6 +448,67 @@ margin-left:6px;white-space:nowrap}
       'Ingen svar endnu.</td></tr>';
   }
 
+  function find(navn, klasse){
+    for(var i=0;i<svarene.length;i++)
+      if(svarene[i].navn===navn &&
+         (svarene[i].klasse||'')===(klasse||'')) return i;
+    return -1;
+  }
+
+  function blok(b){
+    var i, rigtige=0, blanke=0;
+    for(i=0;i<b.rigtig.length;i++) if(b.rigtig[i]) rigtige++;
+    for(i=0;i<b.svar.length;i++) if(b.svar[i]<0) blanke++;
+    var h='<div class="enkeltblok"><div class="enkelthoved"><h3>'+
+      esc(b.navn)+' <span class="emnechip">'+esc(b.klasse||'')+'</span></h3>'+
+      '<div class="noegle">'+rigtige+' af '+ANTAL+' rigtige · '+
+      Math.round(100*rigtige/ANTAL)+' % · '+blanke+' ubesvarede · '+
+      tid(b.sekunder)+' · afleveret '+klokken(b.afleveret)+
+      '</div></div><ol class="svarliste">';
+    for(i=0;i<SPM.length;i++){
+      var nr=SPM[i][0], v=b.svar[nr-1], ok=b.rigtig[nr-1];
+      var art = (v===undefined||v===null||v<0) ? 'blank' : (ok?'ok':'fejl');
+      var mark = art==='blank' ? '–' : art==='ok' ? '✓' : '✗';
+      var sv = art==='blank' ? '<em>ikke besvaret</em>'
+        : '<span class="bogstav">'+'ABC'.charAt(v)+'</span>'+
+          esc((SPM[i][3]||[])[v]||'');
+      h+='<li class="'+art+'"><div class="sp"><span class="nr">'+nr+
+         '. </span>'+esc(SPM[i][1])+' <span class="emnechip">'+
+         esc(SPM[i][2])+'</span></div>'+
+         '<div class="sv"><span class="mark">'+mark+'</span><span>'+
+         sv+'</span></div></li>';
+    }
+    return h+'</ol></div>';
+  }
+
+  function tegnEnkelt(){
+    var e=E('enkelt');
+    if(!alle && aaben<0){ e.hidden=true;
+      document.body.classList.remove('kunenkelt'); return; }
+    e.hidden=false;
+    document.body.classList.add('kunenkelt');
+    if(alle){
+      E('enkeltoverskrift').innerHTML='Alle besvarelser <span class="lille">— '+
+        svarene.length+' stk., én pr. side når du printer</span>';
+      var h='';
+      for(var i=0;i<svarene.length;i++) h+=blok(svarene[i]);
+      E('enkeltkrop').innerHTML=h||'<p class="tom">Ingen besvarelser endnu.</p>';
+      E('forrige').disabled=true; E('naeste').disabled=true;
+      E('alle').textContent='Vis én ad gangen';
+    } else {
+      if(aaben>=svarene.length) aaben=svarene.length-1;
+      if(aaben<0){ e.hidden=true;
+        document.body.classList.remove('kunenkelt'); return; }
+      E('enkeltoverskrift').innerHTML='Besvarelsen <span class="lille">— '+
+        (aaben+1)+' af '+svarene.length+'</span>';
+      E('enkeltkrop').innerHTML=blok(svarene[aaben]);
+      E('forrige').disabled=(aaben<=0);
+      E('naeste').disabled=(aaben>=svarene.length-1);
+      E('alle').textContent='Alle besvarelser';
+    }
+    E('enkelt').scrollIntoView({block:'start'});
+  }
+
   function visLaas(l){
     lukket=l;
     E('laasrk').className='laasrk'+(l?' lukket':'');
@@ -418,6 +542,31 @@ margin-left:6px;white-space:nowrap}
   E('kode').addEventListener('keydown',function(e){
     if(e.key==='Enter') E('aabn').click();
   });
+  E('krop').addEventListener('click',function(ev){
+    var k=ev.target.closest('td.navn button'); if(!k) return;
+    var i=find(k.dataset.navn, k.dataset.klasse);
+    if(i<0){ return; }
+    alle=false; aaben=i; tegnEnkelt();
+  });
+  E('forrige').addEventListener('click',function(){
+    if(aaben>0){aaben--; tegnEnkelt();}
+  });
+  E('naeste').addEventListener('click',function(){
+    if(aaben<svarene.length-1){aaben++; tegnEnkelt();}
+  });
+  E('alle').addEventListener('click',function(){
+    if(alle){ alle=false; if(aaben<0) aaben=0; }
+    else { alle=true; }
+    tegnEnkelt();
+  });
+  E('printenkelt').addEventListener('click',function(){window.print()});
+  E('lukenkelt').addEventListener('click',function(){
+    alle=false; aaben=-1;
+    E('enkelt').hidden=true;
+    document.body.classList.remove('kunenkelt');
+    E('tabel').scrollIntoView({block:'center'});
+  });
+
   E('laasknap').addEventListener('click',function(){
     var nyt=!lukket, b=this;
     if(nyt && !confirm('Luk prøven? Så kan ingen aflevere mere.')) return;

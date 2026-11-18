@@ -43,11 +43,15 @@ SUPABASE = 'https://pxdnszdukyjnbfmcpbvi.supabase.co'
 # "forkert kode".
 NOEGLE = 'sb_publishable_PvPfK3dFW7I2A0U-31Z5Qw_-uIOnzPe'
 
-# [nr, spoergsmaalstekst, emne] — uden svarmuligheder og uden facit.
-SPM = [[nr, tekst, delnavn]
-       for (nr, _fig, tekst, _valg, _plads, _forkl, delnavn) in P.SPM]
+# [nr, spoergsmaalstekst, emne, svarmuligheder i den raekkefoelge, de staar
+# paa afleveringssiden]. Facit staar der ikke: `plads` — nummeret paa det
+# rigtige svar — kommer aldrig med. Rettelsen henter siden fra databasen
+# som et ja/nej pr. spoergsmaal.
+SPM = [[nr, tekst, delnavn, list(valg)]
+       for (nr, _fig, tekst, valg, _plads, _forkl, delnavn) in P.SPM]
+_PLADSER = {nr: plads for (nr, _f, _t, _v, plads, _fo, _d) in P.SPM}
 EMNER = []
-for _, _, _e in SPM:
+for _, _, _e, _v in SPM:
     if _e not in EMNER:
         EMNER.append(_e)
 
@@ -89,7 +93,7 @@ border:1px solid var(--accent);border-radius:9px;background:var(--accent);
 color:#fff;cursor:pointer;margin-top:14px}
 button.stille{background:#fff;color:var(--accent);margin-top:0}
 button:hover{filter:brightness(1.07)}
-.fejl{color:var(--rod);font-weight:600;min-height:1.5em;margin:10px 0 0}
+#fejl{color:var(--rod);font-weight:600;min-height:1.5em;margin:10px 0 0}
 
 .laasrk{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
 border:1px solid var(--line);border-radius:12px;padding:12px 15px;
@@ -143,6 +147,36 @@ tr.lav td.navn{color:var(--rod)}
 .emnechip{display:inline-block;font-size:12px;color:var(--muted);
 border:1px solid var(--line);border-radius:999px;padding:1px 8px;
 margin-left:6px;white-space:nowrap}
+td.navn button{all:unset;cursor:pointer;font-weight:600;color:var(--accent);
+text-decoration:underline;text-underline-offset:2px}
+td.navn button:hover{filter:brightness(1.2)}
+tr.lav td.navn button{color:var(--rod)}
+
+#enkelt{margin:26px 0 0}
+.enkeltstyr{display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+margin:0 0 14px}
+.enkeltstyr button{margin-top:0;padding:8px 13px;font-size:15px}
+.enkeltstyr .fyld{flex:1}
+.enkeltblok{border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+margin:0 0 16px}
+.enkelthoved h3{margin:0;font-size:20px}
+.enkelthoved .noegle{color:var(--muted);font-size:14px;margin:4px 0 0}
+ol.svarliste{list-style:none;margin:16px 0 0;padding:0}
+ol.svarliste li{display:grid;grid-template-columns:1fr 1fr;gap:14px;
+padding:9px 0;border-top:1px solid var(--line);align-items:start}
+ol.svarliste li:first-child{border-top:0}
+ol.svarliste .sp{font-size:15px}
+ol.svarliste .nr{color:var(--muted);font-variant-numeric:tabular-nums;
+margin-right:3px}
+ol.svarliste .sv{font-size:15px;display:flex;gap:9px;align-items:start}
+ol.svarliste .mark{flex:none;width:21px;height:21px;border-radius:50%;
+display:inline-flex;align-items:center;justify-content:center;
+font-size:13px;font-weight:700;color:#fff;background:var(--ok)}
+ol.svarliste li.fejl .mark{background:var(--rod)}
+ol.svarliste li.blank .mark{background:var(--muted)}
+ol.svarliste li.fejl .sv{color:var(--rod)}
+ol.svarliste li.blank .sv em{color:var(--muted)}
+ol.svarliste .bogstav{font-weight:700;margin-right:4px}
 .vaerktoej{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 0}
 .vaerktoej button{margin-top:0}
 .tom{color:var(--muted)}
@@ -156,11 +190,24 @@ margin-left:6px;white-space:nowrap}
   .skjul,.telefonskjul{display:none}
   td.tekst{min-width:0}
   td.spor{width:64px;min-width:64px}
+  ol.svarliste li{grid-template-columns:1fr;gap:5px}
+  .enkeltblok{padding:13px 14px}
 }
 @media print{
-  header.top,.vaerktoej,#laas{display:none}
+  @page{size:A4;margin:14mm}
+  header.top,.vaerktoej,#laas,.laasrk,.enkeltstyr{display:none}
   .svoeb{overflow:visible}
   th{position:static}
+  body{font-size:12pt}
+  .skjul,.telefonskjul{display:table-cell}
+  /* staar en besvarelse aaben, printes kun den */
+  body.kunenkelt #data > *:not(#enkelt){display:none}
+  #enkeltoverskrift{break-after:avoid;page-break-after:avoid}
+  .enkeltblok{break-inside:auto;page-break-after:always;border:0;padding:0}
+  .enkelthoved{break-after:avoid;page-break-after:avoid}
+  .enkeltblok:last-child{page-break-after:auto}
+  ol.svarliste li{break-inside:avoid;page-break-inside:avoid}
+  .tile{break-inside:avoid}
 }
 '''
 
@@ -169,7 +216,8 @@ JS = r'''
   var URL=__URL__, NOEGLE=__NOEGLE__, PROEVE=__PROEVE__;
   var SPM=__SPM__, EMNER=__EMNER__, ANTAL=SPM.length;
   var GEM='samf60_laererkode_v1', TIK=20000;
-  var elever=[], tal=[], kode='', timer=null, henter=false, lukket=false;
+  var elever=[], tal=[], svarene=[], kode='', timer=null, henter=false,
+      lukket=false, aaben=-1, alle=false;
   var sort={felt:'procent',ned:true};
 
   var E=function(id){return document.getElementById(id)};
@@ -222,6 +270,11 @@ JS = r'''
         E('fejl').textContent='';
         E('live').hidden=false; E('live').className='live';
         E('livetxt').textContent='opdateret '+nu();
+        kald('skole_test_besvarelser',function(f4,r4){
+          if(!f4) svarene=r4||[];
+          tegn();
+          if(aaben>=0 || alle) tegnEnkelt();
+        });
         tegn();
         kald('skole_test_status',function(f3,r3){
           if(!f3 && r3 && r3[0]) visLaas(!!r3[0].lukket);
@@ -309,7 +362,8 @@ JS = r'''
     for(k=0;k<liste.length;k++){
       var r=liste[k];
       ud+='<tr'+(r.procent<50?' class="lav"':'')+'>'+
-        '<td class="navn">'+esc(r.navn)+'</td>'+
+        '<td class="navn"><button type="button" data-navn="'+esc(r.navn)+
+          '" data-klasse="'+esc(r.klasse||'')+'">'+esc(r.navn)+'</button></td>'+
         '<td class="telefonskjul">'+esc(r.klasse||'')+'</td>'+
         '<td class="tal">'+r.rigtige+'</td>'+
         '<td class="tal skjul">'+r.forkerte+'</td>'+
@@ -353,6 +407,67 @@ JS = r'''
       'Ingen svar endnu.</td></tr>';
   }
 
+  function find(navn, klasse){
+    for(var i=0;i<svarene.length;i++)
+      if(svarene[i].navn===navn &&
+         (svarene[i].klasse||'')===(klasse||'')) return i;
+    return -1;
+  }
+
+  function blok(b){
+    var i, rigtige=0, blanke=0;
+    for(i=0;i<b.rigtig.length;i++) if(b.rigtig[i]) rigtige++;
+    for(i=0;i<b.svar.length;i++) if(b.svar[i]<0) blanke++;
+    var h='<div class="enkeltblok"><div class="enkelthoved"><h3>'+
+      esc(b.navn)+' <span class="emnechip">'+esc(b.klasse||'')+'</span></h3>'+
+      '<div class="noegle">'+rigtige+' af '+ANTAL+' rigtige · '+
+      Math.round(100*rigtige/ANTAL)+' % · '+blanke+' ubesvarede · '+
+      tid(b.sekunder)+' · afleveret '+klokken(b.afleveret)+
+      '</div></div><ol class="svarliste">';
+    for(i=0;i<SPM.length;i++){
+      var nr=SPM[i][0], v=b.svar[nr-1], ok=b.rigtig[nr-1];
+      var art = (v===undefined||v===null||v<0) ? 'blank' : (ok?'ok':'fejl');
+      var mark = art==='blank' ? '–' : art==='ok' ? '✓' : '✗';
+      var sv = art==='blank' ? '<em>ikke besvaret</em>'
+        : '<span class="bogstav">'+'ABC'.charAt(v)+'</span>'+
+          esc((SPM[i][3]||[])[v]||'');
+      h+='<li class="'+art+'"><div class="sp"><span class="nr">'+nr+
+         '. </span>'+esc(SPM[i][1])+' <span class="emnechip">'+
+         esc(SPM[i][2])+'</span></div>'+
+         '<div class="sv"><span class="mark">'+mark+'</span><span>'+
+         sv+'</span></div></li>';
+    }
+    return h+'</ol></div>';
+  }
+
+  function tegnEnkelt(){
+    var e=E('enkelt');
+    if(!alle && aaben<0){ e.hidden=true;
+      document.body.classList.remove('kunenkelt'); return; }
+    e.hidden=false;
+    document.body.classList.add('kunenkelt');
+    if(alle){
+      E('enkeltoverskrift').innerHTML='Alle besvarelser <span class="lille">— '+
+        svarene.length+' stk., én pr. side når du printer</span>';
+      var h='';
+      for(var i=0;i<svarene.length;i++) h+=blok(svarene[i]);
+      E('enkeltkrop').innerHTML=h||'<p class="tom">Ingen besvarelser endnu.</p>';
+      E('forrige').disabled=true; E('naeste').disabled=true;
+      E('alle').textContent='Vis én ad gangen';
+    } else {
+      if(aaben>=svarene.length) aaben=svarene.length-1;
+      if(aaben<0){ e.hidden=true;
+        document.body.classList.remove('kunenkelt'); return; }
+      E('enkeltoverskrift').innerHTML='Besvarelsen <span class="lille">— '+
+        (aaben+1)+' af '+svarene.length+'</span>';
+      E('enkeltkrop').innerHTML=blok(svarene[aaben]);
+      E('forrige').disabled=(aaben<=0);
+      E('naeste').disabled=(aaben>=svarene.length-1);
+      E('alle').textContent='Alle besvarelser';
+    }
+    E('enkelt').scrollIntoView({block:'start'});
+  }
+
   function visLaas(l){
     lukket=l;
     E('laasrk').className='laasrk'+(l?' lukket':'');
@@ -386,6 +501,31 @@ JS = r'''
   E('kode').addEventListener('keydown',function(e){
     if(e.key==='Enter') E('aabn').click();
   });
+  E('krop').addEventListener('click',function(ev){
+    var k=ev.target.closest('td.navn button'); if(!k) return;
+    var i=find(k.dataset.navn, k.dataset.klasse);
+    if(i<0){ return; }
+    alle=false; aaben=i; tegnEnkelt();
+  });
+  E('forrige').addEventListener('click',function(){
+    if(aaben>0){aaben--; tegnEnkelt();}
+  });
+  E('naeste').addEventListener('click',function(){
+    if(aaben<svarene.length-1){aaben++; tegnEnkelt();}
+  });
+  E('alle').addEventListener('click',function(){
+    if(alle){ alle=false; if(aaben<0) aaben=0; }
+    else { alle=true; }
+    tegnEnkelt();
+  });
+  E('printenkelt').addEventListener('click',function(){window.print()});
+  E('lukenkelt').addEventListener('click',function(){
+    alle=false; aaben=-1;
+    E('enkelt').hidden=true;
+    document.body.classList.remove('kunenkelt');
+    E('tabel').scrollIntoView({block:'center'});
+  });
+
   E('laasknap').addEventListener('click',function(){
     var nyt=!lukket, b=this;
     if(nyt && !confirm('Luk prøven? Så kan ingen aflevere mere.')) return;
@@ -508,6 +648,19 @@ def side():
   </table>
   </div>
 
+  <div id="enkelt" hidden>
+    <h2 id="enkeltoverskrift">Besvarelsen</h2>
+    <div class="enkeltstyr">
+      <button id="forrige" class="stille">◀ Forrige</button>
+      <button id="naeste" class="stille">Næste ▶</button>
+      <span class="fyld"></span>
+      <button id="alle" class="stille">Alle besvarelser</button>
+      <button id="printenkelt" class="stille">Print / gem som PDF</button>
+      <button id="lukenkelt" class="stille">Luk</button>
+    </div>
+    <div id="enkeltkrop"></div>
+  </div>
+
   <h2>Spørgsmålene <span class="lille">— sværeste først</span></h2>
   <div class="svoeb">
   <table>
@@ -538,7 +691,13 @@ def main():
     for ord_ in ('data-answer', 'data-exp', 'rigtigt', 'facit'):
         assert ord_ not in uden_js.lower(), f'{ord_} staar i siden'
     assert 'kontiki26' not in doc, 'afleveringskoden skal ikke staa her'
-    for nr, tekst, emne in SPM:
+    # Facit er raekken af rigtige pladser. Den maa ikke kunne laeses ud af
+    # siden — hverken samlet eller som et opslag pr. spoergsmaal.
+    raekken = json.dumps([_PLADSER[nr] for nr, _t, _e, _v in SPM])
+    assert raekken not in doc, 'facitraekken staar i siden'
+    assert raekken[1:-1] not in doc, 'facitraekken staar i siden'
+    assert '_PLADSER' not in doc and 'plads' not in doc, 'pladserne er med'
+    for nr, tekst, emne, _valg in SPM:
         assert html.escape(tekst) in doc or tekst in json.dumps(
             SPM, ensure_ascii=False), f'spoergsmaal {nr} mangler'
     os.makedirs(os.path.dirname(UD), exist_ok=True)

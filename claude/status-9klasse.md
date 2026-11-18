@@ -119,6 +119,21 @@ To sider, begge på adresser der ikke kan gættes og ikke linkes fra noget:
   er én farve, fordi de måler én ting, og tallet står altid ved siden af.
   Knapper: **Opdatér nu**, **Hent som CSV**, **Glem koden**.
 
+**Den enkelte besvarelse kan læses.** Tryk på et navn i tabellen, og
+besvarelsen folder sig ud: alle 58 spørgsmål med det, ungen svarede, og
+✓ eller ✗ ud for hvert. *Forrige* og *Næste* går gennem klassen, *Alle
+besvarelser* lægger dem efter hinanden med én pr. side, og *Print / gem
+som PDF* printer kun besvarelsen — resten af siden forsvinder.
+**Det rigtige svar vises ikke** — kun om ungens eget var rigtigt. Facit
+står i rettearket i `facit/`.
+
+**Afleveringssiden kan printes.** `@media print` giver A4, skjuler den
+klæbende topbjælke og bundbjælken, tegner svarfelterne som tomme
+rammer og holder figur og svarmuligheder samlet på samme side. Er der
+krydset af på skærmen, printes krydserne med. En færdig udgave ligger i
+`vejledning/samfundsfagstest/samfundsfagstest-til-print.pdf` — 24 sider,
+bygget med `node claude/html_til_pdf.mjs`.
+
 Rettelsen sker i databasen, ikke i browseren. Supabase-projektet er
 `pxdnszdukyjnbfmcpbvi`:
 
@@ -128,9 +143,13 @@ Rettelsen sker i databasen, ikke i browseren. Supabase-projektet er
 - `skole_test_facit` — de rigtige svar. Ingen politik, så nøglen kan
   hverken læse eller skrive i den.
 - `skole_test_adgang` — lærerkoden.
-- `skole_test_resultater(kode, p)` og `skole_test_spoergsmaalstal(kode, p)`
-  — `security definer`-funktioner, der kræver lærerkoden og ellers svarer
+- `skole_test_resultater(kode, p)`, `skole_test_spoergsmaalstal(kode, p)`,
+  `skole_test_besvarelser(kode, p)` og `skole_test_status(kode, p)` —
+  `security definer`-funktioner, der kræver lærerkoden og ellers svarer
   *forkert kode*. Det er dem, resultatsiden kalder.
+  `skole_test_besvarelser` sender **ikke** facit ud af databasen: kun
+  ungens eget svar og et ja/nej pr. spørgsmål.
+- `skole_test_saet_laas(kode, luk, p)` lukker og åbner prøven.
 
 **Lærerkoden står ingen steder i koden.** Den skrives ind på siden og
 gemmes kun i browserens `localStorage` på den telefon, der bruger den.
@@ -143,12 +162,16 @@ læses eller skiftes der:
 De blev afleveret, mens prøven havde 60 spørgsmål, så deres tal passede
 ikke til facit længere. Databasen er tom og klar til klassen.
 
-**Det, der mangler:** låsen. Én aflevering pr. unge og en kontakt, læreren
-kan slå fra, når prøven er slut. SQL'en er skrevet (unikt indeks på
-`proeve` + navn + klasse, `lukket`-kolonne på `skole_test_adgang`, en
-`before insert`-trigger og `skole_test_saet_laas(kode, luk, p)`), men
-godkendelsesdialogen nåede ikke igennem. Indtil den er lagt ind, kan en
-unge aflevere to gange — og begge rækker tæller med.
+**Låsen er på plads.** Unikt indeks på `proeve` + navn + klasse, en
+`lukket`-kolonne på `skole_test_adgang` og en `before insert`-trigger.
+Prøver en unge at aflevere to gange, står der *"Du har allerede
+afleveret"*; er prøven lukket, *"Prøven er lukket"*. Begge dele er
+afprøvet på den rigtige side.
+
+**Rettet undervejs:** betingelsen `antal_svar` i databasen krævede stadig
+60 svar, mens siden sender 58. Ingen ville have kunnet aflevere. Den er
+rettet til 58, og hele kæden er prøvet af: aflevering, rettelse,
+resultatside.
 
 ## Lavet 18. november 2026 · brøker og procent i hverdagen
 
