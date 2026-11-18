@@ -441,24 +441,24 @@ SPM_REGERING = [
   'Paratviden', '82', ('90', '101'),
   'Det er færre end de 90, der skal til for et flertal. Regeringen er '
   'altså en mindretalsregering og skal finde flertal fra sag til sag.'),
- (F_REGERING, 'Hvad vil det sige, at Danmark har negativ parlamentarisme?',
+ ('', 'Hvad vil det sige, at Danmark har negativ parlamentarisme?',
   'Forstå', 'En regering kan sidde, så længe der ikke er et flertal imod den',
   ('En regering skal have et flertal bag sig for at kunne sidde',
    'Folketinget kan ikke vælte en regering'),
   'Derfor kan en regering med 82 mandater godt regere. Den skal bare '
   'undgå, at 90 andre stemmer den ned.'),
- (F_REGERING, 'Hvem er finansminister?', 'Paratviden', 'Peter Hummelgaard',
+ ('', 'Hvem er finansminister?', 'Paratviden', 'Peter Hummelgaard',
   ('Nicolai Wammen', 'Pia Olsen Dyhr'),
   'Nicolai Wammen er justitsminister i den nuværende regering, og '
   'Pia Olsen Dyhr er økonomi- og indenrigsminister.'),
- (F_REGERING, 'Hvem er udenrigsminister?', 'Paratviden',
+ ('', 'Hvem er udenrigsminister?', 'Paratviden',
   'Lars Løkke Rasmussen', ('Mette Frederiksen', 'Troels Lund Poulsen'),
   'Lars Løkke Rasmussen er formand for Moderaterne, som er et af de fire '
   'regeringspartier.'),
 ]
 
 SPM_OEKONOMI = [
- (F_OEKONOMI, 'Hvad er BNP?', 'Økonomi',
+ ('', 'Hvad er BNP?', 'Økonomi',
   'Værdien af alt det, der produceres i et land på et år',
   ('Summen af alle danskeres løn efter skat',
    'Statens samlede udgifter på finansloven'),
@@ -470,13 +470,13 @@ SPM_OEKONOMI = [
    'Omkring 30.000 milliarder kroner om året'),
   'Cirka 750 milliarder i kvartalet. Det er størrelsesordenen, der '
   'tæller her — ikke decimalerne.'),
- (F_OEKONOMI, 'Hvorfor er BNP ikke et mål for, hvor godt folk har det?',
+ ('', 'Hvorfor er BNP ikke et mål for, hvor godt folk har det?',
   'Forstå', 'Fordi det kun måler produktionen og intet siger om fordelingen',
   ('Fordi det kun opgøres hvert tiende år',
    'Fordi det ikke medregner virksomheder'),
   'To lande kan have samme BNP og helt forskellig ulighed. Derfor '
   'bruges BNP sammen med andre tal, ikke alene.'),
- (F_INFLATION, 'Hvad er inflation?', 'Økonomi',
+ ('', 'Hvad er inflation?', 'Økonomi',
   'At priserne generelt stiger, så pengene kan købe mindre',
   ('At lønningerne stiger', 'At der bliver trykt flere pengesedler'),
   'Inflationen måles med forbrugerprisindekset, som følger prisen på '
@@ -485,18 +485,18 @@ SPM_OEKONOMI = [
   'oktober 2026?', 'Paratviden', '2,2 %', ('0,5 %', '7,4 %'),
   'Tallet er fra Danmarks Statistik, offentliggjort 10. november 2026. '
   'Fra september til oktober alene steg indekset 0,5 %.'),
- (F_INFLATION, 'Hvad er kerneinflation?', 'Økonomi',
+ ('', 'Hvad er kerneinflation?', 'Økonomi',
   'Inflationen uden energi og uforarbejdede fødevarer',
   ('Inflationen kun på fødevarer', 'Inflationen målt over ti år'),
   'Energi- og fødevarepriser svinger meget fra måned til måned. '
   'Kerneinflationen viser den mere stabile udvikling — 1,7 % i oktober.'),
- (F_OEKONOMI, 'Hvad måler betalingsbalancen?', 'Økonomi',
+ ('', 'Hvad måler betalingsbalancen?', 'Økonomi',
   'Forskellen mellem det, Danmark tjener i udlandet, og det vi betaler dertil',
   ('Forskellen mellem statens indtægter og udgifter',
    'Hvor mange penge danskerne har i banken'),
   'Det er landet over for udlandet. Statens indtægter og udgifter er '
   'noget andet — det er finansloven og det offentlige budget.'),
- (F_OEKONOMI, 'Danmark havde i 2025 et overskud på betalingsbalancen på '
+ ('', 'Danmark havde i 2025 et overskud på betalingsbalancen på '
   'cirka 441 milliarder kroner. Hvad svarer det til?', 'Økonomi',
   'Omkring 14 % af BNP', ('Omkring 2 % af BNP', 'Omkring 45 % af BNP'),
   'Overskuddet er vokset fra 190 mia. kr. i 2018. Et stort og vedvarende '
