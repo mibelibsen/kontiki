@@ -196,7 +196,17 @@ JS = '''
       body:JSON.stringify({proeve:PROEVE,kode:KODE,navn:navn,klasse:klasse,
         svar:svar,sekunder:Math.round((Date.now()-start)/1000)})})
     .then(function(r){
-      if(!r.ok)throw new Error('HTTP '+r.status);
+      if(!r.ok) return r.text().then(function(t){
+        var m='';
+        try{m=(JSON.parse(t)||{}).message||'';}catch(e){}
+        var e2=new Error(m||('HTTP '+r.status));
+        e2.kendt=(m==='du har allerede afleveret'||m==='proeven er lukket');
+        e2.paen=(m==='du har allerede afleveret')
+          ?'Du har allerede afleveret. Dine svar er gemt — sig til læreren, hvis noget er galt.'
+          :(m==='proeven er lukket')
+          ?'Prøven er lukket. Sig til læreren.' : '';
+        throw e2;
+      });
       sendt=true;
       try{localStorage.removeItem(GEM);}catch(e){}
       document.getElementById('testen').style.display='none';
@@ -208,6 +218,7 @@ JS = '''
     })
     .catch(function(err){
       knap.disabled=false; knap.textContent='Aflever';
+      if(err.kendt){ vis(err.paen,'fejl'); return; }
       vis('Det kunne ikke sendes ('+err.message+'). Dine svar er gemt i '+
         'browseren — prøv igen om et øjeblik, og sig til læreren, hvis '+
         'det bliver ved.','fejl');

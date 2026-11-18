@@ -45,8 +45,16 @@ button.stille{background:#fff;color:var(--accent);margin-top:0}
 button:hover{filter:brightness(1.07)}
 .fejl{color:var(--rod);font-weight:600;min-height:1.5em;margin:10px 0 0}
 
+.laasrk{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+border:1px solid var(--line);border-radius:12px;padding:12px 15px;
+margin:22px 0 0;font-size:15px}
+.laasrk .tekst{flex:1;min-width:210px}
+.laasrk .prik{width:10px;height:10px;border-radius:50%;background:var(--ok);
+display:inline-block;margin-right:9px;flex:none}
+.laasrk.lukket .prik{background:var(--rod)}
+.laasrk button{margin-top:0;white-space:nowrap}
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
-margin:20px 0 6px}
+margin:14px 0 6px}
 .tile{border:1px solid var(--line);border-radius:12px;padding:13px 14px}
 .tile .navn{font-size:13px;color:var(--muted);letter-spacing:.01em}
 .tile .tal{font-size:30px;font-weight:700;line-height:1.15;
@@ -134,6 +142,11 @@ margin-left:6px;white-space:nowrap}
 
 <div id="data" hidden>
 
+  <div class="laasrk" id="laasrk">
+    <span class="tekst" id="laasstatus">—</span>
+    <button id="laasknap" class="stille">Luk prøven</button>
+  </div>
+
   <div class="tiles">
     <div class="tile"><div class="navn">Afleveret</div>
       <div class="tal" id="t-antal">–</div>
@@ -188,7 +201,7 @@ margin-left:6px;white-space:nowrap}
   var URL="https://pxdnszdukyjnbfmcpbvi.supabase.co", NOEGLE="sb_publishable_PvPfK3dFW7I2A0U-31Z5Qw_-uIOnzPe", PROEVE="samfundsfag-60";
   var SPM=[[1, "Hvor mange gange skal et lovforslag behandles i Folketinget, før det kan vedtages?", "Teksterne"], [2, "Hvad er et høringssvar?", "Teksterne"], [3, "Hvad sker der ved 1. behandling?", "Teksterne"], [4, "Hvor i lovprocessen sker det meste af arbejdet?", "Teksterne"], [5, "Hvad er et L-nummer?", "Teksterne"], [6, "Hvor stor en del af Folketingets medlemmer kan kræve en vedtaget lov sendt til folkeafstemning?", "Teksterne"], [7, "Hvad betyder navnene primær, sekundær og tertiær socialisering?", "Teksterne"], [8, "Hvad er en social sanktion?", "Teksterne"], [9, "Hvor stor en andel af de 15–19-årige har over 6 timers skærm om dagen?", "Digital socialisering"], [10, "Hvilken gruppe på figuren har den højeste andel med over 6 timers skærm?", "Digital socialisering"], [11, "Hvorfor har den grå søjle sin egen farve?", "Digital socialisering"], [12, "Hvor mange timer om dagen bruger danske 15-årige digitale redskaber i skoletiden?", "Digital socialisering"], [13, "Hvor stor en del af de danske elever bruger digitale redskaber i hver time eller næsten hver time?", "Digital socialisering"], [14, "Hvordan udviklede problematisk brug af sociale medier sig fra 2018 til 2022 i de 44 lande?", "Digital socialisering"], [15, "Hvad betyder det i undersøgelsen, at brugen er problematisk?", "Digital socialisering"], [16, "Hvad viser tallene for piger og drenge?", "Digital socialisering"], [17, "Hvilken aldersgruppe synes selv, at flest af dem bruger for meget tid på sociale medier?", "Digital socialisering"], [18, "Australien forbød sociale medier for børn under 16 i december 2025. Hvad viste målingen tre måneder efter?", "Digital socialisering"], [19, "Hvad er en stor sprogmodel (LLM) trænet til at gøre?", "AI-ordbogen"], [20, "Hvad er et token?", "AI-ordbogen"], [21, "Hvad er en hallucination?", "AI-ordbogen"], [22, "Hvad er et kontekstvindue?", "AI-ordbogen"], [23, "Hvad er forskellen på en chatbot og en agent?", "AI-ordbogen"], [24, "Hvad betyder menneske i løkken?", "AI-ordbogen"], [25, "Hvad er edge AI?", "AI-ordbogen"], [26, "ChatGPTs og Geminis brugertal kan ikke sammenlignes direkte. Hvorfor ikke?", "AI-ordbogen"], [27, "Hvem har kontrollen over OpenAI?", "AI-ordbogen"], [28, "Hvorfor regnes Nvidia med blandt de største aktører inden for AI?", "AI-ordbogen"], [29, "Hvad er en ideologi?", "Partier og ideologi"], [30, "Hvad er kernen i liberalismen?", "Partier og ideologi"], [31, "Hvad er kernen i socialismen?", "Partier og ideologi"], [32, "Hvad er kernen i konservatismen?", "Partier og ideologi"], [33, "Hvilket parti ligger længst til venstre i Folketinget?", "Partier og ideologi"], [34, "Partiet Venstre ligger på højrefløjen. Hvorfor hedder det så Venstre?", "Partier og ideologi"], [35, "Hvad menes der med rød og blå blok?", "Partier og ideologi"], [36, "Et parti vil sænke skatten og samtidig skære i den offentlige sektor. Hvilken ideologi trækker det på?", "Partier og ideologi"], [37, "Hvad kendetegner den universelle velfærdsmodel, som Danmark bruger?", "Partier og ideologi"], [38, "Hvad er forskellen på en ideologi og et partiprogram?", "Partier og ideologi"], [39, "Hvor mange mandater er der i Folketinget?", "Regeringen og Folketinget"], [40, "Hvor mange mandater skal der til for at have flertal?", "Regeringen og Folketinget"], [41, "Hvor mange mandater vælges der på Færøerne og i Grønland tilsammen?", "Regeringen og Folketinget"], [42, "Hvornår var der folketingsvalg sidst?", "Regeringen og Folketinget"], [43, "Hvilke partier sidder i regeringen?", "Regeringen og Folketinget"], [44, "Hvem er statsminister?", "Regeringen og Folketinget"], [45, "Hvor mange mandater har regeringspartierne tilsammen?", "Regeringen og Folketinget"], [46, "Hvad vil det sige, at Danmark har negativ parlamentarisme?", "Regeringen og Folketinget"], [47, "Hvem er finansminister?", "Regeringen og Folketinget"], [48, "Hvem er udenrigsminister?", "Regeringen og Folketinget"], [49, "Hvad er BNP?", "Økonomi, EU og OECD"], [50, "Hvor stort er Danmarks BNP cirka?", "Økonomi, EU og OECD"], [51, "Hvorfor er BNP ikke et mål for, hvor godt folk har det?", "Økonomi, EU og OECD"], [52, "Hvad er inflation?", "Økonomi, EU og OECD"], [53, "Hvor meget steg priserne i Danmark fra oktober 2025 til oktober 2026?", "Økonomi, EU og OECD"], [54, "Hvad er kerneinflation?", "Økonomi, EU og OECD"], [55, "Hvad måler betalingsbalancen?", "Økonomi, EU og OECD"], [56, "Danmark havde i 2025 et overskud på betalingsbalancen på cirka 441 milliarder kroner. Hvad svarer det til?", "Økonomi, EU og OECD"], [57, "Hvor mange lande er med i EU?", "Økonomi, EU og OECD"], [58, "Hvor mange lande er med i OECD?", "Økonomi, EU og OECD"]], EMNER=["Teksterne", "Digital socialisering", "AI-ordbogen", "Partier og ideologi", "Regeringen og Folketinget", "Økonomi, EU og OECD"], ANTAL=SPM.length;
   var GEM='samf60_laererkode_v1', TIK=20000;
-  var elever=[], tal=[], kode='', timer=null, henter=false;
+  var elever=[], tal=[], kode='', timer=null, henter=false, lukket=false;
   var sort={felt:'procent',ned:true};
 
   var E=function(id){return document.getElementById(id)};
@@ -210,11 +223,13 @@ margin-left:6px;white-space:nowrap}
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});
   }
 
-  function kald(navn, cb){
+  function kald(navn, cb, ekstra){
+    var krop={kode:kode,p:PROEVE};
+    if(ekstra) for(var n in ekstra) krop[n]=ekstra[n];
     fetch(URL+'/rest/v1/rpc/'+navn,{method:'POST',
       headers:{'apikey':NOEGLE,'Authorization':'Bearer '+NOEGLE,
                'Content-Type':'application/json'},
-      body:JSON.stringify({kode:kode,p:PROEVE})})
+      body:JSON.stringify(krop)})
     .then(function(r){
       return r.json().then(function(j){return {ok:r.ok,j:j}});
     }).then(function(s){
@@ -240,6 +255,9 @@ margin-left:6px;white-space:nowrap}
         E('live').hidden=false; E('live').className='live';
         E('livetxt').textContent='opdateret '+nu();
         tegn();
+        kald('skole_test_status',function(f3,r3){
+          if(!f3 && r3 && r3[0]) visLaas(!!r3[0].lukket);
+        });
         if(!timer) timer=setInterval(function(){
           if(!document.hidden) hent(true);
         },TIK);
@@ -367,6 +385,15 @@ margin-left:6px;white-space:nowrap}
       'Ingen svar endnu.</td></tr>';
   }
 
+  function visLaas(l){
+    lukket=l;
+    E('laasrk').className='laasrk'+(l?' lukket':'');
+    E('laasstatus').innerHTML='<span class="prik"></span>Prøven er <b>'+
+      (l?'lukket':'åben')+'</b> — '+
+      (l?'ingen kan aflevere.':'ungerne kan aflevere.');
+    E('laasknap').textContent=l?'Åbn prøven igen':'Luk prøven';
+  }
+
   function csv(){
     var r=['navn;klasse;rigtige;forkerte;ubesvarede;procent;sekunder;afleveret'];
     for(var k=0;k<elever.length;k++){
@@ -390,6 +417,17 @@ margin-left:6px;white-space:nowrap}
   });
   E('kode').addEventListener('keydown',function(e){
     if(e.key==='Enter') E('aabn').click();
+  });
+  E('laasknap').addEventListener('click',function(){
+    var nyt=!lukket, b=this;
+    if(nyt && !confirm('Luk prøven? Så kan ingen aflevere mere.')) return;
+    b.disabled=true;
+    kald('skole_test_saet_laas',function(f,r){
+      b.disabled=false;
+      if(f){ E('livetxt').textContent='kunne ikke ændre låsen ('+f+')';
+             E('live').className='live tier'; return; }
+      visLaas(r===true);
+    },{luk:nyt});
   });
   E('nu').addEventListener('click',function(){hent(false)});
   E('csv').addEventListener('click',csv);

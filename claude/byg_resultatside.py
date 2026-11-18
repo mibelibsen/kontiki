@@ -91,8 +91,16 @@ button.stille{background:#fff;color:var(--accent);margin-top:0}
 button:hover{filter:brightness(1.07)}
 .fejl{color:var(--rod);font-weight:600;min-height:1.5em;margin:10px 0 0}
 
+.laasrk{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+border:1px solid var(--line);border-radius:12px;padding:12px 15px;
+margin:22px 0 0;font-size:15px}
+.laasrk .tekst{flex:1;min-width:210px}
+.laasrk .prik{width:10px;height:10px;border-radius:50%;background:var(--ok);
+display:inline-block;margin-right:9px;flex:none}
+.laasrk.lukket .prik{background:var(--rod)}
+.laasrk button{margin-top:0;white-space:nowrap}
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
-margin:20px 0 6px}
+margin:14px 0 6px}
 .tile{border:1px solid var(--line);border-radius:12px;padding:13px 14px}
 .tile .navn{font-size:13px;color:var(--muted);letter-spacing:.01em}
 .tile .tal{font-size:30px;font-weight:700;line-height:1.15;
@@ -161,7 +169,7 @@ JS = r'''
   var URL=__URL__, NOEGLE=__NOEGLE__, PROEVE=__PROEVE__;
   var SPM=__SPM__, EMNER=__EMNER__, ANTAL=SPM.length;
   var GEM='samf60_laererkode_v1', TIK=20000;
-  var elever=[], tal=[], kode='', timer=null, henter=false;
+  var elever=[], tal=[], kode='', timer=null, henter=false, lukket=false;
   var sort={felt:'procent',ned:true};
 
   var E=function(id){return document.getElementById(id)};
@@ -183,11 +191,13 @@ JS = r'''
       return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});
   }
 
-  function kald(navn, cb){
+  function kald(navn, cb, ekstra){
+    var krop={kode:kode,p:PROEVE};
+    if(ekstra) for(var n in ekstra) krop[n]=ekstra[n];
     fetch(URL+'/rest/v1/rpc/'+navn,{method:'POST',
       headers:{'apikey':NOEGLE,'Authorization':'Bearer '+NOEGLE,
                'Content-Type':'application/json'},
-      body:JSON.stringify({kode:kode,p:PROEVE})})
+      body:JSON.stringify(krop)})
     .then(function(r){
       return r.json().then(function(j){return {ok:r.ok,j:j}});
     }).then(function(s){
@@ -213,6 +223,9 @@ JS = r'''
         E('live').hidden=false; E('live').className='live';
         E('livetxt').textContent='opdateret '+nu();
         tegn();
+        kald('skole_test_status',function(f3,r3){
+          if(!f3 && r3 && r3[0]) visLaas(!!r3[0].lukket);
+        });
         if(!timer) timer=setInterval(function(){
           if(!document.hidden) hent(true);
         },TIK);
@@ -340,6 +353,15 @@ JS = r'''
       'Ingen svar endnu.</td></tr>';
   }
 
+  function visLaas(l){
+    lukket=l;
+    E('laasrk').className='laasrk'+(l?' lukket':'');
+    E('laasstatus').innerHTML='<span class="prik"></span>Prøven er <b>'+
+      (l?'lukket':'åben')+'</b> — '+
+      (l?'ingen kan aflevere.':'ungerne kan aflevere.');
+    E('laasknap').textContent=l?'Åbn prøven igen':'Luk prøven';
+  }
+
   function csv(){
     var r=['navn;klasse;rigtige;forkerte;ubesvarede;procent;sekunder;afleveret'];
     for(var k=0;k<elever.length;k++){
@@ -363,6 +385,17 @@ JS = r'''
   });
   E('kode').addEventListener('keydown',function(e){
     if(e.key==='Enter') E('aabn').click();
+  });
+  E('laasknap').addEventListener('click',function(){
+    var nyt=!lukket, b=this;
+    if(nyt && !confirm('Luk prøven? Så kan ingen aflevere mere.')) return;
+    b.disabled=true;
+    kald('skole_test_saet_laas',function(f,r){
+      b.disabled=false;
+      if(f){ E('livetxt').textContent='kunne ikke ændre låsen ('+f+')';
+             E('live').className='live tier'; return; }
+      visLaas(r===true);
+    },{luk:nyt});
   });
   E('nu').addEventListener('click',function(){hent(false)});
   E('csv').addEventListener('click',csv);
@@ -437,6 +470,11 @@ def side():
 </section>
 
 <div id="data" hidden>
+
+  <div class="laasrk" id="laasrk">
+    <span class="tekst" id="laasstatus">—</span>
+    <button id="laasknap" class="stille">Luk prøven</button>
+  </div>
 
   <div class="tiles">
     <div class="tile"><div class="navn">Afleveret</div>
