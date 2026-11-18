@@ -160,7 +160,20 @@ læses eller skiftes der:
 
 **De tre testrækker er slettet** (`Testelev`, `Proevekoersel`, `Mbtest`).
 De blev afleveret, mens prøven havde 60 spørgsmål, så deres tal passede
-ikke til facit længere. Databasen er tom og klar til klassen.
+ikke til facit længere.
+
+**Én række ligger der stadig, men tæller ikke med.** Kontrolafleveringen
+`Zzkontrol` fra afprøvningen af kæden. Supabase kræver en godkendelse for
+at slette, og den dialog nåede ikke frem to gange i træk. Rækken er i
+stedet flyttet ud af prøven med `proeve = 'kontrol-slettes'`, og da alle
+fire funktioner og begge views filtrerer på `proeve = 'samfundsfag-60'`,
+er den usynlig overalt. Ryd op, når der er lejlighed:
+
+```sql
+delete from public.skole_test_svar where proeve = 'kontrol-slettes';
+```
+
+Prøven viser nul afleveringer og er klar til klassen.
 
 **Låsen er på plads.** Unikt indeks på `proeve` + navn + klasse, en
 `lukket`-kolonne på `skole_test_adgang` og en `before insert`-trigger.
