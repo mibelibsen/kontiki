@@ -127,10 +127,11 @@ def spm_html():
             f'data-q="{nr}" data-v="{i}"><span class="mk">{"ABC"[i]}</span>'
             f'<span>{html.escape(v)}</span></button>'
             for i, v in enumerate(valg))
+        figur = f'<div class="qfig">{FIGUR[fignr]}</div>' if fignr else ''
         ud.append(
             f'<section class="q" id="q{nr}"><div class="qtext">'
             f'<span class="qn">{nr}.</span><span>{html.escape(tekst)}</span>'
-            f'</div><div class="qfig">{FIGUR[fignr]}</div>'
+            f'</div>{figur}'
             f'<div class="opts">{knapper}</div></section>')
     return ''.join(ud)
 

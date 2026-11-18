@@ -63,6 +63,7 @@ for _ in range(20):
     b = [0, 1, 2]
     _r.shuffle(b)
     ORDEN += b
+# der laves 60 pladser; de foerste ANTAL bruges, resten ligger ubrugt
 assert len(ORDEN) == 60 and all(ORDEN.count(i) == 20 for i in range(3))
 
 
@@ -94,23 +95,20 @@ F_LOV = FG.procesdiagram([
    legende=[('Ministeriet', 'a'), ('Folketinget', 'b'), ('Efter vedtagelsen', 'c')])
 
 F_LOV_KORT = FG.procesdiagram([
-    ('Ministeriet: udkast, høring og høringsnotat', '', 'a'),
-    ('Fremsættelse — forslaget får et L-nummer', '', 'b'),
-    ('1. behandling — og derefter i udvalg', '', 'b'),
-    ('Udvalgsbehandling — betænkning', '', 'b'),
-    ('2. behandling — ændringsforslag', '', 'b'),
-    ('3. behandling — endelig afstemning', '', 'b'),
-    ('Stadfæstelse og Lovtidende', '', 'c'),
+    ('Ministeriet', '', 'a'),
+    ('Fremsættelse', '', 'b'),
+    ('1. behandling', '', 'b'),
+    ('Udvalgsbehandling', '', 'b'),
+    ('2. behandling', '', 'b'),
+    ('3. behandling', '', 'b'),
+    ('Stadfæstelse', '', 'c'),
 ], W=560, farver={'a': FG.MUT, 'b': FG.BLA, 'c': FG.GRO})
 
 F_RINGE = FG.socialisationsringe([
-    ('Primær', '#c23b4b', 'familie · hjemmet'),
-    ('Sekundær', '#1f6fd6', 'skole · venner · klub · job'),
-    ('Tertiær', '#b5710a', 'feed · influencere · reklamer')])
-F_KRYDS = FG.krydspres([
-    ('Hjemme', 'mobilen væk ved bordet'),
-    ('I klassen', 'svar nu, ellers er du udenfor'),
-    ('I feedet', 'bliv — der kommer mere')])
+    ('Primær', '#c23b4b', ''), ('Sekundær', '#1f6fd6', ''),
+    ('Tertiær', '#b5710a', '')])
+F_KRYDS = FG.krydspres([('Hjemme', ''), ('I klassen', ''),
+                        ('I feedet', '')])
 F_NORM = FG.procesdiagram([
     ('Normen', 'Det, de fleste gør — og regner med at du også gør', 'n'),
     ('Bruddet', 'Nogen gør noget andet', 'n'),
@@ -150,22 +148,16 @@ F_AGENT = FG.procesdiagram([
     ('Menneske i løkken', 'Nogen godkender det, der ikke kan fortrydes.', 's'),
 ], farver={'i': FG.MUT, 'k': FG.BLA, 's': FG.ROD})
 F_NORM_KORT = FG.procesdiagram([
-    ('Normen — det, de fleste gør', '', 'n'),
-    ('Bruddet — nogen gør noget andet', '', 'n'),
-    ('Sanktionen — reaktionen', '', 'r'),
-    ('Normen står fast — nu ved alle, hvor grænsen går', '', 'n'),
+    ('Normen', '', 'n'), ('Bruddet', '', 'n'),
+    ('Sanktionen', '', 'r'), ('Normen står fast', '', 'n'),
 ], W=540, farver={'n': FG.BLA, 'r': FG.ROD})
 F_LLM_KORT = FG.procesdiagram([
-    ('Du skriver — teksten deles i tokens', '', 'i'),
-    ('Modellen regner — hvad er mest sandsynligt?', '', 'k'),
-    ('Ét token ad gangen — og forfra igen', '', 'k'),
-    ('Du læser et svar', '', 'u'),
+    ('Du skriver', '', 'i'), ('Modellen regner', '', 'k'),
+    ('Ét token ad gangen', '', 'k'), ('Du læser et svar', '', 'u'),
 ], W=540, farver={'i': FG.MUT, 'k': FG.BLA, 'u': FG.GRO})
 F_AGENT_KORT = FG.procesdiagram([
-    ('Mål — en opgave, ikke et spørgsmål', '', 'i'),
-    ('Tænk — modellen vælger selv næste skridt', '', 'k'),
-    ('Brug et værktøj — søg, skriv, send', '', 'k'),
-    ('Menneske i løkken — nogen godkender', '', 's'),
+    ('Mål', '', 'i'), ('Tænk', '', 'k'),
+    ('Brug et værktøj', '', 'k'), ('Menneske i løkken', '', 's'),
 ], W=540, farver={'i': FG.MUT, 'k': FG.BLA, 's': FG.ROD})
 F_AIBRUG = FG.soejler([1000, 950, 382, 167, 150, 130, 117],
                       ['Meta AI', 'Gemini', 'Doubao', 'Qwen', 'Copilot',
@@ -220,12 +212,6 @@ SPM_TEKST = [
   'Udvalget stiller skriftlige spørgsmål til ministeren, kan kalde '
   'eksperter ind, og partierne stiller ændringsforslag. Til sidst skriver '
   'udvalget en betænkning.'),
- (F_LOV_KORT, 'Hvad er en betænkning?', 'Lovprocessen',
-  'Udvalgets skriftlige indstilling — hvad hvert parti mener og vil stemme',
-  ('Et brev fra en borger til Folketinget',
-   'Den tekst, der trykkes i Lovtidende'),
-  'Betænkningen er den korteste vej til at se, hvor partierne står, før '
-  'der overhovedet er stemt.'),
  (F_LOV_KORT, 'Hvad er et L-nummer?', 'Lovprocessen',
   'Lovforslagets nummer i Folketinget, fx L 42',
   ('Nummeret på den lov, der bliver trykt i Lovtidende',
@@ -237,16 +223,12 @@ SPM_TEKST = [
   ('Et flertal', 'To tredjedele'),
   'Det står i grundlovens § 42. Nogle love er undtaget — blandt andet '
   'finanslove og skattelove.'),
- (F_LOV_KORT, 'Hvor bliver en vedtaget lov kundgjort?', 'Lovprocessen',
-  'I Lovtidende', ('I Statstidende', 'På Folketingets hjemmeside'),
-  'En lov, der ikke er kundgjort, gælder ikke. Derfor er kundgørelsen '
-  'et selvstændigt trin og ikke bare en formalitet.'),
  (F_RINGE, 'Hvad betyder navnene primær, sekundær og tertiær socialisering?',
   'Socialisering', 'Rækkefølgen — hvad der kom først i ens liv',
   ('Hvor vigtig arenaen er', 'Hvor mange timer man bruger der'),
   'Den primære arena var der, før du kunne vælge noget som helst. '
   'Navnene siger intet om, hvad der betyder mest i dag.'),
- (F_NORM_KORT, 'Hvad er en sanktion?', 'Socialisering',
+ ('', 'Hvad er en social sanktion?', 'Socialisering',
   'Den reaktion, der kommer, når nogen bryder en norm',
   ('En skreven regel, der hænger på væggen',
    'En straf, der gives af en myndighed'),
@@ -255,8 +237,8 @@ SPM_TEKST = [
 ]
 
 SPM_DIGITAL = [
- (F_SKAERM, 'Hvor stor en andel af de 15–19-årige har over 6 timers skærm '
-  'om dagen?', 'Aflæs', '27 %', ('16 %', '72 %'),
+ ('', 'Hvor stor en andel af de 15–19-årige har over 6 timers skærm '
+  'om dagen?', 'Paratviden', '27 %', ('16 %', '72 %'),
   'Tallet er fra Danmarks Statistik, 31. august 2026. Det dækker al '
   'skærmtid: mobil, computer, tv og spil — ikke kun sociale medier.'),
  (F_SKAERM, 'Hvilken gruppe på figuren har den højeste andel med over '
@@ -269,36 +251,36 @@ SPM_DIGITAL = [
   ('Fordi tallet er fra et andet år', 'Fordi tallet er usikkert'),
   'Hele befolkningen fra 15 til 89 år er ét samlet tal. Sættes den som '
   'en tredje søjle i samme farve, læses den som en tredje aldersgruppe.'),
- (F_SKOLE, 'Hvor mange timer om dagen bruger danske 15-årige digitale '
-  'redskaber i skoletiden?', 'Aflæs', '3,8 timer', ('2 timer', '6 timer'),
+ ('', 'Hvor mange timer om dagen bruger danske 15-årige digitale '
+  'redskaber i skoletiden?', 'Paratviden', '3,8 timer', ('2 timer', '6 timer'),
   'Det er det højeste af alle 81 lande i PISA 2022 — næsten det dobbelte '
   'af OECD-gennemsnittet på 2 timer.'),
- (F_SKOLE, 'Hvor stor en del af de danske elever bruger digitale redskaber '
+ ('', 'Hvor stor en del af de danske elever bruger digitale redskaber '
   'i hver time eller næsten hver time?', 'Paratviden', '72 %',
   ('16 %', '38 %'), 'I OECD som helhed er tallet 16 %. Det er dér, '
   'Danmark for alvor skiller sig ud — ikke på fritidsforbruget.'),
- (F_PROBLEM, 'Hvordan udviklede problematisk brug af sociale medier sig '
+ ('', 'Hvordan udviklede problematisk brug af sociale medier sig '
   'fra 2018 til 2022 i de 44 lande?', 'Aflæs',
   'Fra 7 % til 11 %', ('Fra 11 % til 7 %', 'Den var uændret'),
   'Kilden er WHO Europa, 25. september 2024. Problematisk brug betyder, '
   'at den unge har mistet kontrollen — ikke bare at der bruges lang tid.'),
- (F_PROBLEM, 'Hvad betyder det i undersøgelsen, at brugen er problematisk?',
+ ('', 'Hvad betyder det i undersøgelsen, at brugen er problematisk?',
   'Forstå', 'At den unge har mistet kontrollen over den',
   ('At den unge bruger mere end 6 timer om dagen',
    'At forældrene synes, det er for meget'),
   'Kan ikke lade være, forsømmer andet, får det dårligt uden. Lang tid '
   'er ikke i sig selv problematisk brug.'),
- (F_KOEN, 'Hvad viser tallene for piger og drenge?', 'Forstå',
+ ('', 'Hvad viser tallene for piger og drenge?', 'Forstå',
   'Piger ligger højest på sociale medier, drenge højest på gaming',
   ('Piger ligger højest på begge dele', 'Drenge ligger højest på begge dele'),
   'Sociale medier: 13 % mod 9 %. Gaming: 16 % mod 7 %. Et samlet tal for '
   'unge skjuler to forskellige mønstre.'),
- (F_FORMEGET, 'Hvilken aldersgruppe synes selv, at flest af dem bruger for '
+ ('', 'Hvilken aldersgruppe synes selv, at flest af dem bruger for '
   'meget tid på sociale medier?', 'Aflæs', 'De 18–25-årige',
   ('De 8–12-årige', 'De 13–17-årige'),
   '40 % mod 35 % og 25 %. Jo ældre, jo mere kritiske er de unge selv — '
   'det er ikke kun voksne, der synes, der er et problem.'),
- (F_FORMEGET, 'Australien forbød sociale medier for børn under 16 i '
+ ('', 'Australien forbød sociale medier for børn under 16 i '
   'december 2025. Hvad viste målingen tre måneder efter?', 'Forstå',
   'At 8 ud af 10 australske teenagere under 16 stadig brugte dem',
   ('At næsten ingen brugte dem længere',
@@ -340,17 +322,18 @@ SPM_AI = [
    'At modellen er trænet af mennesker'),
   'Sende, slette, betale. Den vigtigste sikring der findes — spørg altid, '
   'hvem der godkender.'),
- (F_AGENT_KORT, 'Hvad er edge AI?', 'AI-ordbog',
+ ('', 'Hvad er edge AI?', 'AI-ordbog',
   'AI, der kører på selve enheden i stedet for i et datacenter',
   ('AI, der kun bruges af virksomheder', 'Den nyeste version af en model'),
   'Edge betyder kanten af nettet — altså ude hos dig. Det er hurtigere, '
   'virker uden net, og dine data forlader ikke dimsen.'),
- (F_AIBRUG, 'Hvorfor kan ChatGPT ikke sættes ind på denne figur?',
-  'Kildekritik', 'Fordi OpenAI opgør sine brugere pr. uge og ikke pr. måned',
+ ('', 'ChatGPTs og Geminis brugertal kan ikke sammenlignes direkte. '
+  'Hvorfor ikke?', 'Kildekritik',
+  'Fordi OpenAI opgør sine brugere pr. uge og Google pr. måned',
   ('Fordi ChatGPT har for få brugere',
    'Fordi OpenAI ikke oplyser nogen tal'),
   'En uge og en måned er ikke samme vindue. To tal med forskellig enhed '
-  'kan ikke stå på samme akse, selv om begge hedder brugere.'),
+  'kan ikke sammenlignes, selv om begge hedder brugere.'),
  (F_EJERE, 'Hvem har kontrollen over OpenAI?', 'AI-ordbog',
   'OpenAI Foundation, fordi fonden udpeger bestyrelsen',
   ('Microsoft, fordi de ejer den største andel',
@@ -390,7 +373,7 @@ SPM_IDEOLOGI = [
    'At staten skal eje jorden'),
   'Konservatismen lægger vægt på traditioner, familien, ejendomsretten og '
   'orden — og er skeptisk over for store, hurtige reformer.'),
- (F_AKSE, 'Hvilket parti ligger længst til venstre i Folketinget?',
+ ('', 'Hvilket parti ligger længst til venstre i Folketinget?',
   'Paratviden', 'Enhedslisten', ('Socialdemokratiet', 'Radikale Venstre'),
   'Enhedslisten fik 11 mandater ved valget i 2026. Socialdemokratiet er '
   'det største parti på venstrefløjen, men ligger tættere på midten.'),
@@ -432,15 +415,15 @@ SPM_REGERING = [
   '179', ('175', '180'),
   'De 175 vælges i Danmark. Færøerne og Grønland vælger to hver — '
   'det er derfor, tallet er 179 og ikke 175.'),
- (F_SAL, 'Hvor mange mandater skal der til for at have flertal?',
+ ('', 'Hvor mange mandater skal der til for at have flertal?',
   'Paratviden', '90', ('89', '91'),
   'Halvdelen af 179 er 89,5 — så flertallet begynder ved 90. Det er '
   'derfor stregen i figuren ligger, hvor den gør.'),
- (F_SAL, 'Hvor mange mandater vælges der på Færøerne og i Grønland '
+ ('', 'Hvor mange mandater vælges der på Færøerne og i Grønland '
   'tilsammen?', 'Paratviden', '4', ('2', '6'),
   'To fra hvert sted. De nordatlantiske mandater har flere gange været '
   'afgørende for, om en regering havde flertal.'),
- (F_SAL, 'Hvornår var der folketingsvalg sidst?', 'Paratviden',
+ ('', 'Hvornår var der folketingsvalg sidst?', 'Paratviden',
   '24. marts 2026', ('1. november 2022', '5. juni 2025'),
   'Valget i 2022 var det forrige. Der skal være valg mindst hvert '
   'fjerde år, men statsministeren kan udskrive det før tid.'),
@@ -454,7 +437,7 @@ SPM_REGERING = [
   ('Lars Løkke Rasmussen', 'Peter Hummelgaard'),
   'Mette Frederiksen (S) har været statsminister siden 2019 og fortsatte '
   'efter valget i 2026.'),
- (F_REGERING, 'Hvor mange mandater har regeringspartierne tilsammen?',
+ ('', 'Hvor mange mandater har regeringspartierne tilsammen?',
   'Paratviden', '82', ('90', '101'),
   'Det er færre end de 90, der skal til for et flertal. Regeringen er '
   'altså en mindretalsregering og skal finde flertal fra sag til sag.'),
@@ -481,7 +464,7 @@ SPM_OEKONOMI = [
    'Statens samlede udgifter på finansloven'),
   'BNP står for bruttonationalprodukt. Det måler produktionen — ikke '
   'hvor pengene ender, og ikke hvordan de er fordelt.'),
- (F_OEKONOMI, 'Hvor stort er Danmarks BNP cirka?', 'Økonomi',
+ ('', 'Hvor stort er Danmarks BNP cirka?', 'Økonomi',
   'Omkring 3.000 milliarder kroner om året',
   ('Omkring 300 milliarder kroner om året',
    'Omkring 30.000 milliarder kroner om året'),
@@ -498,7 +481,7 @@ SPM_OEKONOMI = [
   ('At lønningerne stiger', 'At der bliver trykt flere pengesedler'),
   'Inflationen måles med forbrugerprisindekset, som følger prisen på '
   'en fast kurv af varer og tjenester.'),
- (F_INFLATION, 'Hvor meget steg priserne i Danmark fra oktober 2025 til '
+ ('', 'Hvor meget steg priserne i Danmark fra oktober 2025 til '
   'oktober 2026?', 'Paratviden', '2,2 %', ('0,5 %', '7,4 %'),
   'Tallet er fra Danmarks Statistik, offentliggjort 10. november 2026. '
   'Fra september til oktober alene steg indekset 0,5 %.'),
@@ -518,11 +501,11 @@ SPM_OEKONOMI = [
   'Omkring 14 % af BNP', ('Omkring 2 % af BNP', 'Omkring 45 % af BNP'),
   'Overskuddet er vokset fra 190 mia. kr. i 2018. Et stort og vedvarende '
   'overskud betyder, at Danmark samlet set låner ud til udlandet.'),
- (F_KLUBBER, 'Hvor mange lande er med i EU?', 'Paratviden', '27 lande',
+ ('', 'Hvor mange lande er med i EU?', 'Paratviden', '27 lande',
   ('25 lande', '31 lande'),
   'Tallet har været 27, siden Storbritannien forlod EU i 2020. '
   'Montenegro er det kandidatland, der er nået længst.'),
- (F_KLUBBER, 'Hvor mange lande er med i OECD?', 'Paratviden', '38 lande',
+ ('', 'Hvor mange lande er med i OECD?', 'Paratviden', '38 lande',
   ('27 lande', '51 lande'),
   'OECD er de rige landes samarbejdsorganisation. Costa Rica kom med '
   'som nr. 38 i 2021. Danmark har været med siden starten i 1961.'),
@@ -531,8 +514,12 @@ SPM_OEKONOMI = [
 ALLE = [SPM_TEKST, SPM_DIGITAL, SPM_AI, SPM_IDEOLOGI, SPM_REGERING,
         SPM_OEKONOMI]
 ANTAL = sum(len(x) for x in ALLE)
-assert ANTAL == 60, f'der skal være 60 spørgsmål, der er {ANTAL}'
-assert all(len(x) == 10 for x in ALLE), 'hver quiz skal have ti spørgsmål'
+assert ANTAL == 58, f'der skal være 58 spørgsmål, der er {ANTAL}'
+assert all(6 <= len(x) <= 10 for x in ALLE)
+# svarene skal stadig fordele sig nogenlunde jaevnt over A, B og C, ogsaa
+# naar antallet ikke gaar op i tre
+for _b in range(3):
+    assert ORDEN[:ANTAL].count(_b) >= ANTAL // 3 - 1, 'svarene er skæve'
 
 
 # =================================================================== siden
@@ -548,11 +535,11 @@ def byg_spm(liste, start, orden):
         knapper = ' '.join(
             f'<button class="opt"><span class="mk">{"ABC"[j]}</span> '
             f'{html.escape(v, quote=False)}</button>' for j, v in enumerate(valg))
+        figur = f'<div class="qfig">{fig}</div>' if fig else ''
         ud.append(
             f'<div class="q" data-answer="{plads}" data-exp="{forklaring}">'
             f'<div class="qtext"><span class="qn">{start+k}.</span> {tekst} '
-            f'<span class="lvl">{niveau}</span></div>'
-            f'<div class="qfig">{fig}</div>'
+            f'<span class="lvl">{niveau}</span></div>{figur}'
             f'<div class="opts">{knapper}</div><div class="fb"></div></div>')
     return ''.join(ud)
 
@@ -598,7 +585,7 @@ assert sum(1 for *_, slut in MODULER if slut is None) == 1, \
 
 OVERSIGT = f'''<section class="lesson" id="om">
 <h2><span class="num">1</span> Sådan virker testen</h2>
-<p class="sub">60 spørgsmål fordelt på seks quizzer med ti i hver. Du får
+<p class="sub">{ANTAL} spørgsmål fordelt på seks quizzer. Du får
 svaret og en forklaring med det samme, du har trykket — så det er lige så
 meget en træning som en prøve. Du kan tage den igen; den husker, hvor du
 nåede til.</p>
@@ -651,7 +638,7 @@ def byg():
     j = hoved.index('<button class="printbtn"', i)
     hoved = (hoved[:i] + '<section class="hero" id="intro">'
              '<span class="pill">9. klasse · samfundsfag</span>'
-             '<h1>Samfundsfagstest</h1><p><b>60 spørgsmål</b> fra de opgivne '
+             f'<h1>Samfundsfagstest</h1><p><b>{ANTAL} spørgsmål</b> fra de opgivne '
              'tekster, AI-ordbogen og dataarket om digital socialisering — '
              'og om partier og ideologi, regeringen, EU og OECD, BNP, '
              'inflation, betalingsbalance og finanslov. Hvert spørgsmål har '

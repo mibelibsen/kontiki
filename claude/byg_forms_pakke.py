@@ -51,10 +51,13 @@ NAVNE = {id(v): n for n, v in vars(T).items() if n.startswith('F_')}
 figurnr, figurer = {}, []          # svg -> nr,  [(nr, svg, kodenavn)]
 for liste in T.ALLE:
     for fig, *_ in liste:
-        if fig not in figurnr:
+        if fig and fig not in figurnr:   # nogle spoergsmaal har ingen figur
             figurnr[fig] = len(figurer) + 1
             figurer.append((len(figurer) + 1, fig, NAVNE.get(id(fig), 'figur')))
-assert len(figurer) == 19, f'{len(figurer)} figurer, 19 forventet'
+# antallet falder, efterhaanden som figurer, der roebede svaret,
+# bliver taget ud. Kun det skal holde: hver figur bruges af nogen.
+assert figurer, 'ingen figurer tilbage'
+assert len(figurer) == len({f for liste in T.ALLE for f, *_ in liste if f})
 
 FIGTEKST = {
     'F_LOV_KORT': 'Lovprocessen fra ministeriet til Lovtidende',
@@ -97,15 +100,17 @@ def spoergsmaalene():
             valg = list(forkerte)
             valg.insert(plads, rigtig)
             assert valg[plads] == rigtig and len(set(valg)) == 3
-            ud.append((nr, figurnr[fig], tekst, valg, plads, forklaring,
-                       delnavn))
+            ud.append((nr, figurnr.get(fig), tekst, valg, plads,
+                       forklaring, delnavn))
     assert nr == T.ANTAL
     return ud
 
 
 SPM = spoergsmaalene()
 BOGSTAV = 'ABC'
-assert [s[4] for s in SPM].count(0) == 20, 'svarene skal fordele sig jævnt'
+# svarene fordeler sig jaevnt nok, ogsaa naar antallet ikke gaar op i tre
+assert all([s[4] for s in SPM].count(b) >= len(SPM) // 3 - 1
+           for b in range(3)), 'svarene er skæve'
 
 
 # ---------------------------------------------------- 1) Forms-importfilen
@@ -134,7 +139,8 @@ def skriv_docx():
     for nr, fignr, tekst, valg, _plads, _forkl, _del in SPM:
         p = d.add_paragraph()
         p.paragraph_format.space_before = Pt(14)
-        p.add_run(f'Spørgsmål {nr} · {tekst} (figur {fignr})')
+        henvis = f' (figur {fignr})' if fignr else ''
+        p.add_run(f'Spørgsmål {nr} · {tekst}{henvis}')
         for i, v in enumerate(valg):
             d.add_paragraph(f'{"abc"[i]}. {v}')
 
@@ -283,8 +289,9 @@ def skriv_retteark():
             f'{" &nbsp;&#10003;" if i == plads else ""}</span></div>'
             for i, v in enumerate(valg))
         krop += (f'<div class="spm"><div class="hd"><span class="nr">{nr}.</span>'
-                 f'{html.escape(tekst)} <span style="color:#586074;'
-                 f'font-weight:400;font-size:9.5pt">(figur {fignr})</span></div>'
+                 f'{html.escape(tekst)}' + (f' <span style="color:#586074;'
+                 f'font-weight:400;font-size:9.5pt">(figur {fignr})</span>'
+                 if fignr else '') + '</div>'
                  f'{svar}<p class="hvorfor"><b>Hvorfor:</b> '
                  f'{html.escape(forkl)}</p></div>')
 
