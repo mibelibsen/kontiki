@@ -45,13 +45,66 @@ assert C_N % 2 == 0, 'udsnittene skal kunne deles i to lige store kamme'
 INK, LIN, BLA, LYS = '#1a2233', '#9aa4b5', '#1f6fd6', '#eef2f8'
 
 
+# Figuren staar i en kasse med polstring og ramme. Bliver kassen bredere
+# end papiret, krymper Chrome **hele siden** for at faa den med - uden at
+# sige noget - og saa er arket ikke trykt i rigtig stoerrelse laengere.
+PLADS_B, KASSE = 184, 5
+
+
 def svg(b, h, krop, luft=2):
     """En figur i rigtig stoerrelse. Papiret er i mm, saa viewBox'en er det
     ogsaa - ét skridt i koordinaterne er én millimeter paa arket."""
+    assert b + 2 * luft <= PLADS_B - KASSE, (
+        f'figuren er {b + 2 * luft:.1f} mm bred. Kassen omkring den bliver '
+        f'{b + 2 * luft + KASSE:.1f} mm, og der er kun {PLADS_B} mm.')
     return (f'<svg width="{b + 2 * luft}mm" height="{h + 2 * luft}mm" '
             f'viewBox="0 0 {b + 2 * luft} {h + 2 * luft}" '
             f'xmlns="http://www.w3.org/2000/svg">'
             f'<g transform="translate({luft},{luft})">{krop}</g></svg>')
+
+
+def kontrolmaal(laengde=100, hoejde=3.5, trin=10):
+    """En maalestok, der er praecis `laengde` mm lang.
+
+    Arkene er trykt i rigtig stoerrelse, men det hjaelper ikke, hvis
+    printeren staar paa "Tilpas til side" — saa krymper alt et par
+    procent, og ingen opdager det. Stokken her kan maales med en lineal,
+    foer der klippes.
+
+    Felterne er **fyldte, ikke stregede**: en streg med tykkelse stikker
+    uden for sine egne koordinater, og saa maaler man 100,5 mm. Et fyldt
+    rektangel slutter, hvor det slutter.
+    """
+    assert laengde % trin == 0, 'maalestokken skal gaa op i hele felter'
+    LUFT, TEKST = 1.5, 4.5
+    k = []
+    for i in range(laengde // trin):
+        k.append(f'<rect x="{i * trin}" y="0" width="{trin}" '
+                 f'height="{hoejde}" fill="{INK if i % 2 == 0 else LYS}"/>')
+    k.append(f'<rect x="0" y="0" width="{laengde}" height="{hoejde}" '
+             f'fill="none" stroke="{INK}" stroke-width="0.2"/>')
+    for x, t, anker in ((0, '0', 'start'), (laengde / 2, str(laengde // 2),
+                        'middle'), (laengde, f'{laengde} mm', 'end')):
+        k.append(f'<text x="{x:.1f}" y="{hoejde + TEKST:.1f}" '
+                 f'text-anchor="{anker}" font-size="3.2" fill="{INK}">'
+                 f'{t}</text>')
+    b, h = laengde + 2 * LUFT, hoejde + TEKST + 2
+    return (f'<svg width="{b:.1f}mm" height="{h:.1f}mm" '
+            f'viewBox="0 0 {b:.1f} {h:.1f}" '
+            f'xmlns="http://www.w3.org/2000/svg">'
+            f'<g transform="translate({LUFT},1)">{"".join(k)}</g></svg>')
+
+
+PRINTNOTE = (
+    '<div class="boks" style="margin:0 0 4mm;padding:2.5mm 4mm">'
+    '<b>Print i 100 %, ikke «Tilpas til side».</b>'
+    '<p style="margin:1mm 0 2mm;color:#333;font-size:9pt">Målestokken '
+    'herunder skal være præcis 100 mm. Er den kortere, har printeren '
+    'skaleret arket — vælg «Faktisk størrelse» eller 100 % i '
+    'printvinduet, og prøv igen. Passer den stadig ikke, så mål selv '
+    'og brug dine egne tal: halvdelen er halvdelen, uanset hvad '
+    'printeren gør.</p>'
+    + kontrolmaal() + '</div>')
 
 
 def klip_parallelogram():
@@ -218,7 +271,7 @@ def trin_html():
     return ud
 
 
-KLIP = (f'<h1>Klip arealet fri</h1>'
+KLIP = (f'<h1>Klip arealet fri</h1>' + PRINTNOTE + f''
         f'<p class="lead">Tre figurer, en saks og en lineal. Du skal ikke '
         f'bruge formler — du skal finde dem. Klip langs de <b>sorte</b> '
         f'kanter først, og langs de <b>stiplede</b> linjer bagefter.</p>'

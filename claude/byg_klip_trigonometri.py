@@ -30,6 +30,14 @@ import os
 import subprocess
 
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+_aspec = importlib.util.spec_from_file_location(
+    'areal', os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          'byg_klip_areal.py'))
+AREAL = importlib.util.module_from_spec(_aspec)
+_aspec.loader.exec_module(AREAL)
+# Maalestokken og printbeskeden er de samme paa alle arkene — én kilde.
+PRINTNOTE = AREAL.PRINTNOTE
 HER = os.path.dirname(os.path.abspath(__file__))
 
 _spec = importlib.util.spec_from_file_location(
@@ -321,6 +329,7 @@ TABELLER = {'A': _tabel_a, 'B': _tabel_b}
 
 KLIPARK = (
  '<h1 class="smal">Klip trigonometrien fri</h1>'
+ + PRINTNOTE +
  '<h2 style="margin-top:0">A · Fem trekanter</h2>'
  '<p class="hvad">Fire af dem har den samme vinkel — den, der er markeret '
  'med en bue. Én har ikke. Klip dem ud, og find ud af hvilken. Vinklerne '

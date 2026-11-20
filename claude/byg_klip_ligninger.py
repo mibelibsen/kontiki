@@ -26,6 +26,14 @@ import subprocess
 from fractions import Fraction as F
 
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+_aspec = importlib.util.spec_from_file_location(
+    'areal', os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          'byg_klip_areal.py'))
+AREAL = importlib.util.module_from_spec(_aspec)
+_aspec.loader.exec_module(AREAL)
+# Maalestokken og printbeskeden er de samme paa alle arkene — én kilde.
+PRINTNOTE = AREAL.PRINTNOTE
 HER = os.path.dirname(os.path.abspath(__file__))
 
 _spec = importlib.util.spec_from_file_location(
@@ -107,7 +115,7 @@ def klippeark():
 
 # --------------------------------------------------------------------- vægten
 SKAAL_B, SKAAL_H = 80.0, 170.0
-GAB_M = 16.0
+GAB_M = 11.0
 M_V = 4.0
 M_H = M_V + SKAAL_B + GAB_M
 TOP = 46.0
@@ -196,7 +204,7 @@ def _vaegt_lille(ox, vx, v1, hx, h1, note=''):
     return ''.join(d), bredde, top + h + 9
 
 
-def raekke(stillinger, gab=6.0):
+def raekke(stillinger, gab=3.5):
     """Flere stillinger i ÉN figur, med pile imellem. Bredden regnes, og
     svg() har en assert paa, at den kan vaere paa papiret."""
     krop, x, hoejder = '', 0.0, []
@@ -313,6 +321,7 @@ h2{margin:3mm 0 1mm}
 
 KLIPARK = (
  '<h1 class="smal">Klip ligningen fri</h1>'
+ + PRINTNOTE +
  '<p class="hvad">Her er brikkerne. Den lange hedder <b>x</b>, og ingen '
  'ved, hvor meget den vejer — det er lige netop dét, I skal finde ud af. '
  'Den lille hedder <b>1</b>. Klip dem alle ud, og hold de to slags adskilt.'

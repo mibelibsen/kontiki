@@ -23,6 +23,14 @@ import subprocess
 from fractions import Fraction as F
 
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+_aspec = importlib.util.spec_from_file_location(
+    'areal', os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          'byg_klip_areal.py'))
+AREAL = importlib.util.module_from_spec(_aspec)
+_aspec.loader.exec_module(AREAL)
+# Maalestokken og printbeskeden er de samme paa alle arkene — én kilde.
+PRINTNOTE = AREAL.PRINTNOTE
 HER = os.path.dirname(os.path.abspath(__file__))
 
 _spec = importlib.util.spec_from_file_location(
@@ -155,6 +163,7 @@ h2{margin:3mm 0 1mm}
 
 KLIPARK = (
  '<h1 class="smal">Klip overfladen fri</h1>'
+ + PRINTNOTE +
  '<div class="boks" style="margin:0 0 4mm"><b>Find kassen og pyramiden '
  'frem.</b><p style="margin:1mm 0 0;color:#333;font-size:9.5pt">Det er de '
  'samme to legemer som på <i>Klip rumfanget fri</i>. Har I bygget dem, '

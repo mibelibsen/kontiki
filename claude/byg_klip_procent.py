@@ -42,6 +42,7 @@ svg = RF.svg
 INK, LIN, BLA, LYS = RF.INK, RF.LIN, RF.BLA, RF.LYS
 KLIP = RF.KLIP
 CSS = RF.CSS
+PRINTNOTE = RF.PRINTNOTE
 
 # ------------------------------------------------------------------ A · feltet
 CELLE = 12                       # mm pr. felt
@@ -145,6 +146,7 @@ stykke_li = ''.join(
 
 KLIPARK = (
  '<h1 class="smal">Klip procenten fri</h1>'
+ + PRINTNOTE +
  '<p class="hvad">Procent betyder <b>hundrededele</b>. Det er ikke en '
  'forklaring, man skal tro på — det er noget, der kan klippes ud og '
  'tælles efter.</p>'

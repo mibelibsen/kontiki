@@ -100,6 +100,39 @@ Skal de bruges igen, printes de forfra med
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
 
+## Rettet 20. november 2026 · klippearkene kommer nu ud i rigtig størrelse
+
+Arkene *var* A4 og *holdt* målene i filen — men to ting kunne vælte det
+på vejen til papiret, og den ene gjorde det allerede.
+
+**1 · Printdialogen.** Acrobat, Forhåndsvisning og Chrome står alle som
+standard på «Tilpas til side», og så krymper alt et par procent uden at
+nogen opdager det. Arket kan ikke forhindre det, men det kan afsløre
+det. Alle syv ark har nu en **målestok på 100 mm** øverst, delt i
+10 mm-felter, og en besked om at vælge 100 % / «Faktisk størrelse».
+Passer den stadig ikke, siger beskeden, at man bare måler selv og bruger
+sine egne tal — halvdelen er halvdelen, uanset hvad printeren gør.
+
+Målestokken ligger i `byg_klip_areal.py` som `kontrolmaal()` og
+`PRINTNOTE`, og de seks andre moduler henter den derfra. Felterne er
+**fyldte, ikke stregede**: en streg med tykkelse stikker uden for sine
+egne koordinater, og så måler man 100,5 mm.
+
+**2 · Ligningsarket var allerede 2 % for lille.** Vægtfiguren var 182 mm
+bred, og `.net`-kassen omkring den bliver 4,6 mm bredere. Det er mere end
+de 184 mm, der er plads til, og så krymper Chrome **hele siden** for at
+få kassen med — uden at sige et ord. Vægten er smalnet (`GAB_M` 16 → 11),
+og rækkerne på svararket med (`gab` 6 → 3,5).
+
+`svg()` har nu en assert på, at figuren plus kassen kan være på papiret —
+både i `byg_klip_areal.py` og i `byg_klip_rumfang.py`. Den fangede med
+det samme en figur mere på ligningernes svarark.
+
+**Efterprøvet på alle syv færdige PDF'er:** målestokken måler 100,1 mm på
+hver af dem (de 0,1 er rammens stregtykkelse). Procentarkets ni strimler
+måler 5 × 100, 2 × 60 og 2 × 80 mm, og hundredefeltet 120,0 mm med 12,0
+mm mellem linjerne.
+
 ## Lavet 20. november 2026 · klip procenten fri
 
 Syvende klippeark, og det andet uden geometri. Procent læres som en

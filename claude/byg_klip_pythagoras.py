@@ -28,6 +28,14 @@ import os
 import subprocess
 
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+_aspec = importlib.util.spec_from_file_location(
+    'areal', os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          'byg_klip_areal.py'))
+AREAL = importlib.util.module_from_spec(_aspec)
+_aspec.loader.exec_module(AREAL)
+# Maalestokken og printbeskeden er de samme paa alle arkene — én kilde.
+PRINTNOTE = AREAL.PRINTNOTE
 HER = os.path.dirname(os.path.abspath(__file__))
 
 _spec = importlib.util.spec_from_file_location(
@@ -362,6 +370,7 @@ h2{margin:3mm 0 1mm}
 
 KLIPARK = (
  '<h1 class="smal">Klip Pythagoras fri</h1>'
+ + PRINTNOTE +
  '<h2 style="margin-top:0">A · Tre kvadrater</h2>'
  '<p class="hvad">Trekanten har en ret vinkel. De to kvadrater, der ligger '
  'lige, kan du tælle. Det skrå kan du ikke — klip det ud, og læg det oven '

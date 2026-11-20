@@ -18,6 +18,7 @@ rigtig stoerrelse, ellers passer de to legemer ikke sammen, og hele
 oevelsen falder.
 """
 import math
+import importlib.util
 import os
 import subprocess
 from fractions import Fraction as F
@@ -29,6 +30,14 @@ def kom(x, n=1):
 
 
 ROD = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+_aspec = importlib.util.spec_from_file_location(
+    'areal', os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          'byg_klip_areal.py'))
+AREAL = importlib.util.module_from_spec(_aspec)
+_aspec.loader.exec_module(AREAL)
+# Maalestokken og printbeskeden er de samme paa alle arkene — én kilde.
+PRINTNOTE = AREAL.PRINTNOTE
 
 L, B, H = 60, 40, 40            # kassen: laengde, bredde, hoejde i mm
 TERN = 10                       # ternet i grundfladen
@@ -52,6 +61,14 @@ FOLD = f'stroke="{BLA}" stroke-width="0.4" stroke-dasharray="4 2.5"'
 
 # Det, der er plads til paa en A4 med 13 mm margen.
 PLADS_B, PLADS_H = 184, 271
+# Figuren staar i en .net-kasse med 2 mm polstring og 0,3 mm ramme i hver
+# side. Bliver kassen bredere end papiret, krymper Chrome **hele siden**
+# for at faa den med - uden at sige noget. Saa er arket ikke trykt i
+# rigtig stoerrelse laengere, og det er hele pointen med et klippeark.
+# Det skete for ligningsarket: figuren var 182 mm, kassen 186,6, og
+# arket kom ud 2 % for lille.
+KASSE = 5
+PLADS_FIG = PLADS_B - KASSE
 
 
 def svg(krop, punkter, luft=3):
@@ -62,7 +79,10 @@ def svg(krop, punkter, luft=3):
     ys = [y for _, y in punkter]
     x0, y0 = min(xs) - luft, min(ys) - luft
     b, h = max(xs) - min(xs) + 2 * luft, max(ys) - min(ys) + 2 * luft
-    assert b <= PLADS_B, f'figuren er {b:.0f} mm bred, der er plads til {PLADS_B}'
+    assert b <= PLADS_FIG, (
+        f'figuren er {b:.1f} mm bred. Kassen omkring den bliver '
+        f'{b + KASSE:.1f} mm, og der er kun {PLADS_B} mm. Chrome ville '
+        f'krympe hele siden, og arket ville ikke vaere i rigtig stoerrelse.')
     assert h <= PLADS_H, f'figuren er {h:.0f} mm høj, der er plads til {PLADS_H}'
     return (f'<svg width="{b:.1f}mm" height="{h:.1f}mm" '
             f'viewBox="0 0 {b:.1f} {h:.1f}" '
@@ -262,6 +282,7 @@ def trin_html():
 
 KLIPARK = (
  '<h1 class="smal">Klip rumfanget fri</h1>'
+ + PRINTNOTE +
  '<h2>A · Grundfladen</h2>'
  f'<div class="net">{grundflade()}</div>'
  '<h2>B · Kassen</h2>'
