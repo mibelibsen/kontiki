@@ -48,3 +48,6 @@ vejledning/klip-trigonometri-fri-svar.pdf
 
 # Svararket til ligningsøvelsen bygges af claude/byg_klip_ligninger.py.
 vejledning/klip-ligninger-fri-svar.pdf
+
+# Svararket til procentøvelsen bygges af claude/byg_klip_procent.py.
+vejledning/klip-procenten-fri-svar.pdf

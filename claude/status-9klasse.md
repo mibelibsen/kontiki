@@ -23,8 +23,8 @@ til noget andet. Der ligger en påmindelse til 4.1.2027. Sidehovedet hedder
 **321flyv · 9. klasse**; navnet «Mibelibsen» er væk fra sitet.
 
 **Matematik** har mest indhold: tre interaktive sider (statistik, manipulation,
-funktioner og ligninger), **Matematik klip** med seks klippeark (areal,
-rumfang, overflade, Pythagoras, trigonometri, ligninger), **Intro til
+funktioner og ligninger), **Matematik klip** med syv klippeark (areal,
+rumfang, overflade, Pythagoras, trigonometri, ligninger, procent), **Intro til
 GeoGebra** med elleve skærmbilleder fra den rigtige app, opslagssider,
 Undervisningsministeriets *Matematiske formler og fagord*, og lektier til og
 med uge 44. Facit til alle moduler og lektier ligger i `facit/` som PDF og
@@ -99,6 +99,45 @@ Skal de bruges igen, printes de forfra med
 5. **Fyrtøjet linker ikke til `/dansk`.** Spillet står for sig selv med et
    kort på forsiden. Hører det til dansksiden, skal den side have et sted til
    litteratur — den er i dag ren skriftlig fremstilling.
+
+## Lavet 20. november 2026 · klip procenten fri
+
+Syvende klippeark, og det andet uden geometri. Procent læres som en
+opskrift — gang med 100, eller del med 100, og hvem kan huske hvilken.
+Her er procenten ikke en opskrift, den er et stykke papir.
+
+- **A · Hundredefeltet.** 10 × 10 felter, 12 mm pr. felt, klippet i fire
+  stykker på 50, 25, 20 og 5 felter. Hvert stykke får fire navne: brøk ud
+  af 100, brøken forkortet, decimaltal og procent. De fire procenter
+  lægger sig til 100, og det 25-felts stykke dækker præcis halvdelen af
+  det på 50 — en fjerdedel er halvdelen af en halvdel, og det kan ses.
+- **B · Strimlerne.** Tre strimler på 100, 60 og 80 mm foldes på midten
+  tre gange: 50 %, 25 %, 12,5 %. Alle tre stykker er 25 %, og de er
+  25, 15 og 20 mm. Så er «25 % af 60 er 25» afgjort uden diskussion.
+- **C · Ned og op igen.** En strimmel falder 50 % og stiger 50 %. Den
+  bliver 75 mm, ikke 100, og de 25 mm, der mangler, holdes op mod en
+  urørt strimmel. Den anden vej rundt giver det samme.
+
+**Længderne er valgt, så en ottendedel kan måles.** 100, 60 og 80 giver
+12,5 · 7,5 · 10 mm — alle på en halv millimeter. En strimmel på 70 mm
+ville give 8,75 mm, og så er øvelsen et gæt. Byggescriptet stopper, hvis
+en længde ikke går op i en halv millimeter.
+
+**Øvelsen tåler, at printeren skalerer.** Bliver alt 4 % mindre, er
+halvdelen stadig halvdelen. Kun mm-tallene flytter sig, og dem måler
+ungen selv. Det står i footeren på arket.
+
+Der er fire **reservestrimler** med. Unger klipper forkert, og uden dem
+vælter øvelsen på en fejlklipning.
+
+Målene er efterprøvet på den færdige PDF, ikke kun i koden: feltet måler
+120,0 mm med 11 linjer og præcis 12,0 mm imellem, og strimlerne måler
+100, 60 og 80 mm. `claude/byg_klip_procent.py` bygger både arket og
+`vejledning/klip-procenten-fri-svar.pdf`, som er i `.gitignore` ligesom
+de seks andre svarark.
+
+**Rettet undervejs:** skriftstørrelsen i figurerne er millimeter, ikke
+punkter. `font-size="9"` gav et bogstav på 9 mm.
 
 ## Lavet 18. november 2026 · magtens tredeling · testen har 60 spørgsmål
 

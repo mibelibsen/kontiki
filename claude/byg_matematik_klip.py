@@ -39,6 +39,7 @@ OVERFLADE = _hent('byg_klip_overflade')
 PYTHAGORAS = _hent('byg_klip_pythagoras')
 TRIGONOMETRI = _hent('byg_klip_trigonometri')
 LIGNINGER = _hent('byg_klip_ligninger')
+PROCENT = _hent('byg_klip_procent')
 
 
 def mini(s, h=150):
@@ -104,6 +105,18 @@ ARK = [
    'Hvad en parentes er'],
   ['Saks'],
   LIGNINGER.vaegt()),
+
+ ('materiale/klip-procenten-fri.pdf', 'Klip procenten fri',
+  'Procent betyder hundrededele, og det kan klippes ud: hundrede felter '
+  'i fire stykker, hvor det samme stykke har tre navne på én gang. '
+  'Bagefter viser tre strimler, at 25 % af 60 ikke er 25 — og en '
+  'strimmel, der falder 50 % og stiger 50 %, bliver ikke lige så lang '
+  'som den var.',
+  ['Brøk, decimaltal og procent som det samme',
+   'At procent er et forhold, ikke et antal',
+   'At procenten regnes af det, der står nu'],
+  ['Saks', 'Lineal med mm', 'Tape'],
+  PROCENT.hundredefelt()),
 ]
 
 for _sti, _t, *_ in ARK:
